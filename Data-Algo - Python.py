@@ -1,3 +1,26 @@
+def twoSum(self, nums, target):
+    """
+    :type nums: List[int]
+    :type target: int
+    :rtype: List[int]
+    """
+    if len(nums) < 2: return
+    d = {}
+    for i, n in enumerate(nums):
+        if n in d: d[n].append(i)
+        else: d[n] = [i]
+    for k, v in d.items():
+        if (target - k) is k and len(v) > 1:
+            return [v[0], v[1]]
+        elif (target - k) is not k and (target - k) in d:
+            return [v[0], d[target - k][0]]
+    ''' # optimal solution
+    d = {}
+    for i, n in enumerate(nums):
+        if (target - n) in d: return [i, d[target - n]]
+        d[n] = i
+    '''
+
 
 # 
 # CODESIGNAL - ARCADE TESTS (increasing difficulty)
