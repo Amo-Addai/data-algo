@@ -7,7 +7,7 @@
 function isZigzag(numbers: number[]): number[] {
     let a: number[] = [], n = numbers
     
-    for (var i = 2; i < n.length; i++) {
+    for (let i = 2; i < n.length; i++) {
         if ((n[i-2] < n[i-1]) && (n[i-1] > n[i])) a.push(1)
         else if ((n[i-2] > n[i-1]) && (n[i-1] < n[i])) a.push(1)
         else a.push(0)
@@ -23,11 +23,11 @@ function countWaysToSplit(s: string): number {
     let max = (s.length - 3) + 1, // max substring length
     solns: string[] = [], s1, s2, s3
     
-    for (var i = 1; i <= max; i++) {
-        s1 = s.substr(0, i)
-        for (var j = 1; j <= max; j++) {
-            s2 = s.substr(i, j)
-            s3 = s.substr(i + j, s.length - (i + j))
+    for (let i = 1; i <= max; i++) {
+        s1 = s.substring(0, i)
+        for (let j = 1; j <= max; j++) {
+            s2 = s.substring(i, j)
+            s3 = s.substring(i + j, s.length - (i + j))
             if (s3 && s3.length) {
                 if ((s1 + s2 != s2 + s3) && (s2 + s3 !== s3 + s1) && (s1 + s2 !== s3 + s1))
                     solns.push(s1 + s2 + s3)
@@ -57,7 +57,7 @@ function checkPalindrome(inputString: string): boolean {
 
 // Find century from year
 function centuryFromYear(year: number): number {
-    let quotient = Math.floor(y/100), remainder = year % 100
+    let quotient = Math.floor(year/100), remainder = year % 100
     let century = (remainder > 0) ? ++quotient : quotient
     return century
 }
@@ -65,15 +65,16 @@ function centuryFromYear(year: number): number {
 
 // Find adjacent elements with highest product
 function adjacentElementsProduct(inputArray: number[]): number {
-    let num = null, adjnum = null, product = null, p = null
-    for(var i = 0; i < inputArray.length; i++){
+    // let num = null, adjnum = null, p = null
+    let product: number = 0
+    for(let i = 0; i < inputArray.length; i++){
 
-        // CGhost - DOESN'T WORK WITH ALL TESTS
+        // DOESN'T WORK WITH ALL TESTS
         // num = inputArray[i], adjnum = inputArray[i+1]
         // p = num * adjnum
         // if(p > product) product = p
         
-        // GG - WORKs WITH ALL TESTS
+        // WORKS WITH ALL TESTS
         if (i === 1 || inputArray[i-1] * inputArray[i] > product)
             product = inputArray[i-1] * inputArray[i]
 
@@ -83,19 +84,21 @@ function adjacentElementsProduct(inputArray: number[]): number {
 
 
 // Find Area of n-interesting polygon, for a given n
+
 function shapeArea(n: number): number {
-    if(n == 0) return 0
+    if (n == 0) return 0
     else if (n == 1) return 1
-    for(var i = 2; i < (n+1); i++) {
+    for(let i = 2; i < (n+1); i++) {
         return (shapeArea(n-1) + (n-1) * 4)
     }
+    return 0
 }
 
 
 // 
 function almostIncreasingSequence(sequence: number[]): boolean {
-    var bad = 0, s = sequence
-    for (var i=1; i<s.length; i++){
+    let bad = 0, s = sequence
+    for (let i=1; i<s.length; i++){
         if(s[i] <= s[i-1]){
             bad++
             if(bad > 1) return false
@@ -125,7 +128,7 @@ function matrixElementsSum(matrix: number[][]): number {
 
 // Given an array of strings, return another array containing all its longest strings
 function allLongestStrings(inputArray: string[]): string[] {
-    let s = [], l = 0
+    let s: string[] = [], l = 0
     for(let x of inputArray){
         if(x.length > l) {
             l = x.length
@@ -141,7 +144,7 @@ function allLongestStrings(inputArray: string[]): string[] {
 function commonCharacterCount(s1: string, s2: string): number {
     let sarr = s1.split(''), num = 0
     // console.log(sarr)
-    for (var s of sarr){
+    for (let s of sarr){
         // console.log(s)
         if(s2.includes(s)){
             num++
@@ -160,12 +163,12 @@ function isLucky(n: number): boolean {
     if((arr.length%2) > 0) return false
     let a1 = arr.slice(0, arr.length/2),
     a2 = arr.slice(arr.length/2, arr.length)
-    for(var x of [arr, a1, a2]) console.log(x)
+    for(let x of [arr, a1, a2]) console.log(x)
     
     let sum = 0, s = 0
-    for(var i of a1) s += Number(i)
+    for(let i of a1) s += Number(i)
     sum = s; s = 0
-    for(var j of a2) s += Number(j)
+    for(let j of a2) s += Number(j)
         
     return sum === s
 }
@@ -173,15 +176,15 @@ function isLucky(n: number): boolean {
 
 // 
 function sortByHeight(a: number[]): number[] {
-    let trees: any = {}, heights: number[] = [], arr: number[] = [], x = null
+    let trees: any = {}, heights: number[] = [], arr: number[] = [], x: any = null
     
-    for(var i = 0; i < a.length; i++) {
+    for(let i = 0; i < a.length; i++) {
         x = a[i]
         if(x === -1) trees[i] = x
         else heights.push(x)
     }
     arr = heights.sort((a,b) => a-b)
-    for(var k in trees) {
+    for(let k in trees) {
         arr.splice(Number(k), 0, trees[k])
     }
     console.log(arr)
@@ -213,7 +216,7 @@ function reverseInParentheses(inputString: string): string {
 function alternatingSums(a: number[]): number[] {
     let sum1 = 0, sum2 = 0
     // INDEX BEGINS FROM 0 .. SO DON'T MIX THE MODULOS %  (0/1) UP
-    for (var i = 0; i < a.length; i++) {
+    for (let i = 0; i < a.length; i++) {
         if (i % 2 === 0) sum1 += a[i]
         else if (i % 2 === 1) sum2 += a[i]
     }
@@ -227,7 +230,7 @@ function addBorder(picture: string[]): string[] {
     let arr: string[] = [(new Array(picture[0].length + 2).fill("*")).join("")], 
     str: string = ""
     
-    for (var i = 0; i < picture.length; i++) {
+    for (let i = 0; i < picture.length; i++) {
         str = "*" + picture[i] + "*"
         console.log(str)
         arr.push(str)
@@ -242,10 +245,10 @@ function addBorder(picture: string[]): string[] {
 function replaceBorder(picture: string[]): string[] {
     let arr: string[] = [], str: string = ""
     
-    for (var i = 0; i < picture.length; i++) {
+    for (let i = 0; i < picture.length; i++) {
         str = ""
         if ((i == 0) || (i == picture.length - 1))
-            for (var j in picture[i].split('')) str += "*"
+            for (let j in picture[i].split('')) str += "*"
         else {
             str = "*" + picture[i].substring(1, picture.length - 1) + "*"
         }
@@ -259,9 +262,9 @@ function replaceBorder(picture: string[]): string[] {
 
 // Two arrays are called similar if one can be obtained from another by swapping at most one pair of elements in one of the arrays.
 function areSimilar(a: number[], b: number[]): boolean {
-    let sim: boolean = true, av = null, bv = null, swap: boolean = false
+    let sim: boolean = true, av: any = null, bv: any = null, swap: boolean = false
     
-    for (var i = 0; i < a.length; i++) {
+    for (let i = 0; i < a.length; i++) {
         if (a[i] !== b[i]) {
             if (av === null || bv === null) {
                 av = a[i]; bv = b[i];
@@ -279,7 +282,7 @@ function areSimilar(a: number[], b: number[]): boolean {
 function arrayChange(inputArray: number[]): number {
     let moves: number = 0, arr = inputArray, num = 0
     
-    for (var i = 1; i < arr.length; i++) {
+    for (let i = 1; i < arr.length; i++) {
         if (arr[i] > arr[i-1]) continue
         else if (arr[i-1] >= arr[i]) {
             num = (arr[i-1] - arr[i]) + 1
@@ -303,7 +306,7 @@ function palindromeRearranging(inputString: string): boolean {
     a = [], b = [], pal: number = 0, limit: number = 2
     console.log(arr)
     
-    for (var i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         if (pal === limit) return false
         if (!b.includes(arr[i])) {
             a = arr.filter(x => x === arr[i])
@@ -346,7 +349,7 @@ function palindromeRearranging(inputString: string): boolean {
 function firstDuplicate(a: number[]): number {
     // let arr = [] // USING AN ARRAY GETS EXEC TIME LIMIT EXCEEDED ..
     let arr = new Set() // SETS ARE FASTER IN IMPLEMENTATION THAN ARRAYS ...
-    for (var x of a) {
+    for (let x of a) {
         // if (arr.includes(x)) return x
         // else arr.push(x)
         if (arr.has(x)) return x
@@ -359,13 +362,13 @@ function firstDuplicate(a: number[]): number {
 // Given a string s consisting of small English letters, find and return the first instance of a non-repeating character in it. If there is no such character, return '_'.
 function firstNotRepeatingCharacter(s: string): string {
     let c = '' // THIS WORKS WITH ALL TESTS PERFECTLY !!
-    for (var i = 0; i < s.length; i++) {
+    for (let i = 0; i < s.length; i++) {
         c = s.charAt(i)
         if ((s.indexOf(c) === i) && (s.indexOf(c, i + 1) == -1)) return c
     }
     // let a = s.split(''); // THESE 2 IMPLEMENTATIONS BELOW, BOTH EXCEEDED EXECUTION TIME LIMIT !!
-    // for (var x of a) if ((s.match(new RegExp(x, 'g')) || []).length === 1) return x // EXCEEDS EXEC TIME LIMIT ..
-    // for (var x of a) if (a.filter(i => i === x).length === 1) return x // EXCEEDS EXEC TIME LIMIT ..
+    // for (let x of a) if ((s.match(new RegExp(x, 'g')) || []).length === 1) return x // EXCEEDS EXEC TIME LIMIT ..
+    // for (let x of a) if (a.filter(i => i === x).length === 1) return x // EXCEEDS EXEC TIME LIMIT ..
     return '_'
 }
 
@@ -374,7 +377,7 @@ function firstNotRepeatingCharacter(s: string): string {
 function containsDuplicates(a: number[]): boolean {
     let arr = a.sort((a,b) => a-b), x = null, vals = []
     console.log("SORTED ARRAY -> " + arr) // <- limit exceeded for some tests
-    for(var i=0; i < arr.length; i++){
+    for(let i=0; i < arr.length; i++){
 
         if(arr[i] === arr[i+1]) return true
 
@@ -394,10 +397,10 @@ function containsDuplicates(a: number[]): boolean {
 
 // 
 function makeArrayConsecutive2(statues: number[]): number {
-    let toAdd = 0, arr = statues.sort((a,b) => a-b), rem = 0, num = null
+    let toAdd = 0, arr = statues.sort((a,b) => a-b), rem = 0, num: number = 0
     console.log("SORTED ARRAY -> " + arr)
     
-    for(var i=0; i < arr.length; i++){
+    for(let i=0; i < arr.length; i++){
         num = arr[i]
         rem = (arr[i+1] - num)
         if(rem > 1) {
@@ -412,16 +415,16 @@ function makeArrayConsecutive2(statues: number[]): number {
 
 // 
 function sumOfTwo(a: number[], b: number[], v: number): boolean {
-    let r = null
+    let r: number = 0
 
     // Exec Time Limit exceeded ...
-    for (var i = 0; i < a.length; i++){
+    for (let i = 0; i < a.length; i++){
         r = v - a[i]
         if(b.includes(r)) return true
     }
     
     // Exec Time Limit exceeded ...
-    // for(var x of a) for (var y of b) if(x+y === v) return true
+    // for(let x of a) for (let y of b) if(x+y === v) return true
     
     return false
 }
@@ -432,7 +435,7 @@ function sumOfTwo(a: number[], b: number[], v: number): boolean {
 function arrayMaxConsecutiveSum2(inputArray: number[]): number {
     let arr = inputArray, max = -(Math.pow(2, 53)) - 1, maxEnd = 0
     
-    for (var i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         maxEnd += arr[i]
         if (max < maxEnd) max = maxEnd
         if (maxEnd < 0) maxEnd = 0
@@ -444,7 +447,8 @@ function arrayMaxConsecutiveSum2(inputArray: number[]): number {
 // Return all the possible sequences of jumps that you could take to climb the staircase, sorted
 function climbingStaircase(n: number, k: number): number[][] {
     if (!n && !k) return [[]]
-    var res = []
+    let res: number[][] = []
+
     let seqs = function (a, sum, indent, level) {
         console.log(`${level} ${indent}: ${a}`)
         if (sum >= n) {
@@ -452,7 +456,7 @@ function climbingStaircase(n: number, k: number): number[][] {
             return
         }
         
-        for (var j = 1; j <= k; j++) {
+        for (let j = 1; j <= k; j++) {
             seqs(a + j + ' ', sum + j, indent + '-'.repeat(4), level + 1)
         }
     }
@@ -468,7 +472,7 @@ function rotateImage(a: number[][]): number[][] {
     const n = a.length
     const x = Math.floor(n/2)
     const y = n - 1
-    let k = null
+    let k: number = 0
     
     for (let i = 0; i < x; i++) {
         for (let j = i; j < y - i; j++) {
@@ -485,7 +489,7 @@ function rotateImage(a: number[][]): number[][] {
     // THIS MIGHT ALSO WORK .. TRY IT OUT
     let grid = a
     return grid.map((inArr, i) => {
-        let newArr = []
+        let newArr: number[] = []
         for (let arr of grid) newArr.push(arr[i])
         return newArr.reverse()
     })
@@ -497,7 +501,7 @@ function houseRobber(nums: number[]): number {
     
     if (nums == null || nums.length == 0 ) return 0
     
-    let dp = []
+    let dp: number[] = []
     dp[0] = nums[0]
     dp[1] = Math.max(nums[0], nums[1])
     
@@ -533,7 +537,7 @@ function composeRanges(nums: number[]): string[] {
     
     // let idx = [], n1, n2
     
-    // for (var i = 0; i < nums.length; i++) {
+    // for (let i = 0; i < nums.length; i++) {
     //     if (idx.includes(i)) continue
     //     else idx.push(i)
     //     // 
@@ -544,7 +548,7 @@ function composeRanges(nums: number[]): string[] {
     //     if (nums[i+1] - nums[i] == 1) {
     //         n1 = nums[i]
     //         // Now, loop ahead until range breaks (difference > 1)
-    //         for (var j = i + 2; j < nums.length; j++) {
+    //         for (let j = i + 2; j < nums.length; j++) {
     //             if (nums[j] - nums[j-1] > 1) {
     //                 n2 = nums[j-1]
     //                 arr.push(`${n1}->${n2}`)
@@ -582,10 +586,10 @@ function isCryptSolution(crypt: string[], solution: string[][]): boolean {
 
     // METHOD 2
 
-    let hasLeadingZeros = false
+    let hasLeadingZeros: boolean = false
     
     let decrypted = crypt.map(word => {
-        let num = word.split('').map(letter => {
+        let num: string = word.split('').map(letter => {
             return solution.find(key => key[0] === letter)[1]
         }).join('')
         
@@ -621,7 +625,7 @@ function removeKFromList(l: ListNode<number>, k: number): ListNode<number> {
         else break;
     }
     if (arr.length === 0) return null
-    for (var i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         arr[i].next = arr[i+1]
     }
     return arr[0]
@@ -640,7 +644,7 @@ function isListPalindrome(l: ListNode<number>): boolean {
         else break;
     }
     console.log(arr)
-    for (var i = 0; i < arr.length; i++) 
+    for (let i = 0; i < arr.length; i++) 
         if (arr[i] !== arr[arr.length - i - 1])
             return false
     return true
@@ -654,11 +658,11 @@ function isListPalindrome(l: ListNode<number>): boolean {
 
 // SIMPLE SOLUTION
 
-function sudoku2(grid: string[][]): boolean {
+function sudoku1(grid: string[][]): boolean {
     
     // SIMPLE SOLUTION
     
-    let map = {}, currVal = null, subBox = null
+    let map = {}, currVal: string = '', subBox: string = ''
     
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
@@ -699,7 +703,7 @@ function sudoku2(grid: string[][]): boolean {
 // Rotate Grid by 90deg (allows validation of columns as rows)
 function rotateGrid(grid: string[][]): string[][] {
     return grid.map((inArr, i) => {
-        let newArr = []
+        let newArr: string[] = []
         for (let arr of grid) newArr.push(arr[i])
         return newArr.reverse()
     })
@@ -723,10 +727,10 @@ function validateRows(grid: string[][]): boolean {
 
 // Convert each 3x3 grid into a row of 9 (allows validation of subGrids as rows)
 function validateSubGrid(grid: string[][]): boolean {
-    let subGrids = []
+    let subGrids: string[][] = []
     
-    let getSubGridRow = (grid, currRow, currCol) => {
-        let currSubGrid = []
+    let getSubGridRow = (grid, currRow, currCol): string[] => {
+        let currSubGrid: string[] = []
         for (let row = currRow; row < currRow + 3; row++)
             for (let col = currCol; col < currCol + 3; col++)
                 currSubGrid.push(grid[row][col])
@@ -754,9 +758,9 @@ function nQueens(n: number): number[][] {
 }
 
 function dfs (res, points, n, index) {
-    for(var i = index; i < n; i++) {
+    for(let i = index; i < n; i++) {
         if (points.length !== i) return
-        for (var j = 0; j < n; j++) {
+        for (let j = 0; j < n; j++) {
             if (isValid(points, [i, j])) {
                 points.push([i, j])
                 dfs(res, points, n, i + 1)
@@ -768,16 +772,16 @@ function dfs (res, points, n, index) {
 }
 
 function buildRes (points) {
-    let res = [], n = points.length
-    for (var i = 0; i < n; i++) {
+    let res: number[] = [], n = points.length
+    for (let i = 0; i < n; i++) {
         // RETURN ARRAY OF INTEGERS HERE (NOT STRINGS LIKE THE ALGO DOES ..)
-        for (var j = 0; j < n; j++) {
+        for (let j = 0; j < n; j++) {
             if (points[i][1] === j) res.push(j + 1)
             // res[i] += (points[i][1] === j ? 'Q' : '.')
         }
         // (NOT STRINGS LIKE THE ALGO DOES ..)
         // res[i] = ''
-        // for (var j = 0; j < n; j++) {
+        // for (let j = 0; j < n; j++) {
         //     res[i] += (points[i][1] === j ? 'Q' : '.')
         // }
     }
@@ -785,8 +789,8 @@ function buildRes (points) {
 }
 
 function isValid (oldPoints, newPoint): boolean {
-    var len = oldPoints.length
-    for (var i = 0; i < len; i++) {
+    let len = oldPoints.length
+    for (let i = 0; i < len; i++) {
         if (oldPoints[i][0] === newPoint[0] || oldPoints[i][1] === newPoint[1]) 
             return false
         if (Math.abs((oldPoints[i][0] - newPoint[0]) / 
@@ -818,16 +822,16 @@ function isValid (oldPoints, newPoint): boolean {
 
 // Z (ZETA) ALGO
 
-function zeta(ptrn :string) :[number] {
+function zeta(ptrn: string): [number] {
     let pttn = ptrn // Array(ptrn)
     let pttnLen :number = pttn.length
-    if(pttnLen <= 0) return null
+    if (pttnLen <= 0) return null
 
-    var zeta :[number] = [0]
-    var l :number, r :number, k1 :number,
+    let zeta :[number] = [0]
+    let l :number, r :number, k1 :number,
     betalen :number, txtIdx :number, pttnIdx :number = 0
 
-    for (var k in Array(pttnLen)) {
+    for (let k in Array(pttnLen)) {
         if(k > r){ // Outside a Z-Box (compare the chars, until mismatch)
             pttnIdx = 0
 
@@ -844,8 +848,6 @@ function zeta(ptrn :string) :[number] {
         }
     }
 
-
-
     return zeta
 }
 
@@ -853,19 +855,19 @@ function zeta(ptrn :string) :[number] {
 // FIZZ-BUZZ ALGO
 
 function fizzBuzz(numTurns :number) {
-    var res = ""
-    for(var i=1; i<=numTurns; i++) {
+    let res = ""
+    for(let i=1; i<=numTurns; i++) {
         if(i % 3 == 0) res += "Fizz"
         if(i % 5 == 0) res += ((res.length==0) ? "": " ") + "Buzz"
         if(res.length==0) res += "" + i
-        print(res) // OR console.log ??
+        console.log(res) // OR console.log ??
     }
 }
 
 
 // RABIN-KARP STRING SEARCH ALGO
 
-function search(t :string, p :string) :number {
+function rkSearch(t :string, p :string) :number {
     // convert to array of numbers
     let pArr =  p // p.flatMap(p as number) // <- FIND .ts METHOD
     let tArr =  t // t.flatMap(t as number)
@@ -873,7 +875,7 @@ function search(t :string, p :string) :number {
     if (tArr.length < pArr.length) return -1
 
     let pHash = hash(pArr) // <- FIND .ts METHOD
-    var endIndex = pArr.length - 1
+    let endIndex = pArr.length - 1
     let firstChars = Array(tArr)
     let firstHash = hash(firstChars)
 
@@ -882,10 +884,10 @@ function search(t :string, p :string) :number {
         if (firstChars == pArr) return 0
     }
 
-    var prevHash = firstHash
+    let prevHash = firstHash
     // Now slide the window across the test to be searched
-    for (var i in Array(tArr.length)) {
-        endIndex = i + (pArr.length - 1)
+    for (let i in Array(tArr.length)) {
+        endIndex = Number(i + (pArr.length - 1))
         let window = Array(tArr)
         let windowHash = null // nextHash() <- FIND .ts METHOD
         // 
