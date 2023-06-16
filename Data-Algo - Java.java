@@ -6,13 +6,9 @@
 
 
 
-
-
 //
 // CODESIGNAL - SAMPLE INTERVIEW QUESTIONS 
 //  
-
-
 
 
 // A top secret message containing uppercase letters from 'A' to 'Z' has been encoded as numbers using the following mapping:
@@ -67,19 +63,5 @@ int mapDecoding(String message) {
 
     return P[L-1];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

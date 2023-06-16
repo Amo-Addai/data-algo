@@ -1,7 +1,16 @@
+'''
+LEARN
+
+for - iter, enumerate, k/v, ..
+..
+
+'''
+
+
 # Given 2 sorted arrays, find the number of elements in common.
 # Both arrays have the same length, and all distinct elements
 
-def commonElems(arr1, arr2): # Brute-force algo [O(n^2)]
+def common_elems(arr1, arr2): # Brute-force algo [O(n^2)]
     nums = []
     for a1 in arr1:
         for a2 in arr2:
@@ -10,7 +19,7 @@ def commonElems(arr1, arr2): # Brute-force algo [O(n^2)]
     print(nums)
     return len(nums)
 
-def commonElems(arr1, arr2): # More optimized algo [time - O(n log n)] [space - should be O(n)]
+def common_elems(arr1, arr2): # More optimized algo [time - O(n log n)] [space - should be O(n)]
     nums, low, high, mid = [], 0, len(arr2) - 1, None
     for a1 in arr1: # TODO now find a1 in arr2, using binary search
         while low <= high:
@@ -24,7 +33,7 @@ def commonElems(arr1, arr2): # More optimized algo [time - O(n log n)] [space - 
     print(nums)
     return len(nums)
 
-def commonElems(arr1, arr2): # More optimized algo [time - O(2n) ~ O(n)] [space - should be O(n)]
+def common_elems(arr1, arr2): # More optimized algo [time - O(2n) ~ O(n)] [space - should be O(n)]
     nums, d2 = [], {}
     for a2 in arr2:
         d2[a2] = a2
@@ -36,7 +45,7 @@ def commonElems(arr1, arr2): # More optimized algo [time - O(2n) ~ O(n)] [space 
     print(nums)
     return len(nums)
 
-def commonElems(arr1, arr2): # Most optimized algo [time - O(n)] [space - should be O(1)]
+def common_elems(arr1, arr2): # Most optimized algo [time - O(n)] [space - should be O(1)]
     nums = [] # getting rid of nums, will put this algo at O(1) space complexity
     for a1 in arr1: # now find a1 in arr2, using linear search, but this time ..
         # with the search picking up where the last one left off (since both arrays are already sorted ..)
@@ -55,7 +64,7 @@ def commonElems(arr1, arr2): # Most optimized algo [time - O(n)] [space - should
 
 #
 
-def twoSum(nums, target):
+def two_sum(nums, target):
     """
     :type nums: List[int]
     :type target: int
@@ -72,7 +81,7 @@ def twoSum(nums, target):
 # Given an array a that contains only numbers in the range from 1 to a.length, 
 # find the first duplicate number for which the second occurrence has the minimal index.
 
-def firstDuplicate(a):
+def first_duplicate(a):
     arr = [] # USING AN ARRAY GETS EXEC TIME LIMIT EXCEEDED ..
     arr = set() # SETS ARE FASTER IN IMPLEMENTATION THAN ARRAYS ...
     for x in a:
@@ -86,14 +95,14 @@ def firstDuplicate(a):
 
 # 
 
-def sumOfTwo(a,b,v):
+def sum_of_two(a,b,v):
     b = set(b)
     return any(v - x in b for x in a)
 
 
 # 
 
-def sumInRange(nums, queries):
+def sum_in_range(nums, queries):
     totalSum, sumSoFar, prefixSum = 0, 0, [0]
     
     # DOESN'T PASS ALL TESTS ..
@@ -115,7 +124,7 @@ def sumInRange(nums, queries):
 # You are climbing a staircase that has n steps. You can take the steps either 1 or 2 at a time. 
 # Calculate how many distinct ways you can climb to the top of the staircase.
 
-def climbingStairs(n):
+def climbing_stairs(n):
     if n == 1 or n == 2:
         return n
         
@@ -136,27 +145,27 @@ def climbingStairs(n):
 
 # THIS METHOD EXCEEDS EXEC TIME LIMIT ...
 
-def fillingBlocks(n):
+def filling_blocks(n):
     if n == 0: return 0
     elif n == 1: return 1
     elif n == 2: return 5
     else:
-        row = fillingBlocks0011(n-1)
-        ccr = fillingBlocks0011(n-2)
-        crc = fillingBlocks0110(n-2)
-        cccc = fillingBlocks(n-2)
+        row = filling_blocks_0011(n-1)
+        ccr = filling_blocks_0011(n-2)
+        crc = filling_blocks_0110(n-2)
+        cccc = filling_blocks(n-2)
         return row + ccr + crc + cccc
 
 
-def fillingBlocks0110(n):
+def filling_blocks_0110(n):
     if n == 0: return 1
     elif n == 1: return 1
-    else: return fillingBlocks(n) + fillingBlocks0110(n-2)
+    else: return filling_blocks(n) + filling_blocks_0110(n-2)
     
 
-def fillingBlocks0011(n):
+def filling_blocks_0011(n):
     if n == 0: return 1
-    else: return fillingBlocks(n) + fillingBlocks0011(n-1)
+    else: return filling_blocks(n) + filling_blocks_0011(n-1)
 
 
 
@@ -171,7 +180,7 @@ def fillingBlocks0011(n):
 
 # Given a binary tree of integers t, return its node values in the following format:
 
-def traverseTree(t):
+def traverse_tree(t):
     if t is None: return []
     arr, a, n = [], [t], None
     
@@ -187,7 +196,7 @@ def traverseTree(t):
 # Return an array in which the first element is the largest value in the row with depth 0, 
 # the second element is the largest value in the row with depth 1, the third element is the largest element in the row with depth 2, etc.
 
-def largestValuesInTreeRows(t):
+def largest_values_in_tree_rows(t):
     res = []; helper(res, t, 0)
     return res
     
@@ -203,15 +212,16 @@ def helper(res, root, d):
 
 # We're going to store numbers in a tree. Each node in this tree will store a single digit (from 0 to 9), and each path from root to leaf encodes a non-negative integer.
 
-def digitTreeSum(t):
-    return treePathsSum(t, 0)
+def digit_tree_sum(t):
+    return tree_paths_sum(t, 0)
 
 
-def treePathsSum(t, v):
+def tree_paths_sum(t, v):
     if t is None: return 0
     v = (v*10) + t.value
     if t.left is None and t.right is None: return v
-    return (treePathsSum(t.left, v) + treePathsSum(t.right, v))
+    return (tree_paths_sum(t.left, v) + tree_paths_sum(t.right, v))
+
 
 
 
@@ -227,7 +237,146 @@ def treePathsSum(t, v):
 
 
 
+########################################
+#  Cracking Coding Interview Qs
+########################################
 
+def number_swapper(a, b):
+    a = a+b; b = a-b; a = a-b
+    # or
+    a = a-b; b = a+b; a = b-a
 
+def word_frequencies(book, words): # O(bw) time; O(m) space
+    map, f = {}, 0
+    s = book.split(' ').lower() # remove all symbols (. , ' etc)
+    for w in words:
+        # str func to find all occurences of x in s = f
+        # or
+        w = w.lower()
+        for x in s:
+            if x == w:
+                f = f + 1
+        map[w] = f
 
+def word_frequencies(book, words): # O(b) + O(w) time; O(b) space
+    map = {}
+    for s in book.split(' ').lower(): # remove all symbols (. , ' etc)
+        if s in map: map[s] = map[s] + 1
+        else: map[s] = 0
+    for w in words:
+        print('{} : {}'.format(w, map[w]))
 
+def factorial_zeros(n):
+    def calc_fact(n):
+        if n is 1: return n * 1
+        return calc_fact(n * (n-1))
+    # TODO
+
+def smallest_difference(a1, a2):
+
+    def sort(a): # O(a log a)
+        # TODO
+        return a
+
+    a1 = sort(a1); a2 = sort(a2)
+    # figure out space complexity here
+    a, b, d = 0, 0, 0 # should be max int val
+    while (a < len(a1) and b < len(a2)):
+        if (d < abs(a1[a] - a2[b])):
+            d = abs(a1[a] - a2[b])
+            if (d is 0): return d
+        if (a1[a] < a2[b]): a = a + 1
+        else: b = b + 1
+
+def sub_sort(a): # Learn - maybe O(n)
+    if len(a) is 0: return -1
+    elif len(a) is 1: return (0, 0)
+
+    f, l = 0, len(a) - 1
+    ff, ll = None, None
+    min, max = None, None
+    while f < l:
+        if ff is None and a[f] <= a[f+1]: f = f + 1
+        else: 
+            if ff is None: min = ff = f = f + 1
+            else:
+                if min < a[f]: min = a[f]
+                f = f + 1
+
+        if ll is None and a[l-1] <= a[l]: l = l - 1
+        else: 
+            if ll is None: max = ll = l = l - 1
+            else:
+                if max > a[l]: max = a[l]
+                l = l - 1
+    
+    i = j = False
+    while not (i and j):
+        f = f - 1; l = l + 1
+        if min >= a[f]:
+            ff = f + 1 if (min > a[f]) else f
+            i = True
+        if max <= a[l]:
+            ll = l - 1 if (max < a[l]) else l
+            j = True
+            
+    return (ff, ll)
+
+def contiguous_sequence(a): 
+    sum, max_sum, s = 0, []
+    for i in a:
+        sum = sum + i
+        if sum < 0: 
+            sum = 0
+            s = []
+        else: s.append(i)
+        if max_sum < sum: max_sum = sum
+    return max_sum, s
+
+def pattern_matching(p, v):
+    if len(p) is 0: return len(v) is 0
+
+    d, i, j, i1, j1, ptn = {}, 0, 0, '', ''
+    while j < len(v):
+        j1 = v[j]
+        if i1 is '':
+            i1 = p[i]
+        # elif i1 == j1:
+        # if i1 in d:
+        #     if d[i1] is not ptn: return False
+        # else: 
+        #     d[i1] = ptn
+        #     i1 = j1
+        
+        # if i1 is not None:
+        else:
+            ptn += j1
+
+        j = j + 1
+    return True
+
+def sum_swap(a1, a2): # s1 - a + b = s2 - b + a
+    d = abs(sum(a1) - sum(a2)) # O(a1 + a2)
+    if d is not 0:
+        # O(a1 * a2)
+        for x in a1:
+            for y in a2:
+                d = abs(x-y)
+                if d is 0: return (x, y)
+        # O(a1 + a2)
+        dt = {}
+        for y in a2: dt[y] = y
+        for x in a1:
+            if (x-d) in dt: return (x, x-d)
+    return None
+
+def pairs_with_sum(a, s): # O(2n) t ; O(p+d) s
+    p, d = [], {}
+    for i in a:
+        if i not in d: d[i] = i
+    for i in a:
+        if (s-i) in d: p.append((i, s-i))
+    return p
+
+def lru_cache():
+    pass

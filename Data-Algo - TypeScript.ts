@@ -3,7 +3,6 @@
 // CODESIGNAL - PRACTICE TESTS (increasing difficulty)
 // 
 
-
 function isZigzag(numbers: number[]): number[] {
     let a: number[] = [], n = numbers
     
@@ -15,8 +14,6 @@ function isZigzag(numbers: number[]): number[] {
     
     return a
 }
-
-
 
 
 function countWaysToSplit(s: string): number {
@@ -38,15 +35,9 @@ function countWaysToSplit(s: string): number {
 }
 
 
-
-
-
-
-
 // 
 // CODESIGNAL - ARCADE TESTS (increasing difficulty)
 // 
-
 
 function checkPalindrome(inputString: string): boolean {
     let str = inputString.toLowerCase().replace(/[\W_]/g, "")
@@ -54,14 +45,12 @@ function checkPalindrome(inputString: string): boolean {
     return str == reverseStr
 }
 
-
 // Find century from year
 function centuryFromYear(year: number): number {
     let quotient = Math.floor(year/100), remainder = year % 100
     let century = (remainder > 0) ? ++quotient : quotient
     return century
 }
-
 
 // Find adjacent elements with highest product
 function adjacentElementsProduct(inputArray: number[]): number {
@@ -82,9 +71,7 @@ function adjacentElementsProduct(inputArray: number[]): number {
     return product
 }
 
-
 // Find Area of n-interesting polygon, for a given n
-
 function shapeArea(n: number): number {
     if (n == 0) return 0
     else if (n == 1) return 1
@@ -95,7 +82,6 @@ function shapeArea(n: number): number {
 }
 
 
-// 
 function almostIncreasingSequence(sequence: number[]): boolean {
     let bad = 0, s = sequence
     for (let i=1; i<s.length; i++){
@@ -109,7 +95,6 @@ function almostIncreasingSequence(sequence: number[]): boolean {
 }
 
 
-// 
 function matrixElementsSum(matrix: number[][]): number {
     return matrix.map((line,j) => line.map((el, i)=> (matrix.slice(0,j).every(l=>l[i]!==0))?el:0)).reduce((a,b)=>a+b.reduce((c,d)=>c+d),0);
         
@@ -125,7 +110,6 @@ function matrixElementsSum(matrix: number[][]): number {
     //     }), 0);
 }
 
-
 // Given an array of strings, return another array containing all its longest strings
 function allLongestStrings(inputArray: string[]): string[] {
     let s: string[] = [], l = 0
@@ -138,7 +122,6 @@ function allLongestStrings(inputArray: string[]): string[] {
     }
     return s
 }
-
 
 // Given two strings, find the number of common characters between them.
 function commonCharacterCount(s1: string, s2: string): number {
@@ -157,7 +140,6 @@ function commonCharacterCount(s1: string, s2: string): number {
 }
 
 
-// 
 function isLucky(n: number): boolean {
     let arr = (""+n).split('')
     if((arr.length%2) > 0) return false
@@ -174,7 +156,6 @@ function isLucky(n: number): boolean {
 }
 
 
-// 
 function sortByHeight(a: number[]): number[] {
     let trees: any = {}, heights: number[] = [], arr: number[] = [], x: any = null
     
@@ -191,7 +172,6 @@ function sortByHeight(a: number[]): number[] {
     
     return arr
 }
-
 
 // Write a function that reverses characters in (possibly nested) parentheses in the input string.
 function reverseInParentheses(inputString: string): string {
@@ -212,7 +192,6 @@ function reverseInParentheses(inputString: string): string {
 }
 
 
-// 
 function alternatingSums(a: number[]): number[] {
     let sum1 = 0, sum2 = 0
     // INDEX BEGINS FROM 0 .. SO DON'T MIX THE MODULOS %  (0/1) UP
@@ -223,7 +202,6 @@ function alternatingSums(a: number[]): number[] {
     
     return [sum1, sum2]
 }
-
 
 // Given a rectangular matrix of characters, add a border of asterisks (*) to it.
 function addBorder(picture: string[]): string[] {
@@ -239,7 +217,6 @@ function addBorder(picture: string[]): string[] {
     console.log(arr)
     return arr
 }
-
 
 // Given a rectangular matrix of characters, replace the border with asterisks (*) in it.
 function replaceBorder(picture: string[]): string[] {
@@ -259,7 +236,6 @@ function replaceBorder(picture: string[]): string[] {
     return arr
 }
 
-
 // Two arrays are called similar if one can be obtained from another by swapping at most one pair of elements in one of the arrays.
 function areSimilar(a: number[], b: number[]): boolean {
     let sim: boolean = true, av: any = null, bv: any = null, swap: boolean = false
@@ -277,7 +253,6 @@ function areSimilar(a: number[], b: number[]): boolean {
     return sim
 }
 
-
 // You are given an array of integers. On each move you are allowed to increase exactly one of its element by one. Find the minimal number of moves required to obtain a strictly increasing sequence from the input.
 function arrayChange(inputArray: number[]): number {
     let moves: number = 0, arr = inputArray, num = 0
@@ -293,7 +268,6 @@ function arrayChange(inputArray: number[]): number {
     console.log(moves + " -> " + arr)
     return moves
 }
-
 
 // Given a string, find out if its characters can be rearranged to form a palindrome.
 function palindromeRearranging(inputString: string): boolean {
@@ -330,15 +304,6 @@ function palindromeRearranging(inputString: string): boolean {
 }
 
 
-
-
-
-
-
-
-
-
-
 // 
 // CODESIGNAL - SAMPLE INTERVIEW QUESTIONS 
 // 
@@ -358,7 +323,6 @@ function firstDuplicate(a: number[]): number {
     return -1
 }
 
-
 // Given a string s consisting of small English letters, find and return the first instance of a non-repeating character in it. If there is no such character, return '_'.
 function firstNotRepeatingCharacter(s: string): string {
     let c = '' // THIS WORKS WITH ALL TESTS PERFECTLY !!
@@ -373,7 +337,6 @@ function firstNotRepeatingCharacter(s: string): string {
 }
 
 
-// 
 function containsDuplicates(a: number[]): boolean {
     let arr = a.sort((a,b) => a-b), x = null, vals = []
     console.log("SORTED ARRAY -> " + arr) // <- limit exceeded for some tests
@@ -395,7 +358,6 @@ function containsDuplicates(a: number[]): boolean {
 }
 
 
-// 
 function makeArrayConsecutive2(statues: number[]): number {
     let toAdd = 0, arr = statues.sort((a,b) => a-b), rem = 0, num: number = 0
     console.log("SORTED ARRAY -> " + arr)
@@ -413,7 +375,6 @@ function makeArrayConsecutive2(statues: number[]): number {
 }
 
 
-// 
 function sumOfTwo(a: number[], b: number[], v: number): boolean {
     let r: number = 0
 
@@ -443,7 +404,6 @@ function arrayMaxConsecutiveSum2(inputArray: number[]): number {
     return max
 }
 
-
 // Return all the possible sequences of jumps that you could take to climb the staircase, sorted
 function climbingStaircase(n: number, k: number): number[][] {
     if (!n && !k) return [[]]
@@ -464,7 +424,6 @@ function climbingStaircase(n: number, k: number): number[][] {
     seqs('', 0, '', 0)
     return res
 }
-
 
 // You are given an n x n 2D matrix that represents an image. Rotate the image by 90 degrees (clockwise).
 // Note: Try to solve this task in-place (with O(1) additional memory), since this is what you'll be asked to do during an interview.
@@ -496,7 +455,6 @@ function rotateImage(a: number[][]): number[][] {
 }
 
 
-// 
 function houseRobber(nums: number[]): number {
     
     if (nums == null || nums.length == 0 ) return 0
@@ -518,7 +476,6 @@ function houseRobber(nums: number[]): number {
     
     // return amt1 >= amt2 ? amt1 : amt2
 }
-
 
 // Given a sorted integer array that does not contain any duplicates, return a summary of the number ranges it contains.
 function composeRanges(nums: number[]): string[] {
@@ -562,7 +519,6 @@ function composeRanges(nums: number[]): string[] {
 }
 
 
-// 
 function isCryptSolution(crypt: string[], solution: string[][]): boolean {
 
     // METHOD 1
@@ -631,10 +587,7 @@ function removeKFromList(l: ListNode<number>, k: number): ListNode<number> {
     return arr[0]
 }
 
-
-
 // Given a singly linked list of integers, determine whether or not it's a palindrome.
-
 function isListPalindrome(l: ListNode<number>): boolean {
     if (l == null || l.next == null) return true
     let arr = []
@@ -651,13 +604,10 @@ function isListPalindrome(l: ListNode<number>): boolean {
 }
 
 
-
-
 ///////////////////////////////////////
 // SUDOKU PROBLEM
 
 // SIMPLE SOLUTION
-
 function sudoku1(grid: string[][]): boolean {
     
     // SIMPLE SOLUTION
@@ -687,10 +637,7 @@ function sudoku1(grid: string[][]): boolean {
 
 }
 
-
-
 // WAY LONGER SOLUTION ..
-
 function sudoku2(grid: string[][]): boolean {
     return (
         validateRows(grid) &&
@@ -698,7 +645,6 @@ function sudoku2(grid: string[][]): boolean {
         validateSubGrid(grid)
     )
 }
-
 
 // Rotate Grid by 90deg (allows validation of columns as rows)
 function rotateGrid(grid: string[][]): string[][] {
@@ -708,7 +654,6 @@ function rotateGrid(grid: string[][]): string[][] {
         return newArr.reverse()
     })
 }
-
 
 // Validate each row
 function validateRows(grid: string[][]): boolean {
@@ -723,7 +668,6 @@ function validateRows(grid: string[][]): boolean {
     }
     return valid
 }
-
 
 // Convert each 3x3 grid into a row of 9 (allows validation of subGrids as rows)
 function validateSubGrid(grid: string[][]): boolean {
@@ -743,9 +687,6 @@ function validateSubGrid(grid: string[][]): boolean {
     
     return validateRows(subGrids)
 }
-
-
-
 
 
 ////////////////////// 
@@ -800,28 +741,13 @@ function isValid (oldPoints, newPoint): boolean {
 }
 
 
-/////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 //  OTHER ALGO'S
 ////////////////////////////////////////////////////////////////////////////////
 
 
-
 // Z (ZETA) ALGO
-
 function zeta(ptrn: string): [number] {
     let pttn = ptrn // Array(ptrn)
     let pttnLen :number = pttn.length
@@ -851,9 +777,7 @@ function zeta(ptrn: string): [number] {
     return zeta
 }
 
-
 // FIZZ-BUZZ ALGO
-
 function fizzBuzz(numTurns :number) {
     let res = ""
     for(let i=1; i<=numTurns; i++) {
@@ -864,9 +788,7 @@ function fizzBuzz(numTurns :number) {
     }
 }
 
-
 // RABIN-KARP STRING SEARCH ALGO
-
 function rkSearch(t :string, p :string) :number {
     // convert to array of numbers
     let pArr =  p // p.flatMap(p as number) // <- FIND .ts METHOD
@@ -899,4 +821,5 @@ function rkSearch(t :string, p :string) :number {
 
     return -1
 }
+
 

@@ -1,7 +1,6 @@
 
 
 // RABIN-KARP STRING SEARCH ALGO
-
 public func search(t: String, p: String) -> Int {
     // convert to array of ints
     let pArr = p.flatMap { $0.asInt }
