@@ -273,12 +273,8 @@ def factorial_zeros(n):
     # TODO
 
 def smallest_difference(a1, a2):
-
-    def sort(a): # O(a log a)
-        # TODO
-        return a
-
-    a1 = sort(a1); a2 = sort(a2)
+    
+    a1.sort(); a2.sort() # O(a log a)
     # figure out space complexity here
     a, b, d = 0, 0, 0 # should be max int val
     while (a < len(a1) and b < len(a2)):
@@ -370,12 +366,35 @@ def sum_swap(a1, a2): # s1 - a + b = s2 - b + a
             if (x-d) in dt: return (x, x-d)
     return None
 
-def pairs_with_sum(a, s): # O(2n) t ; O(p+d) s
+def pairs_with_sum(a, s): 
+    # O(2n) t ; O(p+d) s
     p, d = [], {}
     for i in a:
         if i not in d: d[i] = i
     for i in a:
         if (s-i) in d: p.append((i, s-i))
+
+    # two-pointer technique (sorted arr)
+    # O(nlogn + n) t ; O(1) s
+
+    a.sort()
+    i, j = 0, len(a) - 1
+ 
+    while(i < j):
+       
+        # If we find a pair
+        if (a[i] + a[j] == s): p.append((a[i], a[j]))
+ 
+        # If sum of elements at current
+        # pointers is less, we move towards
+        # higher values by doing i += 1
+        elif(a[i] + a[j] < s): i += 1
+ 
+        # If sum of elements at current
+        # pointers is more, we move towards
+        # lower values by doing j -= 1 sort
+        else: j -= 1
+    
     return p
 
 def lru_cache():
