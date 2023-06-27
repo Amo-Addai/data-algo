@@ -1,3 +1,55 @@
+'use strict';
+
+/*
+
+LEARN
+
+Js/Ts/Sw
+..
+
+*/
+
+
+////////////////////////////////////////
+//  SEARCHING ALGO'S
+////////////////////////////////////////
+
+function linearSearch(a, x) { // O(n)
+    for (i of a) if (i === x) return i
+    return null
+}
+
+function binarySearch(a, x) { // O(log n)
+    if (a.length === 0) return null
+
+    function rBinarySearch(a, x) {
+        if (a.length === 0) return null
+        m = a.length / 2
+        if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x)
+        else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
+        else return m
+    }
+
+    function rBinarySearch(a, x, f, l) {
+        if (a.length === 0 || f > l) return null
+        m = (f + l) / 2
+        if (x < a[m]) return rBinarySearch(a, x, f, m - 1)
+        else if (x > a[m]) return rBinarySearch(a, x, m + 1, l)
+        else return m
+    }
+
+    f = 0, l = a.length - 1 
+    rBinarySearch(a, 3); rBinarySearch(a, 3, f, l)
+
+    while (f < l) {
+        m = (f + l) / 2 // or f + (l - f) / 2 (NB: pemdas / bodmas)
+        if (x < a[m]) l = m - 1
+        else if (x > a[m]) f = m + 1
+        else return m
+    }
+    return null
+}
+
 
 ////////////////////////////////////////
 //  SORTING ALGO'S
@@ -7,12 +59,11 @@
 
 
 ////////////////////////////////////////
-//  SEARCHING ALGO'S
+//  OTHER ALGO'S
 ////////////////////////////////////////
 
 
-// Rabin-Karp String Search Algo
-function search(t, p) {    
+function rabinKarp(t, p) {    
     // convert to array of ints
 
     return -1
@@ -20,21 +71,16 @@ function search(t, p) {
 
 
 ////////////////////////////////////////
-//  OTHER ALGO'S
-////////////////////////////////////////
-
-//
-
-
-////////////////////////////////////////
 //  Cracking Coding Interview Qs
 ////////////////////////////////////////
+
+// ARRAYS, STRINGS, MATRICES
 
 function sortStringArray(arr) {
     // O(n * s log s) + O(n log n) t ; O(1) s
     arr.map((s, i) => s.sort())
     arr.sort() // or
-    arr.sort((a, b) => a < b) // check ascii comparisons of string chars
+    arr.sort((a, b) => a - b) // -ve (a<b) for ascending, ASCII character order
 }
 
 function isUnique(s) {
@@ -106,6 +152,14 @@ function palindromePermutation(s) {
     return odd <= 1 // s cannot be a palindrome if odd > 1
 }
 
+function oneAway(a, b) {
+    let d = i = j = 0
+    while (d !== 2) {
+        
+    }
+    return d === 2
+}
+
 function stringCompression(s) {
     if (s.length <= 1) return s
     // s = s.toLowerCase() // only if s's chars are not Case-Sensitive
@@ -127,4 +181,116 @@ function stringCompression(s) {
         cs += x + m[x] // NB: String Concatenation can operate in O(n^2) t; confirm
     }
     return cs.length < s.length ? cs : s
+}
+
+// TODO: Understand this problem.
+function rotateMatrix(mat) {
+    // O(n^2)
+    if (mat.length == 0 || mat.length != mat[0].length) return false
+    let n = mat.length, first = last = offset = top = i = null
+    for (let layer = 0; layer < n/2; layer++) {
+        first = layer; last = n - layer - 1
+        for (i = first; i < last; i++) {
+            offset = i - first
+            // NB PATTERN: t: first -> i -> last -> last-offset
+            top = mat[first][i] // save top
+            mat[first][i] = mat[last - offset][first] // left -> top
+            mat[last - offset][first] = mat[last][last - offset] // bottom -> left
+            mat[last][last - offset] = mat[i][last] // right -> bottom
+            mat[i][last] = top // top -> right
+        }
+    }
+    return mat
+}
+
+function zeroMatrix(mat) {
+
+}
+
+function stringRotation(a, b) {
+    let isSubStr = (a, b) => a in b
+    // O(n) t, if isSubStr = O(a+b) t
+    if (a.length == b.length && a.length > 0) {
+        let s = "" + a + a
+        return isSubStr(s, b)
+    }
+    return false
+}
+
+// LINKED LISTS
+
+function removeDuplicates(l) { // doubly-linked
+
+    let node = l?.root, d = [], runner = prev = next = null
+
+    // 1-Pass Traversal; O(n) t; O(n) s
+
+    while (node?.next || node?.prev) {
+        if (!(node?.data in d)) {
+            d.push(node.data)
+        } else {
+            node?.prev?.next = node?.next
+            node?.next?.prev = node?.prev
+            // or, use vars: prev & next (more O(space))
+            prev?.next = node?.next
+            next?.prev = node?.prev
+            prev = node?.prev
+            next = node?.next?.next
+            // TODO: find out how this affects vars: prev & next (where the issue is ..), & their props
+            // next = prev?.next = node?.next
+            // prev = next?.prev = node?.prev
+        }
+        node = node?.next
+    }
+
+    // Runner Traversal (2-point); O(n^2) t; O(1) s
+
+    while (node?.next || node?.prev) {
+        runner = node?.next
+        while (runner?.next || runner?.prev) {
+            if (runner?.data === node?.data) {
+                runner?.prev?.next = runner?.next
+                runner?.next?.prev = runner?.prev
+                // or, use vars: prev & next (more O(space))
+                prev?.next = runner?.next
+                next?.prev = runner?.prev
+                prev = runner?.prev
+                next = runner?.next?.next
+                // TODO: find out how this affects vars: prev & next (where the issue is ..), & their props
+                // prev?.next = runner?.next
+                // next = runner?.next?.next // ans
+                // prev = next?.prev = runner?.prev
+            }
+            runner = runner?.next
+        }
+        node = node?.next
+    }
+
+    // Runner Traversal (2-point); O(n^2) t; O(n) s (without prev & next vars)
+
+    while (node?.next) {
+        runner = node
+        while (runner?.next) { // iterating proactively
+            if (runner?.next?.data === node?.data) {
+                if (!(runner?.next?.data in d)) {
+                    d.push(runner.next.data) // hash duplicates instead
+                } else // do
+                runner?.next = runner?.next?.next
+                runner?.next?.next?.prev = runner
+            }
+            runner = runner?.next?.next
+            // might make t O(n^2/2), due to double jumps on each iteration
+        }
+        node = node?.next
+        // TODO: if runner = node by reference, multiple jumps also occur here
+    }
+
+    // Not Needed; Js objects are assigned by reference
+    // l?.root = node
+
+    return l
+}
+
+function kthToLast(l, k) {
+    
 }

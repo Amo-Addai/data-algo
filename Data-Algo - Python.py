@@ -6,6 +6,61 @@ for - iter, enumerate, k/v, ..
 
 '''
 
+########################################
+##  SEARCHING ALGO'S
+########################################
+
+def linear_search(a, x):
+    for i in a:
+        if x is i: return x
+    return None
+
+def binary_search(a, x):
+    if len(a) is 0: return None
+
+    def r_binary_search(a, x):
+        if len(a) is 0: return None
+        m = len(a) / 2
+        if x < a[m]: return r_binary_search(a[:m-1], x)
+        elif x > a[m]: return r_binary_search(a[m+1:], x)
+        else: return m
+
+    def r_binary_search(a, x, f, l):
+        if len(a) is 0 or f > l: return None
+        m = (f + l) / 2
+        if x < a[m]: return r_binary_search(a, x, f, m - 1)
+        elif x > a[m]: return r_binary_search(a, x, m + 1, l)
+        else: return m
+
+    f, l = 0, len(a) - 1
+    # f & l init vals don't need to be reset during recursion/iteration
+    r_binary_search(a, 7); r_binary_search(a, 7, f, l)
+
+    while f < l:
+        m = (f + l) / 2 # or f + (l - f) / 2 (NB: pemdas / bodmas)
+        if x < a[m]: l = m - 1
+        elif x > a[m]: f = m + 1
+        else: return m
+    return None
+
+########################################
+##  SORTING ALGO'S
+########################################
+
+#
+
+
+
+########################################
+##  OTHER ALGO'S
+########################################
+
+
+########################################
+#  CODESIGNAL ALGO'S
+########################################
+
+
 
 # Given 2 sorted arrays, find the number of elements in common.
 # Both arrays have the same length, and all distinct elements
@@ -224,13 +279,6 @@ def tree_paths_sum(t, v):
 
 
 
-
-
-
-
-########################################
-#  OTHER ALGO'S
-########################################
 
 
 

@@ -1,7 +1,71 @@
+'use strict';
 
-// 
+/*
+
+LEARN
+
+Js/Ts/Sw
+..
+
+*/
+
+
+////////////////////////////////////////
+//  SEARCHING ALGO'S
+////////////////////////////////////////
+
+function linearSearch(a: any[], x: any): number | undefined {
+    for (let i of a) if (i in a) return i as number
+    return undefined
+}
+
+function binarySearch(a: any[], x: any): number | undefined {
+    if (a.length === 0 )return undefined
+    
+    var rBinarySearch = (a: any[], x: any): number | undefined => {
+        if (a.length === 0) return undefined
+        let m: number = a.length / 2
+        if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x)
+        else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
+        else return m
+    }
+    
+    var rBinarySearch = (a: any[], x: any, f: number, l: number): number | undefined => {
+        if (a.length === 0) return undefined
+        let m: number = (f + l) / 2
+        if (x < a[m]) return rBinarySearch(a, x, f, m - 1)
+        else if (x > a[m]) return rBinarySearch(a, x, m + 1, l)
+        else return m
+    }
+
+    let f: number = 0, l: number = a.length - 1, m: number
+    rBinarySearch(a, 3); rBinarySearch(a, 3, f, l)
+
+    while (f < l) {
+        m = (f + l) / 2
+        if (x < a[m]) l = m - 1
+        else if (x > a[m]) f = m + 1
+        else return m
+    }
+    return undefined
+}
+
+
+////////////////////////////////////////
+//  SORTING ALGO'S
+////////////////////////////////////////
+
+//
+
+
+////////////////////////////////////////
+//  OTHER ALGO'S
+////////////////////////////////////////
+
+
+////////////////////////////////////////
 // CODESIGNAL - PRACTICE TESTS (increasing difficulty)
-// 
+////////////////////////////////////////
 
 function isZigzag(numbers: number[]): number[] {
     let a: number[] = [], n = numbers
@@ -574,7 +638,7 @@ function isCryptSolution(crypt: string[], solution: string[][]): boolean {
 
 function removeKFromList(l: ListNode<number>, k: number): ListNode<number> {
     if (l == null) return l
-    let arr = [], x: ListNode<number> = l
+    let arr: any[] = [], x: ListNode<number> = l
     while (true) {
         if (x.value !== k) arr.push(x)
         if (!!x.next) x = x.next

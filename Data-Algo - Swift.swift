@@ -1,7 +1,40 @@
+/*
+
+LEARN
+
+Closures, ..
+..
+
+*/
 
 
-// RABIN-KARP STRING SEARCH ALGO
-public func search(t: String, p: String) -> Int {
+////////////////////////////////////////
+//  SEARCHING ALGO'S
+////////////////////////////////////////
+
+func linearSearch(a: Any[], x: Any) -> Any? {
+    for i in 0..a.count if x == a[i] return x
+    else return nil
+}
+
+func binarySearch(a: Any[], x: Any) -> Any? {
+    //
+    return nil
+}
+
+
+////////////////////////////////////////
+//  SORTING ALGO'S
+////////////////////////////////////////
+
+//
+
+
+////////////////////////////////////////
+//  OTHER ALGO'S
+////////////////////////////////////////
+
+func rabinKarp(t: String, p: String) -> Int {
     // convert to array of ints
     let pArr = p.flatMap { $0.asInt }
     let tArr = t.flatMap { $0.asInt }
@@ -33,3 +66,4 @@ public func search(t: String, p: String) -> Int {
 
     return -1
 }
+
