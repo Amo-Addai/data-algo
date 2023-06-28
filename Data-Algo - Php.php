@@ -26,21 +26,21 @@ function binarySearch($a, $x) {
     function rBinarySearch($a, $x) {
         if (empty($a)) return null;
         $m = count($a) / 2;
-        if ($x < $a[$m]) return rBinarySearch($a, $x); // slice a
-        elseif ($x > $a[$m]) return rBinarySearch($a, $x); // slice a
+        if ($x < $a[$m]) return rBinarySearch(array_slice($a, 0, $m - 1), $x);
+        elseif ($x > $a[$m]) return rBinarySearch(array_slice($a, $m + 1), $x);
         else return $m;
     }
 
-    function rBinarySearch($a, $x, $f, $l) {
+    function rBinarySearch2p($a, $x, $f, $l) {
         if (empty($a)) return null;
         $m = ($f + $l) / 2;
-        if ($x < $a[$m]) return rBinarySearch($a, $x, $f, $m - 1);
-        elseif ($x > $a[$m]) return rBinarySearch($a, $x, $m + 1, $l);
+        if ($x < $a[$m]) return rBinarySearch2p($a, $x, $f, $m - 1);
+        elseif ($x > $a[$m]) return rBinarySearch2p($a, $x, $m + 1, $l);
         else return $m;
     }
 
     $f = 0; $l = count($a) - 1;
-    rBinarySearch($a, 7); rBinarySearch($a, 7, $f, $l);
+    rBinarySearch($a, 7); rBinarySearch2p($a, 7, $f, $l);
 
     while ($f < $l) {
         $m = ($f + $l) / 2;
