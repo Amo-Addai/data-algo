@@ -30,16 +30,16 @@ function binarySearch(a: any[], x: any): number | null {
         else return m
     }
     
-    var rBinarySearch = (a: any[], x: any, f: number, l: number): number | null => {
+    var rBinarySearch2p = (a: any[], x: any, f: number, l: number): number | null => {
         if (a.length === 0) return null
         let m: number = (f + l) / 2
-        if (x < a[m]) return rBinarySearch(a, x, f, m - 1)
-        else if (x > a[m]) return rBinarySearch(a, x, m + 1, l)
+        if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1)
+        else if (x > a[m]) return rBinarySearch2p(a, x, m + 1, l)
         else return m
     }
 
     let f: number = 0, l: number = a.length - 1, m: number
-    rBinarySearch(a, 3); rBinarySearch(a, 3, f, l)
+    rBinarySearch(a, 3); rBinarySearch2p(a, 3, f, l)
 
     while (f < l) {
         m = (f + l) / 2
@@ -610,7 +610,7 @@ function isCryptSolution(crypt: string[], solution: string[][]): boolean {
 
     let decrypted = crypt.map(word => {
         let num: string = word.split('').map(letter => {
-            return solution.find(key => key[0] === letter)[1]
+            return solution.find(key => key[0] === letter)//[1]
         }).join('')
 
         if (num.startsWith('0') && num.length > 1) hasLeadingZeros = true
@@ -631,12 +631,24 @@ function isCryptSolution(crypt: string[], solution: string[][]): boolean {
 //
 //   constructor(value: T) {
 //     this.value = value;
-//     this.next = null;
+//     this.next = null;ß
 //   }
 // }
 //
 
-function removeKFromList(l: ListNode<number>, k: number): ListNode<number> {
+class ListNode<T> {
+
+    private root: ListNode<T>;
+    value: T;
+    next: ListNode<T>;
+
+    constructor(node: ListNode<T>, value: T) {
+        this.root = node; this.value = value
+    }
+
+}
+
+function removeKFromList(l: ListNode<number>, k: number): ListNode<number> | null {
     if (l == null) return l
     let arr: any[] = [], x: ListNode<number> = l
     while (true) {
@@ -654,7 +666,7 @@ function removeKFromList(l: ListNode<number>, k: number): ListNode<number> {
 // Given a singly linked list of integers, determine whether or not it's a palindrome.
 function isListPalindrome(l: ListNode<number>): boolean {
     if (l == null || l.next == null) return true
-    let arr = []
+    let arr: number[] = []
     while (true) {
         arr.push(l.value)
         if (!!l.next) l = l.next
@@ -811,17 +823,17 @@ function isValid(oldPoints, newPoint): boolean {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-// Z (ZETA) ALGO
-function zeta(ptrn: string): [number] {
+// TODO Z (Zeta) Algo - Confirm
+function zeta(ptrn: string): [number] | null {
     let pttn = ptrn // Array(ptrn)
     let pttnLen: number = pttn.length
     if (pttnLen <= 0) return null
 
     let zeta: [number] = [0]
-    let l: number, r: number, k1: number,
+    let l: number, r: number= 0, k1: number,
         betalen: number, txtIdx: number, pttnIdx: number = 0
 
-    for (let k in Array(pttnLen)) {
+    for (let k of Array(pttnLen)) {
         if (k > r) { // Outside a Z-Box (compare the chars, until mismatch)
             pttnIdx = 0
 
@@ -854,6 +866,9 @@ function fizzBuzz(numTurns: number) {
 
 // RABIN-KARP STRING SEARCH ALGO
 function rkSearch(t: string, p: string): number {
+    
+    let hash = str => str // TODO
+
     // convert to array of numbers
     let pArr = p // p.flatMap(p as number) // <- FIND .ts METHOD
     let tArr = t // t.flatMap(t as number)
@@ -867,18 +882,18 @@ function rkSearch(t: string, p: string): number {
 
     if (pHash == firstHash) {
         // verify this was not a hash collision
-        if (firstChars == pArr) return 0
+        if (firstChars == Array(pArr)) return 0
     }
 
     let prevHash = firstHash
     // Now slide the window across the test to be searched
-    for (let i in Array(tArr.length)) {
+    for (let i of Array(tArr.length)) {
         endIndex = Number(i + (pArr.length - 1))
         let window = Array(tArr)
         let windowHash = null // nextHash() <- FIND .ts METHOD
         // 
 
-        if (window == pHash) if (pArr == window) return i
+        if (window == pHash) if (Array(pArr) == window) return i
 
         prevHash = windowHash
     }
