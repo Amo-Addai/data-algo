@@ -7,11 +7,45 @@ Closures, ..
 
 */
 
+
 ////////////////////////////////////////
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-//
+int linearSearch(int[] a, int x) {
+    for (int i = 0; i < a.length; i++) if (x == a[i]) return i; 
+}
+
+int binarySearch(int[] a, int x) {
+    if (a.length == 0) return null;
+
+    int rBinarySearch = (int[] a, int x) -> int {
+        if (a.length == 0) return null;
+        int m = a.length / 2;
+        if (x < a[m]) return rBinarySearch(a, x); // slice a
+        else if (x > a[m]) return rBinarySearch(a, x); // slice a
+        else return m;
+    }
+
+    int rBinarySearch2p = (int[] a, int x, int f, int l) -> int {
+        if (a.length == 0) return null;
+        int m = (f + l) / 2;
+        if (x < a[m]) return rBinarySearch(a, x, f, m - 1);
+        else if (x > a[m]) return rBinarySearch(a, x, m + 1, l);
+        else return m;
+    }
+
+    int f = 0, l = a.length - 1, m;
+    rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l);
+
+    while (f < l) {
+        m = (f + l) / 2;
+        if (x < a[m]) l = m - 1;
+        else if (x > a[m]) f = m + 1;
+        else return m;
+    }
+    return null;
+}
 
 
 ////////////////////////////////////////
@@ -31,7 +65,7 @@ Closures, ..
 // CODESIGNAL - ARCADE TESTS (increasing difficulty)
 ////////////////////////////////////////
 
-
+// 
 
 
 ////////////////////////////////////////

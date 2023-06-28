@@ -23,7 +23,7 @@ int linearSearch(int[] a, int x) {
 int binarySearch(int[] a, int x) {
     if (sizeof(a) == 0) return;
 
-    int rBinarySearch(int[] a, int x) {
+    int (^ rBinarySearch)(int, int) = ^(int[] a, int x) {
         if (sizeof(a) == 0) return;
         int m = sizeof(a) / 2;
         if (x < a[m]) return rBinarySearch(a, x); // slice a
@@ -31,7 +31,7 @@ int binarySearch(int[] a, int x) {
         else return m;
     }
 
-    int rBinarySearch(int[] a, int x, int f, int l) {
+    int (^ rBinarySearch)(int, int, int, int) = ^(int[] a, int x, int f, int l) {
         if (sizeof(a) == 0) return;
         int m = (f + l) / 2;
         if (x < a[m]) return rBinarySearch(a, x, f, m - 1);

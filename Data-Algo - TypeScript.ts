@@ -14,24 +14,24 @@ Js/Ts/Sw
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-function linearSearch(a: any[], x: any): number | undefined {
+function linearSearch(a: any[], x: any): number | null {
     for (let i of a) if (i in a) return i as number
-    return undefined
+    return null
 }
 
-function binarySearch(a: any[], x: any): number | undefined {
-    if (a.length === 0 )return undefined
+function binarySearch(a: any[], x: any): number | null {
+    if (a.length === 0 )return null
     
-    var rBinarySearch = (a: any[], x: any): number | undefined => {
-        if (a.length === 0) return undefined
+    var rBinarySearch = (a: any[], x: any): number | null => {
+        if (a.length === 0) return null
         let m: number = a.length / 2
         if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x)
         else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
         else return m
     }
     
-    var rBinarySearch = (a: any[], x: any, f: number, l: number): number | undefined => {
-        if (a.length === 0) return undefined
+    var rBinarySearch = (a: any[], x: any, f: number, l: number): number | null => {
+        if (a.length === 0) return null
         let m: number = (f + l) / 2
         if (x < a[m]) return rBinarySearch(a, x, f, m - 1)
         else if (x > a[m]) return rBinarySearch(a, x, m + 1, l)
@@ -47,7 +47,7 @@ function binarySearch(a: any[], x: any): number | undefined {
         else if (x > a[m]) f = m + 1
         else return m
     }
-    return undefined
+    return null
 }
 
 
