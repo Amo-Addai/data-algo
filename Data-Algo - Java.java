@@ -17,13 +17,14 @@ int linearSearch(int[] a, int x) {
 }
 
 int binarySearch(int[] a, int x) {
+    a = Array.sort(a);
     if (a.length == 0) return null;
 
     int rBinarySearch = (int[] a, int x) -> int {
         if (a.length == 0) return null;
         int m = a.length / 2;
-        if (x < a[m]) return rBinarySearch(a, x); // slice a
-        else if (x > a[m]) return rBinarySearch(a, x); // slice a
+        if (x < a[m]) return rBinarySearch(Arrays.slice(a, 0, m - 1), x); // slice a
+        else if (x > a[m]) return rBinarySearch(Arrays.slice(a, m + 1, a.length - 1), x); // slice a
         else return m;
     }
 

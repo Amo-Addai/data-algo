@@ -14,14 +14,15 @@ Js/Ts/Sw
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-function linearSearch(a: any[], x: any): number | null {
+function linearSearchT(a: any[], x: any): number | null {
     for (let i of a) if (i in a) return i as number
     return null
 }
 
-function binarySearch(a: any[], x: any): number | null {
-    if (a.length === 0 )return null
-    
+function T(a: any[], x: any): number | null {
+    // a.sort()
+    if (a.length === 0) return null
+
     var rBinarySearch = (a: any[], x: any): number | null => {
         if (a.length === 0) return null
         let m: number = a.length / 2
@@ -29,7 +30,7 @@ function binarySearch(a: any[], x: any): number | null {
         else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
         else return m
     }
-    
+
     var rBinarySearch2p = (a: any[], x: any, f: number, l: number): number | null => {
         if (a.length === 0) return null
         let m: number = (f + l) / 2
@@ -621,32 +622,50 @@ function isCryptSolution(crypt: string[], solution: string[][]): boolean {
 }
 
 
+////////////////////////////////////////
 // LINKED-LIST ALGO'S
-// 
+////////////////////////////////////////
 
-// Singly-linked lists are already defined with this interface:
-// class ListNode<T> {
-//   value: T;
-//   next: ListNode<T>;
-//
-//   constructor(value: T) {
-//     this.value = value;
-//     this.next = null;ß
-//   }
-// }
-//
+// Doubly-linked list class
 
 class ListNode<T> {
 
-    private root: ListNode<T>;
     value: T;
-    next: ListNode<T>;
+    next: ListNode<T> | null;
+    prev: ListNode<T> | null;
 
-    constructor(node: ListNode<T>, value: T) {
-        this.root = node; this.value = value
+    constructor(value: T, next: ListNode<T> | null = null, prev: ListNode<T> | null = null) {
+        this.value = value; this.next = next; this.prev = prev
+    }
+
+    beNextOf(left: ListNode<T>) {
+        left.next = this;
+        return left;
+    }
+
+    bePrevOf(right: ListNode<T>) {
+        right.prev = this;
+        return right;
+    }
+
+    // Create a ListNode from an array
+    static fromArray<T>(arr: T[]) {
+        const nodes = arr.map(i => new ListNode(i));
+
+        return nodes.reduceRight((acc, cur) => {
+            return acc.beNextOf(cur);
+        });
+    }
+
+    // Exec cb forEach ListNode
+    forEach(cb: (i: T, idx: number) => void, idx = 0) {
+        cb(this.value, idx);
+        // recursive exec this.forEach when this.next is not null 
+        this.next && this.next.forEach(cb, idx + 1);
     }
 
 }
+
 
 function removeKFromList(l: ListNode<number>, k: number): ListNode<number> | null {
     if (l == null) return l
@@ -830,7 +849,7 @@ function zeta(ptrn: string): [number] | null {
     if (pttnLen <= 0) return null
 
     let zeta: [number] = [0]
-    let l: number, r: number= 0, k1: number,
+    let l: number, r: number = 0, k1: number,
         betalen: number, txtIdx: number, pttnIdx: number = 0
 
     for (let k of Array(pttnLen)) {
@@ -866,7 +885,7 @@ function fizzBuzz(numTurns: number) {
 
 // RABIN-KARP STRING SEARCH ALGO
 function rkSearch(t: string, p: string): number {
-    
+
     let hash = str => str // TODO
 
     // convert to array of numbers

@@ -24,6 +24,7 @@ func LinearSearch(a []int, x int ) int {
 }
 
 func BinarySearch(a []int, x int) int {
+    // a.sort()
 	if len(a) == 0 return nil
 
 	RBinarySearch := { (a []int, x int) int // TODO: confirm syntax

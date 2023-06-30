@@ -20,6 +20,7 @@ function linearSearch(a, x) { // O(n)
 }
 
 function binarySearch(a, x) { // O(log n)
+    // a.sort()
     if (a.length === 0) return null
 
     function rBinarySearch(a, x) {

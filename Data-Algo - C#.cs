@@ -20,6 +20,7 @@ Int LinearSearch(Int[] a, Int x) {
 }
 
 Int BinarySearch(Int[] a, Int x) {
+    // a = Array.sort(a);
     // a.BinarySearch(x); // C# in-built Array Method
     if (a.Length == 0) return null;
 

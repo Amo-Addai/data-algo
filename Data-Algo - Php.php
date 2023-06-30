@@ -21,6 +21,7 @@ function linearSearch($a, $x) {
 }
 
 function binarySearch($a, $x) {
+    // sort($a);
     if (empty($a) || count($a) == 0) return null; // only 1 check required
 
     function rBinarySearch($a, $x) {

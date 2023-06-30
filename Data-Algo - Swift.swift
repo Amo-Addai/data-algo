@@ -12,14 +12,15 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-func linearSearch(a: [Any], x: Any) -> Any? {
-    for i in 0..a.count if x == a[i] return x else return nil
+func linearSearch(a: [Any], x: Any) -> Int? {
+    for i in 0..a.count where x == a[i] return i else return nil
 }
 
-func binarySearch(a: [Any], x: Any) -> Any? {
+func binarySearch(a: [Any], x: Any) -> Int? {
+    // a.sort()
     guard a.count > 0 else return nil
 
-    let rBinarySearch = { (a: [Any], x: Any) -> Any? in
+    let rBinarySearch = { (a: [Any], x: Any) -> Int? in
         guard a.count > 0 else return nil
         var m = a.count / 2
         if x < a[m] return rBinarySearch(a[0..<m], x)
@@ -27,9 +28,9 @@ func binarySearch(a: [Any], x: Any) -> Any? {
         else return m
     }
     
-    let rBinarySearch2p = { (a: [Any], x: Any) -> Any? in
+    let rBinarySearch2p = { (a: [Any], x: Any, f: Int, l: Int) -> Int? in
         guard a.count > 0 else return nil
-        var m = a.count / 2
+        var m = (f + l) / 2
         if x < a[m] return rBinarySearch(a, x, f, m - 1)
         else if x > a[m] return rBinarySearch(a, x, m + 1, l)
         else return m

@@ -1,7 +1,7 @@
 '''
 LEARN
 
-for - iter, enumerate, k/v, ..
+for - iter, k/v, ..
 ..
 
 '''
@@ -16,6 +16,7 @@ def linear_search(a, x):
     return None
 
 def binary_search(a, x):
+    # a.sort()
     if len(a) is 0: return None
 
     def r_binary_search(a, x):
@@ -33,7 +34,6 @@ def binary_search(a, x):
         else: return m
 
     f, l = 0, len(a) - 1
-    # f & l init vals don't need to be reset during recursion/iteration
     r_binary_search(a, 7); r_binary_search(a, 7, f, l)
 
     while f < l:
@@ -43,11 +43,73 @@ def binary_search(a, x):
         else: return m
     return None
 
+
 ########################################
 ##  SORTING ALGO'S
 ########################################
 
-#
+def swap(a, b): # O(1) t; by ref
+    t, a, b = a, b, t
+    return a, b
+
+def compare(a, b): # O(1) t; generic
+    return a < b
+
+def insertion(a): # O(n^2) ; O(1) s
+    for i in range(1, len(a)):
+        j = i
+        while j > 0 and (a[j-1] > a[j]):
+            swap(a[j-1], a[j])
+            j = j - 1
+        # or
+        for j in range(i, 0): # <- loop
+            if a[j-1] > a[j]: swap(a[j-1], a[j])
+            else: break # 1-lvl?
+    return a
+        
+
+def selection(a): # O(n^2) t ; O(1) s
+    pass
+
+def shell(a): # O(n^2)
+    pass
+
+# bad
+
+def bubble(a): # O(n^2) ; O(1) s
+    for i in range(1, len(a)):
+        for j in range(0, len(a) - 1):
+            if a[j] > a[j+1]: swap(a[j], a[j+1])
+
+def slow(a): # O(n^2)
+    pass
+
+# special
+
+def counting(a): # O(n^2)
+    pass
+
+def radix(a): # O(kn)
+    pass
+
+def topological(a): # O(n^2)
+    pass
+
+# hybrid
+
+def intro(a): # O(n^2)
+    pass
+
+# fast
+
+def heap(a): # O(nlogn)
+    pass
+
+def merge(a): # O(nlogn) ; O(n) s
+    pass
+
+def quick(a): # O(nlogn) ; O(logn) s
+    pass
 
 
 
@@ -279,20 +341,15 @@ def tree_paths_sum(t, v):
 
 
 
-
-
-
-
-
-
 ########################################
 #  Cracking Coding Interview Qs
 ########################################
 
-def number_swapper(a, b):
-    a = a+b; b = a-b; a = a-b
+
+def number_swapper(a, b): # in-place
+    a = a+b; b = a-b; a = a-b # simple
     # or
-    a = a-b; b = a+b; a = b-a
+    a = a-b; b = a+b; a = b-a # complex
 
 def word_frequencies(book, words): # O(bw) time; O(m) space
     map, f = {}, 0
