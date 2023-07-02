@@ -45,77 +45,160 @@ def binary_search(a, x):
 
 
 ########################################
-##  SORTING ALGO'S
+##  SORTING ALGO'S (ascending)
 ########################################
 
+def check(a):
+    return len(a) in [0, 1]
+    
 def swap(a, b): # O(1) t; by ref
     t, a, b = a, b, t
+    # (a, b) = (b, a) # faster, but () by value
     return a, b
 
 def compare(a, b): # O(1) t; generic
     return a < b
 
+# regular
+
 def insertion(a): # O(n^2) ; O(1) s
+    if check(a): return a
     for i in range(1, len(a)):
         j = i
-        while j > 0 and (a[j-1] > a[j]):
+        while j > 0 and (a[j] < a[j-1]):
             swap(a[j-1], a[j])
             j = j - 1
         # or
         for j in range(i, 0): # <- loop
-            if a[j-1] > a[j]: swap(a[j-1], a[j])
+            if a[j] < a[j-1]: swap(a[j-1], a[j])
             else: break # 1-lvl?
     return a
-        
 
 def selection(a): # O(n^2) t ; O(1) s
-    pass
+    if check(a): return a
+    for i, x in enumerate(a):
+        l = i
+        for j in range(i + 1, len(a)):
+            if a[j] < x: l = j
+        if x is not a[l]: swap(a[i], a[l]) # x is a[i]
+    return a
 
 def shell(a): # O(n^2)
-    pass
+    if check(a): return a
+    # 
+    return a
+    
 
 # bad
 
 def bubble(a): # O(n^2) ; O(1) s
+    if check(a): return a
+    sorting = True
+    while sorting: # fastest loop
+        for i in range(0, len(a) - 1):
+            if a[i] > a[i+1]: 
+                swap(a[i], a[i+1])
+                sorting = False
+    # or
     for i in range(1, len(a)):
+        sorted = True
         for j in range(0, len(a) - 1):
-            if a[j] > a[j+1]: swap(a[j], a[j+1])
+            if a[j] > a[j+1]: 
+                swap(a[j], a[j+1])
+                sorted = False
+        if sorted: break
+    # or
+    for i in range(0, len(a)): # or len(a) - 1/i - both optimizations
+        sorted = True
+        for j in range(1, len(a)):
+            if a[j] < a[j-1]:
+                swap(a[j-1], a[j])
+                sorted = False
+        if sorted: break
+    return a
 
 def slow(a): # O(n^2)
-    pass
+    if check(a): return a
+    
+    def slow(a, f, l):
+        if not f < l: return
+        m = (f + l) / 2
+        slow(a, f, m); slow(a, m + 1, l)
+        if a[f] < a[m]: swap(a[f], a[m])
+        slow(a, f, l - 1)
+
+    f, l = 0, 999999
+    slow(a, f, l)
+
+    return a
+    
 
 # special
 
 def counting(a): # O(n^2)
-    pass
+    if check(a): return a
+    # 
+    return a
+    
 
 def radix(a): # O(kn)
-    pass
+    if check(a): return a
+    # 
+    return a
+    
 
 def topological(a): # O(n^2)
-    pass
+    if check(a): return a
+    # 
+    return a
+    
 
 # hybrid
 
 def intro(a): # O(n^2)
-    pass
+    if check(a): return a
+    # 
+    return a
+    
 
 # fast
 
 def heap(a): # O(nlogn)
-    pass
+    if check(a): return a
+    # 
+    return a
+    
 
 def merge(a): # O(nlogn) ; O(n) s
-    pass
+    if check(a): return a
+
+    def merge(a, b):
+        if len(a) is 1 and len(b) is 1:
+            a, b = a[0], b[0]
+            return [a, b] if a < b else [b, a]
+        else: return merge(a) + merge(b)
+    
+    m = len(a) / 2
+    l = merge(a[0, m]); r = merge(a[m, len(a)])
+    return merge(l, r)
 
 def quick(a): # O(nlogn) ; O(logn) s
-    pass
+    if check(a): return a
+    p = a[len(a) / 2]
+    l = e = g = []
+    for i in a:
+        if i < p: l.append(i)
+        elif i > p: g.append(i)
+        else: e.append(i)
+    # l = [(i if i < p else _) for i in a] # confirm _
+    return quick(l) + e + quick(g)
 
 
 
 ########################################
 ##  OTHER ALGO'S
 ########################################
+
 
 
 ########################################
@@ -381,7 +464,7 @@ def smallest_difference(a1, a2):
     
     a1.sort(); a2.sort() # O(a log a)
     # figure out space complexity here
-    a, b, d = 0, 0, 0 # should be max int val
+    a, b, d = 0, 0, 999999 # should be max int val
     while (a < len(a1) and b < len(a2)):
         if (d < abs(a1[a] - a2[b])):
             d = abs(a1[a] - a2[b])

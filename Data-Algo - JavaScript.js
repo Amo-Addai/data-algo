@@ -56,12 +56,108 @@ function binarySearch(a, x) { // O(log n)
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-//
+function check(a) {
+    return [0, 1].includes(a.length)
+}
+
+function swap(a, b) {
+    let t = a; a = b; b = t
+    // (a, b) = (b, a) // faster, but () by value
+    return (a, b)
+}
+
+function compare(a, b) {
+    return a < b
+}
+
+// regular
+
+function insertion(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+function selection(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+function shell(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+// bad
+
+function bubble(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+function slow(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+// special
+
+function counting(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+function radix(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+function topological(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+// hybrid
+
+function intro(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+// fast
+
+function heap(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+function merge(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
+function quick(a) {
+    if (check(a)) return a
+    // 
+    return a
+}
+
 
 
 ////////////////////////////////////////
 //  OTHER ALGO'S
 ////////////////////////////////////////
+
 
 
 function rabinKarp(t, p) {    
