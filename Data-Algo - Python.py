@@ -28,7 +28,7 @@ def binary_search(a, x):
 
     def r_binary_search(a, x, f, l):
         if len(a) is 0 or f > l: return None
-        m = (f + l) / 2
+        m = (f + l) / 2 # better: f + (l - f) / 2 (NB: pemdas / bodmas)
         if x < a[m]: return r_binary_search(a, x, f, m - 1)
         elif x > a[m]: return r_binary_search(a, x, m + 1, l)
         else: return m
@@ -37,7 +37,7 @@ def binary_search(a, x):
     r_binary_search(a, 7); r_binary_search(a, 7, f, l)
 
     while f < l:
-        m = (f + l) / 2 # or f + (l - f) / 2 (NB: pemdas / bodmas)
+        m = (f + l) / 2 # better: f + (l - f) / 2 (NB: pemdas / bodmas)
         if x < a[m]: l = m - 1
         elif x > a[m]: f = m + 1
         else: return m
@@ -48,20 +48,20 @@ def binary_search(a, x):
 ##  SORTING ALGO'S (ascending)
 ########################################
 
-def check(a):
+def check(a): # O(1) t ;
     return len(a) in [0, 1]
     
-def swap(a, b): # O(1) t; by ref
+def swap(a, b): # O(1) t ; by ref
     t, a, b = a, b, t
     # (a, b) = (b, a) # faster, but () by value
     return a, b
 
-def compare(a, b): # O(1) t; generic
+def compare(a, b): # O(1) t ; generic
     return a < b
 
 # regular
 
-def insertion(a): # O(n^2) ; O(1) s
+def insertion(a): # O(n^2) t ; O(1) s
     if check(a): return a
     for i in range(1, len(a)):
         j = i
@@ -69,7 +69,7 @@ def insertion(a): # O(n^2) ; O(1) s
             swap(a[j-1], a[j])
             j = j - 1
         # or
-        for j in range(i, 0): # <- loop
+        for j in range(i, 0, -1):
             if a[j] < a[j-1]: swap(a[j-1], a[j])
             else: break # 1-lvl?
     return a
@@ -83,15 +83,17 @@ def selection(a): # O(n^2) t ; O(1) s
         if x is not a[l]: swap(a[i], a[l]) # x is a[i]
     return a
 
-def shell(a): # O(n^2)
+def shell(a): # O(n^2) t ; 
     if check(a): return a
-    # 
+    m = len(a) / 2
+    while m > 0:
+        for i in range(0, m): insertion(a[i : m]) # ensure call by ref
+        m = m / 2        
     return a
-    
 
 # bad
 
-def bubble(a): # O(n^2) ; O(1) s
+def bubble(a): # O(n^2) t ; O(1) s
     if check(a): return a
     sorting = True
     while sorting: # fastest loop
@@ -117,62 +119,78 @@ def bubble(a): # O(n^2) ; O(1) s
         if sorted: break
     return a
 
-def slow(a): # O(n^2)
+def slow(a): # O(n^2) t ; 
     if check(a): return a
     
     def slow(a, f, l):
         if not f < l: return
         m = (f + l) / 2
         slow(a, f, m); slow(a, m + 1, l)
-        if a[f] < a[m]: swap(a[f], a[m])
+        if a[l] < a[m]: swap(a[l], a[m])
         slow(a, f, l - 1)
 
     f, l = 0, 999999
     slow(a, f, l)
 
     return a
-    
 
 # special
 
-def counting(a): # O(n^2)
+def counting(a): # O(3n) best case t ; O(2n) s
     if check(a): return a
-    # 
+    
+    c, s = {}, []
+    for i in a: 
+        c[i] = c[i] + 1 if i in c else 0
+    for i in range(1, len(c)): c[i] = c[i] + c[i-1]
+    for i in range(len(a) - 1, -1, -1):
+        it = a[i]
+        c[it] = c[it] - 1 # reduce count
+        s[c[it]] = it # sort it
+
+    return s
+    
+
+def radix(a): # O(kn) t ; 
+    if check(a): return a
+    # TODO
     return a
     
 
-def radix(a): # O(kn)
+def topological(a): # O(n^2) t ; 
     if check(a): return a
-    # 
+    # TODO
     return a
-    
-
-def topological(a): # O(n^2)
-    if check(a): return a
-    # 
-    return a
-    
 
 # hybrid
 
-def intro(a): # O(n^2)
+def intro(a): # O(n^2) t ; 
     if check(a): return a
-    # 
-    return a
     
+    def intro(a, max):
+        if len(a) < 20: insertion(a)
+        elif max == 0: heap(a)
+        else:
+            m = len(a) / 2
+            intro(a[:m], max - 1)
+            intro(a[m+1 : len(a)], max - 1)
+
+    max = 0 # log(len(a)) * 2
+    intro(a, max)
+
+    return a
 
 # fast
 
-def heap(a): # O(nlogn)
+def heap(a): # O(nlogn) t ; 
     if check(a): return a
-    # 
+    # TODO
     return a
-    
 
-def merge(a): # O(nlogn) ; O(n) s
+def merge(a): # O(nlogn) t ; O(n) s
     if check(a): return a
 
-    def merge(a, b):
+    def merge(a, b): # TODO
         if len(a) is 1 and len(b) is 1:
             a, b = a[0], b[0]
             return [a, b] if a < b else [b, a]
@@ -182,7 +200,7 @@ def merge(a): # O(nlogn) ; O(n) s
     l = merge(a[0, m]); r = merge(a[m, len(a)])
     return merge(l, r)
 
-def quick(a): # O(nlogn) ; O(logn) s
+def quick(a): # O(nlogn) t ; O(logn) s
     if check(a): return a
     p = a[len(a) / 2]
     l = e = g = []
@@ -200,11 +218,9 @@ def quick(a): # O(nlogn) ; O(logn) s
 ########################################
 
 
-
 ########################################
 #  CODESIGNAL ALGO'S
 ########################################
-
 
 
 # Given 2 sorted arrays, find the number of elements in common.
@@ -428,6 +444,7 @@ def tree_paths_sum(t, v):
 #  Cracking Coding Interview Qs
 ########################################
 
+# Arrays & Strings
 
 def number_swapper(a, b): # in-place
     a = a+b; b = a-b; a = a-b # simple

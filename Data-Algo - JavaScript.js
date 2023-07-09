@@ -33,7 +33,7 @@ function binarySearch(a, x) { // O(log n)
 
     function rBinarySearch(a, x, f, l) {
         if (a.length === 0 || f > l) return null
-        m = (f + l) / 2
+        m = (f + l) / 2 // better: f + (l - f) / 2
         if (x < a[m]) return rBinarySearch(a, x, f, m - 1)
         else if (x > a[m]) return rBinarySearch(a, x, m + 1, l)
         else return m
@@ -43,7 +43,7 @@ function binarySearch(a, x) { // O(log n)
     rBinarySearch(a, 3); rBinarySearch(a, 3, f, l)
 
     while (f < l) {
-        m = (f + l) / 2 // or f + (l - f) / 2 (NB: pemdas / bodmas)
+        m = (f + l) / 2 // better: f + (l - f) / 2
         if (x < a[m]) l = m - 1
         else if (x > a[m]) f = m + 1
         else return m
@@ -171,7 +171,7 @@ function rabinKarp(t, p) {
 //  Cracking Coding Interview Qs
 ////////////////////////////////////////
 
-// ARRAYS, STRINGS, MATRICES
+// Arrays & Strings
 
 function sortStringArray(arr) {
     // O(n * s log s) + O(n log n) t ; O(1) s
@@ -280,6 +280,8 @@ function stringCompression(s) {
     return cs.length < s.length ? cs : s
 }
 
+// Matrices
+
 // TODO: Understand this problem.
 function rotateMatrix(mat) {
     // O(n^2)
@@ -314,7 +316,7 @@ function stringRotation(a, b) {
     return false
 }
 
-// LINKED LISTS
+// Linked Lists
 
 function removeDuplicates(l) { // doubly-linked
 
@@ -379,7 +381,7 @@ function removeDuplicates(l) { // doubly-linked
             // might make t O(n^2/2), due to double jumps on each iteration
         }
         node = node?.next
-        // TODO: if runner = node by reference, multiple jumps also occur here
+        // TODO: if runner = node by reference, multiple jumps can also occur here
     }
 
     // Not Needed; Js objects are assigned by reference
