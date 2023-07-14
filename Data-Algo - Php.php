@@ -15,7 +15,10 @@ Closures, ..
 ////////////////////////////////////////
 
 class SearchingAlgorithms {
-        
+    
+    function __construct() {}
+    function __destruct() {}
+
     function linearSearch($a, $x) {
         foreach ($a as $i) if ($x === $i) return $i; // item
         foreach ($a as $i => $v) if ($x === $v) return $i; // index
@@ -61,6 +64,8 @@ class SearchingAlgorithms {
 ////////////////////////////////////////
 
 class SortingAlgorithms {
+
+    function __construct() {}
     
 }
 
@@ -84,6 +89,5 @@ class SortingAlgorithms {
 function main($args) {
     echo "Hello, World!";
 }
-
 
 ?>

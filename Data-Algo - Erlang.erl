@@ -21,27 +21,29 @@ fun linearSearch({A, X}) when length(A) =/= 0 ->
 fun binarySearch({A, X}) when length(A) =/= 0 ->
     % A = lists:sort(A);
 
-    fun rBinarySearch({A, X}) when length(A) =/= 0 ->
+    RBinarySearch = fun({A, X}) when length(A) =/= 0 ->
         M = length(A) div 2;
-        if (X < M) -> rBinarySearch({A, X}). % slice A
-            (X > M) -> rBinarySearch({A, X}). % slice A
+        if (X < M) -> RBinarySearch({A, X}). % slice A
+            (X > M) -> RBinarySearch({A, X}). % slice A
             true -> M.
         end.
-        .
+    end
 
-    fun rBinarySearch({A, X, F, L}) when length(A) =/= 0 ->
+    RBinarySearch2p = fun({A, X, F, L}) when length(A) =/= 0 ->
         M = (F + L) div 2;
-        if (X < M) -> rBinarySearch({A, X, F, M - 1}).
-            (X > M) -> rBinarySearch({A, X, M + 1, L}).
+        if (X < M) -> RBinarySearch2p({A, X, F, M - 1});
+            (X > M) -> RBinarySearch2p({A, X, M + 1, L});
             true -> M.
         end.
-        .
+    end
 
 
-    F = 0, L = length(A) - 1;
-    rBinarySearch({A, X}), rBinarySearch({A, X, F, L});
+    F = 0, 
+    L = length(A) - 1,
+    RBinarySearch({A, X});
+    RBinarySearch({A, X, F, L});
     
-    lists:map(fun rBinarySearch/4, [A]);
+    lists:map(fun RBinarySearch/4, [A]);
     .
 
 
@@ -66,3 +68,5 @@ fun binarySearch({A, X}) when length(A) =/= 0 ->
 %%  TEST CASES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+fun main(A) ->
+    A.

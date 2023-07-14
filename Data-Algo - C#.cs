@@ -31,7 +31,7 @@ class SearchingAlgorithms
         // a.BinarySearch(x); // C# in-built Array Method
         if (a.Length == 0) return null;
 
-        var RBinarySearch = (Int[] a, Int x) => { // TODO: Closures (confirm => or ->)
+        var RBinarySearch = (Int[] a, Int x) => {
             if (a.Length == 0) return null;
             var m = a.Length / 2;
             if (x < a[m]) return RBinarySearch(a, x); // slice a

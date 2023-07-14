@@ -1,4 +1,4 @@
-// package main
+// package main / lib
 
 import (
 	"fmt"
@@ -19,15 +19,19 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-func LinearSearch(a []int, x int ) int {
+type SearchingAlgorithms struct {
+	i int
+}
+
+func (x SearchingAlgorithms) LinearSearch(a []int, x int) int {
 	for i in a if x == i return i else return nil
 }
 
-func BinarySearch(a []int, x int) int {
-    // a.sort()
+func (x SearchingAlgorithms) BinarySearch(a []int, x int) int {
+    // a = sort.Sort(a)
 	if len(a) == 0 return nil
 
-	RBinarySearch := { (a []int, x int) int // TODO: confirm syntax
+	RBinarySearch := func (a []int, x int) int {
 		if len(a) == 0 return nil
 		m := len(a) / 2
 		if x < a[m] return RBinarySearch(a[:m-1], x)
@@ -35,7 +39,7 @@ func BinarySearch(a []int, x int) int {
 		else return m
 	}
 
-	RBinarySearch2p := { (a []int, x int, f int, l int) int
+	RBinarySearch2p := func (a []int, x int, f int, l int) int { 
 		if len(a) == 0 return nil
 		m := len(a) / 2
 		if x < a[m] return RBinarySearch(a, x, f, m - 1)
@@ -60,8 +64,11 @@ func BinarySearch(a []int, x int) int {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-//
+type SortingAlgorithms struct {
+	i int
+}
 
+func (x SortingAlgorithms) Func() {}
 
 
 ////////////////////////////////////////
@@ -77,6 +84,6 @@ func BinarySearch(a []int, x int) int {
 //  TEST CASES
 ////////////////////////////////////////
 
-func main([]string args) {
+func main(args []string) {
     fmt.println("Hello, World!")
 }

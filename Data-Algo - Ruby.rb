@@ -13,7 +13,11 @@ Closures, ..
 ########################################
 
 class SearchingAlgorithms
-        
+
+    def initialize()
+        @i = 0
+    end
+
     def linear_search(a, x)
         for i in x
             if x == i return i # item
@@ -59,7 +63,11 @@ end
 ########################################
 
 class SortingAlgorithms
-    
+
+    def initialize()
+        @i = 0
+    end
+
 end
 
 

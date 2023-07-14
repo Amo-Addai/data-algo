@@ -19,6 +19,7 @@ MemMan, ..
 class SearchingAlgorithms {
 
     private:
+
         int i;
 
     public: 
@@ -44,7 +45,7 @@ class SearchingAlgorithms {
                 else return m;
             }
 
-            int rBinarySearch(int a[], int x, int f, int l) {
+            int rBinarySearch2p(int a[], int x, int f, int l) {
                 if (sizeof(a) == 0) return;
                 int m = sizeof(a) / 2;
                 if (x < a[m]) return rBinarySearch(a, x, f, m - 1);
