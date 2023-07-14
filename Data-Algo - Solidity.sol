@@ -64,7 +64,11 @@ contract SearchingAlgorithms {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-//
+contract SortingAlgorithms {
+
+    constructor() {}
+
+}
 
 
 ////////////////////////////////////////
@@ -72,3 +76,16 @@ contract SearchingAlgorithms {
 ////////////////////////////////////////
 
 //
+
+
+
+
+
+////////////////////////////////////////
+//  TEST CASES
+////////////////////////////////////////
+
+function main(string[] calldata args) pure returns (uint) {
+    // console.log('')
+    return 0;
+}

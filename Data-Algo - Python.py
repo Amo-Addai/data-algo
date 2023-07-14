@@ -10,206 +10,216 @@ for - iter, k/v, ..
 ##  SEARCHING ALGO'S
 ########################################
 
-def linear_search(a, x):
-    for i in a:
-        if x is i: return x
-    return None
+class SearchingAlgorithms:
 
-def binary_search(a, x):
-    # a.sort()
-    if len(a) is 0: return None
+    def __init__(self):
+        pass
+    
+    def linear_search(self, a, x):
+        for i in a:
+            if x is i: return x
+        return None
 
-    def r_binary_search(a, x):
+    def binary_search(self, a, x):
+        # a.sort()
         if len(a) is 0: return None
-        m = len(a) / 2
-        if x < a[m]: return r_binary_search(a[:m-1], x)
-        elif x > a[m]: return r_binary_search(a[m+1:], x)
-        else: return m
 
-    def r_binary_search(a, x, f, l):
-        if len(a) is 0 or f > l: return None
-        m = (f + l) / 2 # better: f + (l - f) / 2 (NB: pemdas / bodmas)
-        if x < a[m]: return r_binary_search(a, x, f, m - 1)
-        elif x > a[m]: return r_binary_search(a, x, m + 1, l)
-        else: return m
+        def r_binary_search(a, x):
+            if len(a) is 0: return None
+            m = len(a) / 2
+            if x < a[m]: return r_binary_search(a[:m-1], x)
+            elif x > a[m]: return r_binary_search(a[m+1:], x)
+            else: return m
 
-    f, l = 0, len(a) - 1
-    r_binary_search(a, 7); r_binary_search(a, 7, f, l)
+        def r_binary_search(a, x, f, l):
+            if len(a) is 0 or f > l: return None
+            m = (f + l) / 2 # better: f + (l - f) / 2 (NB: pemdas / bodmas)
+            if x < a[m]: return r_binary_search(a, x, f, m - 1)
+            elif x > a[m]: return r_binary_search(a, x, m + 1, l)
+            else: return m
 
-    while f < l:
-        m = (f + l) / 2 # better: f + (l - f) / 2 (NB: pemdas / bodmas)
-        if x < a[m]: l = m - 1
-        elif x > a[m]: f = m + 1
-        else: return m
-    return None
+        f, l = 0, len(a) - 1
+        r_binary_search(a, 7); r_binary_search(a, 7, f, l)
+
+        while f < l:
+            m = (f + l) / 2 # better: f + (l - f) / 2 (NB: pemdas / bodmas)
+            if x < a[m]: l = m - 1
+            elif x > a[m]: f = m + 1
+            else: return m
+        return None
 
 
 ########################################
 ##  SORTING ALGO'S (ascending)
 ########################################
 
-def check(a): # O(1) t ;
-    return len(a) in [0, 1]
-    
-def swap(a, b): # O(1) t ; by ref
-    t, a, b = a, b, t
-    # (a, b) = (b, a) # faster, but () by value
-    return a, b
+class SortingAlgorithms:
 
-def compare(a, b): # O(1) t ; generic
-    return a < b
+    def __init__(self):
+        pass
 
-# regular
+    def check(self, a): # O(1) t ;
+        return len(a) in [0, 1]
+        
+    def swap(self, a, b): # O(1) t ; by ref
+        t, a, b = a, b, t
+        # (a, b) = (b, a) # faster, but () by value
+        return a, b
 
-def insertion(a): # O(n^2) t ; O(1) s
-    if check(a): return a
-    for i in range(1, len(a)):
-        j = i
-        while j > 0 and (a[j] < a[j-1]):
-            swap(a[j-1], a[j])
-            j = j - 1
+    def compare(self, a, b): # O(1) t ; generic
+        return a < b
+
+    # regular
+
+    def insertion(self, a): # O(n^2) t ; O(1) s
+        if self.check(a): return a
+        for i in range(1, len(a)):
+            j = i
+            while j > 0 and (a[j] < a[j-1]):
+                self.swap(a[j-1], a[j])
+                j = j - 1
+            # or
+            for j in range(i, 0, -1):
+                if a[j] < a[j-1]: self.swap(a[j-1], a[j])
+                else: break # 1-lvl?
+        return a
+
+    def selection(self, a): # O(n^2) t ; O(1) s
+        if self.check(a): return a
+        for i, x in enumerate(a):
+            l = i
+            for j in range(i + 1, len(a)):
+                if a[j] < x: l = j
+            if x is not a[l]: self.swap(a[i], a[l]) # x is a[i]
+        return a
+
+    def shell(self, a): # O(n^2) t ; 
+        if self.check(a): return a
+        m = len(a) / 2
+        while m > 0:
+            for i in range(0, m): self.insertion(a[i : m]) # ensure call by ref
+            m = m / 2        
+        return a
+
+    # bad
+
+    def bubble(self, a): # O(n^2) t ; O(1) s
+        if self.check(a): return a
+        sorting = True
+        while sorting: # fastest loop
+            for i in range(0, len(a) - 1):
+                if a[i] > a[i+1]: 
+                    self.swap(a[i], a[i+1])
+                    sorting = False
         # or
-        for j in range(i, 0, -1):
-            if a[j] < a[j-1]: swap(a[j-1], a[j])
-            else: break # 1-lvl?
-    return a
+        for i in range(1, len(a)):
+            sorted = True
+            for j in range(0, len(a) - 1):
+                if a[j] > a[j+1]: 
+                    self.swap(a[j], a[j+1])
+                    sorted = False
+            if sorted: break
+        # or
+        for i in range(0, len(a)): # or len(a) - 1/i - both optimizations
+            sorted = True
+            for j in range(1, len(a)):
+                if a[j] < a[j-1]:
+                    self.swap(a[j-1], a[j])
+                    sorted = False
+            if sorted: break
+        return a
 
-def selection(a): # O(n^2) t ; O(1) s
-    if check(a): return a
-    for i, x in enumerate(a):
-        l = i
-        for j in range(i + 1, len(a)):
-            if a[j] < x: l = j
-        if x is not a[l]: swap(a[i], a[l]) # x is a[i]
-    return a
+    def slow(self, a): # O(n^2) t ; 
+        if self.check(a): return a
+        
+        def slow(a, f, l):
+            if not f < l: return
+            m = (f + l) / 2
+            slow(a, f, m); slow(a, m + 1, l)
+            if a[l] < a[m]: self.swap(a[l], a[m])
+            slow(a, f, l - 1)
 
-def shell(a): # O(n^2) t ; 
-    if check(a): return a
-    m = len(a) / 2
-    while m > 0:
-        for i in range(0, m): insertion(a[i : m]) # ensure call by ref
-        m = m / 2        
-    return a
+        f, l = 0, 999999
+        slow(a, f, l)
 
-# bad
+        return a
 
-def bubble(a): # O(n^2) t ; O(1) s
-    if check(a): return a
-    sorting = True
-    while sorting: # fastest loop
-        for i in range(0, len(a) - 1):
-            if a[i] > a[i+1]: 
-                swap(a[i], a[i+1])
-                sorting = False
-    # or
-    for i in range(1, len(a)):
-        sorted = True
-        for j in range(0, len(a) - 1):
-            if a[j] > a[j+1]: 
-                swap(a[j], a[j+1])
-                sorted = False
-        if sorted: break
-    # or
-    for i in range(0, len(a)): # or len(a) - 1/i - both optimizations
-        sorted = True
-        for j in range(1, len(a)):
-            if a[j] < a[j-1]:
-                swap(a[j-1], a[j])
-                sorted = False
-        if sorted: break
-    return a
+    # special
 
-def slow(a): # O(n^2) t ; 
-    if check(a): return a
-    
-    def slow(a, f, l):
-        if not f < l: return
-        m = (f + l) / 2
-        slow(a, f, m); slow(a, m + 1, l)
-        if a[l] < a[m]: swap(a[l], a[m])
-        slow(a, f, l - 1)
+    def counting(self, a): # O(3n) best case t ; O(2n) s
+        if self.check(a): return a
+        
+        c, s = {}, []
+        for i in a: 
+            c[i] = c[i] + 1 if i in c else 0
+        for i in range(1, len(c)): c[i] = c[i] + c[i-1]
+        for i in range(len(a) - 1, -1, -1):
+            it = a[i]
+            c[it] = c[it] - 1 # reduce count
+            s[c[it]] = it # sort it
 
-    f, l = 0, 999999
-    slow(a, f, l)
+        return s
+        
 
-    return a
+    def radix(self, a): # O(kn) t ; 
+        if self.check(a): return a
+        # TODO
+        return a
+        
 
-# special
+    def topological(self, a): # O(n^2) t ; 
+        if self.check(a): return a
+        # TODO
+        return a
 
-def counting(a): # O(3n) best case t ; O(2n) s
-    if check(a): return a
-    
-    c, s = {}, []
-    for i in a: 
-        c[i] = c[i] + 1 if i in c else 0
-    for i in range(1, len(c)): c[i] = c[i] + c[i-1]
-    for i in range(len(a) - 1, -1, -1):
-        it = a[i]
-        c[it] = c[it] - 1 # reduce count
-        s[c[it]] = it # sort it
+    # hybrid
 
-    return s
-    
+    def intro(self, a): # O(n^2) t ; 
+        if self.check(a): return a
+        
+        def intro(a, max):
+            if len(a) < 20: self.insertion(a)
+            elif max == 0: self.heap(a)
+            else:
+                m = len(a) / 2
+                intro(a[:m], max - 1)
+                intro(a[m+1 : len(a)], max - 1)
 
-def radix(a): # O(kn) t ; 
-    if check(a): return a
-    # TODO
-    return a
-    
+        max = 0 # log(len(a)) * 2
+        intro(a, max)
 
-def topological(a): # O(n^2) t ; 
-    if check(a): return a
-    # TODO
-    return a
+        return a
 
-# hybrid
+    # fast
 
-def intro(a): # O(n^2) t ; 
-    if check(a): return a
-    
-    def intro(a, max):
-        if len(a) < 20: insertion(a)
-        elif max == 0: heap(a)
-        else:
-            m = len(a) / 2
-            intro(a[:m], max - 1)
-            intro(a[m+1 : len(a)], max - 1)
+    def heap(self, a): # O(nlogn) t ; 
+        if self.check(a): return a
+        # TODO
+        return a
 
-    max = 0 # log(len(a)) * 2
-    intro(a, max)
+    def merge(self, a): # O(nlogn) t ; O(n) s
+        if self.check(a): return a
 
-    return a
+        def merge(a, b): # TODO
+            if len(a) is 1 and len(b) is 1:
+                a, b = a[0], b[0]
+                return [a, b] if a < b else [b, a]
+            else: return self.merge(a) + self.merge(b)
+        
+        m = len(a) / 2
+        l = self.merge(a[0, m]); r = self.merge(a[m, len(a)])
+        return merge(l, r)
 
-# fast
-
-def heap(a): # O(nlogn) t ; 
-    if check(a): return a
-    # TODO
-    return a
-
-def merge(a): # O(nlogn) t ; O(n) s
-    if check(a): return a
-
-    def merge(a, b): # TODO
-        if len(a) is 1 and len(b) is 1:
-            a, b = a[0], b[0]
-            return [a, b] if a < b else [b, a]
-        else: return merge(a) + merge(b)
-    
-    m = len(a) / 2
-    l = merge(a[0, m]); r = merge(a[m, len(a)])
-    return merge(l, r)
-
-def quick(a): # O(nlogn) t ; O(logn) s
-    if check(a): return a
-    p = a[len(a) / 2]
-    l = e = g = []
-    for i in a:
-        if i < p: l.append(i)
-        elif i > p: g.append(i)
-        else: e.append(i)
-    # l = [(i if i < p else _) for i in a] # confirm _
-    return quick(l) + e + quick(g)
+    def quick(self, a): # O(nlogn) t ; O(logn) s
+        if self.check(a): return a
+        p = a[len(a) / 2]
+        l = e = g = []
+        for i in a:
+            if i < p: l.append(i)
+            elif i > p: g.append(i)
+            else: e.append(i)
+        # l = [(i if i < p else _) for i in a] # confirm _
+        return self.quick(l) + e + self.quick(g)
 
 
 
@@ -608,9 +618,10 @@ def lru_cache():
 
 
 
+
 ########################################
 ##  TEST CASES
 ########################################
 
 if __name__ == "__main__":
-    pass
+    print("Hello, World!")

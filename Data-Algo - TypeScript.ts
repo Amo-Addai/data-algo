@@ -14,7 +14,7 @@ Js/Ts/Sw
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingAlgorithms {
+class SearchingAlgorithmsT {
 
     constructor() {}
 
@@ -57,11 +57,12 @@ class SearchingAlgorithms {
 
 }
 
+
 ////////////////////////////////////////
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingAlgorithms {
+class SortingAlgorithmsT {
 
     constructor() {}
 
@@ -71,6 +72,8 @@ class SortingAlgorithms {
 ////////////////////////////////////////
 //  OTHER ALGO'S
 ////////////////////////////////////////
+
+
 
 
 ////////////////////////////////////////
@@ -932,10 +935,11 @@ function rkSearch(t: string, p: string): number {
 
 
 
+
 ////////////////////////////////////////
 //  TEST CASES
 ////////////////////////////////////////
 
 function mainT() {
-    // document.write(...)
+    console.log("Hello, World!")
 }

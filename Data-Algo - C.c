@@ -80,6 +80,6 @@ int binarySearch(int a[], int x) {
 //  TEST CASES
 ////////////////////////////////////////
 
-void main() {
-    
+void main(int argc, char* argv[]) {
+    printf("Hello, World!");
 }

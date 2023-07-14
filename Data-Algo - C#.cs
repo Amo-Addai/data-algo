@@ -86,7 +86,7 @@ class SortingAlgorithms
 //  TEST CASES
 ////////////////////////////////////////
 
-void main() 
+void Main(String[] args) 
 {
-    
+    Console.WriteLine("Hello, World!");
 }

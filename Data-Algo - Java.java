@@ -15,7 +15,8 @@ Closures, ..
 ////////////////////////////////////////
 
 class SearchingAlgorithms {
-    public void SearchingAlgorithms() {}
+
+    public SearchingAlgorithms SearchingAlgorithms() {}
 
     public int linearSearch(int[] a, int x) {
         for (int i = 0; i < a.length; i++) if (x == a[i]) return i; 
@@ -60,7 +61,8 @@ class SearchingAlgorithms {
 ////////////////////////////////////////
 
 class SortingAlgorithms {
-    void SortingAlgorithms() {}
+
+    public SortingAlgorithms SortingAlgorithms() {}
 
 }
 
@@ -142,6 +144,6 @@ int mapDecoding(String message) {
 //  TEST CASES
 ////////////////////////////////////////
 
-void main() {
-    
+void main(String[] args) {
+    System.out.println("Hello, World!");
 }

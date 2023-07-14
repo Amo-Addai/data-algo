@@ -63,7 +63,13 @@ MemMan, ..
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-//
+@interface SortingAlgorithms : NSObject
+
+@end
+
+@implementation SortingAlgorithms
+
+@end
 
 
 
@@ -81,5 +87,5 @@ MemMan, ..
 ////////////////////////////////////////
 
 void main(int argc, const char* argv[]) {
-    
+    printf(""); NSLog(@"Hello, World!")
 }

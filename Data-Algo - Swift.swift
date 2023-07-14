@@ -12,40 +12,45 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-func linearSearch(a: [Any], x: Any) -> Int? {
-    for i in 0..a.count where x == a[i] return i else return nil
-}
+class SearchingAlgorithms {
 
-func binarySearch(a: [Any], x: Any) -> Int? {
-    // a.sort()
-    guard a.count > 0 else return nil
+    init() {}
 
-    let rBinarySearch = { (a: [Any], x: Any) -> Int? in
+    func linearSearch(a: [Any], x: Any) -> Int? {
+        for i in 0..a.count where x == a[i] return i else return nil
+    }
+
+    func binarySearch(a: [Any], x: Any) -> Int? {
+        // a.sort()
         guard a.count > 0 else return nil
-        var m = a.count / 2
-        if x < a[m] return rBinarySearch(a[0..<m], x)
-        else if x > a[m] return rBinarySearch(a[(m+1)...], x)
-        else return m
-    }
-    
-    let rBinarySearch2p = { (a: [Any], x: Any, f: Int, l: Int) -> Int? in
-        guard a.count > 0 else return nil
-        var m = (f + l) / 2
-        if x < a[m] return rBinarySearch(a, x, f, m - 1)
-        else if x > a[m] return rBinarySearch(a, x, m + 1, l)
-        else return m
-    }
 
-    let f: Int = 0, l: Int = a.count - 1, m: Int
-    rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l)
+        let rBinarySearch = { (a: [Any], x: Any) -> Int? in
+            guard a.count > 0 else return nil
+            var m = a.count / 2
+            if x < a[m] return rBinarySearch(a[0..<m], x)
+            else if x > a[m] return rBinarySearch(a[(m+1)...], x)
+            else return m
+        }
+        
+        let rBinarySearch2p = { (a: [Any], x: Any, f: Int, l: Int) -> Int? in
+            guard a.count > 0 else return nil
+            var m = (f + l) / 2
+            if x < a[m] return rBinarySearch(a, x, f, m - 1)
+            else if x > a[m] return rBinarySearch(a, x, m + 1, l)
+            else return m
+        }
 
-    while f < l {
-        m = (f + l) / 2
-        if x < m l = m - 1
-        else if x > m f = m + 1
-        else return m
+        let f: Int = 0, l: Int = a.count - 1, m: Int
+        rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l)
+
+        while f < l {
+            m = (f + l) / 2
+            if x < m l = m - 1
+            else if x > m f = m + 1
+            else return m
+        }
+        return nil
     }
-    return nil
 }
 
 
@@ -53,7 +58,11 @@ func binarySearch(a: [Any], x: Any) -> Int? {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-//
+class SortingAlgorithms {
+
+    init() {}
+    
+}
 
 
 
@@ -94,3 +103,14 @@ func rabinKarp(t: String, p: String) -> Int {
     return -1
 }
 
+
+
+
+
+////////////////////////////////////////
+//  TEST CASES
+////////////////////////////////////////
+
+func main(args: [String]) {
+    print("Hello, World!")
+}

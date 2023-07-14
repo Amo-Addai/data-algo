@@ -14,41 +14,45 @@ Js/Ts/Sw
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-function linearSearch(a, x) { // O(n)
-    for (i of a) if (i === x) return i
-    return null
-}
+var SearchingAlgorithms = function() {
 
-function binarySearch(a, x) { // O(log n)
-    // a.sort()
-    if (a.length === 0) return null
+    function linearSearch(a, x) { // O(n)
+        for (i of a) if (i === x) return i
+        return null
+    }
 
-    function rBinarySearch(a, x) {
+    function binarySearch(a, x) { // O(log n)
+        // a.sort()
         if (a.length === 0) return null
-        m = a.length / 2
-        if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x)
-        else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
-        else return m
+
+        function rBinarySearch(a, x) {
+            if (a.length === 0) return null
+            m = a.length / 2
+            if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x)
+            else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
+            else return m
+        }
+
+        function rBinarySearch(a, x, f, l) {
+            if (a.length === 0 || f > l) return null
+            m = (f + l) / 2 // better: f + (l - f) / 2
+            if (x < a[m]) return rBinarySearch(a, x, f, m - 1)
+            else if (x > a[m]) return rBinarySearch(a, x, m + 1, l)
+            else return m
+        }
+
+        f = 0, l = a.length - 1 
+        rBinarySearch(a, 3); rBinarySearch(a, 3, f, l)
+
+        while (f < l) {
+            m = (f + l) / 2 // better: f + (l - f) / 2
+            if (x < a[m]) l = m - 1
+            else if (x > a[m]) f = m + 1
+            else return m
+        }
+        return null
     }
 
-    function rBinarySearch(a, x, f, l) {
-        if (a.length === 0 || f > l) return null
-        m = (f + l) / 2 // better: f + (l - f) / 2
-        if (x < a[m]) return rBinarySearch(a, x, f, m - 1)
-        else if (x > a[m]) return rBinarySearch(a, x, m + 1, l)
-        else return m
-    }
-
-    f = 0, l = a.length - 1 
-    rBinarySearch(a, 3); rBinarySearch(a, 3, f, l)
-
-    while (f < l) {
-        m = (f + l) / 2 // better: f + (l - f) / 2
-        if (x < a[m]) l = m - 1
-        else if (x > a[m]) f = m + 1
-        else return m
-    }
-    return null
 }
 
 
@@ -56,102 +60,105 @@ function binarySearch(a, x) { // O(log n)
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-function check(a) {
-    return [0, 1].includes(a.length)
+var SortingAlgorithms = function() {
+
+    SortingAlgorithms.prototype.check = (a) => {
+        return [0, 1].includes(a.length)
+    }
+
+    SortingAlgorithms.prototype.swap = (a, b) => {
+        let t = a; a = b; b = t
+        // (a, b) = (b, a) // faster, but () by value
+        return (a, b)
+    }
+
+    SortingAlgorithms.prototype.compare = (a, b) => {
+        return a < b
+    }
+
+    // regular
+
+    function insertion(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    function selection(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    function shell(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    // bad
+
+    function bubble(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    function slow(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    // special
+
+    function counting(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    function radix(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    function topological(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    // hybrid
+
+    function intro(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    // fast
+
+    function heap(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    function merge(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
+    function quick(a) {
+        if (this.check(a)) return a
+        // 
+        return a
+    }
+
 }
-
-function swap(a, b) {
-    let t = a; a = b; b = t
-    // (a, b) = (b, a) // faster, but () by value
-    return (a, b)
-}
-
-function compare(a, b) {
-    return a < b
-}
-
-// regular
-
-function insertion(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-function selection(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-function shell(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-// bad
-
-function bubble(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-function slow(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-// special
-
-function counting(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-function radix(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-function topological(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-// hybrid
-
-function intro(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-// fast
-
-function heap(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-function merge(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
-function quick(a) {
-    if (check(a)) return a
-    // 
-    return a
-}
-
 
 
 ////////////////////////////////////////
@@ -402,5 +409,5 @@ function kthToLast(l, k) {
 ////////////////////////////////////////
 
 function main() {
-    // document.write(...)
+    document.write("Hello, World!")
 }
