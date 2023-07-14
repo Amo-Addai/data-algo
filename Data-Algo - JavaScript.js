@@ -393,3 +393,14 @@ function removeDuplicates(l) { // doubly-linked
 function kthToLast(l, k) {
     
 }
+
+
+
+
+////////////////////////////////////////
+//  TEST CASES
+////////////////////////////////////////
+
+function main() {
+    // document.write(...)
+}

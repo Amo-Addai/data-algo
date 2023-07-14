@@ -22,7 +22,7 @@ int binarySearch(Array<T> a, T x) {
   // a.sort()
   if (a.length == 0) return null;
 
-  int rBinarySearch(Array<T> a, T x) {
+  Function rBinarySearch = (Array<T> a, T x) {
     if (a.length == 0) return null;
     var m = a.length / 2;
     if (x < a[m]) return rBinarySearch(a, x); // slice a
@@ -30,7 +30,7 @@ int binarySearch(Array<T> a, T x) {
     else return m;
   }
 
-  int rBinarySearch(Array<T> a, T x, int f, int l) {
+  Function rBinarySearch = (Array<T> a, T x, int f, int l) {
     if (a.length == 0) return null;
     var m = (f + l) / 2;
     if (x < a[m]) return rBinarySearch(a, x, f, m - 1);

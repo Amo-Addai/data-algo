@@ -14,49 +14,58 @@ Js/Ts/Sw
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-function linearSearchT(a: any[], x: any): number | null {
-    for (let i of a) if (i in a) return i as number
-    return null
-}
+class SearchingAlgorithms {
 
-function T(a: any[], x: any): number | null {
-    // a.sort()
-    if (a.length === 0) return null
+    constructor() {}
 
-    var rBinarySearch = (a: any[], x: any): number | null => {
+    linearSearch(a: any[], x: any): number | null {
+        for (let i of a) if (i in a) return i as number
+        return null
+    }
+
+    binarySearch(a: any[], x: any): number | null {
+        // a.sort()
         if (a.length === 0) return null
-        let m: number = a.length / 2
-        if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x)
-        else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
-        else return m
+
+        var rBinarySearch = (a: any[], x: any): number | null => {
+            if (a.length === 0) return null
+            let m: number = a.length / 2
+            if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x)
+            else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
+            else return m
+        }
+
+        var rBinarySearch2p = (a: any[], x: any, f: number, l: number): number | null => {
+            if (a.length === 0) return null
+            let m: number = (f + l) / 2
+            if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1)
+            else if (x > a[m]) return rBinarySearch2p(a, x, m + 1, l)
+            else return m
+        }
+
+        let f: number = 0, l: number = a.length - 1, m: number
+        rBinarySearch(a, 3); rBinarySearch2p(a, 3, f, l)
+
+        while (f < l) {
+            m = (f + l) / 2
+            if (x < a[m]) l = m - 1
+            else if (x > a[m]) f = m + 1
+            else return m
+        }
+        return null
     }
 
-    var rBinarySearch2p = (a: any[], x: any, f: number, l: number): number | null => {
-        if (a.length === 0) return null
-        let m: number = (f + l) / 2
-        if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1)
-        else if (x > a[m]) return rBinarySearch2p(a, x, m + 1, l)
-        else return m
-    }
-
-    let f: number = 0, l: number = a.length - 1, m: number
-    rBinarySearch(a, 3); rBinarySearch2p(a, 3, f, l)
-
-    while (f < l) {
-        m = (f + l) / 2
-        if (x < a[m]) l = m - 1
-        else if (x > a[m]) f = m + 1
-        else return m
-    }
-    return null
 }
-
 
 ////////////////////////////////////////
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-//
+class SortingAlgorithms {
+
+    constructor() {}
+
+}
 
 
 ////////////////////////////////////////
@@ -474,7 +483,7 @@ function climbingStaircase(n: number, k: number): number[][] {
     if (!n && !k) return [[]]
     let res: number[][] = []
 
-    let seqs = function (a, sum, indent, level) {
+    let seqs = (a, sum, indent, level) => {
         console.log(`${level} ${indent}: ${a}`)
         if (sum >= n) {
             if (sum === n) res.push(a.trim().split(' ').map(x => +x))
@@ -921,3 +930,12 @@ function rkSearch(t: string, p: string): number {
 }
 
 
+
+
+////////////////////////////////////////
+//  TEST CASES
+////////////////////////////////////////
+
+function mainT() {
+    // document.write(...)
+}
