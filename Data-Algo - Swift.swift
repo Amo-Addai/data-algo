@@ -35,8 +35,8 @@ class SearchingAlgorithms {
         let rBinarySearch2p = { (a: [Any], x: Any, f: Int, l: Int) -> Int? in
             guard a.count > 0 else return nil
             var m = (f + l) / 2
-            if x < a[m] return rBinarySearch(a, x, f, m - 1)
-            else if x > a[m] return rBinarySearch(a, x, m + 1, l)
+            if x < a[m] return rBinarySearch2p(a, x, f, m - 1)
+            else if x > a[m] return rBinarySearch2p(a, x, m + 1, l)
             else return m
         }
 

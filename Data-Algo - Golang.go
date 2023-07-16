@@ -42,8 +42,8 @@ func (x SearchingAlgorithms) BinarySearch(a []int, x int) int {
 	RBinarySearch2p := func (a []int, x int, f int, l int) int { 
 		if len(a) == 0 return nil
 		m := len(a) / 2
-		if x < a[m] return RBinarySearch(a, x, f, m - 1)
-		if x > a[m] return RBinarySearch(a, x, m + 1, l)
+		if x < a[m] return RBinarySearch2p(a, x, f, m - 1)
+		if x > a[m] return RBinarySearch2p(a, x, m + 1, l)
 		else return m
 	}
 

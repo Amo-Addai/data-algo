@@ -42,8 +42,8 @@ class SearchingAlgorithms
         var RBinarySearch2p = (Int[] a, Int x, Int f, Int l) => {
             if (a.Length == 0) return null;
             var m = a.Length / 2;
-            if (x < a[m]) return RBinarySearch(a, x, f, m - 1);
-            else if (x > a[m]) return RBinarySearch(a, x, f, m + 1);
+            if (x < a[m]) return RBinarySearch2p(a, x, f, m - 1);
+            else if (x > a[m]) return RBinarySearch2p(a, x, f, m + 1);
             else return m;
         };
 

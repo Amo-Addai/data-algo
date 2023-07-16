@@ -26,7 +26,7 @@ class SearchingAlgorithms {
         a = Array.sort(a);
         if (a.length == 0) return null;
 
-        int rBinarySearch = (int[] a, int x) -> int {
+        var rBinarySearch = (int[] a, int x) -> int {
             if (a.length == 0) return null;
             int m = a.length / 2;
             if (x < a[m]) return rBinarySearch(Arrays.slice(a, 0, m - 1), x); // slice a
@@ -34,11 +34,11 @@ class SearchingAlgorithms {
             else return m;
         }
 
-        int rBinarySearch2p = (int[] a, int x, int f, int l) -> int {
+        var rBinarySearch2p = (int[] a, int x, int f, int l) -> int {
             if (a.length == 0) return null;
             int m = (f + l) / 2;
-            if (x < a[m]) return rBinarySearch(a, x, f, m - 1);
-            else if (x > a[m]) return rBinarySearch(a, x, m + 1, l);
+            if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1);
+            else if (x > a[m]) return rBinarySearch2p(a, x, m + 1, l);
             else return m;
         }
 

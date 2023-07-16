@@ -31,16 +31,16 @@ class SearchingAlgorithms
         def r_binary_search(a, x)
             if len(a) == 0 return nil
             m = len(a) / 2
-            if x < a[m] return binary_search(a[:m-1], x) # slice a
-            elsif x > a[m] return binary_search(a[m+1:], x) # slice a
+            if x < a[m] return r_binary_search(a[:m-1], x) # slice a
+            elsif x > a[m] return r_binary_search(a[m+1:], x) # slice a
             else return m
         end
         
         def r_binary_search(a, x, f, l)
             if len(a) == 0 return nil
             m = (f + l) / 2
-            if x < a[m] return binary_search(a, x, f, m - 1)
-            elsif x > a[m] return binary_search(a, x, m + 1, l)
+            if x < a[m] return r_binary_search(a, x, f, m - 1)
+            elsif x > a[m] return r_binary_search(a, x, m + 1, l)
             else return m
         end
 

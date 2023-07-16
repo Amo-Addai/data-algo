@@ -41,7 +41,7 @@ fun binarySearch({A, X}) when length(A) =/= 0 ->
     F = 0, 
     L = length(A) - 1,
     RBinarySearch({A, X});
-    RBinarySearch({A, X, F, L});
+    RBinarySearch2p({A, X, F, L});
     
     lists:map(fun RBinarySearch/4, [A]);
     .

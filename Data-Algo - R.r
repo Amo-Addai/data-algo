@@ -32,16 +32,16 @@ binarySearch <- function (a, x) {
         else m
     }
 
-    rBinarySearch <- (a, x, f, l) {
+    rBinarySearch2p <- (a, x, f, l) {
         if (length(a) == 0) nil
         m <- (f + l) / 2
-        if (x < a[m]) rBinarySearch(a, x, f, m - 1)
-        if (x > a[m]) rBinarySearch(a, x, m + 1, l)
+        if (x < a[m]) rBinarySearch2p(a, x, f, m - 1)
+        if (x > a[m]) rBinarySearch2p(a, x, m + 1, l)
         else m
     }
 
     f <- 0; l <- length(a) - 1
-    rBinarySearch(a, 7); rBinarySearch(a, 7, f, l)
+    rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l)
 
     while (f < l) {
         m <- (f + l) / 2

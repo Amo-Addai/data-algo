@@ -34,16 +34,16 @@ class SearchingAlgorithms {
       else return m;
     }
 
-    Function rBinarySearch = (Array<T> a, T x, int f, int l) {
+    Function rBinarySearch2p = (Array<T> a, T x, int f, int l) {
       if (a.length == 0) return null;
       var m = (f + l) / 2;
-      if (x < a[m]) return rBinarySearch(a, x, f, m - 1);
-      else if (x > a[m]) return rBinarySearch(a, x, m + 1, l);
+      if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1);
+      else if (x > a[m]) return rBinarySearch2p(a, x, m + 1, l);
       else return m;
     }
 
     int f = 0, l = a.length - 1, m;
-    rBinarySearch(a, 7); rBinarySearch(a, 7, f, l);
+    rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l);
 
     while (f < l) {
       m = (f + l) / 2;

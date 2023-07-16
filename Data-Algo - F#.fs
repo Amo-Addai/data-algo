@@ -35,18 +35,18 @@ type SearchigAlgorithms (constructor-arguments) = class
             elif x > a[m] then return rBinarySearch(a, x) // slice a
             else return m
 
-        let rec rBinarySearch a: any[], x: any f: int32, l: int32 -> int32 =
+        let rec rBinarySearch2p a: any[], x: any f: int32, l: int32 -> int32 =
             if x.length = 0 then return null
             let m = (f + l) / 2
-            if x < a[m] then return rBinarySearch(a, x, f, m - 1)
-            elif x > a[m] then return rBinarySearch(a, x, m + 1, l)
+            if x < a[m] then return rBinarySearch2p(a, x, f, m - 1)
+            elif x > a[m] then return rBinarySearch2p(a, x, m + 1, l)
             else return m
 
         let f: int32 = 0
         let l: int32 = a.length - 1
         let mutable m: int32 = (f + l) / 2 // mutable
         rBinarySearch(a, 7)
-        rBinarySearch(a, 7, f, l)
+        rBinarySearch2p(a, 7, f, l)
 
         while (f < l) do
             m <- (f + l) / 2

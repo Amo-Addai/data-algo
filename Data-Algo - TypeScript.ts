@@ -16,7 +16,7 @@ Js/Ts/Sw
 
 class SearchingAlgorithmsT {
 
-    constructor() {}
+    constructor() { }
 
     linearSearch(a: any[], x: any): number | null {
         for (let i of a) if (i in a) return i as number
@@ -64,7 +64,7 @@ class SearchingAlgorithmsT {
 
 class SortingAlgorithmsT {
 
-    constructor() {}
+    constructor() { }
 
 }
 
