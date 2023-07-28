@@ -12,7 +12,7 @@ Closures, ..
 ##  SEARCHING ALGO'S
 ########################################
 
-class SearchingAlgorithms
+class Searching
 
     def initialize()
         @i = 0
@@ -62,7 +62,7 @@ end
 ##  SORTING ALGO'S
 ########################################
 
-class SortingAlgorithms
+class Sorting
 
     def initialize()
         @i = 0

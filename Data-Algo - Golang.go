@@ -19,15 +19,15 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-type SearchingAlgorithms struct {
+type Searching struct {
 	i int
 }
 
-func (x SearchingAlgorithms) LinearSearch(a []int, x int) int {
+func (x Searching) LinearSearch(a []int, x int) int {
 	for i in a if x == i return i else return nil
 }
 
-func (x SearchingAlgorithms) BinarySearch(a []int, x int) int {
+func (x Searching) BinarySearch(a []int, x int) int {
     // a = sort.Sort(a)
 	if len(a) == 0 return nil
 
@@ -64,11 +64,11 @@ func (x SearchingAlgorithms) BinarySearch(a []int, x int) int {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-type SortingAlgorithms struct {
+type Sorting struct {
 	i int
 }
 
-func (x SortingAlgorithms) Func() {}
+func (x Sorting) Func() {}
 
 
 ////////////////////////////////////////

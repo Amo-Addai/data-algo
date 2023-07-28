@@ -62,7 +62,7 @@ end
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-type SortingAlgorithms = class
+type Sorting = class
 
     new () as this = 
         //

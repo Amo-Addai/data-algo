@@ -14,7 +14,7 @@ Js/Ts/Sw
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-var SearchingAlgorithms = function() {
+var Searching = function() {
 
     function linearSearch(a, x) { // O(n)
         for (i of a) if (i === x) return i
@@ -60,19 +60,19 @@ var SearchingAlgorithms = function() {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-var SortingAlgorithms = function() {
+var Sorting = function() {
 
-    SortingAlgorithms.prototype.check = (a) => {
+    Sorting.prototype.check = (a) => {
         return [0, 1].includes(a.length)
     }
 
-    SortingAlgorithms.prototype.swap = (a, b) => {
+    Sorting.prototype.swap = (a, b) => {
         let t = a; a = b; b = t
         // (a, b) = (b, a) // faster, but () by value
         return (a, b)
     }
 
-    SortingAlgorithms.prototype.compare = (a, b) => {
+    Sorting.prototype.compare = (a, b) => {
         return a < b
     }
 
@@ -167,12 +167,6 @@ var SortingAlgorithms = function() {
 
 
 
-function rabinKarp(t, p) {    
-    // convert to array of ints
-
-    return -1
-}
-
 
 ////////////////////////////////////////
 //  Cracking Coding Interview Qs
@@ -180,11 +174,11 @@ function rabinKarp(t, p) {
 
 // Arrays & Strings
 
-function sortStringArray(arr) {
+function sortStringArray(a) {
     // O(n * s log s) + O(n log n) t ; O(1) s
-    arr.map((s, i) => s.sort())
-    arr.sort() // or
-    arr.sort((a, b) => a - b) // -ve (a<b) for ascending, ASCII character order
+    a.map((s, i) => s.sort())
+    a.sort() // or
+    a.sort((a, b) => a - b) // -ve (a<b) for ascending, ASCII character order
 }
 
 function isUnique(s) {
@@ -401,6 +395,19 @@ function kthToLast(l, k) {
     
 }
 
+
+
+
+
+////////////////////////////////////////
+//  CodeSignal
+////////////////////////////////////////
+
+function rabinKarp(t, p) {    
+    // convert to array of ints
+
+    return -1
+}
 
 
 

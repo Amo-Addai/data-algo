@@ -12,7 +12,7 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingAlgorithms {
+class Searching {
 
     init() {}
 
@@ -58,7 +58,7 @@ class SearchingAlgorithms {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingAlgorithms {
+class Sorting {
 
     init() {}
     
@@ -69,6 +69,10 @@ class SortingAlgorithms {
 ////////////////////////////////////////
 //  OTHER ALGO'S
 ////////////////////////////////////////
+
+
+
+// CODE SIGNAL
 
 func rabinKarp(t: String, p: String) -> Int {
     // convert to array of ints

@@ -14,7 +14,7 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-contract SearchingAlgorithms {
+contract Searching {
 
     // uint, address, mapping, struct
     constructor() {}
@@ -64,7 +64,7 @@ contract SearchingAlgorithms {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-contract SortingAlgorithms {
+contract Sorting {
 
     constructor() {}
 

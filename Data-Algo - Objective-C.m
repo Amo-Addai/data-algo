@@ -14,12 +14,12 @@ MemMan, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-@interface SearchingAlgorithms : NSObject
+@interface Searching : NSObject
     -(int) linearSearch: (int[]) a, arg2: (int) x;
     -(int) binarySearch: (int[]) a, arg2: (int) x;
 @end
 
-@implementation SearchingAlgorithms
+@implementation Searching
 
     -(int) linearSearch: (int[]) a, arg2: (int) x {
         for (int i = 0; i < sizeof(a); i++) {
@@ -63,11 +63,11 @@ MemMan, ..
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-@interface SortingAlgorithms : NSObject
+@interface Sorting : NSObject
 
 @end
 
-@implementation SortingAlgorithms
+@implementation Sorting
 
 @end
 

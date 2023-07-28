@@ -15,15 +15,15 @@ MemMan, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingAlgorithms
+class Searching
 {
 
 private:
     int i;
 
 public:
-    SearchingAlgorithms::SearchingAlgorithms() {}
-    SearchingAlgorithms::~SearchingAlgorithms() {}
+    Searching::Searching() {}
+    Searching::~Searching() {}
 
     int linearSearch(int a[], int x)
     {
@@ -82,18 +82,18 @@ public:
             return m;
     }
 };
-// returnType SearchingAlgorithms::method(args) {} // defined outside of class scope
+// returnType Searching::method(args) {} // defined outside of class scope
 
 ////////////////////////////////////////
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingAlgorithms
+class Sorting
 {
 
 public:
-    SortingAlgorithms::SortingAlgorithms() {}
-    SortingAlgorithms::~SortingAlgorithms() {}
+    Sorting::Sorting() {}
+    Sorting::~Sorting() {}
 };
 
 ////////////////////////////////////////

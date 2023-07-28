@@ -14,7 +14,7 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingAlgorithms(val prop: Any) {
+class Searching(val prop: Any) {
 
     def linearSearch(a: Array[Any], x: Any): Int = {
         for (var i <- a if x == i) return i // item
@@ -60,7 +60,7 @@ class SearchingAlgorithms(val prop: Any) {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingAlgorithms(val prop: Any) {
+class Sorting(val prop: Any) {
 
 }
 

@@ -14,7 +14,7 @@ Js/Ts/Sw
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingAlgorithmsT {
+class SearchingT {
 
     constructor() { }
 
@@ -62,7 +62,7 @@ class SearchingAlgorithmsT {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingAlgorithmsT {
+class SortingT {
 
     constructor() { }
 
@@ -77,7 +77,7 @@ class SortingAlgorithmsT {
 
 
 ////////////////////////////////////////
-// CODESIGNAL - PRACTICE TESTS (increasing difficulty)
+// CodeSignal
 ////////////////////////////////////////
 
 function isZigzag(numbers: number[]): number[] {
@@ -846,12 +846,6 @@ function isValid(oldPoints, newPoint): boolean {
     }
     return true
 }
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-//  OTHER ALGO'S
-////////////////////////////////////////////////////////////////////////////////
 
 
 // TODO Z (Zeta) Algo - Confirm

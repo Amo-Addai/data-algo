@@ -15,9 +15,9 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingAlgorithms 
+class Searching 
 {
-    public void SearchingAlgorithms() {}
+    public void Searching() {}
         
     public Int LinearSearch(Int[] a, Int x) 
     {
@@ -65,9 +65,9 @@ class SearchingAlgorithms
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingAlgorithms 
+class Sorting 
 {
-    public void SortingAlgorithms() {}
+    public void Sorting() {}
 
 }
 

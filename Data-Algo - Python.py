@@ -1,3 +1,8 @@
+import numpy as np
+import pandas as pd
+import keras
+import tensorflow as t
+
 '''
 LEARN
 
@@ -10,7 +15,7 @@ for - iter, k/v, ..
 ##  SEARCHING ALGO'S
 ########################################
 
-class SearchingAlgorithms:
+class Searching:
 
     def __init__(self):
         pass
@@ -53,7 +58,7 @@ class SearchingAlgorithms:
 ##  SORTING ALGO'S (ascending)
 ########################################
 
-class SortingAlgorithms:
+class Sorting:
 
     def __init__(self):
         pass
@@ -207,7 +212,7 @@ class SortingAlgorithms:
             else: return self.merge(a) + self.merge(b)
         
         m = len(a) / 2
-        l = self.merge(a[0, m]); r = self.merge(a[m, len(a)])
+        l = self.merge(a[:m]); r = self.merge(a[m:])
         return merge(l, r)
 
     def quick(self, a): # O(nlogn) t ; O(logn) s
@@ -228,10 +233,671 @@ class SortingAlgorithms:
 ########################################
 
 
+class DataStructures:
+
+    def __init__(self): pass
+    
+    # Arrays & Strings
+
+    def reverse(self, a: list): pass
+
+    def longest_common_substring(self, s): pass
+
+    def min_jumps(self, a): pass
+
+    # Sets & Sequences
+
+    # HashMaps & Dictionaries
+
+    # Matrices
+
+    # Linked Lists
+
+    class LinkedList:
+
+        class ListNode:
+
+            def __init__(self, v, n=None, p=None): 
+                self.v = v; self.n = n; self.p = p
+            
+            def be_next_of(self, l):
+                l.n = self
+                return l
+            
+            def be_prev_of(self, r):
+                r.p = self
+                return r
+            
+            @staticmethod
+            def from_array(a): 
+                pass # TODO
+                # nodes = [ListNode(i) for i in a]
+                # nodes.__reduce__(lambda(acc: ListNode, cur: ListNode): acc.be_next_of(cur))
+            
+            def for_each(self, cb, i):
+                cb(self.v, i)
+                if self.n is not None:
+                    self.n.for_each(cb, i + 1)
+
+
+        def __init__(self, l: ListNode): 
+            self.r = l
+
+
+    def reverse(self, l: LinkedList): pass
+
+    def merge(self, l1, l2): 
+        
+        # sorted 
+        pass
+        # unsorted
+        
+
+    def add(self, l1, l2): pass
+        
+    def add_nums(self, a, b): pass
+
+    # Stacks & Queues
+
+    # Heaps (max & min)
+
+    # Trees
+
+    # Binary (Search) Trees
+
+    def diameter(self): pass
+
+    def max_depth_or_height(self): pass
+
+    def is_BST(self): pass
+
+    def lowest_common_ancestor(self): pass
+
+    def unique_paths(self): pass
+    
+    # Graphs & Tries
+
+    # Bits
+
+    def func(self): pass
+
+
+class DynamicProgramming:
+
+    def __init__(self): pass
+
+    # advanced
+
+    def bitmasking(self): pass
+
+    def digit_dp(self): pass
+
+    def sum_over_subsets(self): pass
+
+    # easy
+
+    def coin_change(self): pass
+
+    def subset_sum(self): pass
+
+    def cutting_a_rod(self): pass
+    
+    def painting_fence(self): pass
+
+    def longest_common_subsequence(self, a): pass
+
+    def longest_increasing_subsequence(self, a): pass
+
+    def min_cost_path(self): pass
+
+    def longest_common_substring(self, a): pass
+
+    def edit_distance(self): pass
+
+    def convex_hull(self): pass
+    
+    def unique_paths(self): pass
+
+    # medium
+
+    def knapsack(self): pass
+
+    def fractional_knapsack(self): pass
+
+    def unbounded_knapsack(self): pass
+
+    def edd_dropping_puzzle(self): pass
+    
+    def word_break(self): pass
+
+    def vertex_cover(self, a): pass
+
+    def tile_stacking(self, a): pass
+
+    def box_stacking(self): pass
+
+    def partition(self, a): pass
+
+    def travelling_salesman(self): pass
+
+    def longest_palindromic_subsequence(self, a): pass
+
+    def longest_common_increasing_subsequence(self, a): pass
+
+    def distinct_subset_sums(self, a): pass
+
+    def weighted_job_scheduling(self): pass
+    
+    def count_derangements(self): pass
+    
+    def min_insertions_to_palindrome(self): pass
+    
+    def adjacent_balls(self): pass
+
+    # hard
+    
+    def palindrome_partitioning(self): pass
+    
+    def word_wrap(self): pass
+    
+    def painters_partition(self): pass
+    
+    def bridge_and_torch(self): pass
+    
+    def matrix_chain_mult(self): pass
+    
+    def max_sum_rect(self): pass
+    
+    def max_profit(self): pass
+    
+    def min_cost(self): pass
+    
+    def arithmethic_progression(self): pass
+    
+    def dp_on_trees(self): pass
+    
+    def max_height(self): pass
+    
+    def longest_repeating_substr(self): pass
+
+
+class DivideAndConquer:
+
+    def __init__(self): pass
+
+    # standard
+
+    def pow(self, x, n): pass
+
+    def closest_pair(self): pass
+
+    def karatsuba_mult(self): pass
+
+    def strassens_matrix_mult(self): pass
+
+    def max_subarray_sum(self): pass
+
+    def longest_common_prefix(self): pass
+
+    def convex_hull(self): pass
+
+    def quick_hull(self): pass
+
+    # binary search based
+
+    def peak_elem(self, a): pass
+
+    def majority_elem(self): pass
+
+    def kth_elem(self): pass
+
+    def num_zeroes(self): pass
+
+    def rotation_count(self): pass
+
+    def unbounded_binary_search(self): pass
+
+    def median_of_sorted_arrays(self): pass
+
+    def painters_partition(self): pass
+
+    # easy
+
+    # medium
+
+    # hard
+
+    def square_root(self): pass
+
+    def max_min_of_array(self): pass
+
+    def elem_frequency(self): pass
+
+    def tiling(self): pass
+
+    def inversion_count_using_merge_sort(self): pass
+
+    def skyline(self): pass
+
+    def search_2d_matrix(self): pass
+
+    def alloc_min_pages(self): pass
+
+
+class Greedy:
+
+    def __init__(self): pass
+
+    # standard
+
+    def activity_selection(self): pass
+
+    def job_sequencing(self): pass
+
+    def huffman_coding(self): pass
+
+    def huffman_decoding(self): pass
+
+    def water_connection(self): pass
+
+    def egyptian_fraction(self): pass
+
+    def police_thieves(self): pass
+
+    def fitting_shelves(self): pass
+
+    def mice_to_holes(self): pass
+
+    # easy
+
+    def split_into_max_composite_nums(self, n): pass
+
+    def buy_max_stocks(self): pass
+
+    def min_max_amount(self): pass
+
+    def max_equal_sum(self): pass
+
+    def cuboid_to_cubes(self): pass
+
+    def max_custs_to_satisfy(self): pass
+
+    def min_rotations_to_unlock(self): pass
+
+    def min_rooms_for_events(self): pass
+
+    def min_cost_to_reduce_size(self): pass
+
+    def min_cost_to_acquire_coins(self): pass
+
+    def min_increment_by_ops(self): pass
+
+    def min_number_of_notes(self): pass
+
+    def smallest_subset_with_greatest_sum(self): pass
+
+    # medium
+
+    def max_trains_for_stoppage(self): pass
+
+    def min_fibonacci_terms(self): pass
+
+    def divide_with_min_sum_diff(self): pass
+
+    def min_num_squares(self): pass
+
+    def min_diff_between_groups(self): pass
+
+    def min_num_platforms(self): pass
+
+    def min_vertices_to_traverse_matrix(self): pass
+
+    def largest_palindromic_num(self): pass
+
+    def smallest_num_given_digits_num_sum(self): pass
+
+    def lexi_largest_subsequence(self): pass
+
+    # hard
+
+    def max_elems_made_equal(self): pass
+
+    def min_cash_flow(self): pass
+
+    def min_cost_to_cut_board(self): pass
+
+    def min_cost_to_process_tasks(self): pass
+
+    def min_time_to_finish_jobs(self): pass
+
+    def minimize_max_diff(self, a): pass
+
+    def min_edges_to_reverse(self, a): pass
+
+    def largest_cube(self): pass
+
+    def rearrange_str_chars(self): 
+
+        # so no 2 adjacent chars are equal
+        # so all equal chars become d distance away
+        pass
+
+
+class BackTracking:
+
+    def __init__(self): pass
+
+    # standard
+
+    def knights_tour(self): pass
+
+    def rat_in_a_maze(self): pass
+
+    def n_queen(self): pass
+
+    def subset_sum(self): pass
+
+    def m_coloring(self): pass
+
+    def hamiltonian(self): pass
+
+    def sudoku(self): pass
+
+    def magnet_puzzle(self): pass
+
+    def remove_invalid_parenthesis(self): pass
+
+    def generate_gray_codes(self): pass
+
+    def string_permutations(self): pass
+
+    # easy
+
+    def print_subsets(self): pass
+
+    def is_sum_str(self): pass
+
+    def possible_paths(self): pass
+
+    def bitmasking_distinct_subsets(self): pass
+
+    def path_from_source(self): pass
+
+    def print_paths_from_source(self): pass
+
+    def print_strings_using_spaces(self): pass
+
+    # medium
+
+    def tug_of_war(self): pass
+
+    def eight_queens(self): pass
+
+    def combinational_sum(self): pass
+
+    def warnsdorff_for_knights_tour(self): pass
+
+    def paths_in_maze(self): pass
+
+    def max_num_by_k_swaps(self): pass
+
+    # hard
+
+    def power_set(self): pass
+
+    def word_break(self): pass
+
+    def set_to_k_subsets(self): pass
+
+    def longest_route_in_matrix(self): pass
+
+    def shortest_safe_route(self): pass
+
+    def print_n_queen_solns(self, a): pass
+
+    def longest_common_subsequence(self, a): pass
+
+
+class SystemDesign:
+
+    def __init__(self): pass
+
+
+class Mathematical:
+
+    def __init__(self): pass
+
+
+class Geometric:
+
+    def __init__(self): pass
+
+
+class PatternSearching:
+
+    def __init__(self): pass
+
+
+class Hashing:
+
+    def __init__(self): pass
+
+
+class Compression:
+
+    def __init__(self): pass
+
+
+class Encryption:
+
+    def __init__(self): pass
+
+
+class MachineLearning:
+
+    def __init__(self): pass
+
+
+class DeepLearning:
+
+    def __init__(self): pass
+
+
+class NaturalLanguageProcessing:
+
+    def __init__(self): pass
+
+
+class Genetic:
+
+    def __init__(self): pass
+
+
+class MultiThreading:
+
+    def __init__(self): pass
+
+
+class Games:
+
+    def __init__(self): pass
+
+
+class Quant:
+
+    def __init__(self): pass
+
+
+
 ########################################
-#  CODESIGNAL ALGO'S
+#  Cracking Coding Interview Qs
 ########################################
 
+# Arrays & Strings
+
+def number_swapper(a, b): # in-place
+    a = a+b; b = a-b; a = a-b # simple
+    # or
+    a = a-b; b = a+b; a = b-a # complex
+
+def word_frequencies(book, words): # O(bw) time; O(m) space
+    map, f = {}, 0
+    s = book.split(' ').lower() # remove all symbols (. , ' etc)
+    for w in words:
+        # str func to find all occurences of x in s = f
+        # or
+        w = w.lower()
+        for x in s:
+            if x == w:
+                f = f + 1
+        map[w] = f
+
+def word_frequencies(book, words): # O(b) + O(w) time; O(b) space
+    map = {}
+    for s in book.split(' ').lower(): # remove all symbols (. , ' etc)
+        if s in map: map[s] = map[s] + 1
+        else: map[s] = 0
+    for w in words:
+        print('{} : {}'.format(w, map[w]))
+
+def factorial_zeros(n):
+    def calc_fact(n):
+        if n is 1: return n * 1
+        return calc_fact(n * (n-1))
+    # TODO
+
+def smallest_diff(a1, a2):
+    
+    a1.sort(); a2.sort() # O(a log a)
+    # figure out space complexity here
+    a, b, d = 0, 0, 999999 # should be max int val
+    while (a < len(a1) and b < len(a2)):
+        if (d < abs(a1[a] - a2[b])):
+            d = abs(a1[a] - a2[b])
+            if (d is 0): return d
+        if (a1[a] < a2[b]): a = a + 1
+        else: b = b + 1
+
+def sub_sort(a): # Learn - maybe O(n)
+    if len(a) is 0: return -1
+    elif len(a) is 1: return (0, 0)
+
+    f, l = 0, len(a) - 1
+    ff, ll = None, None
+    min, max = None, None
+    while f < l:
+        if ff is None and a[f] <= a[f+1]: f = f + 1
+        else: 
+            if ff is None: min = ff = f = f + 1
+            else:
+                if min < a[f]: min = a[f]
+                f = f + 1
+
+        if ll is None and a[l-1] <= a[l]: l = l - 1
+        else: 
+            if ll is None: max = ll = l = l - 1
+            else:
+                if max > a[l]: max = a[l]
+                l = l - 1
+    
+    i = j = False
+    while not (i and j):
+        f = f - 1; l = l + 1
+        if min >= a[f]:
+            ff = f + 1 if (min > a[f]) else f
+            i = True
+        if max <= a[l]:
+            ll = l - 1 if (max < a[l]) else l
+            j = True
+            
+    return (ff, ll)
+
+def contiguous_sequence(a): 
+    sum, max_sum, s = 0, []
+    for i in a:
+        sum = sum + i
+        if sum < 0: 
+            sum = 0
+            s = []
+        else: s.append(i)
+        if max_sum < sum: max_sum = sum
+    return max_sum, s
+
+def pattern_matching(p, v):
+    if len(p) is 0: return len(v) is 0
+
+    d, i, j, i1, j1, ptn = {}, 0, 0, '', ''
+    while j < len(v):
+        j1 = v[j]
+        if i1 is '':
+            i1 = p[i]
+        # elif i1 == j1:
+        # if i1 in d:
+        #     if d[i1] is not ptn: return False
+        # else: 
+        #     d[i1] = ptn
+        #     i1 = j1
+        
+        # if i1 is not None:
+        else:
+            ptn += j1
+
+        j = j + 1
+    return True
+
+def sum_swap(a1, a2): # s1 - a + b = s2 - b + a
+    d = abs(sum(a1) - sum(a2)) # O(a1 + a2)
+    if d is not 0:
+        # O(a1 * a2)
+        for x in a1:
+            for y in a2:
+                d = abs(x-y)
+                if d is 0: return (x, y)
+        # O(a1 + a2)
+        dt = {}
+        for y in a2: dt[y] = y
+        for x in a1:
+            if (x-d) in dt: return (x, x-d)
+    return None
+
+def pairs_with_sum(a, s): 
+    # O(2n) t ; O(p+d) s
+    p, d = [], {}
+    for i in a:
+        if i not in d: d[i] = i
+    for i in a:
+        if (s-i) in d: p.append((i, s-i))
+
+    # two-pointer technique (sorted arr)
+    # O(nlogn + n) t ; O(1) s
+
+    a.sort()
+    i, j = 0, len(a) - 1
+ 
+    while(i < j):
+       
+        # If we find a pair
+        if (a[i] + a[j] == s): p.append((a[i], a[j]))
+ 
+        # If sum of elements at current
+        # pointers is less, we move towards
+        # higher values by doing i += 1
+        elif(a[i] + a[j] < s): i += 1
+ 
+        # If sum of elements at current
+        # pointers is more, we move towards
+        # lower values by doing j -= 1 sort
+        else: j -= 1
+    
+    return p
+
+def lru_cache(): pass
+
+
+
+########################################
+#  CodeSignal
+########################################
 
 # Given 2 sorted arrays, find the number of elements in common.
 # Both arrays have the same length, and all distinct elements
@@ -447,174 +1113,6 @@ def tree_paths_sum(t, v):
     v = (v*10) + t.value
     if t.left is None and t.right is None: return v
     return (tree_paths_sum(t.left, v) + tree_paths_sum(t.right, v))
-
-
-
-########################################
-#  Cracking Coding Interview Qs
-########################################
-
-# Arrays & Strings
-
-def number_swapper(a, b): # in-place
-    a = a+b; b = a-b; a = a-b # simple
-    # or
-    a = a-b; b = a+b; a = b-a # complex
-
-def word_frequencies(book, words): # O(bw) time; O(m) space
-    map, f = {}, 0
-    s = book.split(' ').lower() # remove all symbols (. , ' etc)
-    for w in words:
-        # str func to find all occurences of x in s = f
-        # or
-        w = w.lower()
-        for x in s:
-            if x == w:
-                f = f + 1
-        map[w] = f
-
-def word_frequencies(book, words): # O(b) + O(w) time; O(b) space
-    map = {}
-    for s in book.split(' ').lower(): # remove all symbols (. , ' etc)
-        if s in map: map[s] = map[s] + 1
-        else: map[s] = 0
-    for w in words:
-        print('{} : {}'.format(w, map[w]))
-
-def factorial_zeros(n):
-    def calc_fact(n):
-        if n is 1: return n * 1
-        return calc_fact(n * (n-1))
-    # TODO
-
-def smallest_difference(a1, a2):
-    
-    a1.sort(); a2.sort() # O(a log a)
-    # figure out space complexity here
-    a, b, d = 0, 0, 999999 # should be max int val
-    while (a < len(a1) and b < len(a2)):
-        if (d < abs(a1[a] - a2[b])):
-            d = abs(a1[a] - a2[b])
-            if (d is 0): return d
-        if (a1[a] < a2[b]): a = a + 1
-        else: b = b + 1
-
-def sub_sort(a): # Learn - maybe O(n)
-    if len(a) is 0: return -1
-    elif len(a) is 1: return (0, 0)
-
-    f, l = 0, len(a) - 1
-    ff, ll = None, None
-    min, max = None, None
-    while f < l:
-        if ff is None and a[f] <= a[f+1]: f = f + 1
-        else: 
-            if ff is None: min = ff = f = f + 1
-            else:
-                if min < a[f]: min = a[f]
-                f = f + 1
-
-        if ll is None and a[l-1] <= a[l]: l = l - 1
-        else: 
-            if ll is None: max = ll = l = l - 1
-            else:
-                if max > a[l]: max = a[l]
-                l = l - 1
-    
-    i = j = False
-    while not (i and j):
-        f = f - 1; l = l + 1
-        if min >= a[f]:
-            ff = f + 1 if (min > a[f]) else f
-            i = True
-        if max <= a[l]:
-            ll = l - 1 if (max < a[l]) else l
-            j = True
-            
-    return (ff, ll)
-
-def contiguous_sequence(a): 
-    sum, max_sum, s = 0, []
-    for i in a:
-        sum = sum + i
-        if sum < 0: 
-            sum = 0
-            s = []
-        else: s.append(i)
-        if max_sum < sum: max_sum = sum
-    return max_sum, s
-
-def pattern_matching(p, v):
-    if len(p) is 0: return len(v) is 0
-
-    d, i, j, i1, j1, ptn = {}, 0, 0, '', ''
-    while j < len(v):
-        j1 = v[j]
-        if i1 is '':
-            i1 = p[i]
-        # elif i1 == j1:
-        # if i1 in d:
-        #     if d[i1] is not ptn: return False
-        # else: 
-        #     d[i1] = ptn
-        #     i1 = j1
-        
-        # if i1 is not None:
-        else:
-            ptn += j1
-
-        j = j + 1
-    return True
-
-def sum_swap(a1, a2): # s1 - a + b = s2 - b + a
-    d = abs(sum(a1) - sum(a2)) # O(a1 + a2)
-    if d is not 0:
-        # O(a1 * a2)
-        for x in a1:
-            for y in a2:
-                d = abs(x-y)
-                if d is 0: return (x, y)
-        # O(a1 + a2)
-        dt = {}
-        for y in a2: dt[y] = y
-        for x in a1:
-            if (x-d) in dt: return (x, x-d)
-    return None
-
-def pairs_with_sum(a, s): 
-    # O(2n) t ; O(p+d) s
-    p, d = [], {}
-    for i in a:
-        if i not in d: d[i] = i
-    for i in a:
-        if (s-i) in d: p.append((i, s-i))
-
-    # two-pointer technique (sorted arr)
-    # O(nlogn + n) t ; O(1) s
-
-    a.sort()
-    i, j = 0, len(a) - 1
- 
-    while(i < j):
-       
-        # If we find a pair
-        if (a[i] + a[j] == s): p.append((a[i], a[j]))
- 
-        # If sum of elements at current
-        # pointers is less, we move towards
-        # higher values by doing i += 1
-        elif(a[i] + a[j] < s): i += 1
- 
-        # If sum of elements at current
-        # pointers is more, we move towards
-        # lower values by doing j -= 1 sort
-        else: j -= 1
-    
-    return p
-
-def lru_cache():
-    pass
-
 
 
 

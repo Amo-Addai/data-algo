@@ -12,9 +12,9 @@ Closures, ..
 ##  SEARCHING ALGO'S
 ########################################
 
-class(list(prop="val")) <- "SearchingAlgorithms"
-setClass("SearchingAlgorithms", slots = list(prop="val"))
-# obj <- new("SearchingAlgorithms", prop="val")
+class(list(prop="val")) <- "Searching"
+setClass("Searching", slots = list(prop="val"))
+# obj <- new("Searching", prop="val")
 
 linearSearch <- function (a, x) {
     for (i in x) if (x == i) i # item
@@ -52,18 +52,18 @@ binarySearch <- function (a, x) {
     nil # fix
 }
 
-setMethod("linearSearch", "SearchingAlgorithms", linearSearch)
-setMethod("binarySearch", "SearchingAlgorithms", binarySearch)
+setMethod("linearSearch", "Searching", linearSearch)
+setMethod("binarySearch", "Searching", binarySearch)
 
 
 ########################################
 ##  SORTING ALGO'S
 ########################################
 
-class(list(prop="val")) <- "SortingAlgorithms"
-setClass("SortingAlgorithms", slots = list(prop="val"))
-# obj <- new("SearchingAlgorithms", prop="val")
-# setMethod("func", "SortingAlgorithms", func)
+class(list(prop="val")) <- "Sorting"
+setClass("Sorting", slots = list(prop="val"))
+# obj <- new("Searching", prop="val")
+# setMethod("func", "Sorting", func)
 
 
 

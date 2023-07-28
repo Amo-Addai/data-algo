@@ -14,7 +14,7 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingAlgorithms {
+class Searching {
     
     function __construct() {}
     function __destruct() {}
@@ -63,7 +63,7 @@ class SearchingAlgorithms {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingAlgorithms {
+class Sorting {
 
     function __construct() {}
     

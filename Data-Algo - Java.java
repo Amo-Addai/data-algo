@@ -14,9 +14,9 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingAlgorithms {
+class Searching {
 
-    public SearchingAlgorithms SearchingAlgorithms() {}
+    public Searching Searching() {}
 
     public int linearSearch(int[] a, int x) {
         for (int i = 0; i < a.length; i++) if (x == a[i]) return i; 
@@ -60,9 +60,9 @@ class SearchingAlgorithms {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingAlgorithms {
+class Sorting {
 
-    public SortingAlgorithms SortingAlgorithms() {}
+    public Sorting Sorting() {}
 
 }
 

@@ -12,7 +12,7 @@ Lambda, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingAlgorithms {
+class Searching {
 
     private var i: Int = 0
 
@@ -61,7 +61,7 @@ class SearchingAlgorithms {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingAlgorithms {
+class Sorting {
 
     private var i: Int = 0
     

@@ -12,9 +12,9 @@ Closures, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingAlgorithms {
+class Searching {
 
-  SearchingAlgorithms([this.i]);
+  Searching([this.i]);
 
   int linearSearch(Array<T> a, T x) {
     for (var i = 0; i < a.length; i++) { // length
@@ -61,9 +61,9 @@ class SearchingAlgorithms {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingAlgorithms {
+class Sorting {
 
-  SortingAlgorithms([this.i]);
+  Sorting([this.i]);
 
 }
 
