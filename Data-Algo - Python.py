@@ -678,6 +678,21 @@ class PatternSearching:
     def __init__(self): pass
 
 
+class Recursion:
+
+    def __init__(self): pass
+
+
+class Bitwise:
+
+    def __init__(self): pass
+
+
+class Randomized:
+
+    def __init__(self): pass
+
+
 class Hashing:
 
     def __init__(self): pass
@@ -689,6 +704,11 @@ class Compression:
 
 
 class Encryption:
+
+    def __init__(self): pass
+
+
+class BranchAndBound:
 
     def __init__(self): pass
 

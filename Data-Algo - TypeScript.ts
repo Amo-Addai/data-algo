@@ -879,13 +879,14 @@ function zeta(ptrn: string): [number] | null {
 }
 
 // FIZZ-BUZZ ALGO
-function fizzBuzz(numTurns: number) {
+function fizzBuzz(n: number) {
     let res = ""
-    for (let i = 1; i <= numTurns; i++) {
+    for (let i = 1; i <= n; i++) { // or: 1 to n+1 (n-inclusive)
         if (i % 3 == 0) res += "Fizz"
-        if (i % 5 == 0) res += ((res.length == 0) ? "" : " ") + "Buzz"
-        if (res.length == 0) res += "" + i
-        console.log(res) // OR console.log ??
+        if (i % 5 === 0) res += "Buzz" // with no space in-between "FizzBuzz"
+        // or: if (i % 5 == 0) res += ((res.length == 0) ? "" : " ") + "Buzz" // with a space in-between "Fizz Buzz"
+        if (res.length == 0) res = `${i}`
+        console.log(res); res = ''
     }
 }
 
