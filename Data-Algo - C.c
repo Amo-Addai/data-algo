@@ -62,7 +62,8 @@ int binarySearch(int a[], int x) {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-//
+int* insertionSort(int a[]);
+int* selectionSort(int a[]);
 
 
 
