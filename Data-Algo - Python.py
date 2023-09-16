@@ -881,12 +881,17 @@ def sum_swap(a1, a2): # s1 - a + b = s2 - b + a
     return None
 
 def pairs_with_sum(a, s): 
-    # O(2n) t ; O(p+d) s
+    # O(2n) t ; O(d+p) s
     p, d = [], {}
     for i in a:
         if i not in d: d[i] = i
     for i in a:
         if (s-i) in d: p.append((i, s-i))
+
+    # O(n) t ; O(d+p) s
+    for i in a: # combining 2 loops into 1
+        if (s-i) in d: p.append((i, s-i))
+        if i not in d: d[i] = i
 
     # two-pointer technique (sorted arr)
     # O(nlogn + n) t ; O(1) s
