@@ -891,7 +891,7 @@ def pairs_with_sum(a, s):
     # two-pointer technique (sorted arr)
     # O(nlogn + n) t ; O(1) s
 
-    a.sort()
+    a.sort() # O(nlogn) (quick) sort
     i, j = 0, len(a) - 1
  
     while(i < j):

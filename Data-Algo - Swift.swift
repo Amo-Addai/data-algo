@@ -2,7 +2,7 @@
 
 LEARN
 
-Closures, ..
+Closures, some, convenience, ..
 ..
 
 */
@@ -106,7 +106,6 @@ func rabinKarp(t: String, p: String) -> Int {
 
     return -1
 }
-
 
 
 
