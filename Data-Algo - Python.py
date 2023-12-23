@@ -898,7 +898,7 @@ def pairs_with_sum(a, s):
 
     a.sort() # O(nlogn) (quick) sort
     i, j = 0, len(a) - 1
- 
+
     while(i < j):
        
         # If we find a pair
