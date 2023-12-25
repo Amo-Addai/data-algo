@@ -21,8 +21,9 @@ Data structures included:
 - Arrays
 - Strings
 - Lists
-- Sets
 - Array Lists
+- Sets
+- Tuples
 - Dictionaries
 - HashMaps
 - HashTables

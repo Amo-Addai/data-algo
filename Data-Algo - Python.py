@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import pandas as pd
 import keras
@@ -144,7 +145,7 @@ class Sorting:
             if a[l] < a[m]: self.swap(a[l], a[m])
             slow(a, f, l - 1)
 
-        f, l = 0, 999999
+        f, l = 0, sys.maxsize
         slow(a, f, l)
 
         return a
@@ -760,7 +761,7 @@ def number_swapper(a, b): # in-place
     # or
     a = a-b; b = a+b; a = b-a # complex
 
-def word_frequencies(book, words): # O(bw) time; O(m) space
+def word_frequencies(book, words): # O(bw) time; O(w) / O(m) space
     map, f = {}, 0
     s = book.split(' ').lower() # remove all symbols (. , ' etc)
     for w in words:
@@ -772,7 +773,7 @@ def word_frequencies(book, words): # O(bw) time; O(m) space
                 f = f + 1
         map[w] = f
 
-def word_frequencies(book, words): # O(b) + O(w) time; O(b) space
+def word_frequencies(book, words): # O(b) + O(w) time; O(b) / O(m) space
     map = {}
     for s in book.split(' ').lower(): # remove all symbols (. , ' etc)
         if s in map: map[s] = map[s] + 1
@@ -790,7 +791,7 @@ def smallest_diff(a1, a2):
     
     a1.sort(); a2.sort() # O(a log a)
     # figure out space complexity here
-    a, b, d = 0, 0, 999999 # should be max int val
+    a, b, d = 0, 0, sys.maxsize # Python 3.5 | sys.maxint in Python 2.7
     while (a < len(a1) and b < len(a2)):
         if (d < abs(a1[a] - a2[b])):
             d = abs(a1[a] - a2[b])
@@ -798,7 +799,7 @@ def smallest_diff(a1, a2):
         if (a1[a] < a2[b]): a = a + 1
         else: b = b + 1
 
-def sub_sort(a): # Learn - maybe O(n)
+def sub_sort(a): # Learn - maybe O(n) 
     if len(a) is 0: return -1
     elif len(a) is 1: return (0, 0)
 
@@ -878,7 +879,7 @@ def sum_swap(a1, a2): # s1 - a + b = s2 - b + a
         for y in a2: dt[y] = y
         for x in a1:
             if (x-d) in dt: return (x, x-d)
-    return None
+    else: return None
 
 def pairs_with_sum(a, s): 
     # O(2n) t ; O(d+p) s
