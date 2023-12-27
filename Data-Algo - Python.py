@@ -765,7 +765,7 @@ def word_frequencies(book, words): # O(bw) time; O(w) / O(m) space
     map, f = {}, 0
     s = book.split(' ').lower() # remove all symbols (. , ' etc)
     for w in words:
-        # str func to find all occurences of x in s = f
+        # str func to find all occurrences of x in s = f
         # or
         w = w.lower()
         for x in s:
@@ -866,20 +866,33 @@ def pattern_matching(p, v):
         j = j + 1
     return True
 
-def sum_swap(a1, a2): # s1 - a + b = s2 - b + a
+def sum_swap(a1, a2): 
+    # Looking for a and b, such that ..
+    # s1 - a + b = s2 - b + a  | s1 - s2 = 2(a - b) ~ a - b
     d = abs(sum(a1) - sum(a2)) # O(a1 + a2)
-    if d is not 0:
+    if d > 0: # d != -ve (absolute value)
         # O(a1 * a2)
         for x in a1:
             for y in a2:
+                # option 1 # todo: working option only
+                s1 = sum(a1) - x + y # swap y into x, for a1
+                s2 = sum(a2) - y + x # swap x into y, for a2
+                if s1 == s2: return (x, y)
+                # option 2 (not sure about this option, because this new d should be compared to old d)
                 d = abs(x-y)
-                if d is 0: return (x, y)
+                if d == 0: return (x, y)
+                # todo: perhaps, option 2 should be if (old) d == abs(x-y)
         # O(a1 + a2)
         dt = {}
         for y in a2: dt[y] = y
         for x in a1:
             if (x-d) in dt: return (x, x-d)
-    else: return None
+    else: # d == 0, therefore s1 == s2 already, therefore any 2 same number occurrences in both a1 & a2 can be returned
+        for x in a1:
+            for y in a2:
+                d = abs(x-y) # OR: if x == y
+                if d == 0: return (x, y) # therefore x == y, and if they're both swapped, s1 == s2 still (since the old d == 0)
+    return None # so complete the solution (unless both arrays have all distinct values)
 
 def pairs_with_sum(a, s): 
     # O(2n) t ; O(d+p) s
@@ -892,7 +905,8 @@ def pairs_with_sum(a, s):
     # O(n) t ; O(d+p) s
     for i in a: # combining 2 loops into 1
         if (s-i) in d: p.append((i, s-i))
-        if i not in d: d[i] = i
+        if i not in d: # needed if a doesn't have distinct elements
+            d[i] = i
 
     # two-pointer technique (sorted arr)
     # O(nlogn + n) t ; O(1) s
@@ -907,15 +921,24 @@ def pairs_with_sum(a, s):
  
         # If sum of elements at current
         # pointers is less, we move towards
-        # higher values by doing i += 1
+        # higher values by incrementing i += 1
         elif(a[i] + a[j] < s): i += 1
  
         # If sum of elements at current
         # pointers is more, we move towards
-        # lower values by doing j -= 1 sort
+        # lower values by decrementing j -= 1
         else: j -= 1
     
     return p
+
+# same as above, but returning indices of elements, not elements themselves
+
+def two_sum(nums, target): 
+    if len(nums) < 2: return
+    d = {}
+    for i, n in enumerate(nums):
+        if (target - n) in d: return [i, d[target - n]]
+        d[n] = i
 
 def lru_cache(): pass
 
@@ -982,12 +1005,7 @@ def common_elems(arr1, arr2): # Most optimized algo [time - O(n)] [space - shoul
 
 #
 
-def two_sum(nums, target):
-    """
-    :type nums: List[int]
-    :type target: int
-    :rtype: List[int]
-    """
+def two_sum(nums, target): # returning indices of elements, not elements themselves
     if len(nums) < 2: return
     d = {}
     for i, n in enumerate(nums):
@@ -1087,14 +1105,47 @@ def filling_blocks_0011(n):
 
 
 
+# LINKED LIST TRAVERSAL ALGO'S
+
+
+# Singly-linked list (interface already defined)
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+    ls = ListNode(); sa = []; c = 0
+    s = l1.val + l2.val
+    d = f"{s}"[-1:]
+    c = int(f"{s}"[:-1])
+    sa.append(d)
+    ls.val = d
+    while (l1.next is not None) or (l2.next is not None):
+        if l1.next is not None: 
+            l1 = l1.next
+            c += l1.val
+        if l2.next is not None: 
+            l2 = l2.next
+            c += l2.val
+        s = c
+        d = f"{s}"[-1:]
+        c = int(f"{s}"[:-1])
+        sa.append(d)
+        ls.next = ListNode(val=d)
+    return ls # or return s
+
+
+
 # TREE TRAVERSAL ALGO'S
 
-# Binary trees are already defined with this interface:
-# class Tree(object):
-#   def __init__(self, x):
-#     self.value = x
-#     self.left = None
-#     self.right = None
+
+# Binary tree (interface already defined)
+class Tree(object):
+  def __init__(self, x):
+    self.value = x
+    self.left = None
+    self.right = None
 
 # Given a binary tree of integers t, return its node values in the following format:
 

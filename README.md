@@ -22,7 +22,9 @@ Data structures included:
 - Strings
 - Lists
 - Array Lists
+- Matrices (N-dimensional arrays)
 - Sets
+- Vectors
 - Tuples
 - Dictionaries
 - HashMaps
@@ -33,10 +35,11 @@ Data structures included:
 - Trees
 - Binary Search Trees (BST)
 - TreeMaps
+- Heaps
 - Binary Heaps (Min & Max Heaps)
 - Tries
 - Graphs
-- Bits
+- Bits & Bytes
 - Blobs (hopefully :)
 - etc
 
