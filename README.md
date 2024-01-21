@@ -14,6 +14,10 @@ One of my side-projects I work on, to keep my language skills from atrophying.
 
 <br />
 
+Here’s a sample [Big O Problem-Solution Explanation](https://docs.google.com/document/d/1KWwbliK1PYVXpt_njYhlCq8t373SC78eb_XJdECacTQ/edit?usp=sharing)
+
+<br />
+
 ## Data Structures
 
 Data structures included:
