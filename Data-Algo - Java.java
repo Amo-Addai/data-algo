@@ -71,6 +71,31 @@ class Sorting {
 //  OTHER ALGO'S
 ////////////////////////////////////////
 
+// TODO: class DataStructures
+
+// Arrays & Strings
+
+// Matrices
+
+// This diagonal iteration solution only works on square matrices
+void setZeroesDiagonally (int[][] matrix) {
+    int r = 0; int c = 0; Boolean isZ = false; int r2 = 0;
+    int rs = matrix.length;
+    int cs = matrix[0].length;
+    while (r < rs) {
+        while (c < cs) {
+            System.out.println(matrix[r][c]);
+            if (isZ) matrix[r][c] = 0;
+            else if (matrix[r][c] == 0) isZ = true; 
+            else break;
+        }
+        if (isZ) {
+            r2 = r + 1;
+            while (r2 < rs) matrix[r2][c] = 0;
+        } 
+        r++; c++;
+    }
+}
 
 ////////////////////////////////////////
 // CODESIGNAL - ARCADE TESTS (increasing difficulty)
@@ -147,3 +172,8 @@ int mapDecoding(String message) {
 void main(String[] args) {
     System.out.println("Hello, World!");
 }
+
+
+/** NOTES:
+
+*/

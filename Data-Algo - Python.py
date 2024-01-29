@@ -943,6 +943,18 @@ def two_sum(nums, target):
 def lru_cache(): pass
 
 
+# Matrices
+
+
+# Linked Lists
+
+
+# Trees
+
+
+# Graphs
+
+
 
 ########################################
 #  CodeSignal
@@ -1000,7 +1012,6 @@ def common_elems(arr1, arr2): # Most optimized algo [time - O(n)] [space - shoul
 
     print(nums)
     return len(nums)
-
 
 
 #
