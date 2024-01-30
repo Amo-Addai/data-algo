@@ -920,6 +920,35 @@ class Quant:
 
 
 
+###################################################
+#  Data Structures (Arrays, Strings, Matrices, etc)
+###################################################
+
+
+
+# LINKED LIST TRAVERSAL ALGO'S
+
+
+
+# Singly-linked list (interface already defined)
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+# TREE TRAVERSAL ALGO'S
+
+
+# Binary tree (interface already defined)
+class Tree(object):
+  def __init__(self, x):
+    self.value = x
+    self.left = None
+    self.right = None
+
+
+
 ########################################
 #  Cracking Coding Interview Qs
 ########################################
@@ -1127,8 +1156,71 @@ def lru_cache(): pass
 
 
 ########################################
+#  LeetCode
+########################################
+
+
+# https://leetcode.com/problems/add-two-numbers/description/
+def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode: # todo: optimize
+    ls = ListNode(); sa = []; c = 0
+    s = l1.val + l2.val
+    d = f"{s}"[-1:]
+    c = int(f"{s}"[:-1])
+    sa.append(d)
+    ls.val = d
+    while (l1.next is not None) or (l2.next is not None):
+        if l1.next is not None: 
+            l1 = l1.next
+            c += l1.val
+        if l2.next is not None: 
+            l2 = l2.next
+            c += l2.val
+        s = c
+        d = f"{s}"[-1:]
+        c = int(f"{s}"[:-1])
+        sa.append(d)
+        ls.next = ListNode(val=d)
+    return ls # or return s
+
+
+# https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+def lengthOfLongestSubstring(self, s: str) -> int: # todo: optimize
+    if len(s) < 1: return 0
+    elif len(s) == 1: return 1
+    d = {}; l = 0; li = 0
+    for i, c in enumerate(list(s)):
+        if c in d: 
+            li = i
+            if li - d[c] > l: l = li - d[c]
+        d[c] = i
+    if l == 0: l = len(s)
+    elif (len(s) - li) > l: l = len(s) - li
+    return l
+
+
+# https://leetcode.com/problems/string-compression-ii/?envType=daily-question&envId=2023-12-28
+def getLengthOfOptimalCompression(self, s: str, k: int) -> int: # todo
+    cs = ''
+    while len(s) > 0:
+        t = 0; si = 0
+        cs += s[0]
+        if len(s) >= 2 and s[0] == s[1]:
+            t = 2
+            for i, c in enumerate(s[2:]):
+                if s[0] == c: t += 1
+                else: 
+                    si = i + 2
+                    break
+            cs += f"{t}"
+        else: si += 1
+        s = s[si:]
+    return len(cs)
+
+
+########################################
 #  CodeSignal
 ########################################
+
 
 # Given 2 sorted arrays, find the number of elements in common.
 # Both arrays have the same length, and all distinct elements
@@ -1285,48 +1377,7 @@ def filling_blocks_0011(n):
     else: return filling_blocks(n) + filling_blocks_0011(n-1)
 
 
-
-# LINKED LIST TRAVERSAL ALGO'S
-
-
-# Singly-linked list (interface already defined)
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-    ls = ListNode(); sa = []; c = 0
-    s = l1.val + l2.val
-    d = f"{s}"[-1:]
-    c = int(f"{s}"[:-1])
-    sa.append(d)
-    ls.val = d
-    while (l1.next is not None) or (l2.next is not None):
-        if l1.next is not None: 
-            l1 = l1.next
-            c += l1.val
-        if l2.next is not None: 
-            l2 = l2.next
-            c += l2.val
-        s = c
-        d = f"{s}"[-1:]
-        c = int(f"{s}"[:-1])
-        sa.append(d)
-        ls.next = ListNode(val=d)
-    return ls # or return s
-
-
-
-# TREE TRAVERSAL ALGO'S
-
-
-# Binary tree (interface already defined)
-class Tree(object):
-  def __init__(self, x):
-    self.value = x
-    self.left = None
-    self.right = None
+# TODO: TREES
 
 # Given a binary tree of integers t, return its node values in the following format:
 
@@ -1371,6 +1422,19 @@ def tree_paths_sum(t, v):
     v = (v*10) + t.value
     if t.left is None and t.right is None: return v
     return (tree_paths_sum(t.left, v) + tree_paths_sum(t.right, v))
+
+
+
+########################################
+##  EXTRA TESTS
+########################################
+
+def count_like_dislike (A, P):
+    c = 0; A = list(A); P = list(P) # these 2 castings might be O(A + P) t
+    while len(A) > 0 or len(P) > 0: # O(n) t , if n is same length for both A and P
+        if A.pop(0) == P.pop(0): c += 1 
+        # todo: find out differences in time/space complexities and memory usage between indexing and pop() within python lists
+    return c
 
 
 
