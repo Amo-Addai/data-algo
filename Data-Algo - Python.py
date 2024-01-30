@@ -266,12 +266,47 @@ class DataStructures:
                         arr[i - 1] * arr[k] * arr[j]
                 min_ops = min(ops, min_ops)
             return min_ops
+
+        def top_down_matrix_chain_multiplication(self, arr, i, j, memo):
+            if i == j: return 0
+
+            if memo[i][j] >= 0: return memo[i][j]
+
+            min_ops = sys.maxsize
+            for k in range(i, j):
+                ops = self.top_down_matrix_chain_multiplication(arr, i, k, memo) + \
+                    self.top_down_matrix_chain_multiplication(arr, k + 1, j, memo) + \
+                        arr[i - 1] * arr[k] * arr[j]
+                min_ops = min(ops, min_ops)
+            memo[i][j] = min_ops
+            return memo[i][j]
+
+        def bottom_up_matrix_chain_multiplication(self, arr, n, mat):
+            
+            for l in range(2, n):
+                for i in range(1, n - l + 1):
+                    j = i + l - 1
+                    if j == n: continue
+                    min_ops = sys.maxsize
+                    for k in range(i, j):
+                        min_ops = min(min_ops, (mat[i][k] + mat[k + 1][j] + \
+                            arr[i - 1] * arr[k] * arr[j]))
+                    mat[i][j] = min_ops
+            return mat[1][n - 1]
         
         def test(self, test='mcm'):
             obj = Matrix()
             if test == 'mcm':
                 arr = [4, 3, 2, 1, 5]; n = len(arr)
                 print(obj.matrix_chain_multiplication(arr, 1, n - 1))
+            elif test == 'td_mcm':
+                arr = [4, 3, 2, 1, 5]; n = len(arr)
+                memo = [[-1 for i in range(n)] for i in range(n)]
+                print(obj.top_down_matrix_chain_multiplication(arr, 1, n - 1, memo))
+            elif test == 'bu_mcm':
+                arr = [4, 3, 2, 1, 5]; n = len(arr)
+                mat = [[0 for i in range(n)] for i in range(n)]
+                print(obj.bottom_up_matrix_chain_multiplication(arr, n, mat))
             else: pass
 
     # Linked Lists
