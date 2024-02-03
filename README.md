@@ -31,6 +31,7 @@ Data structures included:
 - Vectors
 - Tuples
 - Dictionaries
+- Maps
 - HashMaps
 - HashTables
 - Linked Lists
