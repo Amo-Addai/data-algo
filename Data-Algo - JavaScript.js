@@ -166,6 +166,130 @@ var Sorting = function() {
 ////////////////////////////////////////
 
 
+// Matrices
+
+function spiralMatrix(mat) { // spiralOrder | O(n) / O(nm) t; O(n) / O(nm) s
+    let arr = []
+    if (mat.length === 0) return arr
+
+    let rs = mat.length, cs = mat[0].length
+    let top = 0, bottom = rs - 1,
+    left = 0, right = cs - 1,
+    dir = 'right', i = 0
+
+    while (top <= bottom && left <= right) {
+        switch (dir) {
+            case 'right':
+                for (i = left; i <= right; i++) arr.push(mat[top][i])
+                top++; dir = 'down'
+                break
+            case 'down':
+                for (i = top; i <= bottom; i++) arr.push(mat[i][right])
+                right--; dir = 'left'
+                break
+            case 'left':
+                for (i = right; i >= left; i--) arr.push(mat[bottom][i])
+                bottom--; dir = 'up'
+                break
+            case 'up':
+                for (i = bottom; i >= top; i--) arr.push(mat[i][left])
+                left++; dir = 'right'
+                break
+        }
+    }
+    return arr
+}
+
+function setMatrixZeroes(mat) { // O(nm) t ; O(1) s
+    let firstColHasZero = firstRowHasZero = false
+    let rs = mat.length, cs = mat[0].length
+
+    // check if 1st col has zero
+    for (let i = 0; i < rs; i++) {
+        if (mat[i][0] === 0) {
+            firstColHasZero = true
+            break
+        }
+    }
+
+    // check if 1st row has zero
+    for (let i = 0; i < cs; i++) {
+        if (mat[0][i] === 0) {
+            firstRowHasZero = true
+            break
+        }
+    }
+
+    // use 1st row & col as flags, if rest of cells have zeroes
+    for (let r = 1; r < rs; r++) {
+        for (let c = 1; c < cs; c++) {
+            if (mat[r][c] === 0) {
+                mat[0][c] = 0
+                mat[r][0] = 0
+            }
+        }
+    }
+
+    // zero out cells based on flags in 1st row & col
+    for (let r = 1; r < rs; r++) {
+        for (let c = 1; c < cs; c++) {
+            if (mat[r][0] === 0 || mat[0][c] === 0)
+                mat[r][c] = 0
+        }
+    }
+
+    // zero out 1st col
+    if (firstColHasZero)
+        for (let i = 0; i < rs; i++)
+            mat[i][0] = 0
+
+    // zero out 1st row
+    if (firstRowHasZero)
+        for (let i = 0; i < cs; i++)
+            mat[0][i] = 0
+}
+
+function wordSearch(mat) { // O(nm) t ; O(1) s
+    // check if word exists in matrix of letters
+
+    const exist = (mat, word) => {
+
+        let found = false, rs = mat.length, cs = mat[0].length
+
+        const dfs = (r, c, count, word) => {
+            if (count === word.length) {
+                found = true; return
+            }
+            if (
+                r < 0 || r >= rs ||
+                c < 0 || c >= cs ||
+                mat[r][c] !== word[count] ||
+                found
+            ) return
+
+            let tmp = mat[r][c]
+            mat[r][c] = ''
+
+            dfs(r + 1, c, count + 1, word)
+            dfs(r - 1, c, count + 1, word)
+            dfs(r, c + 1, count + 1, word)
+            dfs(r, c - 1, count + 1, word)
+
+            mat[r][c] = tmp
+        }
+
+        for (let r = 0; r < rs; r++) {
+            for (let c = 0; c < cs; c++) {
+                if (mat[r][c] === word[0])
+                    dfs(r, c, 0, word)
+            }
+        }
+
+        return found
+    }
+
+    return exist(mat, 'word')
+}
 
 
 ////////////////////////////////////////
@@ -281,11 +405,20 @@ function stringCompression(s) {
     return cs.length < s.length ? cs : s
 }
 
+function stringRotation(a, b) {
+    let isSubStr = (a, b) => a in b
+    // O(n) t, if isSubStr = O(a+b) t
+    if (a.length == b.length && a.length > 0) {
+        let s = "" + a + a
+        return isSubStr(s, b)
+    }
+    return false
+}
+
 // Matrices
 
-// TODO: Understand this problem.
-function rotateMatrix(mat) {
-    // O(n^2)
+function rotateMatrix(mat) { // O(n^2) t
+
     if (mat.length == 0 || mat.length != mat[0].length) return false
     let n = mat.length, first = last = offset = top = i = null
     for (let layer = 0; layer < n/2; layer++) {
@@ -301,20 +434,6 @@ function rotateMatrix(mat) {
         }
     }
     return mat
-}
-
-function zeroMatrix(mat) {
-
-}
-
-function stringRotation(a, b) {
-    let isSubStr = (a, b) => a in b
-    // O(n) t, if isSubStr = O(a+b) t
-    if (a.length == b.length && a.length > 0) {
-        let s = "" + a + a
-        return isSubStr(s, b)
-    }
-    return false
 }
 
 // Linked Lists
@@ -394,6 +513,12 @@ function removeDuplicates(l) { // doubly-linked
 function kthToLast(l, k) {
     
 }
+
+
+// Trees
+
+
+// Graphs
 
 
 

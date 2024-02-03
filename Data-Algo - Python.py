@@ -252,6 +252,63 @@ class DataStructures:
 
     # Matrices
 
+    class Matrix:
+
+        def __init__(self): pass
+
+        def matrix_chain_multiplication(self, arr, i, j):
+            if i == j: return 0
+
+            min_ops = sys.maxsize
+            for k in range(i, j):
+                ops = self.matrix_chain_multiplication(arr, i, k) + \
+                    self.matrix_chain_multiplication(arr, k + 1, j) + \
+                        arr[i - 1] * arr[k] * arr[j]
+                min_ops = min(ops, min_ops)
+            return min_ops
+
+        def top_down_matrix_chain_multiplication(self, arr, i, j, memo):
+            if i == j: return 0
+
+            if memo[i][j] >= 0: return memo[i][j]
+
+            min_ops = sys.maxsize
+            for k in range(i, j):
+                ops = self.top_down_matrix_chain_multiplication(arr, i, k, memo) + \
+                    self.top_down_matrix_chain_multiplication(arr, k + 1, j, memo) + \
+                        arr[i - 1] * arr[k] * arr[j]
+                min_ops = min(ops, min_ops)
+            memo[i][j] = min_ops
+            return memo[i][j]
+
+        def bottom_up_matrix_chain_multiplication(self, arr, n, mat):
+            
+            for l in range(2, n):
+                for i in range(1, n - l + 1):
+                    j = i + l - 1
+                    if j == n: continue
+                    min_ops = sys.maxsize
+                    for k in range(i, j):
+                        min_ops = min(min_ops, (mat[i][k] + mat[k + 1][j] + \
+                            arr[i - 1] * arr[k] * arr[j]))
+                    mat[i][j] = min_ops
+            return mat[1][n - 1]
+        
+        def test(self, test='mcm'):
+            obj = Matrix()
+            if test == 'mcm':
+                arr = [4, 3, 2, 1, 5]; n = len(arr)
+                print(obj.matrix_chain_multiplication(arr, 1, n - 1))
+            elif test == 'td_mcm':
+                arr = [4, 3, 2, 1, 5]; n = len(arr)
+                memo = [[-1 for i in range(n)] for i in range(n)]
+                print(obj.top_down_matrix_chain_multiplication(arr, 1, n - 1, memo))
+            elif test == 'bu_mcm':
+                arr = [4, 3, 2, 1, 5]; n = len(arr)
+                mat = [[0 for i in range(n)] for i in range(n)]
+                print(obj.bottom_up_matrix_chain_multiplication(arr, n, mat))
+            else: pass
+
     # Linked Lists
 
     class LinkedList:
@@ -315,8 +372,121 @@ class DataStructures:
     def lowest_common_ancestor(self): pass
 
     def unique_paths(self): pass
+
+    # Tries
     
-    # Graphs & Tries
+    # Graphs
+
+    class Graph:
+
+        def __init__(self): pass
+
+        class DirectedGraph:
+        
+            def __init__(self, num_nodes):
+                self.num_nodes = num_nodes + 1
+                self.graph = [[0 for x in range(self.num_nodes)] for y in range(self.num_nodes)]
+            
+            def within_bounds(self, v1, v2):
+                return (v1 >= 0 and v1 <= self.num_nodes) and (v2 >= 0 and v2 <= self.num_nodes)
+
+            def insert_edge(self, v1, v2):
+                if self.within_bounds(v1, v2): self.graph[v1][v2] = 1
+            
+            def print_graph(self):
+                for i in range(self.num_nodes):
+                    for j in range(len(self.graph[i])):
+                        if self.graph[i][j] is not None:
+                            print(f"{i} -> {j}")
+            
+            def test(self):
+                g = Graph(5)
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print_graph()
+
+        class UndirectedGraph:
+        
+            def __init__(self, num_nodes):
+                self.num_nodes = num_nodes + 1
+                self.graph = [[0 for x in range(self.num_nodes)] for y in range(self.num_nodes)]
+            
+            def within_bounds(self, v1, v2):
+                return (v1 >= 0 and v1 <= self.num_nodes) and (v2 >= 0 and v2 <= self.num_nodes)
+
+            def insert_edge(self, v1, v2):
+                if self.within_bounds(v1, v2):
+                    self.graph[v1][v2] = 1
+                    self.graph[v2][v1] = 1
+            
+            def print_graph(self):
+                for i in range(self.num_nodes):
+                    for j in range(len(self.graph[i])):
+                        if self.graph[i][j] is not None:
+                            print(f"{i} -> {j}")
+            
+            def test(self):
+                g = Graph(5)
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print_graph()
+        
+        # 
+        
+        
+        class DijkstrasAlgorithm:
+
+            def __init__(self, adj_mat, start_vertex):
+                self.mat = adj_mat
+                self.start = start_vertex
+                self.v = len(adj_mat)
+                self.visited = [False for _ in range(len(adj_mat))]
+                self.distances = [float('inf') for _ in range(len(adj_mat))]
+                self.distances[start_vertex] = 0
+            
+            def get_min_vertex(self):
+                # vertex with the lowest distance
+                min_vertex_value = sys.maxsize
+                min_vertex_index = 0
+
+                for i in range(self.v):
+                    if not self.visited[i] and self.distances[i] < min_vertex_value:
+                        min_vertex_value = self.distances[i]
+                        min_vertex_index = i
+                
+                return min_vertex_index
+            
+            def calculate(self):
+
+                for vertex in range(self.v):
+                    actual_vertex = self.get_min_vertex()
+                    print(f"Considering vertex {actual_vertex}")
+                    self.visited[actual_vertex] = True
+
+                    for other_vertex in range(self.v):
+                        if self.mat[actual_vertex][other_vertex] > 0:
+                            if self.distances[actual_vertex] + self.mat[actual_vertex][other_vertex] < \
+                                self.distances[other_vertex]:
+                                self.distances[other_vertex] = self.distances[actual_vertex] + self.mat[actual_vertex][other_vertex]
+
+            def print_distance(self):
+                print(self.distances)
+        
+            def test(self): 
+                m = [
+                    [0, 7, 5, 2, 0, 0],
+                    [0, 7, 5, 2, 0, 0],
+                    [0, 7, 5, 2, 0, 0],
+                    [0, 7, 5, 2, 0, 0],
+                    [0, 7, 5, 2, 0, 0],
+                    [0, 7, 5, 2, 0, 0]
+                ]
+                algo = DijkstrasAlgorithm(m, 0)
+                algo.calculate()
+                algo.print_distance()
+
 
     # Bits
 
@@ -972,6 +1142,18 @@ def two_sum(nums, target):
 def lru_cache(): pass
 
 
+# Matrices
+
+
+# Linked Lists
+
+
+# Trees
+
+
+# Graphs
+
+
 
 ########################################
 #  LeetCode
@@ -1092,7 +1274,6 @@ def common_elems(arr1, arr2): # Most optimized algo [time - O(n)] [space - shoul
 
     print(nums)
     return len(nums)
-
 
 
 #
