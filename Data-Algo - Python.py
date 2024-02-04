@@ -233,6 +233,7 @@ class Sorting:
 ##  OTHER ALGO'S
 ########################################
 
+# Data Structures (Arrays, Strings, Matrices, etc)
 
 class DataStructures:
 
@@ -312,8 +313,16 @@ class DataStructures:
     # Linked Lists
 
     class LinkedList:
+            
+        # Singly-linked list
+        class SListNode:
 
-        class ListNode:
+            def __init__(self, v=0, n=None):
+                self.v = v
+                self.n = n
+
+        # Doubly-linked list
+        class DListNode:
 
             def __init__(self, v, n=None, p=None): 
                 self.v = v; self.n = n; self.p = p
@@ -338,8 +347,7 @@ class DataStructures:
                     self.n.for_each(cb, i + 1)
 
 
-        def __init__(self, l: ListNode): 
-            self.r = l
+        def __init__(self): pass
 
 
     def reverse(self, l: LinkedList): pass
@@ -349,11 +357,11 @@ class DataStructures:
         # sorted 
         pass
         # unsorted
-        
 
     def add(self, l1, l2): pass
         
     def add_nums(self, a, b): pass
+
 
     # Stacks & Queues
 
@@ -362,6 +370,13 @@ class DataStructures:
     # Trees
 
     # Binary (Search) Trees
+
+    class Tree():
+
+        def __init__(self, x):
+            self.value = x
+            self.left = None
+            self.right = None
 
     def diameter(self): pass
 
@@ -432,10 +447,7 @@ class DataStructures:
                 g.insert_edge(2, 3)
                 g.insert_edge(4, 5)
                 g.print_graph()
-        
-        # 
-        
-        
+
         class DijkstrasAlgorithm:
 
             def __init__(self, adj_mat, start_vertex):
@@ -917,35 +929,6 @@ class Games:
 class Quant:
 
     def __init__(self): pass
-
-
-
-###################################################
-#  Data Structures (Arrays, Strings, Matrices, etc)
-###################################################
-
-
-
-# LINKED LIST TRAVERSAL ALGO'S
-
-
-
-# Singly-linked list (interface already defined)
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-
-# TREE TRAVERSAL ALGO'S
-
-
-# Binary tree (interface already defined)
-class Tree(object):
-  def __init__(self, x):
-    self.value = x
-    self.left = None
-    self.right = None
 
 
 

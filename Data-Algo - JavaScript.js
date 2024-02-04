@@ -166,6 +166,10 @@ var Sorting = function() {
 ////////////////////////////////////////
 
 
+// TODO: class DataStructures
+
+// Arrays & Strings
+
 // Matrices
 
 function spiralMatrix(mat) { // spiralOrder | O(n) / O(nm) t; O(n) / O(nm) s
@@ -290,6 +294,21 @@ function wordSearch(mat) { // O(nm) t ; O(1) s
 
     return exist(mat, 'word')
 }
+
+// Linked Lists
+
+// Trees
+
+// Trees
+
+// Trees
+
+// Trees
+
+// Trees
+
+// Trees
+
 
 
 ////////////////////////////////////////

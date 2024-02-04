@@ -75,7 +75,112 @@ class Sorting {
 
 // Arrays & Strings
 
+String reorganizeString(String S) { // TODO: verify - O(n + n log n) t ; O(n) s
+    Map<Character, Integer> counts = new HashMap<>();
+
+    // O(n)
+    for (char c : S.toCharArray())
+        counts.put(c, counts.getOrDefault(c, 0) + 1);
+    
+    PriorityQueue<Character> maxHeap = new PriorityQueue<>(
+        (a, b) -> counts.get(b) - counts.get(a)
+    );
+    maxHeap.addAll(counts.keySet());
+
+    // todo: NB: Concatenating a String takes in more buffer data or additional memory overhead (more space complexity) than manually building up a String with a mutable StringBuilder object, Character by Character
+    // Concatenating to an immutable String object creates a new String object (leading to additional memory overhead)
+
+    StringBuilder result = new StringBuilder();
+    char current; char next; char last;
+
+    // O(n log n)
+    while (maxHeap.size() > 1) {
+        current = maxHeap.poll();
+        next = maxHeap.poll();
+        result.append(current);
+        result.append(next);
+        counts.put(current, counts.get(current) - 1);
+        counts.put(next, counts.get(next) - 1);
+        if (counts.get(current) > 0) maxHeap.add(current);
+        if (counts.get(next) > 0) maxHeap.add(next);
+        // base-case check
+        if (!maxHeap.isEmpty()) {
+            last = maxHeap.poll();
+            if (counts.get(last) > 1) return "";
+            result.append(last);
+        }
+    }
+
+    return result.toString();
+}
+
+int minimumDominoRotations(int[] a, int[] b) { // todo: test
+    int numSwaps(int target, int[] a, int[] b) {
+        int numSwaps = 0;
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] != target && b[i] != target) return Integer.MAX_VALUE;
+            else if (a[i] != target) numSwaps++;
+        }
+        return numSwaps;
+    }
+
+    int minSwaps = Math.min(
+        numSwaps(a[0], a, b),
+        numSwaps(b[0], a, b)
+    );
+    minSwaps = Math.min(minSwaps, numSwaps(a[0], b, a));
+    minSwaps = Math.min(minSwaps, numSwaps(b[0], a, b));
+    return minSwaps == Integer.MAX_VALUE ? -1 : minSwaps;
+}
+
+int maximumPointsFromCards(int[] points, int k) {
+    int sum = 0, int max = 0;
+    int n = points.length - 1;
+    int[] left = new int[k+1];
+    int[] right = new int[k+1];
+    left[0] = 0; right[0] = 0;
+
+    for (int i = 1; i <= k; i++)
+        left[i] = left[i-1] + points[i-1];
+    
+    for (int i = 1; i <= k; i++)
+        right[i] = right[i-1] + points[n--];
+    
+    for (int j = 0; j < left.length; j++) {
+        sum = left[j] + right[right.length - j - 1];
+        max = Math.max(sum, max);
+    }
+
+    return max;
+}
+
 // Matrices
+
+/**
+ * TODO:
+
+int[][] rotateMatrix(int[][] matrix) {
+    int N = matrix.length; // only for square NxN matrices, or else, find number of columns too (matrix[0].length)
+    int temp;
+
+    for (int i = 0; i < N; i++) {
+        for (int j = i; j < N; j++) {
+            temp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = temp;
+        }
+    }
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N / 2; j++) {
+            temp = matrix[i][j];
+            matrix[i][j] = matrix[i][N - 1 - j];
+            matrix[i][N - 1 - j] = temp;
+        }
+    }
+}
+
+*/
 
 // This diagonal iteration solution only works on square matrices
 void setZeroesDiagonally (int[][] matrix) {
@@ -96,6 +201,8 @@ void setZeroesDiagonally (int[][] matrix) {
         r++; c++;
     }
 }
+
+
 
 ////////////////////////////////////////
 // CODESIGNAL - ARCADE TESTS (increasing difficulty)
