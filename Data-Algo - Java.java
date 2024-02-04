@@ -159,8 +159,9 @@ int maximumPointsFromCards(int[] points, int k) {
 /**
  * TODO:
 
-int[][] rotateMatrix(int[][] matrix) {
-    int N = matrix.length; // only for square NxN matrices, or else, find number of columns too (matrix[0].length)
+int[][] rotateMatrix(int[][] matrix) { O(n) t ; O(1) s
+    // only for square NxN matrices, or else, find number of columns too (matrix[0].length)
+    int N = matrix.length;
     int temp;
 
     for (int i = 0; i < N; i++) {
