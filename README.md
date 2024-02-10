@@ -37,6 +37,7 @@ Data structures included:
 - Linked Lists
 - Stacks
 - Queues
+- PriorityQueues
 - Trees
 - Binary Search Trees (BST)
 - TreeMaps
