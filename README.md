@@ -33,6 +33,7 @@ Data structures included:
 - Tuples
 - Dictionaries
 - Maps
+- Tables
 - HashMaps
 - HashTables
 - Linked Lists
@@ -47,7 +48,7 @@ Data structures included:
 - Tries
 - Graphs
 - Bits & Bytes
-- Blobs (hopefully :)
+- Blobs
 - etc
 
 <br />
