@@ -204,7 +204,7 @@ function spiralMatrix(mat) { // spiralOrder | O(n) / O(nm) t; O(n) / O(nm) s
     return arr
 }
 
-function setMatrixZeroes(mat) { // O(nm) t ; O(1) s
+function setMatrixZeroes(mat) { // O(nm) t | O(1) s
     let firstColHasZero = firstRowHasZero = false
     let rs = mat.length, cs = mat[0].length
 
@@ -253,7 +253,7 @@ function setMatrixZeroes(mat) { // O(nm) t ; O(1) s
             mat[0][i] = 0
 }
 
-function wordSearch(mat) { // O(nm) t ; O(1) s
+function wordSearch(mat) { // O(nm) t | O(1) s
     // check if word exists in matrix of letters
 
     const exist = (mat, word) => {
@@ -318,7 +318,7 @@ function wordSearch(mat) { // O(nm) t ; O(1) s
 // Arrays & Strings
 
 function sortStringArray(a) {
-    // O(n * s log s) + O(n log n) t ; O(1) s
+    // O(n * s log s) + O(n log n) t | O(1) s
     a.map((s, i) => s.sort())
     a.sort() // or
     a.sort((a, b) => a - b) // -ve (a<b) for ascending, ASCII character order
@@ -327,7 +327,7 @@ function sortStringArray(a) {
 function isUnique(s) {
     if (s.length == 0) return false
     else if (s.length == 1) return true
-    // O(s) t ; O(s) s
+    // O(s) t | O(s) s
     let m = {}
     for (let c of s) {
         if (c in m) return false
@@ -343,7 +343,7 @@ function isUnique(s) {
 
 function checkPermutation(a, b) {
     if (a.length != b.length) return false
-    // O(a) + O(b) t ; O(a) s 
+    // O(a) + O(b) t | O(a) s 
     let m = {}
     for (let x of a) {
         m[x] = x in m ? ++m[x] : 1
@@ -361,7 +361,7 @@ function URLify(s) {
     if (s.length == 0) return null
     // O(?)
     s.replace(" ", "%20")
-    // O(s) t ; O(1) s
+    // O(s) t | O(1) s
     s = [...s] // find t-complexity
     for (let i = 0; i < s.length; i++) {
         if (s[i] === " ") s[i] = "%20"
@@ -372,7 +372,7 @@ function URLify(s) {
 }
 
 function palindromePermutation(s) {
-    // O(s + m) t ; O(m) s [NB: s>m]
+    // O(s + m) t | O(m) s [NB: s>m]
     let m = {}, f = false
     for (let x of s) {
         m[x] = x in m ? ++m[x] : 1
@@ -384,7 +384,7 @@ function palindromePermutation(s) {
         }
     }
     return true
-    // O(s) t ; O(m) s
+    // O(s) t | O(m) s
     let odd = 0
     for (x of s) {
         m[x] = x in m ? ++m[x] : 1
@@ -413,7 +413,7 @@ function stringCompression(s) {
             c = 0
         }
     }
-    // O(s + m) t ; O(m) s [NB: s>m]
+    // O(s + m) t | O(m) s [NB: s>m]
     let m = {}
     for (let x of s) {
         m[x] = x in m ? ++m[x] : 1

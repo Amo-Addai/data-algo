@@ -75,7 +75,7 @@ class Sorting {
 
 // Arrays & Strings
 
-String reorganizeString(String S) { // TODO: verify - O(n + n log n) t ; O(n) s
+String reorganizeString(String S) { // TODO: verify - O(n + n log n) t | O(n) s
     Map<Character, Integer> counts = new HashMap<>();
 
     // O(n)
@@ -159,7 +159,7 @@ int maximumPointsFromCards(int[] points, int k) {
 /**
  * TODO:
 
-int[][] rotateMatrix(int[][] matrix) { O(n) t ; O(1) s
+int[][] rotateMatrix(int[][] matrix) { O(n) t | O(1) s
     // only for square NxN matrices, or else, find number of columns too (matrix[0].length)
     int N = matrix.length;
     int temp;

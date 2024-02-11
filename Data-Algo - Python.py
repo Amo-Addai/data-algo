@@ -77,7 +77,7 @@ class Sorting:
 
     # regular
 
-    def insertion(self, a): # O(n^2) t ; O(1) s
+    def insertion(self, a): # O(n^2) t | O(1) s
         if self.check(a): return a
         for i in range(1, len(a)):
             j = i
@@ -90,7 +90,7 @@ class Sorting:
                 else: break # 1-lvl?
         return a
 
-    def selection(self, a): # O(n^2) t ; O(1) s
+    def selection(self, a): # O(n^2) t | O(1) s
         if self.check(a): return a
         for i, x in enumerate(a):
             l = i
@@ -109,7 +109,7 @@ class Sorting:
 
     # bad
 
-    def bubble(self, a): # O(n^2) t ; O(1) s
+    def bubble(self, a): # O(n^2) t | O(1) s
         if self.check(a): return a
         sorting = True
         while sorting: # fastest loop
@@ -152,7 +152,7 @@ class Sorting:
 
     # special
 
-    def counting(self, a): # O(3n) best case t ; O(2n) s
+    def counting(self, a): # O(3n) best case t | O(2n) s
         if self.check(a): return a
         
         c, s = {}, []
@@ -203,7 +203,7 @@ class Sorting:
         # TODO
         return a
 
-    def merge(self, a): # O(nlogn) t ; O(n) s
+    def merge(self, a): # O(nlogn) t | O(n) s
         if self.check(a): return a
 
         def merge(a, b): # TODO
@@ -216,7 +216,7 @@ class Sorting:
         l = self.merge(a[:m]); r = self.merge(a[m:])
         return merge(l, r)
 
-    def quick(self, a): # O(nlogn) t ; O(logn) s
+    def quick(self, a): # O(nlogn) t | O(logn) s
         if self.check(a): return a
         p = a[len(a) / 2]
         l = e = g = []
@@ -1077,21 +1077,21 @@ def sum_swap(a1, a2):
     return None # so complete the solution (unless both arrays have all distinct values)
 
 def pairs_with_sum(a, s): 
-    # O(2n) t ; O(d+p) s
+    # O(2n) t | O(d+p) s
     p, d = [], {}
     for i in a:
         if i not in d: d[i] = i
     for i in a:
         if (s-i) in d: p.append((i, s-i))
 
-    # O(n) t ; O(d+p) s
+    # O(n) t | O(d+p) s
     for i in a: # combining 2 loops into 1
         if (s-i) in d: p.append((i, s-i))
         if i not in d: # needed if a doesn't have distinct elements
             d[i] = i
 
     # two-pointer technique (sorted arr)
-    # O(nlogn + n) t ; O(1) s
+    # O(nlogn + n) t | O(1) s
 
     a.sort() # O(nlogn) (quick) sort
     i, j = 0, len(a) - 1
