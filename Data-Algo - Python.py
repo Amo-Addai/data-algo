@@ -1,4 +1,6 @@
 import sys
+from collections import deque, defaultdict
+
 import numpy as np
 import pandas as pd
 import keras
@@ -377,7 +379,60 @@ class DataStructures:
             self.value = x
             self.left = None
             self.right = None
+            self.children = [] # for more than 2 children
+        
+        def add_child(self, t):
+            self.children.append(t)
 
+    def dfs(self, tree):
+        if tree is None or type(tree) is not DataStructures.Tree: return
+
+        # DFS pre-order
+        print(tree.value)
+        self.dfs(tree.left)
+        self.dfs(tree.right)
+        for child in tree.children:
+            self.dfs(child)
+
+        # DFS post-order
+        self.dfs(tree.left)
+        self.dfs(tree.right)
+        for child in tree.children:
+            self.dfs(child)
+        print(tree.value)
+
+        # DFS in-order
+        self.dfs(tree.left)
+        print(tree.value)
+        self.dfs(tree.right)
+        ''' # TODO: test this option
+        for child in tree.children:
+            self.dfs(child)
+            print(tree.value)
+        '''
+        # Traverse all children, except last child
+        for i in range(len(tree.children) - 1):
+            self.dfs(tree.children[i])
+            print(tree.value)
+        # Traverse last child
+        if tree.children:
+            self.dfs(tree.children[-1])
+        print(tree.value)
+
+    def bfs(self, tree):
+        if tree is None or type(tree) is not DataStructures.Tree: return
+
+        queue = deque()
+        queue.append(tree)
+
+        while queue:
+            node = queue.popleft()
+            print(node.value)
+            queue.append(node.left)
+            queue.append(node.right)
+            for child in node.children:
+                queue.append(child)
+    
     def diameter(self): pass
 
     def max_depth_or_height(self): pass
