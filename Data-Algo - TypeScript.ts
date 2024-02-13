@@ -2,8 +2,6 @@
 
 /*
 
-LEARN
-
 Js/Ts/Sw
 ..
 

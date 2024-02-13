@@ -7,8 +7,6 @@ import keras
 import tensorflow as t
 
 '''
-LEARN
-
 for - iter, k/v, ..
 ..
 

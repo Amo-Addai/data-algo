@@ -2,8 +2,6 @@ open System
 
 (*
 
-LEARN
-
 Arrows, Lambdas, ..
 ..
 

@@ -7,8 +7,6 @@ import (
 
 /*
 
-LEARN
-
 Closures, ..
 ..
 

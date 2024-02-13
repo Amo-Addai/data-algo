@@ -1,7 +1,5 @@
 /*
 
-LEARN
-
 Closures, some, convenience, ..
 ..
 

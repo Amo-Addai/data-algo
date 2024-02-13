@@ -2,8 +2,6 @@ import java.io._
 
 /*
 
-LEARN
-
 Closures, ..
 ..
 

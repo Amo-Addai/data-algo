@@ -3,8 +3,6 @@ using System.Linq;
 
 /*
 
-LEARN
-
 Closures, ..
 ..
 
