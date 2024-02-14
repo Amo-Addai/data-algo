@@ -17,23 +17,23 @@ type SearchigAlgorithms (constructor-arguments) = class
     new () as this =
         // 
 
-    let linearSearch a: any[], x: any -> int32 =
+    let linearSearch a: int32[], x: int32 -> int32 =
         for i = 0 to a.length do
         // for i in a do; for i in 0 .. a.length do
             if x = a[i] then return i // index
 
-    let binarySearch a: any[], x: any -> int32 =
+    let binarySearch a: int32[], x: int32 -> int32 =
         // a.sort()
         if (x.length = 0) then return null
 
-        let rec rBinarySearch a: any[], x: any -> int32 =
+        let rec rBinarySearch a: int32[], x: int32 -> int32 =
             if x.length = 0 then return null
             let m = a.length / 2
             if x < a[m] then return rBinarySearch(a, x) // slice a
             elif x > a[m] then return rBinarySearch(a, x) // slice a
             else return m
 
-        let rec rBinarySearch2p a: any[], x: any f: int32, l: int32 -> int32 =
+        let rec rBinarySearch2p a: int32[], x: int32 f: int32, l: int32 -> int32 =
             if x.length = 0 then return null
             let m = (f + l) / 2
             if x < a[m] then return rBinarySearch2p(a, x, f, m - 1)

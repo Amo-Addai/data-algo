@@ -3,7 +3,7 @@
 
 <br />
 
-Implementations of algorithms for coding interview questions, leveraging all data structures and programming languages.
+Implementations of algorithms for coding interview questions, leveraging some data structures and programming languages.
 
 <br />
 
@@ -55,7 +55,7 @@ Data structures included:
 
 ## Programming Languages
 
-Some of the programming languages (ordered in-terms of total skill-level) included:
+Some of the programming languages (mostly ordered in-terms of total skill-level) included:
 
 - Python
 - Javascript
@@ -70,12 +70,13 @@ Some of the programming languages (ordered in-terms of total skill-level) includ
 - Golang
 - R
 - Ruby
-- Scala
+- Bash
 - Objective-C
+- Scala
 - Dart
 - Kotlin
-- Bash
+- Rust
 - Erlang
-- Matlab
 - F#
 - Q#
+- Matlab

@@ -3,7 +3,6 @@ using System.Linq;
 
 /*
 
-Closures, ..
 ..
 
 */

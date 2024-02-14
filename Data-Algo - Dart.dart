@@ -1,6 +1,5 @@
 /*
 
-Closures, ..
 ..
 
 */
@@ -14,17 +13,17 @@ class Searching {
 
   Searching([this.i]);
 
-  int linearSearch(Array<T> a, T x) {
+  int linearSearch(Array<int> a, int x) {
     for (var i = 0; i < a.length; i++) { // length
       if (x == a[i]) return i;
     }
   }
 
-  int binarySearch(Array<T> a, T x) {
+  int binarySearch(Array<int> a, int x) {
     // a.sort()
     if (a.length == 0) return null;
 
-    Function rBinarySearch = (Array<T> a, T x) {
+    Function rBinarySearch = (Array<int> a, int x) {
       if (a.length == 0) return null;
       var m = a.length / 2;
       if (x < a[m]) return rBinarySearch(a, x); // slice a
@@ -32,7 +31,7 @@ class Searching {
       else return m;
     }
 
-    Function rBinarySearch2p = (Array<T> a, T x, int f, int l) {
+    Function rBinarySearch2p = (Array<int> a, int x, int f, int l) {
       if (a.length == 0) return null;
       var m = (f + l) / 2;
       if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1);

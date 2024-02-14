@@ -1,6 +1,5 @@
 /*
 
-Lambda, ..
 ..
 
 */
@@ -10,34 +9,32 @@ Lambda, ..
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class Searching {
+pub mod Searching {
 
-    private let mut i:i32 = 0;
+    priv let mut i:i32 = 0;
 
-    fn linearSearch(a: &[T], mut x: T) -> i32? {
+    fn linearSearch(a: &[i32], mut x: i32) -> Option<i32> {
         for i in 0..a.len()-1 if x == a[i] return i; // index
     }
 
-    fn binarySearch(a: Vec<T>, mut x: T) -> i32? {
+    fn binarySearch(a: Vec<i32>, mut x: i32) -> Option<i32> {
         // a.sort()
-        if a.len() == 0 return null; // length
+        if a.len() == 0 return None; // length
 
-        let rBinarySearch: (Vec<T>, T) -> i32? = { (a: Vec<T>, x: T) -> { // lambda
-                if a.len() == 0 return null;
-                let m = a.len() / 2;
-                if x < a[m] return rBinarySearch(a, x);
-                else if x > a[m] return rBinarySearch(a, x);
-                else return m;
-            }
+        let rBinarySearch: fn(Vec<i32>, i32) -> Option<i32> = | a: Vec<i32>, x: i32 | -> i32 {
+            if a.len() == 0 return None;
+            let m = a.len() / 2;
+            if x < a[m] return rBinarySearch(a, x);
+            else if x > a[m] return rBinarySearch(a, x);
+            else return m;
         }
 
-        let rBinarySearch2p: (Vec<T>, T) -> i32? = { (a: Vec<T>, x: T, f:i32, l:i32) -> {
-                if a.len() == 0 return null;
-                let m = (f + l) / 2;
-                if x < a[m] return rBinarySearch2p(a, x, f, m - 1);
-                else if x > a[m] return rBinarySearch2p(a, x, m + 1, l);
-                else return m;
-            }
+        let rBinarySearch2p: fn(Vec<i32>, i32) -> Option<i32> = | a: Vec<i32>, x: i32, f:i32, l:i32 | -> i32 {
+            if a.len() == 0 return None;
+            let m = (f + l) / 2;
+            if x < a[m] return rBinarySearch2p(a, x, f, m - 1);
+            else if x > a[m] return rBinarySearch2p(a, x, m + 1, l);
+            else return m;
         }
 
         let mut f:i32 = 0;
@@ -52,7 +49,7 @@ class Searching {
             else if x > a[m] f = m + 1;
             else return m;
         }
-        return null;
+        return None;
     }
 
 }
@@ -62,9 +59,9 @@ class Searching {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class Sorting {
+pub mod Sorting {
 
-    private let i:i32 = 0;
+    priv let i:i32 = 0;
     
 }
 
