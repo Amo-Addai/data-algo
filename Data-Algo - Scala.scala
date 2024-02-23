@@ -2,9 +2,6 @@ import java.io._
 
 /*
 
-LEARN
-
-Closures, ..
 ..
 
 */
@@ -16,16 +13,16 @@ Closures, ..
 
 class Searching(val prop: Any) {
 
-    def linearSearch(a: Array[Any], x: Any): Int = {
+    def linearSearch(a: Array[Int], x: Int): Int = {
         for (var i <- a if x == i) return i // item
         // tip - a.length times | for (var i <- i to a) |  for (var i <- 0 until a)
     }
 
-    def binarySearch(a: Array[Any], x: Any): Int = {
+    def binarySearch(a: Array[Int], x: Int): Int = {
         // a.sort()
         if (a.length == 0) return Nil
 
-        var rBinarySearch = (a: Array[Any], x: Any): Int => {
+        var rBinarySearch = (a: Array[Int], x: Int): Int => {
             if (a.length == 0) return Nil
             val m: Int = a.length / 2
             if (x < a(m)) return rBinarySearch(a.range(0, m - 1), x)
@@ -33,7 +30,7 @@ class Searching(val prop: Any) {
             else return m
         }
 
-        var rBinarySearch2p = (a: Array[Any], x: Any, f: Int, l: Int): Int => {
+        var rBinarySearch2p = (a: Array[Int], x: Int, f: Int, l: Int): Int => {
             if (a.length == 0) return Nil
             val m: Int = (f + l) / 2
             if (x < a(m)) return rBinarySearch2p(a, x, f, m - 1)

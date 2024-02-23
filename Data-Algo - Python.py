@@ -7,8 +7,6 @@ import keras
 import tensorflow as t
 
 '''
-LEARN
-
 for - iter, k/v, ..
 ..
 
@@ -383,7 +381,41 @@ class DataStructures:
         
         def add_child(self, t):
             self.children.append(t)
+    
+    def print_tree(self, tree, level=0):
+        print("  " * level, tree.value)
+        for child in tree.children:
+            self.print_tree(child, level + 1)
 
+    def print_tree_2(self, tree, indent=''):
+        # Print the current noode's value
+        print(indent + str(tree.value))
+
+        # Recursively print each child with appropriate indentation
+        for i, child in enumerate(tree.children):
+            if i < len(tree.children) - 1:
+                print(indent + '├── ', end='')
+            else:
+                print(indent + '└── ', end='')
+            self.print_tree_2(child, indent + '│   ')
+    
+    def print_tree_3(self, tree, indent='', last=True):
+        print(indent, end='')
+        if last:
+            print('└── ', end='')
+            indent += '    '
+        else:
+            print('├── ', end='')
+            indent += '│   '
+
+        print(tree.value)
+
+        # Recursively print each child with appropriate indentation
+        child_count = len(tree.children)
+        for i, child in enumerate(tree.children):
+            self.print_tree_3(child, indent, i == child_count - 1)
+    
+    
     def dfs(self, tree):
         if tree is None or type(tree) is not DataStructures.Tree: return
 

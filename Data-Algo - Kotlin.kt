@@ -1,8 +1,5 @@
 /*
 
-LEARN
-
-Lambda, ..
 ..
 
 */
@@ -16,15 +13,15 @@ class Searching {
 
     private var i: Int = 0
 
-    fun linearSearch(a: Array<T>, x: T): Int? {
+    fun linearSearch(a: Array<Int>, x: Int): Int? {
         for (var i in 0..a.length-1) if (x == a[i]) return i // index
     }
 
-    fun binarySearch(a: Array<T>, x: T): Int? {
+    fun binarySearch(a: Array<Int>, x: Int): Int? {
         // a.sort()
         if (a.length == 0) return null // length
 
-        val rBinarySearch: (Array<T>, T) -> Int? = { (a: Array<T>, x: T) -> { // lambda
+        val rBinarySearch: (Array<Int>, Int) -> Int? = { (a: Array<Int>, x: Int) -> {
                 if (a.length == 0) return null
                 val m = a.length / 2
                 if (x < a[m]) return rBinarySearch(a, x)
@@ -33,7 +30,7 @@ class Searching {
             }
         }
 
-        val rBinarySearch2p: (Array<T>, T) -> Int? = { (a: Array<T>, x: T, f: Int, l: Int) -> {
+        val rBinarySearch2p: (Array<Int>, Int) -> Int? = { (a: Array<Int>, x: Int, f: Int, l: Int) -> {
                 if (a.length == 0) return null
                 val m = (f + l) / 2
                 if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1)
@@ -42,7 +39,7 @@ class Searching {
             }
         }
 
-        val f: Int = 0, l: Int = a.length -1, m: Int
+        val f: Int = 0, l: Int = a.length - 1, m: Int
         rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l)
 
         while (f < l) {

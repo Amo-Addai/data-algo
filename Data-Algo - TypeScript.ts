@@ -2,8 +2,6 @@
 
 /*
 
-LEARN
-
 Js/Ts/Sw
 ..
 
@@ -14,20 +12,20 @@ Js/Ts/Sw
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
-class SearchingT {
+class TSearching {
 
     constructor() { }
 
-    linearSearch(a: any[], x: any): number | null {
+    linearSearch(a: number[], x: number): number | null {
         for (let i of a) if (i in a) return i as number
         return null
     }
 
-    binarySearch(a: any[], x: any): number | null {
+    binarySearch(a: number[], x: number): number | null {
         // a.sort()
         if (a.length === 0) return null
 
-        var rBinarySearch = (a: any[], x: any): number | null => {
+        var rBinarySearch = (a: number[], x: number): number | null => {
             if (a.length === 0) return null
             let m: number = a.length / 2
             if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x)
@@ -35,7 +33,7 @@ class SearchingT {
             else return m
         }
 
-        var rBinarySearch2p = (a: any[], x: any, f: number, l: number): number | null => {
+        var rBinarySearch2p = (a: number[], x: number, f: number, l: number): number | null => {
             if (a.length === 0) return null
             let m: number = (f + l) / 2
             if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1)
@@ -62,7 +60,7 @@ class SearchingT {
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-class SortingT {
+class TSorting {
 
     constructor() { }
 

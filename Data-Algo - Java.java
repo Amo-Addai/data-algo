@@ -2,9 +2,6 @@ import java.io.*;
 
 /*
 
-LEARN
-
-Closures, ..
 ..
 
 */

@@ -7,9 +7,6 @@ import (
 
 /*
 
-LEARN
-
-Closures, ..
 ..
 
 */
