@@ -2,7 +2,7 @@
 
 /*
 
-Js/Ts/Sw
+Compare Js/Ts/Sw/C#
 ..
 
 */
@@ -17,7 +17,7 @@ class TSearching {
     constructor() { }
 
     linearSearch(a: number[], x: number): number | null {
-        for (let i of a) if (i in a) return i as number
+        for (let i of a) if (i in a) return i
         return null
     }
 
@@ -173,16 +173,16 @@ function almostIncreasingSequence(sequence: number[]): boolean {
 function matrixElementsSum(matrix: number[][]): number {
     return matrix.map((line, j) => line.map((el, i) => (matrix.slice(0, j).every(l => l[i] !== 0)) ? el : 0)).reduce((a, b) => a + b.reduce((c, d) => c + d), 0);
 
-    //  COULDN'T EVEN COPY THE CODE DITO-DITO PROPERLY !!!
-
-    // return matrix.map((line, j) => {
-    //     line.map((el, i) => {
-    //         (matrix.slice(0, j).every(l => l[i] !== 0)) ? el : 0
-    //     })
-    // }).reduce((a, b) => {
-    //     a + b.reduce((c, d) => {
-    //         c + d
-    //     }), 0);
+    /*
+    return matrix.map((line, j) => {
+        line.map((el, i) => {
+            (matrix.slice(0, j).every(l => l[i] !== 0)) ? el : 0
+        })
+    }).reduce((a, b) => {
+        a + b.reduce((c, d) => {
+            c + d
+        }), 0);
+    */
 }
 
 // Given an array of strings, return another array containing all its longest strings
@@ -915,9 +915,8 @@ function rkSearch(t: string, p: string): number {
         endIndex = Number(i + (pArr.length - 1))
         let window = Array(tArr)
         let windowHash = null // nextHash() <- FIND .ts METHOD
-        // 
 
-        if (window == pHash) if (Array(pArr) == window) return i
+        if (window == pHash) if (Array(pArr) == window) return i as number // todo: remove casting when .flatMap(x as number) is fixed
 
         prevHash = windowHash
     }
