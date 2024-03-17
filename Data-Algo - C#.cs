@@ -18,7 +18,7 @@ class Searching
         
     public Int LinearSearch(Int[] a, Int x) 
     {
-        return from i in a where i == x select i; // return i as index, instead of item
+        return from i in a where i == x select i; // todo: return i as index, instead of item
         // return a.Where(i => i == x).Select(i); // Alternative Linq Usage
     }
 

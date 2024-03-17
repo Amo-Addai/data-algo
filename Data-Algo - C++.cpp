@@ -41,7 +41,7 @@ public:
         // a = rsort(a);
         
         if (size(a) == 0)
-            return;
+            return -1;
 
         int f = 0, l = size(a) - 1, m;
         rBinarySearch(a, 7);
@@ -60,7 +60,7 @@ public:
 
     int rBinarySearch(int a[], int x) {
         if (size(a) == 0)
-            return;
+            return -1;
         int m = size(a) / 2;
         if (x < a[m])
             return rBinarySearch(a, x); // slice a
@@ -72,7 +72,7 @@ public:
 
     int rBinarySearch(int a[], int x, int f, int l) {
         if (size(a) == 0)
-            return;
+            return -1;
         int m = size(a) / 2;
         if (x < a[m])
             return rBinarySearch(a, x, f, m - 1);
@@ -181,7 +181,7 @@ void setZeroesDiagonally (vector<vector<int>>& matrix) {
 //  TEST CASES
 ////////////////////////////////////////
 
-void main(int argc, char argv[]) {
+int main(int argc, char** argv) {
     auto i = 0;
     cout << "Hello, World (" << i << ") !" << endl;
 }
