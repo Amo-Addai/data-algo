@@ -1499,12 +1499,89 @@ def tree_paths_sum(t, v):
 ##  EXTRA TESTS
 ########################################
 
+def wave_array(arr): #nlogn + (n/2)
+    arr.sort() # O(n log n)
+    for i in range(1, len(arr), 2): # O(n / 2)
+        arr[i], arr[i-1] = arr[i-1], arr[i]
+
 def count_like_dislike (A, P):
     c = 0; A = list(A); P = list(P) # these 2 castings might be O(A + P) t
     while len(A) > 0 or len(P) > 0: # O(n) t , if n is same length for both A and P
         if A.pop(0) == P.pop(0): c += 1 
         # todo: find out differences in time/space complexities and memory usage between indexing and pop() within python lists
     return c
+
+def occupied_desks(arr):
+  K = arr[0]
+  occupied_desks = arr[1:]
+  ways = 0
+  for i in range(1, K+1):
+    if i not in occupied_desks:
+      if i + 1 <= K and i + 1 not in occupied_desks:
+        ways += 1
+      if i + 2 <= K and i + 2 not in occupied_desks:
+        ways += 1
+  return ways
+
+def algebra(str):
+    # __define-ocg__
+    parts = str.split()
+
+    # Get the index of the x character
+    x_index = parts.index('x')
+
+    # Get the numbers and the operator
+    num1 = int(parts[0]) if x_index != 0 else None
+    num2 = int(parts[2]) if x_index != 2 else None
+    result = int(parts[4])
+
+    # Determine the missing digit
+    if parts[1] == '+':
+        if x_index == 0:
+            return result - num2
+        elif x_index == 2:
+            return result - num1
+        else:
+            return num1 + num2
+    elif parts[1] == '-':
+        if x_index == 0:
+            return result + num2
+        elif x_index == 2:
+            return num1 - result
+        else:
+            return num1 - num2
+    elif parts[1] == '*':
+        if x_index == 0:
+            return result // num2
+        elif x_index == 2:
+            return result // num1
+        else:
+            return num1 * num2
+    elif parts[1] == '/':
+        if x_index == 0:
+            return result * num2
+        elif x_index == 2:
+            return num1 // result
+        else:
+            return num1 // num2
+
+def gas_stations(strArr):
+    # __define-ocg__
+    N = int(strArr[0])
+    gas_stations = [list(map(int, station.split(':'))) for station in strArr[1:]]
+
+    # Check starting from each gas station
+    for i in range(N):
+        tank = 0
+        for j in range(N):
+            station = gas_stations[(i + j) % N]
+            tank += station[0] - station[1]
+            if tank < 0:
+                break
+        else:
+            return i + 1
+
+    return "impossible"
 
 
 
@@ -1515,3 +1592,4 @@ def count_like_dislike (A, P):
 
 if __name__ == "__main__":
     print("Hello, World!")
+
