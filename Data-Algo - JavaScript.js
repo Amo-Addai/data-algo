@@ -450,15 +450,17 @@ function merge2SortedLinkedLists(l1, l2) { // O(n1 + n2) t ; O(1) s
 // * Leetcode Q141 - hasCycle or isCircular
 function hasCycle(ll) { 
 
-    // Option 1: O(n/2) t; O(1) s
+    // Option 1: O(n) t; O(1) s
     // todo: test for true Circularity (to be sure slow & fast iterations always intersect on every cycle-check)
     let slow = fast = ll.head
-    while (fast && fast.next) {
+    // NB: not O(n/2) t because fast shifts 2x for every slow shift
+    // because fast node keeps iterating in cycles until it intersects with slow node
+    // so O(n) t is based on slow node's iteration through the entire linked list, once
+    while (slow && fast && fast.next) {
         slow = slow.next
         fast = fast.next.next
-        // fast node keeps iterating in cycles until it intersects with slow node
-        if (slow === fast) return true
         // check slow & fast obj id's, not values
+        if (slow === fast) return true
     }
 
     // Option 2: Wrong

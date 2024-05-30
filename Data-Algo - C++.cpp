@@ -225,16 +225,51 @@ node* find_middle(node* head) {
     return slow; // or int slow->value
 }
 
-bool has_cycle(node* head) { // O(n/2) t ; O(1) s
+bool has_cycle(node* head) { // O(n) t ; O(1) s
     node* slow = head;
     node* fast = head;
-    while (fast && fast->next) {
+    // NB: not O(n/2) t because fast shifts 2x for every slow shift
+    // because fast node keeps iterating in cycles until it intersects with slow node
+    // so O(n) t is based on slow node's iteration through the entire linked list, once
+    while (slow && fast && fast->next) {
         slow = slow->next;
         fast = fast->next->next;
-        if (slow == fast)
-            return true;
+        // check slow & fast obj id's, not values
+        if (slow == fast) return true;
     }
     return false;
+}
+
+// * Important // todo: Test
+node* remove_cycle(node* head) {
+    node* slow = head;
+    node* fast = head->next;
+    while (slow != fast) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    // count the nodes inside the cycle
+    int num{0}; ++num;
+    fast = fast->next;
+    while (slow != fast) {
+        fast = fast->next;
+        ++num;
+    }
+    // reset node pointers to head
+    slow = fast = head;
+    for (int i(0); i < num; ++i)
+        fast = fast->next;
+    // find 1st node of cycle
+    while (slow != fast) {
+        slow = slow->next;
+        fast = fast->next;
+    }
+
+    while (fast->next && fast->next != slow)
+        fast = fast->next;
+    
+    // remove unwanted cycle linkage
+    fast->next = NULL;
 }
 
 void print_node(node* n) {
@@ -258,6 +293,9 @@ int test_main() {
     node* l = create_list();
     print_list(l);
     print_node(find_middle(l));
+    cout << has_cycle(l);
+    if (has_cycle(l))
+        print_list(remove_cycle(l));
 
     return 0;
 }
