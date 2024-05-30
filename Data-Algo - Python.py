@@ -349,8 +349,47 @@ class DataStructures:
                 if self.n is not None:
                     self.n.for_each(cb, i + 1)
 
+        def __init__(self): 
+            self.head = None
+            self.tail = None
+        
+        def insert(self, n: ListNode):
+            if self.head is None:
+                self.head = self.tail = n
+            else: self.insertTail(n)
+        
+        def insertHead(self, n: ListNode):
+            n.next = self.head
+            self.head = n
+        '''
+        faster than inserting an item to the beginning of an array - for i in range(500000): arr.insert(0, i)
+        because array has to shift all the other items to the right, after each insertion of a new item to the beginning
+        '''
+        
+        def insertTail(self, n: ListNode):
+            if type(n) is DataStructures.LinkedList.DListNode: 
+                n.prev = self.tail
+            self.tail.next = n
+            self.tail = n
+        
+        def removeHead(self):
+            if self.head is None: return
+            n = self.head
+            self.head = self.head.next # or n.next
+            n.next = None
+        
+        def removeTail(self): # works for doubly-lls only
+            if self.head is None: return
+            if self.tail is None: self.tail = self.head
+            self.tail = self.tail.prev
+            self.tail.next = None
+            # or
+            n = self.tail
+            # self.tail = n.prev # unnecessary if uncomment, not tail set if commented
+            n = None
 
-        def __init__(self): pass
+
+
 
 
     def reverse(self, l: LinkedList): pass

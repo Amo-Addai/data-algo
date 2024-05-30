@@ -69,8 +69,40 @@ int* selectionSort(int a[]);
 //  OTHER ALGO'S
 ////////////////////////////////////////
 
-// 
 
+// TODO: class DataStructures
+
+// Arrays & Strings
+
+// Matrices
+
+// Linked Lists
+
+
+// Stacks & Queues
+
+// Heaps (max & min)
+
+// Trees
+
+// Binary (Search) Trees
+
+// Tries
+    
+// Graphs
+
+// Bits
+
+
+
+////////////////////////////////////////
+//  Cracking Coding Interview Qs
+////////////////////////////////////////
+
+
+// Arrays & Strings
+
+// ...
 
 
 

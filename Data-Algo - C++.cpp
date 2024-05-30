@@ -1,5 +1,7 @@
 // #include <bits/stdc++.h>
 #include <iostream>
+#include <string>
+#include <map>
 #include <iterator>
 #include <vector>
 
@@ -96,6 +98,7 @@ public:
 
 };
 
+
 ////////////////////////////////////////
 //  OTHER ALGO'S
 ////////////////////////////////////////
@@ -177,6 +180,120 @@ void setZeroesDiagonally (vector<vector<int>>& matrix) {
     }
 }
 
+
+// Linked Lists
+
+/*
+struct node {
+    int value;
+    struct node* next;
+};
+*/
+
+typedef struct node {
+    int value;
+    node* next; // can do away with struct node call when using typedef (confirm with VSCode)
+};
+
+node* create_list() {
+    node* head = NULL, * tail = NULL, * new_node = NULL;
+    int num, tmp;
+    cin >> num;
+    for (int i(0); i < num; ++i) {
+        cin >> tmp;
+        new_node = new node;
+        new_node->value = tmp;
+        new_node->next = NULL;
+        if (head) {
+            tail->next = new_node;
+            tail = new_node;
+        } else {
+            head = new_node;
+            tail = new_node;
+        }
+    }
+    return head; // or ll // todo: create LinkedList class
+}
+
+node* find_middle(node* head) {
+    node* slow = head;
+    node* fast = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow; // or int slow->value
+}
+
+bool has_cycle(node* head) { // O(n/2) t ; O(1) s
+    node* slow = head;
+    node* fast = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast)
+            return true;
+    }
+    return false;
+}
+
+void print_node(node* n) {
+    cout << n->value;
+}
+
+void print_list(node* head) {
+    while (head != NULL) { // can do away with the != NULL force-check
+        cout << head->value << ' ';
+        head = head->next;
+    }
+}
+
+
+// todo: tests
+int test_main() {
+    node* n = new node;
+    n->value = 100;
+    n->next = NULL;
+    cout << n->value;
+    node* l = create_list();
+    print_list(l);
+    print_node(find_middle(l));
+
+    return 0;
+}
+
+
+
+
+// Stacks & Queues
+
+// Heaps (max & min)
+
+// Trees
+
+// Binary (Search) Trees
+
+// Tries
+    
+// Graphs
+
+// Bits
+
+
+
+////////////////////////////////////////
+//  Cracking Coding Interview Qs
+////////////////////////////////////////
+
+
+// Arrays & Strings
+
+// ...
+
+
+
+
+
 ////////////////////////////////////////
 //  TEST CASES
 ////////////////////////////////////////
@@ -184,6 +301,8 @@ void setZeroesDiagonally (vector<vector<int>>& matrix) {
 int main(int argc, char** argv) {
     auto i = 0;
     cout << "Hello, World (" << i << ") !" << endl;
+
+    return 0;
 }
 
 

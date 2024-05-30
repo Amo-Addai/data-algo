@@ -450,23 +450,24 @@ function merge2SortedLinkedLists(l1, l2) { // O(n1 + n2) t ; O(1) s
 // * Leetcode Q141 - hasCycle or isCircular
 function hasCycle(ll) { 
 
-    // Option 1: O(n) t; O(1) s
+    // Option 1: O(n/2) t; O(1) s
     // todo: test for true Circularity (to be sure slow & fast iterations always intersect on every cycle-check)
     let slow = fast = ll.head
     while (fast && fast.next) {
         slow = slow.next
         fast = fast.next.next
+        // fast node keeps iterating in cycles until it intersects with slow node
         if (slow === fast) return true
+        // check slow & fast obj id's, not values
     }
 
-    // Option 2: O(n/2) t ; ~ O(n/2) s
-    slow = ll.head
-    fast = ll.head.next // starting out fast from head leads to a false +ve
+    // Option 2: Wrong
+    // TODO: this checks values only, and slow/fast node values always intersect
+
     let d = {} // store ll node values on every fast-node iteration
     // in order to check existence of every slow-node iteration
     // todo: find out how to achieve this without a hashmap (so O(1) s)
     while (slow.next) {
-        d[fast.value] = true
         // don't double iterate fast in a loop to keep to constant time
         if (fast.next) { // but find any possibly more-optimized option
             fast = fast.next
@@ -483,23 +484,26 @@ function hasCycle(ll) {
     return false
 }
 
-// Leetcode Q206 - Reverse LinkedList (singly for more difficulty)
+// Leetcode Q206 - Reverse LinkedList (singly for more simplicity)
 function reverseLinkedList(ll) { // O(n) t ; O(1) s
     let node = ll.head, next = null, prev = null
     ll.head = ll.tail
     ll.tail = node
     // now iterate through ll while reversing pointers
+    // with doubly-lls, reverse both next & prev pointers on each iteration
     while (node) { // will break when node is null (previous iteration's next to last node is null)
         next = node.next
         node.next = prev
+        // node.prev = next // reverse .prev pointer too, for doubly lls
         prev = node
         node = next
+
     }
     return ll // or ll.head / prev (new head)
 }
 
 
-/* // todo: test
+/* // todo: tests
 var ll = new LinkedList()
 ll.addToHead(100)
 ll.addToHead('Hello')
