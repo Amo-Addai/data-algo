@@ -295,18 +295,314 @@ function wordSearch(mat) { // O(nm) t | O(1) s
 
 // Linked Lists
 
-// Trees
+function Node(value, next, prev) {
+    this.value = value
+    this.next = next
+    this.prev = prev
+}
+
+var LinkedList = function() {
+    this.head = null
+    this.tail = null
+}
+
+LinkedList.prototype.addToHead = function(value) { // O(1) t ; 
+    var node = new Node(value, this.head, null)
+    if (this.head) this.head.prev = node
+    else this.tail = node // if no head, ll was empty
+    this.head = node
+}
+
+LinkedList.prototype.addToTail = function(value) { // O(1) t ; 
+    var node = new Node(value, null, this.tail)
+    if (this.tail) this.tail.next = node
+    else if (this.head) this.head.next = node // if no tail & head, 
+    else this.head = node // if no head either, ll was empty
+    this.tail = node
+}
+
+LinkedList.prototype.removeHead = function() { // O(1) t ; 
+    if (!this.head) return null
+    let value = this.head.value
+    this.head = this.head.next
+    if (this.head) this.head.prev = null
+    else this.tail = null // if ll had only 1 node (head), so it's now empty
+    return value
+}
+
+LinkedList.prototype.removeTail = function() { // O(1) t ; 
+    if (!this.tail) return null
+    let value = this.tail.value
+    this.tail = this.tail.prev
+    if (this.tail) this.tail.next = null
+    else this.head = null // if ll had only 1 node (tail), so it's now empty
+    // this option is invalid if every ll must have a head, before having a tail
+    return value
+}
+
+LinkedList.prototype.removeTail = function() { // todo: test option 2
+    if (!this.head) return null
+    // this option is only valid if every ll must have a head, before having a tail
+    let value = null
+    if (!this.tail) {
+        value = this.head.value
+        this.head = null
+        return value
+    }
+    value = this.tail.value
+    this.tail = this.tail.prev
+    if (this.tail) this.tail.next = null
+    else this.head = null // if ll had only 1 node (tail), so it's now empty
+    return value
+}
+
+LinkedList.prototype.search = function(value) { // O(n) t ; n = number of ll nodes
+    let currentNode = this.head
+    while (currentNode) {
+        if (value === currentNode.value)
+            return currentNode.value
+        currentNode = currentNode.next
+    }
+    return null
+}
+
+LinkedList.prototype.indexOf = function(value) {
+    let currentNode = this.head
+    let is = [], i = 0
+    while (currentNode) {
+        if (value === currentNode.value) is.push(i)
+        currentNode = currentNode.next; i++
+    }
+    return is
+}
+
+// Leetcode Q19
+function removeNthFromEnd(ll, n) { // O(nl / n) t (nl = ll node num) ; O(1) s
+    let slow = fast = ll.head
+    for (let i = 0; i < n; i++) 
+        fast = fast.next
+    while (fast.next) {
+        slow = slow.next
+        fast = fast.next
+    }
+    // this only removes nth node
+    let nthNode = slow.next
+    let nextNode = nthNode.next
+    slow.next = nextNode
+    nextNode.prev = slow
+    // ll.tail = slow // this removes all nodes from nth to tail
+    return nthNode // or ll / ll.head
+}
+
+// Leetcode Q21
+function merge2SortedLinkedLists(l1, l2) { // O(n1 + n2) t ; O(1) s
+    let l1Node = l1.head, l2Node = l2.head
+    let dummyHead = Node(0, null, null)
+    let ll = LinkedList(); ll.addToHead(dummyHead.value)
+    // todo: test Option 1: ensure this adds longer ll's remaining nodes' values
+    while (l1Node.next || l2Node.next) {
+        if (l1Node.value <= l2Node.value) {
+            ll.addToTail(l1Node.value)
+            if (l1Node.next) l1Node = l1Node.next
+            else {
+                while (l2Node.next) {
+                    ll.addToTail(l2Node.value)
+                    l2Node = l2Node.next
+                }
+                break
+            }
+        } else {
+            ll.addToTail(l2Node.value)
+            if (l2Node.next) l2Node = l2Node.next
+            else {
+                while (l1Node.next) {
+                    ll.addToTail(l1Node.value)
+                    l1Node = l1Node.next
+                }
+                break
+            }
+        }
+    }
+    /* // todo: test Option 2: ensure this adds longer ll's remaining nodes' values
+    while (l1Node.next && l2Node.next) {
+        if (l1Node.value <= l2Node.value) {
+            ll.addToTail(l1Node.value)
+            if (l1Node.next) l1Node = l1Node.next
+        } else {
+            ll.addToTail(l2Node.value)
+            if (l2Node.next) l2Node = l2Node.next
+        }
+    }
+    while (l1Node.next) {
+        ll.addToTail(l1Node.value)
+        l1Node = l1Node.next
+    }
+    while (l2Node.next) {
+        ll.addToTail(l2Node.value)
+        l2Node = l2Node.next
+    }
+    */
+
+    ll.removeHead() // remove dummyHead when done
+    return ll
+}
+
+// * Leetcode Q141 - hasCycle or isCircular
+function hasCycle(ll) { 
+
+    // Option 1: O(n) t; O(1) s
+    // todo: test for true Circularity (to be sure slow & fast iterations always intersect on every cycle-check)
+    let slow = fast = ll.head
+    while (fast && fast.next) {
+        slow = slow.next
+        fast = fast.next.next
+        if (slow === fast) return true
+    }
+
+    // Option 2: O(n/2) t ; ~ O(n/2) s
+    slow = ll.head
+    fast = ll.head.next // starting out fast from head leads to a false +ve
+    let d = {} // store ll node values on every fast-node iteration
+    // in order to check existence of every slow-node iteration
+    // todo: find out how to achieve this without a hashmap (so O(1) s)
+    while (slow.next) {
+        d[fast.value] = true
+        // don't double iterate fast in a loop to keep to constant time
+        if (fast.next) { // but find any possibly more-optimized option
+            fast = fast.next
+            d[fast.value] = true
+            if (fast.next) {
+                fast = fast.next
+                d[fast.value] = true
+            }
+        }
+        if (!!d[slow.value]) return true // break fast, to keep to O(n/2) t & x
+        slow = slow.next
+    }
+
+    return false
+}
+
+// Leetcode Q206 - Reverse LinkedList (singly for more difficulty)
+function reverseLinkedList(ll) { // O(n) t ; O(1) s
+    let node = ll.head, next = null, prev = null
+    ll.head = ll.tail
+    ll.tail = node
+    // now iterate through ll while reversing pointers
+    while (node) { // will break when node is null (previous iteration's next to last node is null)
+        next = node.next
+        node.next = prev
+        prev = node
+        node = next
+    }
+    return ll // or ll.head / prev (new head)
+}
+
+
+/* // todo: test
+var ll = new LinkedList()
+ll.addToHead(100)
+ll.addToHead('Hello')
+ll.addToHead(200)
+ll.addToHead('World')
+ll.addToTail(300)
+ll.addToTail(100)
+let val1 = ll.removeHead()
+let val2 = ll.removeTail()
+let val3 = ll.search('World')
+let val4 = ll.search('Earth')
+let vals = lls.indexOf(100)
+console.log(ll, val1, val2, val3, val4, vals)
+*/
+
+
+
+// todo: Test out this shorthand JS Object Notation
+
+var LL = {
+
+    N: function(value, next, prev) {
+        this.value = value
+        this.next = next
+        this.prev = prev
+    },
+
+    _head: null,
+    get head() { return this._head },
+    set head(node) { this._head = node },
+
+    _tail: null,
+    get tail() { return this._tail },
+    set tail(node) { this._tail = node },
+
+    addToHead: (value) => {
+        var node = new this.N(value, this.head, null)
+        if (this.head) this.head.prev = node
+        else this.tail = node
+        this.head = node
+    },
+
+    addToTail: (value) => {
+        var node = new this.N(value, null, this.tail)
+        if (this.tail) this.tail.next = node
+        else if (this.head) this.head.next = node
+        else this.head = node
+        this.tail = node
+    },
+
+    removeHead: () => {
+        if (!this.head) return null
+        let value = this.head.value
+        this.head = this.head.next
+        if (this.head) this.head.prev = null
+        else this.tail = null
+        return value
+    },
+
+    removeTail: () => {
+        if (!this.tail) return null
+        let value = this.tail.value
+        this.tail = this.tail.prev
+        if (this.tail) this.tail.next = null
+        else this.head = null
+        return value
+    },
+
+    search: (value) => {
+        let currentNode = this.head
+        while (currentNode) {
+            if (value === currentNode.value)
+                return currentNode.value
+            currentNode = currentNode.next
+        }
+        return null
+    },
+
+    indexOf: (value) => {
+        let currentNode = this.head
+        let is = [], i = 0
+        while (currentNode) {
+            if (value === currentNode.value) is.push(i)
+            currentNode = currentNode.next; i++
+        }
+        return is
+    }
+
+}
+
+// Stacks & Queues
+
+// Heaps (max & min)
 
 // Trees
 
-// Trees
+// Binary (Search) Trees
 
-// Trees
+// Tries
+    
+// Graphs
 
-// Trees
-
-// Trees
-
+// Bits
 
 
 ////////////////////////////////////////

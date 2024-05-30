@@ -3,8 +3,6 @@ from collections import deque, defaultdict
 
 import numpy as np
 import pandas as pd
-import keras
-import tensorflow as t
 
 '''
 for - iter, k/v, ..
@@ -296,7 +294,7 @@ class DataStructures:
             return mat[1][n - 1]
         
         def test(self, test='mcm'):
-            obj = Matrix()
+            obj = DataStructures.Matrix()
             if test == 'mcm':
                 arr = [4, 3, 2, 1, 5]; n = len(arr)
                 print(obj.matrix_chain_multiplication(arr, 1, n - 1))
@@ -313,19 +311,24 @@ class DataStructures:
     # Linked Lists
 
     class LinkedList:
-            
-        # Singly-linked list
-        class SListNode:
+
+        class ListNode:
 
             def __init__(self, v=0, n=None):
-                self.v = v
-                self.n = n
+                self.v = v; self.n = n
+
+        # Singly-linked list
+        class SListNode(ListNode):
+
+            def __init__(self, v=0, n=None):
+                super().__init__(v, n)
 
         # Doubly-linked list
-        class DListNode:
+        class DListNode(ListNode):
 
             def __init__(self, v, n=None, p=None): 
-                self.v = v; self.n = n; self.p = p
+                super().__init__(v, n)
+                self.p = p
             
             def be_next_of(self, l):
                 l.n = self
@@ -502,7 +505,7 @@ class DataStructures:
                             print(f"{i} -> {j}")
             
             def test(self):
-                g = Graph(5)
+                g = DataStructures.Graph(5)
                 g.insert_edge(1, 2)
                 g.insert_edge(2, 3)
                 g.insert_edge(4, 5)
@@ -529,7 +532,7 @@ class DataStructures:
                             print(f"{i} -> {j}")
             
             def test(self):
-                g = Graph(5)
+                g = DataStructures.Graph(5)
                 g.insert_edge(1, 2)
                 g.insert_edge(2, 3)
                 g.insert_edge(4, 5)
@@ -582,7 +585,7 @@ class DataStructures:
                     [0, 7, 5, 2, 0, 0],
                     [0, 7, 5, 2, 0, 0]
                 ]
-                algo = DijkstrasAlgorithm(m, 0)
+                algo = DataStructures.Graph.DijkstrasAlgorithm(m, 0)
                 algo.calculate()
                 algo.print_distance()
 
@@ -1231,6 +1234,13 @@ def lru_cache(): pass
 
 
 # https://leetcode.com/problems/add-two-numbers/description/
+
+class ListNode:
+
+    def __init__(self, v=0, n=None):
+        self.v = v; self.n = n
+
+
 def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode: # todo: optimize
     ls = ListNode(); sa = []; c = 0
     s = l1.val + l2.val
