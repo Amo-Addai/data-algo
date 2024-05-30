@@ -67,9 +67,130 @@ class TSorting {
 }
 
 
+
 ////////////////////////////////////////
 //  OTHER ALGO'S
 ////////////////////////////////////////
+
+
+// TODO: class DataStructures
+
+
+// Arrays & Strings
+
+// Matrices
+
+// Linked Lists
+
+class TLinkedList {
+
+    private _head: TLinkedList.TListNode? = null
+    private _tail: TLinkedList.TListNode? = null
+    
+    constructor() {
+        this._head = null
+        this._tail = null
+    }
+
+    get head(): TLinkedList.TListNode | null {
+        return this._head
+    }
+
+    set head(n: TLinkedList.TListNode | null) {
+        this._head = n
+    }
+
+    get tail(): TLinkedList.TListNode | null {
+        return this._tail
+    }
+
+    set tail(n: TLinkedList.TListNode | null) {
+        this._tail = n
+    }
+
+    
+    static TListNode = class {
+
+        private _value: any
+        private _next: TLinkedList.TListNode? = null
+    
+        constructor(v, n) {
+            this._value = v
+            this._next = n
+        }
+
+        get value(): any {
+            return this._value
+        }
+
+        set value(n: any) {
+            this._value = n
+        }
+
+        get next(): TLinkedList.TListNode | null {
+            return this._next
+        }
+
+        set next(n: TLinkedList.TListNode | null) {
+            this._next = n
+        }
+
+    }
+
+    static TSLinkNode = class extends TLinkedList.TListNode {
+
+        constructor(v, n) {
+            super(v, n)
+        }
+
+    }
+
+    static TDLinkNode = class extends TLinkedList.TListNode {
+
+        private _prev: TLinkedList.TListNode? = null
+
+        constructor(v, n, p) {
+            super(v, n)
+            this._prev = p
+        }
+
+        get prev(): TLinkedList.TListNode | null {
+            return this._prev
+        }
+    
+        set prev(n: TLinkedList.TListNode | null) {
+            this._prev = n
+        }
+        
+    }
+
+}
+
+
+// Stacks & Queues
+
+// Heaps (max & min)
+
+// Trees
+
+// Binary (Search) Trees
+
+// Tries
+    
+// Graphs
+
+// Bits
+
+
+
+////////////////////////////////////////
+//  Cracking Coding Interview Qs
+////////////////////////////////////////
+
+
+// Arrays & Strings
+
+// ...
 
 
 

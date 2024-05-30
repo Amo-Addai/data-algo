@@ -387,9 +387,54 @@ class DataStructures:
             n = self.tail
             # self.tail = n.prev # unnecessary if uncomment, not tail set if commented
             n = None
+        
+        def middleNode(self, head: ListNode) -> ListNode: # * Sample
+            # corner case: if head or head.next is null, return head
+            if head is None or head.next is None:
+                return head
+
+            slow = head
+            fast = head
+            # step 2: move slow and fast pointers until fast.next or fast.next.next is null
+            while fast.next is not None and fast.next.next is not None:
+                slow = slow.next
+                fast = fast.next.next
+            
+            # step 3:
+            
+            middle = head;                                                                                    
+            # odd case
+            # if fast.next is null, middle is slow
+            if fast.next is None:
+                middle = slow
+            # even case
+            # else fast.next.next is null, middle is slow.next
+            else:
+                middle = slow.next
+            
+            return middle
 
 
+        def hasCycle(self, head: ListNode) -> bool: # * Sample
+            # corner case: if head or head.next == null, return false
+            if head is None or head.next is None:
+                return False
+            
+            #  run two pointers, slow (turtle) and fast (rabbit) while fast.next and fast.next.next is not null
+            slow = head
+            fast = head.next
+            while fast.next is not None and fast.next.next is not None:
+                slow = slow.next
+                fast = fast.next.next
 
+                # if there is a cycle, 2x speed fast (rabbit) will eventually catch up with 1x speed slow (turtle) pointer
+                if slow == fast:
+                    return True
+                
+            return False
+
+
+    
 
 
     def reverse(self, l: LinkedList): pass

@@ -68,7 +68,9 @@ class Sorting {
 //  OTHER ALGO'S
 ////////////////////////////////////////
 
+
 // TODO: class DataStructures
+
 
 // Arrays & Strings
 
@@ -199,6 +201,37 @@ void setZeroesDiagonally (int[][] matrix) {
         r++; c++;
     }
 }
+
+
+// Linked Lists
+
+// Stacks & Queues
+
+// Heaps (max & min)
+
+// Trees
+
+// Binary (Search) Trees
+
+// Tries
+    
+// Graphs
+
+// Bits
+
+
+
+////////////////////////////////////////
+//  Cracking Coding Interview Qs
+////////////////////////////////////////
+
+
+// Arrays & Strings
+
+// ...
+
+
+
 
 
 

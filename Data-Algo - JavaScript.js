@@ -166,6 +166,7 @@ var Sorting = function() {
 
 // TODO: class DataStructures
 
+
 // Arrays & Strings
 
 // Matrices
@@ -522,8 +523,7 @@ console.log(ll, val1, val2, val3, val4, vals)
 */
 
 
-
-// todo: Test out this shorthand JS Object Notation
+// todo: Test out this shorthand JS Object notation
 
 var LL = {
 
@@ -595,6 +595,126 @@ var LL = {
     }
 
 }
+
+
+// todo: Test out this JS class notation
+
+class LL {
+
+    static Node = class {
+
+        constructor(v, n = null) {
+            this.value = v
+            this.next = n
+        }
+        
+    }
+
+    static SNode = class extends Node {
+
+        constructor(v, n = null) {
+            super(v, n)
+        }
+
+    }
+
+    static DNode = class extends Node {
+
+        constructor(v, n = null, p = null) {
+            super(v, n)
+            this.prev = p
+        }
+        
+    }
+
+    constructor(v) {
+        this.head = {
+            value: v, next: null, prev: null
+        } // todo: or new Node(v) / DNode(v)
+        this.tail = this.head
+        this.length = 1
+    }
+
+    // prepend O(1), append O(1), 
+    // lookup O(n), insert O(n), remove O(n)
+    
+    print() {
+        const arr = []
+        let node = this.head
+        while (node) {
+            arr.push(node.value)
+            node = node.next
+        }
+        console.log(arr)
+    }
+
+    prepend(v) {
+        const node = {
+            value: v, next: this.head, prev: null
+        }
+        // with js class objects, even if this.head is assigned to node.next by reference ..
+        this.head.prev = node
+        // changing this.head object itself, once done after, doesn't affect the node.next object
+        this.head = node
+        this.length++
+        return this
+    }
+
+    append(v) {
+        const node = {
+            value: v, next: null, prev: this.tail
+        }
+        // with js class objects, even if this.tail changes .next by reference ..
+        this.tail.next = node
+        // changing this.tail object itself, once done after, doesn't affect the this.tail.next object
+        this.tail = node
+        this.length++
+        return this
+    }
+
+    lookup(i) {
+        let c = 0
+        let node = this.head
+        while (c !== i) {
+            node = node.next
+            c++
+        }
+        return node
+    }
+
+    insert(i, v) {
+        if (!v) return null
+        if (i >= this.length)
+            return this.append(v)
+        const node = {
+            value: v, next: null, prev: null
+        }
+        const prev = this.lookup(i-1)
+        // prev.next will never be null due to the index check above (to append v instead)
+        node.prev = prev
+        node.next = prev.next
+        prev.next.prev = node // or node.next.prev = node
+        prev.next = node
+        this.length++
+        return this
+    }
+
+    remove(i) {
+        const prev = this.lookup(i-1)
+        const toRemove = prev.next
+        prev.next = toRemove.next
+        toRemove.next.prev = prev
+        toRemove = null // not toRemove.next, because that'd affect the new next node to prev
+        this.length--
+        return this
+    }
+
+    reverse() {
+        
+    }
+
+}
+
 
 // Stacks & Queues
 

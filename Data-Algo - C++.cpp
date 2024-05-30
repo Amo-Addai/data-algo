@@ -103,7 +103,9 @@ public:
 //  OTHER ALGO'S
 ////////////////////////////////////////
 
+
 // TODO: class DataStructures
+
 
 // Arrays & Strings
 
@@ -284,6 +286,7 @@ void print_list(node* head) {
 }
 
 
+// /*
 // todo: tests
 int test_main() {
     node* n = new node;
@@ -299,8 +302,7 @@ int test_main() {
 
     return 0;
 }
-
-
+// */
 
 
 // Stacks & Queues
