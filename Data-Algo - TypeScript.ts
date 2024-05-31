@@ -80,6 +80,8 @@ class TSorting {
 
 // Matrices
 
+// HashMaps & HashTables
+
 // Linked Lists
 
 class TLinkedList {
@@ -170,6 +172,8 @@ class TLinkedList {
 // Stacks & Queues
 
 // Heaps (max & min)
+
+// Binary Heaps & Priority Queues
 
 // Trees
 

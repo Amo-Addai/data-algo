@@ -183,6 +183,8 @@ void setZeroesDiagonally (vector<vector<int>>& matrix) {
 }
 
 
+// HashMaps & HashTables
+
 // Linked Lists
 
 /*
@@ -230,7 +232,7 @@ node* find_middle(node* head) {
 bool has_cycle(node* head) { // O(n) t ; O(1) s
     node* slow = head;
     node* fast = head;
-    // NB: not O(n/2) t because fast shifts 2x for every slow shift
+    // NB: not O(n/2 ~ n) t because fast shifts 2x for every slow shift
     // because fast node keeps iterating in cycles until it intersects with slow node
     // so O(n) t is based on slow node's iteration through the entire linked list, once
     while (slow && fast && fast->next) {
@@ -308,6 +310,8 @@ int test_main() {
 // Stacks & Queues
 
 // Heaps (max & min)
+
+// Binary Heaps & Priority Queues
 
 // Trees
 

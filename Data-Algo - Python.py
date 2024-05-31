@@ -315,7 +315,7 @@ class DataStructures:
         class ListNode:
 
             def __init__(self, v=0, n=None):
-                self.v = v; self.n = n
+                self.value = v; self.next = n
 
         # Singly-linked list
         class SListNode(ListNode):
@@ -328,14 +328,14 @@ class DataStructures:
 
             def __init__(self, v, n=None, p=None): 
                 super().__init__(v, n)
-                self.p = p
+                self.prev = p
             
             def be_next_of(self, l):
-                l.n = self
+                l.next = self
                 return l
             
             def be_prev_of(self, r):
-                r.p = self
+                r.prev = self
                 return r
             
             @staticmethod
@@ -345,40 +345,123 @@ class DataStructures:
                 # nodes.__reduce__(lambda(acc: ListNode, cur: ListNode): acc.be_next_of(cur))
             
             def for_each(self, cb, i):
-                cb(self.v, i)
-                if self.n is not None:
-                    self.n.for_each(cb, i + 1)
+                cb(self.value, i)
+                if self.next is not None:
+                    self.next.for_each(cb, i + 1)
 
         def __init__(self): 
-            self.head = None
-            self.tail = None
+            self.head: ListNode = None
+            self.tail: ListNode = None
+        
+        def create_list(self, arr):
+            start = self.head
+            tmp = start
+            n = len(arr); i = 0
+            while i < n:
+                node = ListNode(arr[i])
+                if i == 0:
+                    start = node
+                    tmp = start
+                else:
+                    tmp.next = node
+                    node.prev = tmp
+                    tmp = tmp.next
+                i += 1
+            self.head = start
+            return self.head
+
+        def print_list(self):
+            node = self.head
+            ll = ''
+            while node:
+                ll += (str(node.value) + ' ')
+                node = node.next
+            print(ll)
+        
+        def length(self):
+            # required when there's no self.length prop being inc'd/dec'd whenever there's a change in the linked list
+            node = self.head
+            l = 1
+            while node.next:
+                node = node.next
+                l += 1
+            return l
+        
+        def find(self, i):
+            node = self.head
+            c = 0
+            while c < i: # previous node after loop end
+                node = node.next
+                c += 1
+            return node
         
         def insert(self, n: ListNode):
             if self.head is None:
                 self.head = self.tail = n
             else: self.insertTail(n)
         
-        def insertHead(self, n: ListNode):
+        def insert_at_index(self, v, i): # O(n ~ i) t
+            node = ListNode(v)
+            if i == 0: 
+                self.insert_head(node) # O(1) t 
+                return
+            prev = self.find(i) # O(n ~ i) t
+            # O(1) t
+            next = prev.next
+            prev.next = node
+            node.prev = prev
+            node.next = next
+            next.prev = node
+        
+        def insert_head(self, n: ListNode):
             n.next = self.head
             self.head = n
+        
         '''
-        faster than inserting an item to the beginning of an array - for i in range(500000): arr.insert(0, i)
+        faster than inserting an item to the beginning or end of an array - for i in range(500000): arr.insert(0, i)
         because array has to shift all the other items to the right, after each insertion of a new item to the beginning
         '''
         
-        def insertTail(self, n: ListNode):
+        def insert_tail(self, n: ListNode):
             if type(n) is DataStructures.LinkedList.DListNode: 
                 n.prev = self.tail
             self.tail.next = n
             self.tail = n
         
-        def removeHead(self):
+        def remove_at_index(self, i):
+            if self.head is None: return
+            prev = self.find(i-1)
+            if prev and prev.next:
+                node = prev.next
+                next = node.next
+                prev.next = next 
+                next.prev = prev
+                node.next = node.prev = None
+        
+        def remove_value(self, v): # O(n) t
+            # remove all nodes containing value v
+
+            def remove_node(node):
+                prev = node.prev # wouldn't work on a singly-linked (use self.find with an index - 1)
+                next = node.next
+                prev.next = next
+                next.prev = prev
+                node.next = node.prev = None
+            
+            if self.head is None: return
+            tmp = self.head
+            while tmp:
+                if tmp.value == v:
+                    remove_node(tmp)
+                tmp = tmp.next
+        
+        def remove_head(self):
             if self.head is None: return
             n = self.head
             self.head = self.head.next # or n.next
             n.next = None
         
-        def removeTail(self): # works for doubly-lls only
+        def remove_tail(self): # works for doubly-lls only
             if self.head is None: return
             if self.tail is None: self.tail = self.head
             self.tail = self.tail.prev
@@ -388,7 +471,39 @@ class DataStructures:
             # self.tail = n.prev # unnecessary if uncomment, not tail set if commented
             n = None
         
-        def middleNode(self, head: ListNode) -> ListNode: # * Sample
+        def middle_node(self): # O(n/2 ~ n) t ; O(1) s
+            slow = fast = self.head
+            while fast.next and fast.next.next:
+                fast = fast.next.next
+                slow = slow.next
+            return slow
+        
+        def reverse(self): # O(n) t ; O(1) s
+            node = self.head
+            prev = next = None
+            while node:
+                next = node.next
+                node.next = prev
+                prev = node
+                node = next
+            self.head = prev # or self.tail
+        
+        def has_cycle(self):
+            if self.head is None or self.head.next is None:
+                return False
+            slow = fast = self.head
+            while fast.next and fast.next.next:
+                slow = slow.next
+                fast = fast.next.next
+                # if fast began from the next to start (slow) node, you check before iterating nodes
+                if slow is fast or id(slow) == id(fast):
+                    return True
+            return False
+
+
+        # todo: Test next 4 Alt (3rd-Party) Logic Samples
+        
+        def middleNode(self, head: ListNode) -> ListNode:
             # corner case: if head or head.next is null, return head
             if head is None or head.next is None:
                 return head
@@ -415,7 +530,7 @@ class DataStructures:
             return middle
 
 
-        def hasCycle(self, head: ListNode) -> bool: # * Sample
+        def hasCycle(self, head: ListNode) -> bool:
             # corner case: if head or head.next == null, return false
             if head is None or head.next is None:
                 return False
@@ -432,12 +547,105 @@ class DataStructures:
                     return True
                 
             return False
+        
+
+        def insertAtLocation(self, v, i):
+            tmp = self.head
+            l = self.length()
+            if l + 1 < i: return tmp
+            node = ListNode(v)
+            if i == 1:
+                node.next = tmp
+                tmp.prev = node
+                self.head = node
+                return self.head
+            if i == l + 1:
+                while tmp.next is not None:
+                    tmp = tmp.next
+                tmp.next = node
+                node.prev = tmp
+                return self.head
+            j = 1
+            while j < i - 1:
+                tmp = tmp.next
+                j += 1
+            next = tmp.next
+            node.next = next
+            next.prev = node
+            tmp.next = node
+            node.prev = tmp
+            return self.head
+        
+        def removeAtLocation(self, i):
+            tmp = self.head
+            l = self.length()
+            if l < i: return tmp
+            if i == 1:
+                tmp = tmp.next
+                self.head = tmp
+                return self.head
+            if l == i:
+                while tmp.next and tmp.next.next:
+                    tmp = tmp.next
+                    tmp.next = None
+                    return self.head
+            j = 1
+            while j < i - 1:
+                tmp = tmp.next
+                j += 1
+            prev = tmp
+            node = tmp.next
+            next = node.next
+            prev.next = next
+            next.prev = prev
+            node.next = node.prev = None
+            return self.head
+
+        # works perfectly for singly-linked listnodes
+        # reset node's value to next's value, then set node's .next to next's .next
+        def deleteNode(self, node):
+            if node is None or node.next is None: return
+            nextNext = node.next.next
+            node.value = node.next.value
+            node.next = nextNext
+        
+        def deleteDuplicates(self, head: ListNode) -> ListNode:
+            if head is None or head.next is None: return head
+            node = head
+            while node.next is not None:
+                if node.value == node.next.value:
+                    node.next = node.next.next
+                else: node = node.next
+                # else statement this time, forces iteration to stay with current node until all in-line duplicates are removed
+            return head
+        
+        
+        ''' # todo: Test
+        ll = LinkedList()
+        ll.head = ListNode(5)
+        node = ListNode(1)
+        ll.head.next = node
+        node.next = ListNode(7)
+        ll.insert_at_index(2, 2)
+        ll.print_list()
+        ll.remove_at_index(2)
+        ll.print_list()
+        '''
 
 
-    
+    def reverse(self, l: LinkedList): 
+        node = l.head
+        next = l.head.next
+        l.head = l.tail
+        l.tail = l.head
+        node.next = None
+        while next:
+            tmp = next.next
+            next.next = node
+            node.prev = next
+            node = next
+            next = tmp
 
-
-    def reverse(self, l: LinkedList): pass
 
     def merge(self, l1, l2): 
         
@@ -453,6 +661,8 @@ class DataStructures:
     # Stacks & Queues
 
     # Heaps (max & min)
+    
+    # Binary Heaps & Priority Queues
 
     # Trees
 
@@ -622,56 +832,64 @@ class DataStructures:
                 g.insert_edge(4, 5)
                 g.print_graph()
 
-        class DijkstrasAlgorithm:
+        class ShortestPathAlgorithms:
 
-            def __init__(self, adj_mat, start_vertex):
-                self.mat = adj_mat
-                self.start = start_vertex
-                self.v = len(adj_mat)
-                self.visited = [False for _ in range(len(adj_mat))]
-                self.distances = [float('inf') for _ in range(len(adj_mat))]
-                self.distances[start_vertex] = 0
-            
-            def get_min_vertex(self):
-                # vertex with the lowest distance
-                min_vertex_value = sys.maxsize
-                min_vertex_index = 0
+            def __init__(self): pass
 
-                for i in range(self.v):
-                    if not self.visited[i] and self.distances[i] < min_vertex_value:
-                        min_vertex_value = self.distances[i]
-                        min_vertex_index = i
+
+            class Dijkstra:
+
+                def __init__(self, adj_mat, start_vertex):
+                    self.mat = adj_mat
+                    self.start = start_vertex
+                    self.v = len(adj_mat)
+                    self.visited = [False for _ in range(len(adj_mat))]
+                    self.distances = [float('inf') for _ in range(len(adj_mat))]
+                    self.distances[start_vertex] = 0
                 
-                return min_vertex_index
+                def get_min_vertex(self):
+                    # vertex with the lowest distance
+                    min_vertex_value = sys.maxsize
+                    min_vertex_index = 0
+
+                    for i in range(self.v):
+                        if not self.visited[i] and self.distances[i] < min_vertex_value:
+                            min_vertex_value = self.distances[i]
+                            min_vertex_index = i
+                    
+                    return min_vertex_index
+                
+                def calculate(self):
+
+                    for vertex in range(self.v):
+                        actual_vertex = self.get_min_vertex()
+                        print(f"Considering vertex {actual_vertex}")
+                        self.visited[actual_vertex] = True
+
+                        for other_vertex in range(self.v):
+                            if self.mat[actual_vertex][other_vertex] > 0:
+                                if self.distances[actual_vertex] + self.mat[actual_vertex][other_vertex] < \
+                                    self.distances[other_vertex]:
+                                    self.distances[other_vertex] = self.distances[actual_vertex] + self.mat[actual_vertex][other_vertex]
+
+                def print_distance(self):
+                    print(self.distances)
             
-            def calculate(self):
+                def test(self): 
+                    m = [
+                        [0, 7, 5, 2, 0, 0],
+                        [0, 7, 5, 2, 0, 0],
+                        [0, 7, 5, 2, 0, 0],
+                        [0, 7, 5, 2, 0, 0],
+                        [0, 7, 5, 2, 0, 0],
+                        [0, 7, 5, 2, 0, 0]
+                    ]
+                    algo = DataStructures.Graph.ShortestPathAlgorithms.Dijkstra(m, 0)
+                    algo.calculate()
+                    algo.print_distance()
 
-                for vertex in range(self.v):
-                    actual_vertex = self.get_min_vertex()
-                    print(f"Considering vertex {actual_vertex}")
-                    self.visited[actual_vertex] = True
-
-                    for other_vertex in range(self.v):
-                        if self.mat[actual_vertex][other_vertex] > 0:
-                            if self.distances[actual_vertex] + self.mat[actual_vertex][other_vertex] < \
-                                self.distances[other_vertex]:
-                                self.distances[other_vertex] = self.distances[actual_vertex] + self.mat[actual_vertex][other_vertex]
-
-            def print_distance(self):
-                print(self.distances)
-        
-            def test(self): 
-                m = [
-                    [0, 7, 5, 2, 0, 0],
-                    [0, 7, 5, 2, 0, 0],
-                    [0, 7, 5, 2, 0, 0],
-                    [0, 7, 5, 2, 0, 0],
-                    [0, 7, 5, 2, 0, 0],
-                    [0, 7, 5, 2, 0, 0]
-                ]
-                algo = DataStructures.Graph.DijkstrasAlgorithm(m, 0)
-                algo.calculate()
-                algo.print_distance()
+            class BellmanFord: 
+                pass
 
 
     # Bits
@@ -1301,6 +1519,8 @@ def lru_cache(): pass
 
 # Matrices
 
+
+# HashMaps & HashTables
 
 # Linked Lists
 

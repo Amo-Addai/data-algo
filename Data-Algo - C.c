@@ -77,11 +77,15 @@ int* selectionSort(int a[]);
 
 // Matrices
 
+// HashMaps & HashTables
+
 // Linked Lists
 
 // Stacks & Queues
 
 // Heaps (max & min)
+
+// Binary Heaps & Priority Queues
 
 // Trees
 

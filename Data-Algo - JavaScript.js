@@ -294,6 +294,64 @@ function wordSearch(mat) { // O(nm) t | O(1) s
     return exist(mat, 'word')
 }
 
+// HashMaps & HashTables
+
+class HashTable {
+
+    constructor(size) {
+        this.data = new Array(size)
+    }
+
+    _hash(key) {
+        let hash = 0
+        for (let i = 0; i < key.length; i++) {
+            hash = (hash + key.charCodeAt(i) * i) % this.data.length
+        }
+        return hash
+    }
+
+    set(key, value) {
+        let address = this._hash(key)
+        if (!this.data[address])
+            this.data[address] = []
+        this.data[address].push([key, value])
+        return this.data
+    }
+
+    get(key) {
+        const address = this._hash(key)
+        const currentBucket = this.data[address]
+        if (currentBucket) {
+            for (let i = 0; i < currentBucket.length; i++) {
+                if (currentBucket[i][0] === key)
+                    return currentBucket[i][1]
+            }
+        }
+        return null
+    }
+
+    keys() {
+        const keysArray = []
+        console.log(this.data.length)
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i])
+                keysArray.push(this.data[i][0][0])
+        }
+        return keysArray
+    }
+
+}
+
+/* // todo: Test
+const ht = new HashTable(50)
+ht.set('grapes', 10000)
+ht.get('grapes')
+ht.set('apples', 9)
+ht.get('apples')
+ht.keys()
+*/
+
+
 // Linked Lists
 
 function Node(value, next, prev) {
@@ -454,7 +512,7 @@ function hasCycle(ll) {
     // Option 1: O(n) t; O(1) s
     // todo: test for true Circularity (to be sure slow & fast iterations always intersect on every cycle-check)
     let slow = fast = ll.head
-    // NB: not O(n/2) t because fast shifts 2x for every slow shift
+    // NB: not O(n/2 ~ n) t because fast shifts 2x for every slow shift
     // because fast node keeps iterating in cycles until it intersects with slow node
     // so O(n) t is based on slow node's iteration through the entire linked list, once
     while (slow && fast && fast.next) {
@@ -480,7 +538,7 @@ function hasCycle(ll) {
                 d[fast.value] = true
             }
         }
-        if (!!d[slow.value]) return true // break fast, to keep to O(n/2) t & x
+        if (!!d[slow.value]) return true // break fast, to keep to O(n/2 ~ n) t & x
         slow = slow.next
     }
 
@@ -710,7 +768,42 @@ class LL {
     }
 
     reverse() {
-        
+        if (this.length == 1 || !this.head.next)
+            return this.head
+        let node = this.head
+        let next = node.next
+        this.head = this.tail
+        this.tail = node
+        let tmp = null
+        while (next) {
+            tmp = next.next
+            next.next = node
+            node.prev = next
+            node = next
+            next = tmp
+        }
+        this.head.prev = null
+        this.tail.next = null
+        return this
+    }
+
+    // Alt (3rd Party) logic
+    reverse(dummyOverrideArg) {
+        if (!this.head.next)
+            return this.head
+        let first = this.head
+        this.tail = this.head
+        let second = first.next
+        let tmp = null
+        while (second) {
+            tmp = second.next
+            second.next = first
+            first = second
+            second = tmp
+        }
+        this.head.next = null
+        this.head = first
+        return this
     }
 
 }
@@ -719,6 +812,8 @@ class LL {
 // Stacks & Queues
 
 // Heaps (max & min)
+
+// Binary Heaps & Priority Queues
 
 // Trees
 
@@ -874,6 +969,8 @@ function rotateMatrix(mat) { // O(n^2) t
     }
     return mat
 }
+
+// HashMaps & HashTables
 
 // Linked Lists
 
