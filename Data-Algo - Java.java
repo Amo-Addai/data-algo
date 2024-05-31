@@ -456,27 +456,8 @@ public void deleteNode(ListNode node) {
     node.next = nextNext;
 }
 
-// Alt 3rd-Party logic - Singly-linked list only, without a set tail ListNode
-public ListNode reverse(ListNode head) { 
-    if (head == null || head.next == null) return head;
-    ListNode prev = null;
-    ListNode node = head;
-    ListNode next = head.next;
-
-    while (node != null) {
-        node.next = prev;
-        prev = node;
-        node = next;
-        if (next != null) {
-            next = next.next;
-        }
-    }
-    head = prev;
-    return head;
-}
-
 public ListNode deleteDuplicates(ListNode head) {
-    if (head == null or head.next == null) return head;
+    if (head == null || head.next == null) return head;
     ListNode node = head;
     while (node.next != null) {
         if (node.value == node.next.value)
@@ -484,6 +465,22 @@ public ListNode deleteDuplicates(ListNode head) {
         else node = node.next;
         // else statement this time, forces iteration to stay with current node until all in-line duplicates are removed
     }
+    return head;
+}
+
+// Alt 3rd-Party logic - Singly-linked list only, without a set tail ListNode
+public ListNode reverse(ListNode head) { 
+    if (head == null || head.next == null) return head;
+    ListNode prev = null, node = head, next = head.next;
+
+    while (node != null) {
+        node.next = prev;
+        prev = node;
+        node = next;
+        if (next != null)
+            next = next.next;
+    }
+    head = prev;
     return head;
 }
 
