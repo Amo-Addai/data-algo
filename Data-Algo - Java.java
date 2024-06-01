@@ -154,6 +154,13 @@ int maximumPointsFromCards(int[] points, int k) {
     return max;
 }
 
+
+// Sets & Sequences
+
+
+// HashMaps & HashTables
+
+
 // Matrices
 
 /**
@@ -203,8 +210,6 @@ void setZeroesDiagonally (int[][] matrix) {
     }
 }
 
-
-// HashMaps & HashTables
 
 // Linked Lists
 
@@ -418,7 +423,7 @@ LinkedList reverse(LinkedList ll) { // O(n) t ; O(1) s
     return ll
 }
 
-// todo: Test all remaining Alt 3rd-Party logic methods
+// todo: Test all remaining Alt 3rd-Party (Tutorials) logic methods
 // * create a new ListNode class with all properties public
 
 public boolean hasCycle(ListNode head) {

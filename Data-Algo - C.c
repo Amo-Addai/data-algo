@@ -75,9 +75,11 @@ int* selectionSort(int a[]);
 
 // Arrays & Strings
 
-// Matrices
+// Sets & Sequences
 
 // HashMaps & HashTables
+
+// Matrices
 
 // Linked Lists
 

@@ -1,8 +1,11 @@
 import sys
 from collections import deque, defaultdict
+from typing import List
 
 import numpy as np
 import pandas as pd
+
+# TODO: NB: Algo, Correctness, Speed / Execution Time, Uniqueness
 
 '''
 for - iter, k/v, ..
@@ -247,7 +250,7 @@ class DataStructures:
 
     # Sets & Sequences
 
-    # HashMaps & Dictionaries
+    # HashMaps & HashTables
 
     # Matrices
 
@@ -314,13 +317,13 @@ class DataStructures:
 
         class ListNode:
 
-            def __init__(self, v=0, n=None):
+            def __init__(self, v=None, n=None):
                 self.value = v; self.next = n
 
         # Singly-linked list
         class SListNode(ListNode):
 
-            def __init__(self, v=0, n=None):
+            def __init__(self, v=None, n=None):
                 super().__init__(v, n)
 
         # Doubly-linked list
@@ -349,9 +352,10 @@ class DataStructures:
                 if self.next is not None:
                     self.next.for_each(cb, i + 1)
 
-        def __init__(self): 
-            self.head: ListNode = None
-            self.tail: ListNode = None
+        def __init__(self, h=None, t=None, l=0): 
+            self.head: ListNode = h
+            self.tail: ListNode = t
+            self.length = l
         
         def create_list(self, arr):
             start = self.head
@@ -400,7 +404,7 @@ class DataStructures:
                 self.head = self.tail = n
             else: self.insertTail(n)
         
-        def insert_at_index(self, v, i): # O(n ~ i) t
+        def insert_at_index(self, v, i: int): # O(n ~ i) t
             node = ListNode(v)
             if i == 0: 
                 self.insert_head(node) # O(1) t 
@@ -412,6 +416,25 @@ class DataStructures:
             node.prev = prev
             node.next = next
             next.prev = node
+
+        def insert_at_index(self, i: int, v): # override
+            if self.head is None or \
+                i < 0 or i >= self.length: 
+                return None
+            node = ListNode(v)
+            if i == 0: self.insert_head(node)
+            elif i == self.length - 1: self.insert_tail(node)
+            else:
+                c = 0
+                tmp = self.head
+                while c < i:
+                    tmp = tmp.next
+                    c += 1
+                next = tmp.next
+                node.prev = tmp
+                node.next = next
+                tmp.next = node
+                next.prev = node
         
         def insert_head(self, n: ListNode):
             n.next = self.head
@@ -438,6 +461,33 @@ class DataStructures:
                 next.prev = prev
                 node.next = node.prev = None
         
+        def remove_at_index(self, i: int): # override
+            if self.head is None or \
+                i < 0 or i >= self.length:
+                return None
+            if i == 0: self.remove_head()
+            elif i == self.length - 1: self.remove_tail()
+            else:
+                c = 0
+                node = self.head
+
+                # Option 1 - only for doubly-linked
+                
+                while c < i:
+                    node = node.next
+                    c += 1
+                prev = node.prev 
+                next = node.next
+                prev.next = next
+                next.prev = prev
+
+                # Option 2 - only for singly-linked
+                
+                while c < i-1: # would still work for i == 1; first iteration would fail, but node = self.head already
+                    node = node.next
+                    c += 1
+                node.next = node.next.next
+        
         def remove_value(self, v): # O(n) t
             # remove all nodes containing value v
 
@@ -459,7 +509,7 @@ class DataStructures:
             if self.head is None: return
             n = self.head
             self.head = self.head.next # or n.next
-            n.next = None
+            n.next = None; self.head.prev = None
         
         def remove_tail(self): # works for doubly-lls only
             if self.head is None: return
@@ -471,6 +521,16 @@ class DataStructures:
             # self.tail = n.prev # unnecessary if uncomment, not tail set if commented
             n = None
         
+        def remove_nth_from_end(self, i: int) -> ListNode:
+            # only works for doubly-linked lists
+            node = self.tail
+            while i > 0:
+                node = node.prev
+            prev = node.prev
+            next = node.next
+            prev.next = next
+            next.prev = prev
+
         def middle_node(self): # O(n/2 ~ n) t ; O(1) s
             slow = fast = self.head
             while fast.next and fast.next.next:
@@ -496,13 +556,249 @@ class DataStructures:
                 slow = slow.next
                 fast = fast.next.next
                 # if fast began from the next to start (slow) node, you check before iterating nodes
-                if slow is fast or id(slow) == id(fast):
+                if slow is fast or id(slow) == id(fast) or slow == fast: 
+                # 3rd (slow == fast) check also works for referenced object equality comparison
                     return True
             return False
-
-
-        # todo: Test next 4 Alt (3rd-Party) Logic Samples
         
+        def odd_evens(self): # O(n) t ; O(n) s (2 * n/2)
+            # sort ll with odds 1st, then evens after
+            if not self.head: return None
+            lo = le = ListNode()
+            lo_head = lo; le_head = le
+            node = self.head
+            while node:
+                if node.value % 2 == 0:
+                    le.value = node.value
+                    le = le.next = ListNode()
+                else:
+                    lo.value = node.value
+                    lo = lo.next = ListNode()
+                node = node.next
+            if not lo.value: lo = le_head
+            else: lo.next = le_head
+            if not le.value: le = None
+            else: self.tail = le_tail = le
+            # finding le's tail if set to None becomes difficult here
+            # next option is to use a dummy head for the 2nd half (le - evens ll), 
+            # so there's no need to create empty ListNodes at the end of each iteration
+            
+            # next implementation options below # test
+            ll = DataStructures.LinkedList(h=lo_head)
+            return ll
+        
+        def odd_evens(self): # todo: Test
+            if not self.head: return None
+            lo = le = ListNode()
+            lo_dummy, le_dummy = lo, le
+            node = self.head; i = 0
+            while node:
+                if node.value % 2 == 0:
+                    le = le.next = ListNode(v=node.value)
+                else:
+                    lo = lo.next = ListNode(v=node.value)
+                node = node.next
+                i += 1
+
+            # after loop, node == null)
+            le.next = node # point last even node to null node
+            self.tail = le # then set it to tail
+            lo.next = le_dummy.next # connect odd lo and even le
+            # find out if lo_dummy / le_dummy's states (being assigned le by obj reference) change whenever le.next or lo.next gets updated
+            le_dummy = le_dummy.next = None # find out if this affects le's real head (lo.next) by obj reference
+            
+            ll = DataStructures.LinkedList(h=lo_dummy.next, t=le, l=i)
+            return ll
+        
+        # Better option - creating only 1 extra ll for evens, as the main ll is being traversed (remove evens to be added to extra ll), then append evens to main ll after
+        
+        def odd_evens(self): # O(n) t; O(n/k or n-k ? ~ 1) s (k - num even numbers)
+            if not self.head: return None
+            le_dummy = le = ListNode()
+            node = self.head; i = 0
+            # easier using node.prev if doubly-linked
+            prev = None # with singly-linked, loop alongside manual prev var
+            while node:
+                if node.value % 2 == 0:
+                    if prev == None: # for 1st iteration only (optimize is necessary)
+                        self.head = node.next
+                    else: # should check: type(prev) is ListNode
+                        prev.next = node.next
+                    le = le.next = node # ListNode(v=node.value) is actually not required; can point directly to the node # todo: test
+
+                else: pass # do nothing this time, if node.value is odd
+                
+                prev = node
+                node = node.next
+
+            # after loop, prev is the last node (node == null)
+            le.next = node # point last even node to null node
+            self.tail = le # then set it to tail
+            prev.next = le_dummy.next # connect main ll and even le
+            le_dummy = None # delete le dummy node
+            return self.head # final odd-even sorted linked-list
+
+        # Best option so far - only a few extra vars created, instead of an extra ll or 2 lls as the before options
+
+        def odd_evens(self): # O(n) t ; O(1) s
+            pass # TODO: 
+
+        # 3rd-Party - Alt-logic # test
+
+        def odd_evens(self): # O(n) t ; O(1) s (only 3 additional vars are used)
+            if not self.head: return None
+
+            # this assumes 1st node always contains an odd number
+            odd = self.head; 
+            # this assumes 2nd node always contains an even number
+            even = odd.next
+            evenList = even
+
+            while even and even.next:
+                odd.next = even.next
+                odd = odd.next
+
+                even.next = odd.next
+                even = even.next
+            
+            odd.next = evenList
+            return self.head
+
+
+        ''' # todo: Test
+        ll = LinkedList()
+        ll.head = ListNode(5)
+        node = ListNode(1)
+        ll.head.next = node
+        node.next = ListNode(7)
+        ll.insert_at_index(2, 2)
+        ll.print_list()
+        ll.remove_at_index(2)
+        ll.print_list()
+        '''
+
+
+        # todo: Test next set of Alt (3rd- Party - Tutorials) Logic Samples
+
+
+        def get(self, i: int) -> int:
+            if i < 0 or i >= self.length: return -1
+            node = self.head
+            while i != 0:
+                node = node.next
+                i -= 1 # decrementing this time
+            # when i reaches 0, node is found
+            return node.value
+        
+        def addAtHead(self, v):
+            node = ListNode(v)
+            if self.head is None:
+                self.head = self.tail = node
+            else:
+                node.next = self.head
+                self.head.prev = node
+                self.head = node
+            self.length += 1
+        
+        def addAtTail(self, v):
+            node = ListNode(v)
+            if self.head is None:
+                self.head = self.tail = node
+            else:
+                node.prev = self.tail
+                self.tail.next = node
+                self.tail = node
+            self.length += 1
+
+        def addAtIndex(self, i: int, v):
+            if self.head is None or \
+                i < 0 or i > self.length: 
+                return None
+            elif i == 0: self.addAtHead(v)
+            elif i == self.length: self.addAtTail(v)
+            else:
+                tmp = self.head
+                while i-1 != 0:
+                    tmp = tmp.next
+                    i -= 1
+                node = ListNode(v)
+                node.next = tmp.next
+                tmp.next.prev = node
+                tmp.next = node
+                node.prev = tmp
+                self.length += 1
+            # not outside else: because it's also inc'd in both addAt(Head/Tail)
+        
+        def deleteAtHead(self):
+            if self.head is None: return None
+            else:
+                node = self.head.next
+                if node: node.prev = None
+                self.head = node
+            self.length -= 1
+        
+        def deleteAtTail(self):
+            if self.tail is None:
+                if self.head is None: return None
+                else: self.tail = self.head 
+                # set new tail to be deleted later (or now .. if required)
+            else:
+                node = self.tail.prev # for doubly-linked only (else, loop to end of singly-linked-list)
+                self.tail = node
+            self.length -= 1
+        
+        def deleteAtIndex(self, i):
+            if self.head is None or \
+                i < 0 or i >= self.length: 
+                return
+            elif i == 0: self.deleteAtHead()
+            elif i == self.length - 1: self.deleteAtTail()
+            else:
+                c = 0
+                node = self.head
+
+                # Option 1 - only for doubly-linked
+                
+                while c < i:
+                    node = node.next
+                    c += 1
+                prev = node.prev 
+                next = node.next
+                prev.next = next
+                next.prev = prev
+
+                # Option 2 - only for singly-linked
+                
+                while c < i-1: # would still work for i == 1; first iteration would fail, but node = self.head already
+                    node = node.next
+                    c += 1
+                node.next = node.next.next
+        
+        def deleteAtIndex(self, i: int): # override
+            if i < 0 or i >= self.length: return
+            elif i == 0: # manually deleting Head
+                node = self.head.next
+                if node: node.prev = None
+                self.head = self.head.next # node
+                self.length -= 1
+                if self.length == 0:
+                    self.tail = None
+            elif i == self.length - 1:
+                node = self.tail.prev
+                if node: node.next = None
+                self.tail = self.tail.prev # node
+                self.length -= 1
+                if self.length == 0:
+                    self.head = None
+            else:
+                node = self.head
+                while i - 1 != 0:
+                    node = node.next
+                    i -= 1
+                node.next = node.next.next
+                node.next.prev = node
+                self.size -= 1
+
         def middleNode(self, head: ListNode) -> ListNode:
             # corner case: if head or head.next is null, return head
             if head is None or head.next is None:
@@ -547,7 +843,6 @@ class DataStructures:
                     return True
                 
             return False
-        
 
         def insertAtLocation(self, v, i):
             tmp = self.head
@@ -600,6 +895,18 @@ class DataStructures:
             next.prev = prev
             node.next = node.prev = None
             return self.head
+        
+        def removeNthFromEnd(self, head: ListNode, i: int) -> ListNode:
+            ans = ListNode(0)
+            node = next = ans
+            ans.next = head
+            for i in range(1, i + 1):
+                node = node.next
+            while node is not None:
+                node = node.next
+                next = next.next
+            next.next = next.next.next
+            return ans.next # exclude dummy head
 
         # works perfectly for singly-linked listnodes
         # reset node's value to next's value, then set node's .next to next's .next
@@ -619,18 +926,26 @@ class DataStructures:
                 # else statement this time, forces iteration to stay with current node until all in-line duplicates are removed
             return head
         
+        def reverse(self, head: ListNode) -> ListNode: # override
+            prev = None; node = head; next = None
+            while node:
+                next = node.next
+                node.next = prev
+                prev = node
+                node = next
+            return prev # new head
         
-        ''' # todo: Test
-        ll = LinkedList()
-        ll.head = ListNode(5)
-        node = ListNode(1)
-        ll.head.next = node
-        node.next = ListNode(7)
-        ll.insert_at_index(2, 2)
-        ll.print_list()
-        ll.remove_at_index(2)
-        ll.print_list()
-        '''
+        def reverse(self, head: ListNode) -> ListNode: # override
+            node = None
+            while head is not None:
+                next = head.next
+                head.next = node
+                node = head
+                head = next
+            return node # new head
+
+
+        # todo: Done with set of Alt (3rd-Party) Logic Samples
 
 
     def reverse(self, l: LinkedList): 
@@ -646,16 +961,142 @@ class DataStructures:
             node = next
             next = tmp
 
-
-    def merge(self, l1, l2): 
+    def merge(self, l1: LinkedList, l2: LinkedList) -> LinkedList: 
         
-        # sorted 
-        pass
-        # unsorted
+        # sorted - O(a + b ~ n) t (n - length of longer list) ; O(a + b ~ n) s (creating a newly merged linked-list)
+
+        node, l1_node, l2_node = ListNode(0), l1.head, l2.head
+        dummy = node; i = 0
+
+        while l1_node and l2_node:
+            if l1_node.value <= l2_node.value:
+                node.next = l1_node
+                l1_node = l1_node.next
+            else:
+                node.next = l2_node
+                l2_node = l2_node.next
+            node = node.next # crucial shift, or the merged list would stay at only 1 node iteration throughout loop
+            i += 1
+        if l1_node: # if-check is unnecessary (while check is enough)
+            while l1_node:
+                node.next = l1_node
+                l1_node = l1_node.next
+                node = node.next
+                i += 1
+        while l2_node:
+            node.next = l2_node
+            l2_node = l2_node.next
+            node = node.next
+            i += 1
+        
+        # now, construct a new linked list, remove dummy head, then return it
+        ll = DataStructures.LinkedList(h=dummy, t=node.next, l=i)
+        ll.remove_head()
+        return ll
+
+        # unsorted - O(sorting ll - ?) + O(a + b) t ; O(sorting ll - ?) + O(1) s
+        
+        # TODO
+        
+    def merge_k_lls(self, ks: List[LinkedList]) -> LinkedList:
+
+        def find_min(arr):
+            found = min(arr) # O(?) t
+            # arr.remove(found) # removes, but doesn't return value
+            min_val = arr.pop(arr.index(found)) # this pops it out, but has to find the index 1st
+            # find out O(?) ts for both options
+
+            return min_val
+
+
+        
+        # sorted - O(kn) t ; O(kn) s (n - longest ll's length)
+        dummy = ListNode()
+        dummy.next = ListNode()
+        ll = DataStructures.LinkedList(h=dummy.next)
+        nodes = []
+        for k in ks:
+
+        
+        # unsorted - 
+    
+        # TODO
+        
 
     def add(self, l1, l2): pass
         
-    def add_nums(self, a, b): pass
+    def add_nums(self, l1, l2): pass
+        
+    def add_2_nums(self, l1, l2): # O(n) t (n - length of longer list); O(n) s (creating a newly summed linked-list)
+
+        # both are singly-linked lists, each having a number's digits in reverse order (123 = 3 -> 2 -> 1)
+        # regular addition of 2 numbers with multiple digits is already done in reverse order, 
+        # with n > base 10's extra digit carried over as a multiple of 10 (10, 100, 1000, ...) to the next 
+
+        l1, l2, ls = l1.head, l2.head, ListNode()
+        s = c = 0; ll = DataStructures.LinkedList(h=ls)
+        while l1 or l2:
+            s = int(l1.value if l1 and l1.value else 0) + \
+                int(l2.value if l2 and l2.value else 0) + c
+            if len(f"{s}") > 1:
+                ls.value = int((f"{s}")[-1]) # or s % 10
+                c = int((f"{s}")[:-1]) # or s / 10
+            else:
+                ls.value = s
+                c = 0
+            ls.next = ListNode()
+            l1, l2, ls = l1.next, l2.next, ls.next
+        if c > 0: ls.value = c
+        else: ls = None # remove the last empty ls node
+        return ll
+
+
+    # todo: Test next set of Alt (3rd- Party - Tutorials) Logic Samples
+
+
+    def merge(self, l1: LinkedList.ListNode, l2: LinkedList.ListNode) -> LinkedList.ListNode:
+        node = ListNode(0); dummy = node
+        while l1 and l2:
+            if l1.value > l2.value:
+                node.next = l2
+                l2 = l2.next
+            else:
+                node.next = l1
+                l1 = l1.next
+            node = node.next
+        while l1:
+            node.next = l1
+            l1 = l1.next
+            node = node.next
+        while l2:
+            node.next = l2
+            l2 = l2.next
+            node = node.next
+        return dummy.next # exclude the dummy from list first, if required
+        
+    def merge_k_lls(self, ks: List[LinkedList.ListNode]) -> LinkedList.ListNode:
+        pass
+    
+    def add_2_nums(self, l1, l2): 
+        ans = DataStructures.LinkedList.ListNode()
+        node = ans
+        s = c = 0
+        while l1 or l2:
+            s = c
+            if l1:
+                s += l1.value
+                l1 = l1.next
+            if l2:
+                s += l2.value
+                l2 = l2.next
+            c = int(s / 10)
+            node.next = ListNode(s % 10)
+            node = node.next
+        if c > 0: node.next = ListNode(c)
+        return ans.next # leave out dummy head
+
+
+    # todo: Done with set of Alt (3rd-Party) Logic Samples
 
 
     # Stacks & Queues
@@ -1541,30 +1982,75 @@ def lru_cache(): pass
 
 class ListNode:
 
-    def __init__(self, v=0, n=None):
-        self.v = v; self.n = n
+    def __init__(self, v=None, n=None):
+        self.value = v; self.next = n
 
 
 def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode: # todo: optimize
     ls = ListNode(); sa = []; c = 0
-    s = l1.val + l2.val
+    s = l1.value + l2.value
     d = f"{s}"[-1:]
     c = int(f"{s}"[:-1])
     sa.append(d)
-    ls.val = d
+    ls.value = d
     while (l1.next is not None) or (l2.next is not None):
         if l1.next is not None: 
             l1 = l1.next
-            c += l1.val
+            c += l1.value
         if l2.next is not None: 
             l2 = l2.next
-            c += l2.val
+            c += l2.value
         s = c
         d = f"{s}"[-1:]
         c = int(f"{s}"[:-1])
         sa.append(d)
-        ls.next = ListNode(val=d)
+        ls.next = ListNode(v=d)
     return ls # or return s
+
+    # or
+
+    # both are singly-linked lists, each having a number's digits in reverse order (123 = 3 -> 2 -> 1)
+    # regular addition of 2 numbers with multiple digits is already done in reverse order, 
+    # with n > base 10's extra digit carried over as a multiple of 10 (10, 100, 1000, ...) to the next 
+
+    l1, l2, ls = l1.head, l2.head, ListNode()
+    s = c = 0; ll = DataStructures.LinkedList(h=ls)
+    while l1 or l2:
+        s = int(l1.value if l1 and l1.value else 0) + \
+            int(l2.value if l2 and l2.value else 0) + c
+        if len(f"{s}") > 1:
+            ls.value = int((f"{s}")[-1]) # or s % 10
+            c = int((f"{s}")[:-1]) # or s / 10
+        else:
+            ls.value = s
+            c = 0
+        ls.next = ListNode()
+        l1, l2, ls = l1.next, l2.next, ls.next
+    if c > 0: ls.value = c
+    else: ls = None # remove the last empty ls node
+    return ll
+
+    # or
+    
+    ans = ListNode(); node = ans
+    s = c = 0
+    while l1 or l2:
+        s = c
+        if l1:
+            s += l1.value
+            l1 = l1.next
+        if l2:
+            s += l2.value
+            l2 = l2.next
+        c = int(s / 10)
+        node.next = ListNode(s % 10)
+        node = node.next
+    if c > 0: node.next = ListNode(c)
+    return ans.next # leave out dummy head
+
+
+
+
 
 
 # https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
