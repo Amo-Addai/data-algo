@@ -678,7 +678,7 @@ class DataStructures:
         '''
 
 
-        # todo: Test next set of Alt (3rd- Party - Tutorials) Logic Samples
+        # todo: Test next set of Alt (3rd-Party - Tutorials) Logic Samples
 
 
         def get(self, i: int) -> int:
@@ -945,7 +945,7 @@ class DataStructures:
             return node # new head
 
 
-        # todo: Done with set of Alt (3rd-Party) Logic Samples
+        # todo: End of set of Alt (3rd-Party) Logic Samples
 
 
     def reverse(self, l: LinkedList): 
@@ -999,6 +999,7 @@ class DataStructures:
         # TODO
         
     def merge_k_lls(self, ks: List[LinkedList]) -> LinkedList:
+        if len(ks) == 0: return None
 
         def find_min(arr):
             found = min(arr) # O(?) t
@@ -1007,16 +1008,41 @@ class DataStructures:
             # find out O(?) ts for both options
 
             return min_val
-
-
         
-        # sorted - O(kn) t ; O(kn) s (n - longest ll's length)
-        dummy = ListNode()
-        dummy.next = ListNode()
-        ll = DataStructures.LinkedList(h=dummy.next)
-        nodes = []
-        for k in ks:
+        def should_loop(nodes):
+            for n in nodes:
+                if n is not None: return True
+            return False
 
+
+        # sorted - O(kn) t ; O(n) s (n - longest ll's length)
+
+        dummy = ListNode()
+        ll = DataStructures.LinkedList(h=dummy)
+        ll_node = ll.head
+        nodes = [l.head for l in ks]
+        min = ListNode(v=sys.maxsize)
+
+        while should_loop(nodes):
+            # finding min value before comparing - waste of t
+            # arr = [n.value for n in nodes] 
+            # min_value = find_min(arr)
+            found_index = 0
+            for i, n in enumerate(nodes):
+                if n and n.value <= min.value:
+                    min = n; found_index = i
+            ll_node.next = min
+            ll_node = ll_node.next
+            min = min.next
+            # replace min-value node in nodes, before resetting min node
+            nodes[found_index] = min # nodes.replace()
+            min = ListNode(v=sys.maxsize)
+        ll_node.next = None
+        ll.tail = ll_node
+        # ll.head = ll.head.next
+        ll.remove_head()
+        return ll
+        
         
         # unsorted - 
     
@@ -1051,7 +1077,7 @@ class DataStructures:
         return ll
 
 
-    # todo: Test next set of Alt (3rd- Party - Tutorials) Logic Samples
+    # todo: Test next set of Alt (3rd-Party - Tutorials) Logic Samples
 
 
     def merge(self, l1: LinkedList.ListNode, l2: LinkedList.ListNode) -> LinkedList.ListNode:
@@ -1075,7 +1101,41 @@ class DataStructures:
         return dummy.next # exclude the dummy from list first, if required
         
     def merge_k_lls(self, ks: List[LinkedList.ListNode]) -> LinkedList.ListNode:
-        pass
+        if len(ks) == 0: return None
+
+        def merge_2_lls(l1, l2):
+            node = ListNode(0)
+            ans = node
+
+            while l1 and l2:
+                if l1.value > l2.value:
+                    node.next = l2
+                    l2 = l2.next
+                else:
+                    node.next = l1
+                    l1 = l1.next
+                node = node.next
+
+            while l1:
+                node.next = l1
+                l1 = l1.next
+                node = node.next
+
+            while l2:
+                node.next = l2
+                l2 = l2.next
+                node = node.next
+
+            return ans.next
+        
+        i = 0; last = len(ks) - 1; j = last
+
+        while last != 0:
+            i = 0; j = last
+            while j > i:
+                ks[i] = merge_2_lls(ks[i], ks[j])
+                i += 1; j -= 1; last = j
+        return ks[0]
     
     def add_2_nums(self, l1, l2): 
         ans = DataStructures.LinkedList.ListNode()
@@ -1096,7 +1156,7 @@ class DataStructures:
         return ans.next # leave out dummy head
 
 
-    # todo: Done with set of Alt (3rd-Party) Logic Samples
+    # todo: End of set of Alt (3rd-Party) Logic Samples
 
 
     # Stacks & Queues
