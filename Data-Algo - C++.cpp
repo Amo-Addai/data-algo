@@ -201,7 +201,7 @@ typedef struct node {
     node* next; // can do away with struct node call when using typedef (confirm with VSCode)
 };
 
-node* create_list() {
+node* createList() {
     node* head = NULL, * tail = NULL, * new_node = NULL;
     int num, tmp;
     cin >> num;
@@ -221,7 +221,7 @@ node* create_list() {
     return head; // or ll // todo: create LinkedList class
 }
 
-node* find_middle(node* head) {
+node* findMiddle(node* head) {
     node* slow = head;
     node* fast = head;
     while (fast && fast->next) {
@@ -231,7 +231,7 @@ node* find_middle(node* head) {
     return slow; // or int slow->value
 }
 
-bool has_cycle(node* head) { // O(n) t ; O(1) s
+bool hasCycle(node* head) { // O(n) t ; O(1) s
     node* slow = head;
     node* fast = head;
     // NB: not O(n/2 ~ n) t because fast shifts 2x for every slow shift
@@ -247,7 +247,7 @@ bool has_cycle(node* head) { // O(n) t ; O(1) s
 }
 
 // * Important // todo: Test
-node* remove_cycle(node* head) {
+node* removeCycle(node* head) {
     node* slow = head;
     node* fast = head->next;
     while (slow != fast) {
@@ -278,11 +278,11 @@ node* remove_cycle(node* head) {
     fast->next = NULL;
 }
 
-void print_node(node* n) {
+void printNode(node* n) {
     cout << n->value;
 }
 
-void print_list(node* head) {
+void printList(node* head) {
     while (head != NULL) { // can do away with the != NULL force-check
         cout << head->value << ' ';
         head = head->next;
@@ -290,19 +290,19 @@ void print_list(node* head) {
 }
 
 
-// /*
+/*
 // todo: tests
-int test_main() {
+int testMain() {
     node* n = new node;
     n->value = 100;
     n->next = NULL;
     cout << n->value;
-    node* l = create_list();
-    print_list(l);
-    print_node(find_middle(l));
-    cout << has_cycle(l);
-    if (has_cycle(l))
-        print_list(remove_cycle(l));
+    node* l = createList();
+    printList(l);
+    printNode(findMiddle(l));
+    cout << hasCycle(l);
+    if (hasCycle(l))
+        printList(removeCycle(l));
 
     return 0;
 }
