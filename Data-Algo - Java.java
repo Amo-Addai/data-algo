@@ -143,7 +143,7 @@ int minimumDominoRotations(int[] a, int[] b) { // todo: test
 }
 
 int maximumPointsFromCards(int[] points, int k) {
-    int sum = 0, int max = 0;
+    int sum = 0, max = 0;
     int n = points.length - 1;
     int[] left = new int[k+1];
     int[] right = new int[k+1];
@@ -163,6 +163,38 @@ int maximumPointsFromCards(int[] points, int k) {
     return max;
 }
 
+int firstPositionOfTarget(int[] nums, int target) {
+    if (nums == null || nums.length == 0)
+        return -1;
+    int left = 0, right = nums.length - 1, mid = 0;
+    while (left + 1 < right) {
+        mid = left + (right - left) / 2;
+        // major difference between first & last position search
+        if (nums[mid] < target) left = mid; // nums[mid] < target
+        else right = mid;
+    }
+    if (nums[left] == target) return left;
+    if (nums[right] == target) return right;
+    return -1;
+}
+
+int lastPositionOfTarget(int[] nums, int target) {
+    if (nums == null || nums.length == 0)
+        return -1;
+    int left = 0, right = nums.length -1, mid = 0;
+    while (left + 1 < right) {
+        mid = left + (right - left) / 2;
+        // major difference between last & first position search
+        if (nums[mid] <= target) left = mid; // nums[mid] <= target
+        else right = mid;
+    }
+    if (nums[right] == target) return right;
+    if (nums[left] == target) return left;
+    return -1;
+}
+
+
+// (Array) Lists & Tuples
 
 // Sets & Sequences
 

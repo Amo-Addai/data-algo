@@ -248,6 +248,8 @@ class DataStructures:
 
     def min_jumps(self, a): pass
 
+    # (Array) Lists & Tuples
+
     # Sets & Sequences
 
     # HashMaps & HashTables

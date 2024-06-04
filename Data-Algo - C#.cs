@@ -80,6 +80,8 @@ class Sorting
 
 // Arrays & Strings
 
+// (Array) Lists & Tuples
+
 // Sets & Sequences
 
 // HashMaps & HashTables
