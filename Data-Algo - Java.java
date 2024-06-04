@@ -1,4 +1,8 @@
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.function.Function;
 
 /*
 
@@ -14,7 +18,7 @@ Functional Interfaces, Lombok,
 
 class Searching {
 
-    public Searching Searching() {}
+    public Searching() {}
 
     public int linearSearch(int[] a, int x) {
         for (int i = 0; i < a.length; i++) if (x == a[i]) return i; 
@@ -25,7 +29,7 @@ class Searching {
         if (a.length == 0) return null;
 
         var rBinarySearch = (int[] a, int x) -> int {
-            if (a.length == 0) return null;
+            if (a.length == 0) return -1;
             int m = a.length / 2;
             if (x < a[m]) return rBinarySearch(Arrays.slice(a, 0, m - 1), x); // slice a
             else if (x > a[m]) return rBinarySearch(Arrays.slice(a, m + 1, a.length - 1), x); // slice a
@@ -33,7 +37,7 @@ class Searching {
         }
 
         var rBinarySearch2p = (int[] a, int x, int f, int l) -> int {
-            if (a.length == 0) return null;
+            if (a.length == 0) return -1;
             int m = (f + l) / 2;
             if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1);
             else if (x > a[m]) return rBinarySearch2p(a, x, m + 1, l);
@@ -60,7 +64,11 @@ class Searching {
 
 class Sorting {
 
-    public Sorting Sorting() {}
+    public Sorting() {}
+
+    public int[] quickSort(int[] arr) {
+        // TODO
+    }
 
 }
 
@@ -76,6 +84,7 @@ class Sorting {
 // Arrays & Strings
 
 String reorganizeString(String S) { // TODO: verify - O(n + n log n) t | O(n) s
+    
     Map<Character, Integer> counts = new HashMap<>();
 
     // O(n)
@@ -231,13 +240,13 @@ public class LinkedList {
         public void setNext(ListNode v) { this.next = v; }
     }
 
-    public class SListNode {
+    public class SListNode extends ListNode {
         public SListNode(Object v, ListNode n) {
             super(v, n);
         }
     }
 
-    public class DListNode {
+    public class DListNode extends ListNode {
         private ListNode prev;
 
         public DListNode(Object v, ListNode n, ListNode p) {
@@ -267,10 +276,10 @@ public class LinkedList {
 
     // with SListNode (or ListNode in general) find previous nodes on each iteration, to be passed into the callbacks as an extra argument
     public DListNode findAction(String by, Object key, Function<DListNode, DListNode> cb) { // O(n) t ; O(1) s
-        DListNode node = this.head;
+        ListNode node = this.head;
         if (node == null) return null;
         switch (by) {
-            case 'node':
+            case "node":
                 DListNode toFind = (DListNode) key;
                 if (toFind == null) return null;
                 while (node.getNext() != null) {
@@ -281,7 +290,7 @@ public class LinkedList {
                     node = node.getNext();
                 }
                 break;
-            case 'index':
+            case "index":
                 Integer i = (Integer) key;
                 int c = 0;
                 while (node.getNext() != null) {
@@ -290,7 +299,7 @@ public class LinkedList {
                     c++;
                 }
                 break;
-            case 'value':
+            case "value":
                 Object value = key; // unnecessary
                 while (node.getNext() != null) {
                     // should cb on every object value match
@@ -298,7 +307,7 @@ public class LinkedList {
                     node = node.getNext();
                 }
                 return null;
-            case 'duplicates-inline':
+            case "duplicates-inline":
                 while (node.getNext() != null) {
                     // should cb on every object value match
                     if (node.getValue() == node.getNext().getValue()) 
@@ -309,9 +318,10 @@ public class LinkedList {
                 return null;
             default: return null;
         }
+        return null;
     }
 
-    private void remove = (DListNode node) ->  {
+    private Function<DListNode, DListNode> remove = (DListNode node) -> DListNode {
         ListNode prev = node.getPrev();
         DListNode next = node.getNext();
         prev.setNext(next); next.setPrev(prev);
@@ -327,28 +337,29 @@ public class LinkedList {
         node.setNext(nextNext);
         ((DListNode) nextNext).setPrev(node);
         // no need to call .setPrev(), if DListNode isn't forced
-    }
+    };
 
     public DListNode removeNode(DListNode n) {
-        DListNode node = this.findAction('node', n, this.remove);
+        DListNode node = this.findAction("node", n, this.remove);
         // work with node
         return node;
     }
 
     public DListNode removeAtIndex(int i) {
-        DListNode node = this.findAction('index', i, this.remove);
+        DListNode node = this.findAction("index", i, this.remove);
         return node;
     }
 
     public DListNode removeValue(Object v) { // wouldn't work for primitive data type values
-        DListNode node = this.findAction('value', v, this.remove);
+        DListNode node = this.findAction("value", v, this.remove);
         return node;
     }
 
     public DListNode removeInlineDuplicates() {
-        DListNode node = this.findAction('duplicates-inline', (DListNode node) ->  {
+        DListNode node = this.findAction("duplicates-inline", (DListNode node) -> DListNode {
             DListNode next = node.getNext();
             node.setNext(next.getNext());
+            return node;
         });
         return node;
     }
@@ -489,6 +500,10 @@ public ListNode reverse(ListNode head) {
     return head;
 }
 
+public ListNode flattenBinaryTreeToLinkedList(TreeNode root) {
+    // TODO: 
+}
+
 // Stacks & Queues
 
 // Heaps (max & min)
@@ -496,6 +511,65 @@ public ListNode reverse(ListNode head) {
 // Binary Heaps & Priority Queues
 
 // Trees
+
+public class Tree {
+
+    public class TreeNode {
+
+        private Object value;
+        private TreeNode left;
+        private TreeNode right;
+        
+        public TreeNode(Object v, TreeNode l, TreeNode r) {
+            this.value = v;
+            this.left = l;
+            this.right = r;
+        }
+
+    }
+
+    private TreeNode root;
+
+    public Tree(TreeNode root) {
+        this.root = root;
+    }
+
+    // Traversal
+    public LinkedList.ListNode flattenBinaryTreeToLinkedList(TreeNode root) {
+        if (root == null) return null;
+        TreeNode lastNode = null;
+
+        if (lastNode != null) {
+            lastNode.left = null;
+            lastNode.right = root;
+        }
+
+        lastNode = root;
+        TreeNode right = root.right; // root might be changed
+        this.flattenBinaryTreeToLinkedList(root.left);
+        this.flattenBinaryTreeToLinkedList(right);
+        // recurse on the right var node instead, because root might be changed
+        // this.flattenBinaryTreeToLinkedList(root.right);
+    }
+
+    // Divide & Conquer
+    public TreeNode DCflattenBinaryTreeToLinkedList(TreeNode root) {
+        if (root == null) return null;
+
+        TreeNode left = this.DCflattenBinaryTreeToLinkedList((root.left));
+        TreeNode right = this.DCflattenBinaryTreeToLinkedList(root.right);
+
+        if (left != null) {
+            left.right = root.right;
+            root.right = root.left;
+            root.left = null;
+        }
+
+        if (right != null) return right;
+        if (left != null) return left;
+        return root;
+    }
+}
 
 // Binary (Search) Trees
 

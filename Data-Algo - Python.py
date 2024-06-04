@@ -1,6 +1,6 @@
 import sys
 from collections import deque, defaultdict
-from typing import List
+from typing import List, Callable
 
 import numpy as np
 import pandas as pd
@@ -8,7 +8,7 @@ import pandas as pd
 # TODO: NB: Algo, Correctness, Speed / Execution Time, Uniqueness
 
 '''
-for - iter, k/v, ..
+
 ..
 
 '''
@@ -390,6 +390,13 @@ class DataStructures:
                 node = node.next
                 l += 1
             return l
+
+        def traverse(self, backward=False, cb: Callable[[ListNode], None]=None):
+            node = self.head if not backward else self.tail
+            while node is not None:
+                print(f"Working with node - {node.value}")
+                cb(node)
+                node = node.next if not backward and node.next else node.prev if node.prev else None
         
         def find(self, i):
             node = self.head
@@ -398,6 +405,15 @@ class DataStructures:
                 node = node.next
                 c += 1
             return node
+    
+        def find_tail(self, i): # if no tail is set yet
+            if self.tail is not None: return self.tail
+            if not self.head: return None
+            node = self.head
+            while node.next:
+                node = node.next
+            self.tail = node
+            return self.tail
         
         def insert(self, n: ListNode):
             if self.head is None:
@@ -1100,10 +1116,10 @@ class DataStructures:
             node = node.next
         return dummy.next # exclude the dummy from list first, if required
         
-    def merge_k_lls(self, ks: List[LinkedList.ListNode]) -> LinkedList.ListNode:
+    def mergeKlls(self, ks: List[LinkedList.ListNode]) -> LinkedList.ListNode:
         if len(ks) == 0: return None
 
-        def merge_2_lls(l1, l2):
+        def merge2lls(l1, l2):
             node = ListNode(0)
             ans = node
 
@@ -1133,11 +1149,11 @@ class DataStructures:
         while last != 0:
             i = 0; j = last
             while j > i:
-                ks[i] = merge_2_lls(ks[i], ks[j])
+                ks[i] = merge2lls(ks[i], ks[j])
                 i += 1; j -= 1; last = j
         return ks[0]
     
-    def add_2_nums(self, l1, l2): 
+    def add2Nums(self, l1, l2): 
         ans = DataStructures.LinkedList.ListNode()
         node = ans
         s = c = 0

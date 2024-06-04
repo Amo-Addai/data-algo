@@ -814,6 +814,90 @@ class LL {
 
 // Stacks & Queues
 
+class Stack {
+
+    // private fields
+    #length
+    // linked-list is mainly used for stack data, in this cases
+    #node // : LL.Node
+    // array could be used instead
+    #data
+
+    constructor() {
+        this._top = null
+        this._bottom = null
+        this.#length = 0
+        this.#node = null
+        this.#data = []
+    }
+
+    get top() { return this._top }
+    set top(v) { this._top = v }
+
+    get bottom() { return this._bottom }
+    set bottom(v) { this._bottom = v }
+
+    get length() { return this.#length }
+    set length(v) { this.#length = v }
+
+    get node() { return this.#node }
+    set node(v) { this.#node = v }
+
+    get data() { return this.#data }
+    set data(v) { this.#data = v }
+
+    isEmpty() {
+        if (this.length === 0 || this.data.length === 0) {
+            this.top = null
+            this.bottom = null
+            return true
+        }
+        return false
+    }
+
+    peek() {
+        return this.top
+    }
+
+    push(v) {
+        this.node = LL.Node(v)
+        if (this.isEmpty())
+            this.top = this.bottom = this.node
+        else {
+            this.node.next = this.top
+            this.top = this.node
+            this.node = null
+        } // push node on top of 'array' stack
+        // treat either index 0 (beginning) or length-1 (end) or array as the top, and other as the bottom
+        this.data.push(this.node) // end of array chosen as top of stack
+        this.length++
+    }
+
+    pop() {
+        if (this.isEmpty()) return null
+        if (this.length === 1 || this.top === this.bottom)
+            this.bottom = null
+        this.node = this.top
+        this.top = this.node.next
+        this.data.splice(this.data.length-1) // can return this spliced[0] top (end of array) to this.node too
+        this.length--
+        return this.node
+    }
+
+}
+
+
+/*
+const stack = new Stack()
+stack.push('google')
+stack.push('youtube')
+stack.push('microsoft')
+stack.peek()
+stack.pop()
+stack.peek()
+// */
+
+
 // Heaps (max & min)
 
 // Binary Heaps & Priority Queues
