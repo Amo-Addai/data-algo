@@ -2,7 +2,19 @@
 
 ..
 
+
 "
+
+
+########################################
+##  SORTING ALGO'S
+########################################
+
+class(list(prop="val")) <- "Sorting"
+setClass("Sorting", slots = list(prop="val"))
+# obj <- new("Searching", prop="val")
+# setMethod("func", "Sorting", func)
+
 
 
 ########################################
@@ -14,23 +26,23 @@ setClass("Searching", slots = list(prop="val"))
 # obj <- new("Searching", prop="val")
 
 linearSearch <- function (a, x) {
-    for (i in x) if (x == i) i # item
+    for (i in x) if (x == i) i # i -> item # todo: index
 }
 
 binarySearch <- function (a, x) {
     # a <- sort(a)
-    if (length(a) == 0) nil # fix
+    if (length(a) == 0) NULL
 
-    rBinarySearch <- (a, x) {
-        if (length(a) == 0) nil
+    rBinarySearch <- function (a, x) {
+        if (length(a) == 0) NULL
         m <- length(a) / 2
         if (x < a[m]) rBinarySearch(a, x) # slice a
         if (x > a[m]) rBinarySearch(a, x) # slice a
         else m
     }
 
-    rBinarySearch2p <- (a, x, f, l) {
-        if (length(a) == 0) nil
+    rBinarySearch2p <- function (a, x, f, l) {
+        if (length(a) == 0) NULL
         m <- (f + l) / 2
         if (x < a[m]) rBinarySearch2p(a, x, f, m - 1)
         if (x > a[m]) rBinarySearch2p(a, x, m + 1, l)
@@ -46,21 +58,11 @@ binarySearch <- function (a, x) {
         if (x > a[m]) f <- m + 1
         else m
     }
-    nil # fix
+    NULL
 }
 
 setMethod("linearSearch", "Searching", linearSearch)
 setMethod("binarySearch", "Searching", binarySearch)
-
-
-########################################
-##  SORTING ALGO'S
-########################################
-
-class(list(prop="val")) <- "Sorting"
-setClass("Sorting", slots = list(prop="val"))
-# obj <- new("Searching", prop="val")
-# setMethod("func", "Sorting", func)
 
 
 

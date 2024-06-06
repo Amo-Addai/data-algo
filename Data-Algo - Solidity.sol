@@ -8,6 +8,17 @@ pragma solidity >=0.8.19 <0.9.0;
 
 
 ////////////////////////////////////////
+//  SORTING ALGO'S
+////////////////////////////////////////
+
+contract Sorting {
+
+    constructor() {}
+
+}
+
+
+////////////////////////////////////////
 //  SEARCHING ALGO'S
 ////////////////////////////////////////
 
@@ -54,16 +65,6 @@ contract Searching {
         if (x > a[m]) return rBinarySearch(a, x, m + 1, l);
         else return m;
     }
-
-}
-
-////////////////////////////////////////
-//  SORTING ALGO'S
-////////////////////////////////////////
-
-contract Sorting {
-
-    constructor() {}
 
 }
 

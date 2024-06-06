@@ -1,4 +1,5 @@
 import sys
+import math
 from collections import deque, defaultdict
 from typing import List, Callable
 
@@ -12,48 +13,6 @@ import pandas as pd
 ..
 
 '''
-
-########################################
-##  SEARCHING ALGO'S
-########################################
-
-class Searching:
-
-    def __init__(self):
-        pass
-    
-    def linear_search(self, a, x):
-        for i in a:
-            if x is i: return x
-        return None
-
-    def binary_search(self, a, x):
-        # a.sort()
-        if len(a) is 0: return None
-
-        def r_binary_search(a, x):
-            if len(a) is 0: return None
-            m = len(a) / 2
-            if x < a[m]: return r_binary_search(a[:m-1], x)
-            elif x > a[m]: return r_binary_search(a[m+1:], x)
-            else: return m
-
-        def r_binary_search(a, x, f, l):
-            if len(a) is 0 or f > l: return None
-            m = (f + l) / 2 # better: f + (l - f) / 2 (NB: pemdas / bodmas)
-            if x < a[m]: return r_binary_search(a, x, f, m - 1)
-            elif x > a[m]: return r_binary_search(a, x, m + 1, l)
-            else: return m
-
-        f, l = 0, len(a) - 1
-        r_binary_search(a, 7); r_binary_search(a, 7, f, l)
-
-        while f < l:
-            m = (f + l) / 2 # better: f + (l - f) / 2 (NB: pemdas / bodmas)
-            if x < a[m]: l = m - 1
-            elif x > a[m]: f = m + 1
-            else: return m
-        return None
 
 
 ########################################
@@ -227,6 +186,50 @@ class Sorting:
             else: e.append(i)
         # l = [(i if i < p else _) for i in a] # confirm _
         return self.quick(l) + e + self.quick(g)
+
+
+
+########################################
+##  SEARCHING ALGO'S
+########################################
+
+class Searching:
+
+    def __init__(self):
+        pass
+    
+    def linear_search(self, a, x):
+        for i in a:
+            if x is i: return x
+        return None
+
+    def binary_search(self, a, x):
+        a.sort() # or - sorted(a) # O(n log n) t
+        if len(a) is 0: return None
+
+        def r_binary_search(a, x):
+            if len(a) is 0: return None
+            m = len(a) / 2 # better math.floor(len(a) / 2)
+            if x < a[m]: return r_binary_search(a[:m-1], x)
+            elif x > a[m]: return r_binary_search(a[m+1:], x)
+            else: return m
+
+        def r_binary_search(a, x, f, l):
+            if len(a) is 0 or f > l: return None
+            m = (f + l) / 2 # better - math.floor(f + (l - f) / 2) (NB: pemdas / bodmas)
+            if x < a[m]: return r_binary_search(a, x, f, m - 1)
+            elif x > a[m]: return r_binary_search(a, x, m + 1, l)
+            else: return m
+
+        f, l = 0, len(a) - 1
+        r_binary_search(a, 7); r_binary_search(a, 7, f, l)
+
+        while f < l:
+            m = (f + l) / 2 # better - math.floor(f + (l - f) / 2) (NB: pemdas / bodmas)
+            if x < a[m]: l = m - 1
+            elif x > a[m]: f = m + 1
+            else: return m
+        return None
 
 
 

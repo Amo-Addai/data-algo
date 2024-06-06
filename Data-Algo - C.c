@@ -8,6 +8,14 @@ MemMan, ..
 */
 
 
+////////////////////////////////////////
+//  SORTING ALGO'S
+////////////////////////////////////////
+
+int* insertionSort(int a[]);
+int* selectionSort(int a[]);
+
+
 int linearSearch(int a[], int x);
 int binarySearch(int a[], int x);
 int rBinarySearch(int a[], int x);
@@ -54,14 +62,6 @@ int binarySearch(int a[], int x) {
         else return m;
     }
 }
-
-
-////////////////////////////////////////
-//  SORTING ALGO'S
-////////////////////////////////////////
-
-int* insertionSort(int a[]);
-int* selectionSort(int a[]);
 
 
 

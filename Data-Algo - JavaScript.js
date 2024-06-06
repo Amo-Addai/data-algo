@@ -9,52 +9,6 @@ Js/Ts/Sw
 
 
 ////////////////////////////////////////
-//  SEARCHING ALGO'S
-////////////////////////////////////////
-
-var Searching = function() {
-
-    function linearSearch(a, x) { // O(n)
-        for (i of a) if (i === x) return i
-        return null
-    }
-
-    function binarySearch(a, x) { // O(log n)
-        // a.sort()
-        if (a.length === 0) return null
-
-        function rBinarySearch(a, x) {
-            if (a.length === 0) return null
-            m = a.length / 2
-            if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x)
-            else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
-            else return m
-        }
-
-        function rBinarySearch(a, x, f, l) {
-            if (a.length === 0 || f > l) return null
-            m = (f + l) / 2 // better: f + (l - f) / 2
-            if (x < a[m]) return rBinarySearch(a, x, f, m - 1)
-            else if (x > a[m]) return rBinarySearch(a, x, m + 1, l)
-            else return m
-        }
-
-        f = 0, l = a.length - 1 
-        rBinarySearch(a, 3); rBinarySearch(a, 3, f, l)
-
-        while (f < l) {
-            m = (f + l) / 2 // better: f + (l - f) / 2
-            if (x < a[m]) l = m - 1
-            else if (x > a[m]) f = m + 1
-            else return m
-        }
-        return null
-    }
-
-}
-
-
-////////////////////////////////////////
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
@@ -157,6 +111,55 @@ var Sorting = function() {
     }
 
 }
+
+
+
+////////////////////////////////////////
+//  SEARCHING ALGO'S
+////////////////////////////////////////
+
+var Searching = function() {
+
+    function linearSearch(a, x) { // O(n)
+        for (i of a) if (i === x) return i
+        return null
+    }
+
+    function binarySearch(a, x) { // O(log n)
+        a.sort((a, b) => a - b); // O(n log n) t // compare func for int arrays only
+        // or - .sort() - without compare func for strings & chars (alphabetical order) only 
+        if (a.length === 0) return null
+
+        function rBinarySearch(a, x) {
+            if (a.length === 0) return null
+            m = a.length / 2 // better - Math.floor(a.length / 2)
+            if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x) // or - a.splice(0, m - 1)
+            else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
+            else return m
+        }
+
+        function rBinarySearch(a, x, f, l) {
+            if (a.length === 0 || f > l) return null
+            m = (f + l) / 2 // better - Math.floor(f + (l - f) / 2)
+            if (x < a[m]) return rBinarySearch(a, x, f, m - 1)
+            else if (x > a[m]) return rBinarySearch(a, x, m + 1, l)
+            else return m
+        }
+
+        f = 0, l = a.length - 1 
+        rBinarySearch(a, 3); rBinarySearch(a, 3, f, l)
+
+        while (f < l) {
+            m = (f + l) / 2 // better - Math.floor(f + (l - f) / 2)
+            if (x < a[m]) l = m - 1
+            else if (x > a[m]) f = m + 1
+            else return m
+        }
+        return null
+    }
+
+}
+
 
 
 ////////////////////////////////////////
@@ -913,6 +916,69 @@ stack.peek()
 // Graphs
 
 // Bits
+
+
+/* // TODO: Create classes:
+
+class DynamicProgramming
+
+class DivideAndConquer
+
+class Greedy
+
+class BackTracking
+
+class SystemDesign
+
+class Mathematical
+
+class Geometric
+
+class PatternSearching
+
+*/
+
+class Recursion {
+
+    constructor() {}
+
+    factorial(num) { // O(n) t [not O(n!)]
+        if (num === 1) return num
+        else return num * factorial(num - 1);
+    }
+
+}
+
+/* // TODO: Create classes:
+
+class Bitwise
+
+class Randomized
+
+class Hashing
+
+class Compression
+
+class Encryption
+
+class BranchAndBound
+
+class MachineLearning
+
+class DeepLearning
+
+class NaturalLanguageProcessing
+
+class Genetic
+
+class MultiThreading
+
+class Games
+
+class Quant
+
+*/
+
 
 
 ////////////////////////////////////////
