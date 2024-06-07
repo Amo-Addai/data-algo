@@ -1087,7 +1087,7 @@ class DataStructures:
                 int(l2.value if l2 and l2.value else 0) + c
             if len(f"{s}") > 1:
                 ls.value = int((f"{s}")[-1]) # or s % 10
-                c = int((f"{s}")[:-1]) # or s / 10
+                c = int((f"{s}")[::-1]) # or s / 10
             else:
                 ls.value = s
                 c = 0
@@ -1188,111 +1188,276 @@ class DataStructures:
 
     # Trees
 
+    class Tree(): # acyclic-undirected graphs
+            
+        class Node():
+
+            def __init__(self, v=None, l=None, r=None, c=[], p=None):
+                self.value = v
+                self.left = l
+                self.right = r
+                self.parent = p # for bi-directed tree-nodes
+                self.children = c # for more than 2 children
+        
+            def add_child(self, n: DataStructures.Tree.Node): # todo
+                self.children.append(n)
+            
+            def add_left(self, n):
+                self.left = n
+                n.parent = self # todo
+            
+            def add_right(self, n):
+                self.right = n
+            
+            def add_parent(self, n):
+                n.add_child(self)
+                self.parent = n
+    
+            def print(self, level=0):
+                print("  " * level, self.value)
+                for child in self.children:
+                    self.print_tree(child, level = level + 1)
+        
+        def __init__(self, n):
+            self.root = n
+            self.height = 1
+        
+        def set_root(self, n):
+            n.left = self.root.left
+            n.right = self.root.right
+            n.children = self.root.children
+            self.root = n
+            # * don't increment height - self.height += 1 
+        
+        def add_root(self, n): # add new root on top of old
+            n.add_child(self.root)
+            # todo: set old root to n's left or right child
+            # if using BST child class, .left if old_root.value < n.value else .right
+            self.root = n
+            self.height += 1
+        
+        def print(self):
+            self.print_tree(self.root)
+    
+        def print_tree(self, root, level=0):
+            print("  " * level, root.value)
+            for child in root.children:
+                self.print_tree(child, level = level + 1)
+
+        def print_tree(self, root, indent=''):
+            # Print the current noode's value
+            print(indent + str(root.value))
+
+            # Recursively print each child with appropriate indentation
+            for i, child in enumerate(root.children):
+                if i < len(root.children) - 1:
+                    print(indent + '├── ', end='')
+                else:
+                    print(indent + '└── ', end='')
+                self.print_tree(child, indent = indent + '│   ')
+        
+        def print_tree(self, root, indent='', last=True):
+            print(indent, end='')
+            if last:
+                print('└── ', end='')
+                indent += '    '
+            else:
+                print('├── ', end='')
+                indent += '│   '
+
+            print(root.value)
+
+            # Recursively print each child with appropriate indentation
+            child_count = len(root.children)
+            for i, child in enumerate(root.children):
+                self.print_tree(child, indent=indent, last = i == child_count - 1)
+
+        # b/c/d - first searches
+
+        def bfs(self, root):
+            if root is None or type(root) is not DataStructures.Tree.Node:
+                return
+
+            queue = deque()
+            queue.append(root)
+
+            while queue: # No pre/post/in - order in BFS
+
+                node = queue.popleft() # queue - fifo, so pop oldest item (no .popright())
+                print(node.value)
+
+                # BFS "Straight" order - .left before .right
+                queue.append(node.left)
+                queue.append(node.right)
+                for child in node.children:
+                    queue.append(child)
+        
+                # NB: BFS "Reverse" - order - .right before .left
+                queue.append(node.right)
+                queue.append(node.left)
+                for child in node.children[::-1]:
+                    queue.append(child)
+        
+        def cfs(self, root=None, cb=None): # code/value - first search
+            if root is None or cb is None: return None
+
+            while root is not None and root.value is not None:
+                res = cb(root)
+                if res == 'l': self.cfs(root.left, cb)
+                elif res == 'r': self.cfs(root.right, cb)
+                else: return root # or res (root.value)
+        
+        def dfs(self, root):
+            if root is None or type(root) is not DataStructures.Tree.Node:
+                return
+
+            # DFS pre-order
+            print(root.value)
+            self.dfs(root.left)
+            self.dfs(root.right)
+            for child in root.children:
+                self.dfs(child)
+
+            # DFS post-order
+            self.dfs(root.left)
+            self.dfs(root.right)
+            for child in root.children:
+                self.dfs(child)
+            print(root.value)
+
+            # DFS in-order
+            self.dfs(root.left)
+            print(root.value)
+            self.dfs(root.right)
+            # consider in-order with root.children
+
+            # todo: NB: DFS "Reverse" pre/post/in - order too - .right before .left or reverse .children
+
+            # TODO: test these extra options
+
+            # Traverse all children
+            for child in root.children:
+                self.dfs(child)
+            print(root.value)
+
+            # Traverse all children, except last child
+            for i in range(len(root.children) - 1):
+                self.dfs(root.children[i])
+            print(root.value)
+            
+            # Traverse last child only
+            if root.children:
+                self.dfs(root.children[-1])
+            print(root.value)
+
+        def diameter(self): pass
+
+        def max_depth_or_height(self): pass
+
+        def is_BST(self): pass
+
+        def lowest_common_ancestor(self): pass
+
+        def unique_paths(self): pass
+
+        # TODO: Test
+
+        def tests(self):
+            root = DataStructures.Tree.Node(4)
+            root.left = DataStructures.Tree.Node(5)
+            root.right = DataStructures.Tree.Node(6)
+            root.left.left = DataStructures.Tree.Node(7)
+            root.print()
+            # 
+            self.print_tree(root)
+
+
     # Binary (Search) Trees
 
-    class Tree():
-
-        def __init__(self, x):
-            self.value = x
-            self.left = None
-            self.right = None
-            self.children = [] # for more than 2 children
+    class BST(Tree): # .left.value <= .value <= .right.value (vice versa)
         
-        def add_child(self, t):
-            self.children.append(t)
-    
-    def print_tree(self, tree, level=0):
-        print("  " * level, tree.value)
-        for child in tree.children:
-            self.print_tree(child, level + 1)
+        def __init__(self, n=None):
+            super().__init__(n)
+        
+        def find(self, root, v):
+            return self.cfs(
+                root, 
+                cb=lambda root: None if not (root and root.value) \
+                    else root if root.value == v \
+                    else 'l' if root.value < v \
+                    else 'r'
+            )
+        
+        def insert(self, root, v):
+            if not root: return None
+            node = DataStructures.BST.Node(v)
 
-    def print_tree_2(self, tree, indent=''):
-        # Print the current noode's value
-        print(indent + str(tree.value))
+            def cb(root):
+                if not root: return None
 
-        # Recursively print each child with appropriate indentation
-        for i, child in enumerate(tree.children):
-            if i < len(tree.children) - 1:
-                print(indent + '├── ', end='')
-            else:
-                print(indent + '└── ', end='')
-            self.print_tree_2(child, indent + '│   ')
-    
-    def print_tree_3(self, tree, indent='', last=True):
-        print(indent, end='')
-        if last:
-            print('└── ', end='')
-            indent += '    '
-        else:
-            print('├── ', end='')
-            indent += '│   '
+                if root.value == v:
+                    print(f"Node with value '{v}' already exists")
+                    return root # or - root.value ; not the new node
+                elif not root.left and not root.right: # if root is a leaf-node
+                    # add a check for root.children .length
+                    node.parent = root # set parent before or after add leaf-node
+                    if v < root.value: root.left = node
+                    else: root.right = node # v == root.value - already checked
+                else: # check traverse left/right
+                    if root.value < v: return 'l'
+                    else: return 'r' # root.value == v - already checked
+                    
+            return self.cfs(root, cb=cb)
+        
+        def remove(self, root, v):
+            if not root: return None
+            node = None
 
-        print(tree.value)
+            def cb(root):
+                if not root: return None
 
-        # Recursively print each child with appropriate indentation
-        child_count = len(tree.children)
-        for i, child in enumerate(tree.children):
-            self.print_tree_3(child, indent, i == child_count - 1)
-    
-    
-    def dfs(self, tree):
-        if tree is None or type(tree) is not DataStructures.Tree: return
+                if not root.left and not root.right: # if root is a leaf-node and has value v
+                    # add a check for root.children .length
+                    if root.value == v:
+                        print(f"Leaf Node with value '{v}' exists. Removing ..")
+                        node = root; root = None
+                    return node # else: node == None
+                elif root.value == v:
+                    print(f"Node with value '{v}' exists. Removing ..")
+                    # todo: also do this with 1-direction trees (no .parent)
+                    # remove current node
+                    # if 1 child-node, connect its parent to its child 
+                    # if 2 children-node, connect its right-child's side's minimum value node in-between its parent and right child itself
+                    # by 'minimum' traverse through all left child nodes, from the current node's right child, until left-leaf-node
+                    # left-leaf-node will always be higher than current node's value (hence its left child's), keeping the BST binary
+                    # todo: NB: All nodes to the right of any node, have greater values than that node's value
+                    node = root; parent = root.parent
+                    if not root.left: # only root.right child-node
+                        if parent.left == root: parent.left = root.right
+                        elif parent.right == root: parent.right = root.right
+                        # might not need to check for parent.right, but should be explicitly done anyway
+                    elif not root.right: # only root.left child-node
+                        if parent.left == root: parent.left = root.left
+                        elif parent.right == root: parent.right = root.left
+                    else: # both root .left & .right children-nodes
+                        loop_node = root.right; leaf_left = None
+                        while loop_node and loop_node.left:
+                            loop_node = loop_node.left
+                        loop_node.left = root.left
+                        loop_node.right = root.right
+                        if parent.left == root: parent.left = loop_node
+                        elif parent.right == root: parent.right = loop_node
+                    
+                    # when done, delete root and return it as node
+                    root = None
+                    return node
+                else: # check traverse left/right
+                    if root.value < v: return 'l'
+                    else: return 'r' # root.value == v - already checked
+                    
+            return self.cfs(root, cb=cb)
+        
 
-        # DFS pre-order
-        print(tree.value)
-        self.dfs(tree.left)
-        self.dfs(tree.right)
-        for child in tree.children:
-            self.dfs(child)
-
-        # DFS post-order
-        self.dfs(tree.left)
-        self.dfs(tree.right)
-        for child in tree.children:
-            self.dfs(child)
-        print(tree.value)
-
-        # DFS in-order
-        self.dfs(tree.left)
-        print(tree.value)
-        self.dfs(tree.right)
-        ''' # TODO: test this option
-        for child in tree.children:
-            self.dfs(child)
-            print(tree.value)
-        '''
-        # Traverse all children, except last child
-        for i in range(len(tree.children) - 1):
-            self.dfs(tree.children[i])
-            print(tree.value)
-        # Traverse last child
-        if tree.children:
-            self.dfs(tree.children[-1])
-        print(tree.value)
-
-    def bfs(self, tree):
-        if tree is None or type(tree) is not DataStructures.Tree: return
-
-        queue = deque()
-        queue.append(tree)
-
-        while queue:
-            node = queue.popleft()
-            print(node.value)
-            queue.append(node.left)
-            queue.append(node.right)
-            for child in node.children:
-                queue.append(child)
-    
-    def diameter(self): pass
-
-    def max_depth_or_height(self): pass
-
-    def is_BST(self): pass
-
-    def lowest_common_ancestor(self): pass
-
-    def unique_paths(self): pass
 
     # Tries
     
@@ -2071,7 +2236,7 @@ def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode: # todo: optimiz
     ls = ListNode(); sa = []; c = 0
     s = l1.value + l2.value
     d = f"{s}"[-1:]
-    c = int(f"{s}"[:-1])
+    c = int(f"{s}"[::-1])
     sa.append(d)
     ls.value = d
     while (l1.next is not None) or (l2.next is not None):
@@ -2083,7 +2248,7 @@ def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode: # todo: optimiz
             c += l2.value
         s = c
         d = f"{s}"[-1:]
-        c = int(f"{s}"[:-1])
+        c = int(f"{s}"[::-1])
         sa.append(d)
         ls.next = ListNode(v=d)
     return ls # or return s
@@ -2101,7 +2266,7 @@ def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode: # todo: optimiz
             int(l2.value if l2 and l2.value else 0) + c
         if len(f"{s}") > 1:
             ls.value = int((f"{s}")[-1]) # or s % 10
-            c = int((f"{s}")[:-1]) # or s / 10
+            c = int((f"{s}")[::-1]) # or s / 10
         else:
             ls.value = s
             c = 0
