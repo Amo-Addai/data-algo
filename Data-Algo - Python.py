@@ -1677,10 +1677,11 @@ class DataStructures:
                         visited.add(n)
                         queue.append(n)
 
+
         def cfs(self, graph): 
             pass
 
-        # 3rd-Party DFS (tutorial):
+
         def dfs(self, graph: 'DirectedGraphWithAdjacencyList'): # O(n + e) t (n = nodes, e = edges) ; O(n) s (stack all nodes back & forth)
             root = graph.get_root()
             visited = set()
@@ -1724,6 +1725,9 @@ class DataStructures:
                     if n not in visited: # or checked: (but visited is better)
                         visited.add(n)
                         stack.append(n)
+        
+        def dijsktra(self, graph, node): # O(e log n) t (n = nodes, e = edges) ; 
+            pass
         
         def tests(self):
             dgl = DataStructures.Graph.DirectedGraphWithAdjacencyList()
