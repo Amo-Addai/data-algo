@@ -1188,7 +1188,7 @@ class DataStructures:
 
     # Trees
 
-    class Tree(): # acyclic-undirected graphs
+    class Tree(): # Acyclic Undirected Graph - a tree if connected, and a forest if not connected
             
         class Node():
 
@@ -1198,8 +1198,11 @@ class DataStructures:
                 self.right = r
                 self.parent = p # for bi-directed tree-nodes
                 self.children = c # for more than 2 children
+                self.depth = None # length of the path from the tree root-node to this node
         
-            def add_child(self, n: DataStructures.Tree.Node): # todo
+            def add_child(self, n: 'DataStructures.Tree.Node'): # * using a Forward Reference for the current class as an argument's data type
+                # using a string containing the class name as a type hint, when defining methods that take or return instances of the same class
+                
                 self.children.append(n)
             
             def add_left(self, n):
@@ -1215,12 +1218,15 @@ class DataStructures:
     
             def print(self, level=0):
                 print("  " * level, self.value)
+                # self.print_tree(self.left, level = level + 1)
+                # self.print_tree(self.right, level = level + 1)
+                # or
                 for child in self.children:
                     self.print_tree(child, level = level + 1)
         
         def __init__(self, n):
             self.root = n
-            self.height = 1
+            self.height = 1 # length of the longest path from the root to a leaf node
         
         def set_root(self, n):
             n.left = self.root.left
@@ -1272,7 +1278,13 @@ class DataStructures:
             for i, child in enumerate(root.children):
                 self.print_tree(child, indent=indent, last = i == child_count - 1)
 
-        # b/c/d - first searches
+
+        '''
+            breadth - first search
+            code (value) - first search
+            depth - first search
+        ''' 
+
 
         def bfs(self, root):
             if root is None or type(root) is not DataStructures.Tree.Node:
@@ -1298,14 +1310,14 @@ class DataStructures:
                 for child in node.children[::-1]:
                     queue.append(child)
         
-        def cfs(self, root=None, cb=None): # code/value - first search
+        def cfs(self, root=None, cb=None): 
             if root is None or cb is None: return None
 
             while root is not None and root.value is not None:
                 res = cb(root)
                 if res == 'l': self.cfs(root.left, cb)
                 elif res == 'r': self.cfs(root.right, cb)
-                else: return root # or res (root.value)
+                else: return res # or root / root.value
         
         def dfs(self, root):
             if root is None or type(root) is not DataStructures.Tree.Node:
@@ -1379,38 +1391,59 @@ class DataStructures:
         def __init__(self, n=None):
             super().__init__(n)
         
-        def find(self, root, v):
+        def add_root(self, n): # add new root on top of old
+            if not self.root:
+                self.root = n
+                return
+
+            # todo: decide on whether to .insert(n.value) if n.value == self.root.value
+            # or whether to go straight ahead and add it as a new root, like when > self.root.value
+            if n.value <= self.root.value: self.insert(n.value)
+            else: # n.value > self.root.value (new max value in BST): so can insert at BST new root
+                n.add_child(self.root)
+                # set old root to n's LEFT child because n.value > self.root.value
+                n.left = self.root
+                self.root.parent = n # set parent to new root, if bi-directional node
+                self.root = n
+            
+            # increment tree-height
+            self.height += 1
+        
+        def find(self, v):
             return self.cfs(
-                root, 
+                self.root, 
                 cb=lambda root: None if not (root and root.value) \
                     else root if root.value == v \
                     else 'l' if root.value < v \
                     else 'r'
             )
         
-        def insert(self, root, v):
-            if not root: return None
+        def insert(self, v):
             node = DataStructures.BST.Node(v)
+            if not self.root: # if no root, insert node as root
+                self.root = node
+                return
 
             def cb(root):
                 if not root: return None
 
                 if root.value == v:
                     print(f"Node with value '{v}' already exists")
-                    return root # or - root.value ; not the new node
+                    return root # or - root.value ; not the newly un-added node
                 elif not root.left and not root.right: # if root is a leaf-node
                     # add a check for root.children .length
                     node.parent = root # set parent before or after add leaf-node
                     if v < root.value: root.left = node
                     else: root.right = node # v == root.value - already checked
+                    return self.root # not the newly added node
                 else: # check traverse left/right
                     if root.value < v: return 'l'
                     else: return 'r' # root.value == v - already checked
                     
-            return self.cfs(root, cb=cb)
+            return self.cfs(self.root, cb=cb)
         
-        def remove(self, root, v):
-            if not root: return None
+        def remove(self, v):
+            if not self.root: return None
             node = None
 
             def cb(root):
@@ -1424,7 +1457,7 @@ class DataStructures:
                     return node # else: node == None
                 elif root.value == v:
                     print(f"Node with value '{v}' exists. Removing ..")
-                    # todo: also do this with 1-direction trees (no .parent)
+                    # todo: also do this with 1-directional tree nodes (no .parent)
                     # remove current node
                     # if 1 child-node, connect its parent to its child 
                     # if 2 children-node, connect its right-child's side's minimum value node in-between its parent and right child itself
@@ -1455,70 +1488,434 @@ class DataStructures:
                     if root.value < v: return 'l'
                     else: return 'r' # root.value == v - already checked
                     
-            return self.cfs(root, cb=cb)
+            return self.cfs(self.root, cb=cb)
+
+
+    # todo: Test next set of Alt (3rd-Party - Tutorials) Logic Samples
+
+    
+    def find(self, root: 'DataStructures.BST.Node', v):
+        if root is None: return None
+        node = root
+        if node.value == v: return node
+        if node.value < v:
+            return self.find(node.right, v)
+        return self.find(node.left, v)
+
+    def insert(self, root: 'DataStructures.BST.Node', node: 'DataStructures.BST.Node'):
+        if root is None:
+            root = node
+            return
+        if root.value < node.value:
+            if root.right is None: root.right = node
+            else: self.insert(root.right, node)
+        else:
+            if root.left is None: root.left = node
+            else: self.insert(root.left, node)
+    
+    def remove(self, root: 'DataStructures.BST.Node', v):
+        if root is None: return root
+        node = root
+
+        def minTreeValue(node):
+            while node.left is not None:
+                node = node.left
+            return node
+
+        if v < node.value:
+            node.left = self.remove(node.left, v)
+        elif v > node.value:
+            node.right = self.remove(node.right, v)
+        else:
+            if node.left is None:
+                tmp = node.right
+                node = None
+                return tmp
+            elif node.right is None:
+                tmp = node.left
+                node = None
+                return tmp
+            tmp = minTreeValue(node.right)
+            node.value = tmp.value
+            node.right = self.remove(node.right, tmp.value)
         
+        return node
+    
+    def tests(self):
+        tree = DataStructures.BST.Node(5)
+        self.insert(tree, DataStructures.BST.Node(4))
+        self.insert(tree, DataStructures.BST.Node(3))
+        self.insert(tree, DataStructures.BST.Node(2))
+        node = self.find(tree, 3)
+        self.remove(tree, node)
+        tree.print()
+
+
+    # todo: End of set of Alt (3rd-Party) Logic Samples
 
 
     # Tries
     
+
     # Graphs
 
     class Graph:
 
         def __init__(self): pass
 
-        class DirectedGraph:
+
+        # Cyclic or Non-Acyclic Graph - has at least 1 cycle
+
+        # Acyclic Graph - has NO cycles
+
+        # Directed Acyclic Graph (DAG) - has no directed 'cycles'
+
+        # Acyclic Undirected Graph - a tree if connected, and a forest if not connected
+
+
+        '''
+
+        Traversal Actions: Visit node; Check node; Push to stack; Pop from stack (also a visit);
+
+        
+        Traversal Option Opinions:
+        
+
+        # TODO: Fix
+        - BFS: # O(n + e) t (n = nodes, e = edges) ; O(~n) s (queue only nodes with 2+ unchecked neighbors in & out)
+        
+        pick (visit) root node as start node
+        check node 1st (if not already checked), push to queue if it has 2+ unchecked neighbors (except previous node), move to next neighbor (bfs - all, cfs - custom value check, dfs - first), repeat
+        repeat until current node has 0 neighbors or 1 already/previously checked neighbor node, pop latest (lifo) node from queue (also already checked, before pushed to queue)
+        after pop latest node (already checked) from queue, start again (with current node as start node)
+
+        
+        - 3rd-Party BFS (tutorial): # O(n + e) t (n = nodes, e = edges) ; O(n) s (queue all nodes in & out)
+
+        Traversing graph horizontally, layer by layer
+
+        pick (visit) root node as start node
+        mark current node as visited and enqueue it (add to queue)
+        while queue is not empty, dequeue 1st (fifo) node from queue (this time, already visited, but not checked), check current node and mark as checked
+        for all unvisited (also unchecked, but unvisited is better) neighbors (in the next layer) of current node, mark them as visited and enqueue them into queue
+        repeat while loop until queue is empty
+
+        NB: this time, only mark current node as visited before enqueuing it to queue, and only check current node after dequeuing it from queue
+        if you enqueued all unchecked (not unvisited) neighbors unto queue, you'd end up enqueuing duplicate (already visited) nodes into queue (more space complexity)
+        if you had duplicates in queue (after enqueuing unchecked but already visited nodes only), you'd check them after dequeuing the latest duplicate, and skip the other duplicates because they'd already be checked by then.
+
+
+        - DFS: # O(n + e) t (n = nodes, e = edges) ; O(~n) s (stack only nodes with 2+ unchecked neighbors back & forth)
+        
+        pick (visit) root node as start node
+        check node 1st (if not already checked), push to stack if it has 2+ unchecked neighbors (except previous node), move to next neighbor (bfs - all, cfs - custom value check, dfs - first), repeat
+        repeat until current node has 0 neighbors or 1 already checked neighbor node (which will lead to a cycle if it wasn't the previously checked node), pop latest (lifo) node from stack (also already checked, before pushed to stack)
+        after pop latest node (already checked) from stack, start again (with current node as start node)
+
+        
+        - 3rd-Party DFS (tutorial): # O(n + e) t (n = nodes, e = edges) ; O(n) s (stack all nodes back & forth)
+        
+        Traversing graph vertically, path by path
+
+        pick (visit) root node as start node
+        mark current node as visited and push to stack
+        while stack is not empty, pop latest (lifo) node from stack (this time, already visited, but not checked), check current node and mark as checked
+        for all unvisited (also unchecked, but unvisited is better) neighbors of current node, mark them as visited and push to stack
+        repeat while loop until stack is empty
+
+        NB: this time, only mark current node as visited before pushing it to stack, and only check current node after popping it from stack
+        if you pushed all unchecked (not unvisited) neighbors unto stack, you'd end up pushing duplicate (already visited) nodes onto stack (more space complexity)
+        if you had duplicates in stack (after pushing unchecked but already visited nodes only), you'd check them after popping the latest duplicate, and skip the other duplicates because they'd already be checked by then.
+
+
+        '''
+
+        def bfs(self, graph: 'DirectedGraphWithAdjacencyList'): # O(n + e) t (n = nodes, e = edges) ; O(n) s (stack all nodes back & forth)
+            root = graph.get_root()
+            visited = set()
+            checked = set()
+            queue = deque()
+            queue.append(root)
+
+            # Option 1: with visited only
+            
+            visited.add(node)
+            
+            while len(queue) > 0:
+                node = queue.popleft() # deque: .popleft() 1st item (.pop() last item ; .pop(0) error - takes no argument)
+                # if queue = [], .pop(0) 1st item
+                print(node, end=' ')
+                for n in self.graph[node]:
+                    if n not in visited:
+                        visited.add(n)
+                        queue.append(n)
+
+            # Option 2: with checked only
+
+            while len(queue) > 0:
+                node = queue.popleft() # deque: .popleft() 1st item (.pop() last item ; .pop(0) error - takes no argument)
+                # if queue = [], .pop(0) 1st item
+                if node not in checked:
+                    print(node, end=' ')
+                    checked.add(node)
+                for n in self.graph[node]:
+                    if n not in checked:
+                        queue.append(n)
+
+            # Option 3: with visited & checked
+
+            visited.add(node)
+            
+            while len(queue) > 0:
+                node = queue.popleft() # deque: .popleft() 1st item (.pop() last item ; .pop(0) error - takes no argument)
+                # if queue = [], .pop(0) 1st item
+                if node not in checked:
+                    print(node, end=' ')
+                    checked.add(node)
+                for n in self.graph[node]:
+                    if n not in visited: # or checked: (but visited is better)
+                        visited.add(n)
+                        queue.append(n)
+
+        def cfs(self, graph): 
+            pass
+
+        # 3rd-Party DFS (tutorial):
+        def dfs(self, graph: 'DirectedGraphWithAdjacencyList'): # O(n + e) t (n = nodes, e = edges) ; O(n) s (stack all nodes back & forth)
+            root = graph.get_root()
+            visited = set()
+            checked = set()
+            stack = []
+            stack.append(root)
+
+            # Option 1: with visited only
+
+            visited.add(node)
+
+            while len(stack) > 0:
+                node = stack.pop() # .pop() last item (.pop(0) index 0 (1st) item)
+                print(node, end=' ')
+                for n in self.graph[node]:
+                    if n not in visited:
+                        visited.add(n)
+                        stack.append(n)
+
+            # Option 2: with checked only
+
+            while len(stack) > 0:
+                node = stack.pop() # .pop() last item (.pop(0) index 0 (1st) item)
+                if node not in checked:
+                    print(node, end=' ')
+                    checked.add(node)
+                for n in self.graph[node]:
+                    if n not in checked:
+                        stack.append(n)
+
+            # Option 3: with visited & checked
+
+            visited.add(node)
+
+            while len(stack) > 0:
+                node = stack.pop() # .pop() last item (.pop(0) index 0 (1st) item)
+                if node not in checked:
+                    print(node, end=' ')
+                    checked.add(node)
+                for n in self.graph[node]:
+                    if n not in visited: # or checked: (but visited is better)
+                        visited.add(n)
+                        stack.append(n)
+        
+        def tests(self):
+            dgl = DataStructures.Graph.DirectedGraphWithAdjacencyList()
+            dgm = DataStructures.Graph.DirectedGraphWithAdjacencyMatrix()
+            ugl = DataStructures.Graph.UndirectedGraphWithAdjacencyList()
+            ugm = DataStructures.Graph.UndirectedGraphWithAdjacencyMatrix()
+            for gl in [dgl, dgm, ugl, ugm]:
+                gl.insert_edge(2, 1); gl.insert_edge(2, 5); gl.insert_edge(5, 6)
+                gl.insert_edge(5, 8); gl.insert_edge(6, 9); gl.insert_edge(5, 6)
+                self.bfs(gl); self.cfs(gl); self.dfs(gl)
+        
+        
+        class DirectedGraph: # All edges are 1/uni-directional (point in 1 specific direction)
+            # * Same as class DirectedGraphWithAdjacencyMatrix
         
             def __init__(self, num_nodes):
                 self.num_nodes = num_nodes + 1
-                self.graph = [[0 for x in range(self.num_nodes)] for y in range(self.num_nodes)]
+                self.graph = [ # Graph is setup as an Adjacency Matrix (not Adj List)
+                    [0 for x in range(self.num_nodes)] 
+                    for y in range(self.num_nodes)
+                ]
+            
+            def get_root(self): return self.graph[0][0]
             
             def within_bounds(self, v1, v2):
-                return (v1 >= 0 and v1 <= self.num_nodes) and (v2 >= 0 and v2 <= self.num_nodes)
+                return (v1 >= 0 and v1 <= self.num_nodes) \
+                    and (v2 >= 0 and v2 <= self.num_nodes)
 
             def insert_edge(self, v1, v2):
                 if self.within_bounds(v1, v2): self.graph[v1][v2] = 1
             
-            def print_graph(self):
+            def print(self):
                 for i in range(self.num_nodes):
                     for j in range(len(self.graph[i])):
                         if self.graph[i][j] is not None:
                             print(f"{i} -> {j}")
             
             def test(self):
-                g = DataStructures.Graph(5)
+                g = DataStructures.Graph.DirectedGraph(5)
                 g.insert_edge(1, 2)
                 g.insert_edge(2, 3)
                 g.insert_edge(4, 5)
-                g.print_graph()
+                g.print()
 
-        class UndirectedGraph:
+        class DirectedGraphWithAdjacencyList:
+
+            def __init__(self):
+                self.graph = defaultdict(list) # Graph is setup as an Adjacency List (dict of lists)
+            
+            def get_root(self): return self.graph[self.graph.keys()[0]]
+            
+            def insert_edge(self, v1, v2):
+                self.graph[v1].append(v2) # self.graph[v1] = [.., v2] (add v2 node to 1 of v1 node's neighbors)
+            
+            def print(self):
+                for node in self.graph:
+                    for v in self.graph[node]:
+                        print(node, ' -> ', v)
+            
+            def test(self):
+                g = DataStructures.Graph.DirectedGraphWithAdjacencyList()
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print()
+
+        class DirectedGraphWithAdjacencyMatrix:
+
+            def __init__(self, num_nodes):
+                self.num_nodes = num_nodes + 1
+                self.graph = [
+                    [0 for x in range(self.num_nodes)]
+                    for y in range(self.num_nodes)
+                ]
+            
+            def get_root(self): return self.graph[0][0]
+            
+            def within_bounds(self, v1, v2):
+                return (v1 >= 0 and v1 <= self.num_nodes) \
+                    and (v2 >= 0 and v2 <= self.num_nodes)
+            
+            def insert_edge(self, v1, v2):
+                if self.within_bounds(v1, v2): self.graph[v1][v2] = 1
+            
+            def print(self):
+                for i in range(self.num_nodes):
+                    for j in range(len(self.graph[i])):
+                        if self.graph[i][j] is not None:
+                            print(i, '->', j)
+            
+            def test(self):
+                g = DataStructures.Graph.DirectedGraphWithAdjacencyMatrix()
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print()
+
+        class UndirectedGraph: # All edges are bi-directional (do not point in any 1 specific direction)
+            # * Same as class UndirectedGraphWithAdjacencyMatrix
         
             def __init__(self, num_nodes):
                 self.num_nodes = num_nodes + 1
-                self.graph = [[0 for x in range(self.num_nodes)] for y in range(self.num_nodes)]
+                self.graph = [ # Graph is setup as an Adjacency Matrix (not Adj List)
+                    [0 for x in range(self.num_nodes)]
+                    for y in range(self.num_nodes)
+                ]
+            
+            def get_root(self): return self.graph[0][0]
             
             def within_bounds(self, v1, v2):
-                return (v1 >= 0 and v1 <= self.num_nodes) and (v2 >= 0 and v2 <= self.num_nodes)
+                return (v1 >= 0 and v1 <= self.num_nodes) \
+                    and (v2 >= 0 and v2 <= self.num_nodes)
 
+            def insert_edge(self, v1, v2):
+                if self.within_bounds(v1, v2):
+                    self.graph[v1][v2] = 1
+                    self.graph[v2][v1] = 1 # Undirected / Bi-directional edges (both directions)
+            
+            def print(self):
+                for i in range(self.num_nodes):
+                    for j in range(len(self.graph[i])):
+                        if self.graph[i][j] is not None:
+                            print(f"{i} -> {j}")
+            
+            def test(self):
+                g = DataStructures.Graph.UndirectedGraph(5)
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print()
+        
+        class UndirectedGraphWithAdjacencyList:
+
+            def __init__(self):
+                self.graph = defaultdict(list) # Graph is setup as an Adjacency List (dict of lists)
+            
+            def get_root(self): return self.graph[self.graph.keys()[0]]
+            
+            def insert_edge(self, v1, v2):
+                self.graph[v1].append(v2)
+                self.graph[v2].append(v1)
+            
+            def print(self):
+                for node in self.graph:
+                    for v in self.graph[node]:
+                        print(node, ' -> ', v)
+            
+            def test(self):
+                g = DataStructures.Graph.UndirectedGraphWithAdjacencyList()
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print()
+
+        class UndirectedGraphWithAdjacencyMatrix:
+
+            def __init__(self, num_nodes): 
+                self.num_nodes = num_nodes + 1
+                self.graph = [
+                    [0 for x in range(self.num_nodes)]
+                    for y in range(self.num_nodes)
+                ]
+            
+            def get_root(self): return self.graph[0][0]
+            
+            def within_bounds(self, v1, v2):
+                return (v1 >= 0 and v1 <= self.num_nodes) \
+                    and (v2 >= 0 and v2 <= self.num_nodes)
+            
             def insert_edge(self, v1, v2):
                 if self.within_bounds(v1, v2):
                     self.graph[v1][v2] = 1
                     self.graph[v2][v1] = 1
             
-            def print_graph(self):
+            def print(self):
                 for i in range(self.num_nodes):
                     for j in range(len(self.graph[i])):
                         if self.graph[i][j] is not None:
-                            print(f"{i} -> {j}")
+                            print(i, ' -> ', j)
             
             def test(self):
-                g = DataStructures.Graph(5)
+                g = DataStructures.Graph.UndirectedGraphWithAdjacencyMatrix(5)
                 g.insert_edge(1, 2)
                 g.insert_edge(2, 3)
                 g.insert_edge(4, 5)
-                g.print_graph()
+                g.print()
 
+        class WeightedGraph: # All edges are assigned a weight/cost value (to calculate costs from node to node)
+
+            def __init__(self, num_nodes):
+                self.num_nodes = num_nodes + 1
+        
         class ShortestPathAlgorithms:
 
             def __init__(self): pass
