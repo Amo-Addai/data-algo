@@ -1726,7 +1726,7 @@ class DataStructures:
                         visited.add(n)
                         stack.append(n)
         
-        def dijsktra(self, graph, node): # O(e log n) t (n = nodes, e = edges) ; 
+        def dijkstra(self, graph, node): # O(e log n) t (n = nodes, e = edges) ; 
             pass
         
         def tests(self):
@@ -1925,7 +1925,7 @@ class DataStructures:
             def __init__(self): pass
 
 
-            class Dijsktra:
+            class Dijkstra:
 
                 def __init__(self, adj_mat, start_vertex):
                     self.mat = adj_mat
@@ -1972,7 +1972,7 @@ class DataStructures:
                         [0, 7, 5, 2, 0, 0],
                         [0, 7, 5, 2, 0, 0]
                     ]
-                    algo = DataStructures.Graph.ShortestPathAlgorithms.Dijsktra(m, 0)
+                    algo = DataStructures.Graph.ShortestPathAlgorithms.Dijkstra(m, 0)
                     algo.calculate()
                     algo.print_distance()
 
