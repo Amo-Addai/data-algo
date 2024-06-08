@@ -1921,7 +1921,7 @@ class DataStructures:
             def __init__(self): pass
 
 
-            class Dijkstra:
+            class Dijsktra:
 
                 def __init__(self, adj_mat, start_vertex):
                     self.mat = adj_mat
@@ -1968,7 +1968,7 @@ class DataStructures:
                         [0, 7, 5, 2, 0, 0],
                         [0, 7, 5, 2, 0, 0]
                     ]
-                    algo = DataStructures.Graph.ShortestPathAlgorithms.Dijkstra(m, 0)
+                    algo = DataStructures.Graph.ShortestPathAlgorithms.Dijsktra(m, 0)
                     algo.calculate()
                     algo.print_distance()
 
