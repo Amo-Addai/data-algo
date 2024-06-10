@@ -1110,8 +1110,8 @@ public class DataAlgoJava {
                  * A node is allowed to be a descendant of itself
                  */
 
-                public class LowestCommonAncestor {
-                    
+                public static class LowestCommonAncestor {
+
                     /*
                     * Start from the tree root
                     * if LCA is found, return it
@@ -1137,6 +1137,55 @@ public class DataAlgoJava {
 
                         return null;
 
+                    }
+
+                    class ResultType {
+                        public boolean n1Exists, n2Exists;
+                        public TreeNode node;
+
+                        ResultType(boolean n1, boolean n2, TreeNode n) {
+                            n1Exists = n1;
+                            n2Exists = n2;
+                            node = n;
+                        }
+                    }
+
+                    @FunctionalInterface
+                    interface Helper {
+                        ResultType help(TreeNode r, TreeNode a, TreeNode b);
+                    }
+
+                    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode n1, TreeNode n2) {
+
+                        Helper[] helper = new Helper[1];
+                        helper[0] = (r, a, b) -> {
+                            if (r == null)
+                                return new ResultType(false, false, null);
+                            
+                            ResultType left = helper[0].help(r.left(), a, b);
+                            ResultType right = helper[0].help(r.right(), a, b);
+
+                            boolean aExists = left.n1Exists || right.n1Exists || r == a;
+                            boolean bExists = left.n2Exists || right.n2Exists || r == b;
+
+                            if (r == a || r == b)
+                                return new ResultType(aExists, bExists, r);
+                            
+                            if (left.node() != null && right.node() != null)
+                                return new ResultType(aExists, bExists, r);
+                            if (left.node() != null)
+                                return new ResultType(aExists, bExists, left.node());
+                            if (right.node() != null)
+                                return new ResultType(aExists, bExists, right.node());
+                            
+                            return new ResultType(aExists, bExists, null);
+
+                        };
+
+                        ResultType res = helper[0].help(root, n1, n2);
+                        if (res.n1Exists && res.n2Exists)
+                            return res.node;
+                        else return null;
                     }
 
                 }
@@ -1239,13 +1288,9 @@ public class DataAlgoJava {
         //  TEST CASES
         ////////////////////////////////////////
 
-    // public static class Main {
-
         public static void main(String[] args) {
             System.out.println("Hello, World!");
         }
-
-    // }
 
     }
 
