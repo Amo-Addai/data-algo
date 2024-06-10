@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 
+// TODO: Work with in-built DataStructure classes, from all c# source libs
+
 /*
 
 ..
@@ -77,36 +79,42 @@ class Searching
 ////////////////////////////////////////
 
 
-// TODO: class DataStructures
+class DataStructures
+{
+
+    public DataStructures() {}
 
 
-// Arrays & Strings
+    // Arrays & Strings
 
-// (Array) Lists & Tuples
+    // (Array) Lists & Tuples
 
-// Sets & Sequences
+    // Sets & Sequences
 
-// HashMaps & HashTables
+    // HashMaps & HashTables
 
-// Matrices
+    // Matrices
 
-// Linked Lists
+    // Linked Lists
 
-// Stacks & Queues
+    // Stacks & Queues
 
-// Heaps (max & min)
+    // Heaps (max & min)
 
-// Binary Heaps & Priority Queues
+    // Binary Heaps & Priority Queues
 
-// Trees
+    // Trees
 
-// Binary (Search) Trees
+    // Binary (Search) Trees
 
-// Tries
-    
-// Graphs
+    // Tries
+        
+    // Graphs
 
-// Bits
+    // Bits
+
+
+}
 
 
 

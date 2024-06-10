@@ -47,7 +47,7 @@ public:
     }
 
     int linearSearch(int a[], int x) {
-        for (int i = 0; i < size(a); i++) {
+        for (int i = 0; i < size(a); i++) { // todo: import size() from list lib
             if (x == a[i])
                 return i;
         }

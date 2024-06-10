@@ -443,7 +443,7 @@ LinkedList.prototype.indexOf = function(value) {
     return is
 }
 
-// Leetcode Q19
+// Leetcode #19
 function removeNthFromEnd(ll, n) { // O(nl / n) t (nl = ll node num) ; O(1) s
     let slow = fast = ll.head
     for (let i = 0; i < n; i++) 
@@ -461,7 +461,7 @@ function removeNthFromEnd(ll, n) { // O(nl / n) t (nl = ll node num) ; O(1) s
     return nthNode // or ll / ll.head
 }
 
-// Leetcode Q21
+// Leetcode #21
 function merge2SortedLinkedLists(l1, l2) { // O(n1 + n2) t ; O(1) s
     let l1Node = l1.head, l2Node = l2.head
     let dummyHead = Node(0, null, null)
@@ -514,7 +514,7 @@ function merge2SortedLinkedLists(l1, l2) { // O(n1 + n2) t ; O(1) s
     return ll
 }
 
-// * Leetcode Q141 - hasCycle or isCircular
+// * Leetcode #141 - hasCycle or isCircular
 function hasCycle(ll) { 
 
     // Option 1: O(n) t; O(1) s
@@ -553,7 +553,7 @@ function hasCycle(ll) {
     return false
 }
 
-// Leetcode Q206 - Reverse LinkedList (singly for more simplicity)
+// Leetcode #206 - Reverse LinkedList (singly for more simplicity)
 function reverseLinkedList(ll) { // O(n) t ; O(1) s
     let node = ll.head, next = null, prev = null
     ll.head = ll.tail
@@ -909,13 +909,314 @@ stack.peek()
 
 // Trees
 
+function isSameTree(t1, t2) { // O(n1 + n2 ~ n) t (n - if trees are same); O(1) s
 
+    // traverse both trees simultaneously (with b/c/d-fs) and compare current node values at each iteration
+    
+    if (!t1 || !t2 || !t1.root || !t2.root) return false
+    let n1 = t1.root, n2 = t2.root
+    if (n1.value !== n2.value) return false
+
+    // BFS
+
+    q1 = q2 = []
+    q1.push(n1); q2.push(n2)
+
+    while ((q1.length > 0) && (q2.length > 0)) {
+        // n1 = q1.pop(0); n2 = q2.pop(0) // todo: .pop(takes no arguments) - .pop() always removes last item
+        n1 = q1.shift(); n2 = q2.shift()
+        if (n1.value !== n2.value) return false
+
+        // assuming t1 & t2 are not binary trees
+        // all nodes have 1 or multiple (2+) children
+        if (!n1.children && !n2.children) break
+        if (n1.children.length !== n2.children.length) return false
+
+        for (let i = 0; i < n1.children.length; i++) {
+            if (n1.children[i].value !== n2.children[i].value)
+                return false
+            q1.push(n1.children[i]); q2.push(n2.children[i])
+        }
+
+        /*
+        // in-case they were binary trees, enqueue both .left & .right of both nodes
+        // you can also check .left and .right for both nodes, before enqueueing
+        q1.push(n1.left); q1.push(n1.right)
+        q2.push(n2.left); q2.push(n2.right)
+        */
+    }
+
+    return true
+}
+
+// 3rd-Party (Tutorial) Logic - Leetcode #100
+function isSameTree(t1, t2) { // O(n1 + n2 ~ n) t (n - if trees are same); O(1) s
+    let same = true
+
+    function checkNodes(n1, n2) {
+        if (!n1 && !n2) return
+        else if (
+            !n1 || !n2 ||
+            n1.value !== n2.value
+        ) {
+            same = false
+            return
+        }
+        checkNodes(n1.left, n2.left)
+        checkNodes(n1.right, n2.right)
+    }
+
+    checkNodes(t1.root, t2.root)
+    return same
+}
 
 // Binary (Search) Trees
 
+function isValidBST(tree) { // O(n) t ; O(1) s
+
+    // traverse tree while current node is always max to left-side and min to right-side
+
+    let root = tree.root
+    let minmax = root.value
+
+    let checkBST = (node) => {
+        if (!node) return true
+        if (node.left) {
+            if (
+                node.left.value > node.value
+                || node.left.value > minmax
+            ) return false
+            minmax = node.value
+            node = node.left
+            checkBST(node)
+        }
+        if (node.right) {
+            if (
+                node.right.value < node.value
+                || node.right.value < minmax
+            ) return false
+            minmax = node.value
+            node = node.right
+            checkBST(node)
+        }
+    }
+
+    let res = true
+    res = checkBST(root)
+
+    return res
+}
+
+// 3rd-Party (Tutorial) Logic - Leetcode #98
+function isValidBST(root) { // O(n) t ; O(1) s
+    let valid = true
+
+    function helper(node, min, max) {
+        if (!node) return
+        if (
+            (min !== null && node.value <= min) ||
+            (max !== null && node.value >= max)
+        ) {
+            valid = false
+            return
+        }
+        helper(node.left, min, node.value)
+        helper(node.right, node.value, max)
+    }
+    helper(root, null, null)
+    return valid
+}
+
+function levelOrder(tree) { // O(n) t ; O(1) s
+    let root = tree.root
+    let queue = arr = [root]
+    let order = [arr]
+
+    // bfs traversal with queue in while loop
+    while (queue.length > 0) {
+        // node = queue.pop(0) // todo: .pop(takes no arguments) - .pop() always removes last item
+        node = queue.shift()
+        arr.push(node.value)
+        queue.push(node.left)
+        queue.push(node.right)
+        // hack-check only works because tree is binary 
+        // (only 2 children - left & right)
+        if (arr.length == 2) {
+            order.push(arr)
+            arr = []
+        }
+    }
+
+    return order
+}
+
+// 3rd-Party (Tutorial) Logic - Leetcode #102
+function levelOrder(root) { // O(n) t ; O(1) s
+    const res = []
+
+    // dfs traversal with recursion
+    function helper(node, depth) {
+        if (!node) return
+        if (!res[depth]) res[depth] = []
+        res[depth].push(node.value)
+        helper(node.left, depth + 1)
+        helper(node.right, depth + 1)
+    }
+
+    helper(root, 0)
+
+    return res
+}
+
+function maximumDepth(tree) { // O(n) t ; O(1) s
+    if (!tree || !tree.root) return null
+    let root = tree.root, d = 0
+
+    function helper(node) {
+        if (
+            !node ||
+            (!node.left && !node.right)
+        ) return
+        else {
+            helper(node.left)
+            helper(node.right)
+            d++ // todo: test incrementing depth without argument separation
+        }
+    }
+
+    helper(root)
+    return d
+}
+
+// 3rd-Party (Tutorial) Logic - Leetcode #104
+function maximumDepth(root) { // O(n) t ; O(1) s
+    let maxD = 0
+
+    function helper(node, d) {
+        if (!node) {
+            maxD = Math.max(d - 1, maxD)
+            return
+        }
+        helper(node.left, d + 1)
+        helper(node.right, d + 1)
+    }
+
+    helper(root, 1)
+    return maxD
+}
+
+function invertBinaryTree(tree) { // O(n) t ; O(1) s
+    if (!tree || !tree.root) return tree
+
+    let root = tree.root, tmp = null
+
+    // can use dfs, and invert .left & .right on every node
+    function helper(node) {
+        if (!node) return // todo: don't forget base-case in dfs helper recursive function
+        tmp = node.left
+        node.left = node.right
+        node.right = tmp
+        helper(node.right)
+        helper(node.left)
+        // you can still recurse into new .left before new .right
+    }
+    helper(root)
+
+    // can also use bfs, and invert on every node, before enqueueing
+    q = [root]
+    while (q.length > 0) {
+        node = q.shift() // * not .pop() - takes no params, and returns last item only
+        tmp = node.left
+        node.left = node.right
+        node.right = tmp
+        q.push(node.right)
+        q.push(node.left)
+        // you can still enqueue new .left before new .right
+    }
+}
+
+// 3rd-Party (Tutorial) Logic - Leetcode #226
+function invertBinaryTree(root) { // O(n) t ; O(1) s
+
+    function helper(node) {
+        if (!node) return
+        let tmp = node.left
+        node.left = node.right
+        node.right = tmp
+        helper(node.left)
+        helper(node.right)
+    }
+
+    helper(root)
+    return root
+}
+
+function leastCommonAncestorOfBST(tree, n1, n2) { // O(n) t ; O(1) s
+    // find branch node to finding n1 & n2 in tree
+    // todo
+}
+
+// 3rd-Party (Tutorial) Logic - Leetcode #235
+function leastCommonAncestorOfBST(root, n1, n2) { // O(n) t ; O(1) s
+
+    let v1 = n1.value, v2 = n2.value, v
+    let node = root // for traversal
+
+    while (node) {
+        v = node.value
+        if (v < v1 && v < v2)
+            node = node.right
+        else if (v > v1 && v > v2)
+            node = node.left
+        else return node // LCA - Lowest Common Ancestor
+    }
+
+    return null
+}
+
 // Tries
-    
+
 // Graphs
+
+function numberOfIslands(graph) {
+    // TODO:
+}
+
+// 3rd-Party (Tutorial) Logic - Leetcode #200
+function numberOfIslands(grid) { // O(n) / O(m * n) t ; O(1) s (n - num cells of square matrix | m * n - height & width of matrix)
+    // island - land surrounded by water
+    // cell values: 1 - land ; 0 - water
+    // island - 1s surrounded by 0s in graph adjacency matrix
+
+    let count = 0
+
+    for (let row = 0; row < grid.length; row++) {
+        for (let col = 0; col < grid[0].length; col++) {
+            if (grid[row][col] === '1') {
+                count++
+                sinkIslandWithDFS(grid, row, col)
+            }
+        }
+    }
+    
+    function sinkIslandWithDFS(grid, row, col) {
+        // sink island - convert land - 1 and surrounding 1s to 0 - water
+        
+        if ( // return if cell indices are out of bounds
+            row < 0 || row >= grid.length || 
+            col < 0 || col >= grid[0].length ||
+            grid[row][col] === '0' // or on water (1 - land, 0 - water)
+        ) return
+    
+        grid[row][col] = '0'
+        sinkIslandWithDFS(grid, row - 1, col)
+        sinkIslandWithDFS(grid, row + 1, col)
+        sinkIslandWithDFS(grid, row, col - 1)
+        sinkIslandWithDFS(grid, row, col + 1)
+    }
+    
+    return count
+}
 
 // Bits
 

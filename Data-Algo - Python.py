@@ -1,7 +1,8 @@
 import sys
 import math
-from collections import deque, defaultdict
 from typing import List, Callable
+from collections import deque, defaultdict
+import heapq
 
 import numpy as np
 import pandas as pd
@@ -1286,7 +1287,7 @@ class DataStructures:
         ''' 
 
 
-        def bfs(self, root):
+        def bfs(self, root): # uses queue in while loop
             if root is None or type(root) is not DataStructures.Tree.Node:
                 return
 
@@ -1319,7 +1320,7 @@ class DataStructures:
                 elif res == 'r': self.cfs(root.right, cb)
                 else: return res # or root / root.value
         
-        def dfs(self, root):
+        def dfs(self, root): # uses recursion
             if root is None or type(root) is not DataStructures.Tree.Node:
                 return
 
@@ -1600,9 +1601,9 @@ class DataStructures:
         for all unvisited (also unchecked, but unvisited is better) neighbors (in the next layer) of current node, mark them as visited and enqueue them into queue
         repeat while loop until queue is empty
 
-        NB: this time, only mark current node as visited before enqueuing it to queue, and only check current node after dequeuing it from queue
-        if you enqueued all unchecked (not unvisited) neighbors unto queue, you'd end up enqueuing duplicate (already visited) nodes into queue (more space complexity)
-        if you had duplicates in queue (after enqueuing unchecked but already visited nodes only), you'd check them after dequeuing the latest duplicate, and skip the other duplicates because they'd already be checked by then.
+        NB: this time, only mark current node as visited before enqueueing it to queue, and only check current node after dequeueing it from queue
+        if you enqueued all unchecked (not unvisited) neighbors unto queue, you'd end up enqueueing duplicate (already visited) nodes into queue (more space complexity)
+        if you had duplicates in queue (after enqueueing unchecked but already visited nodes only), you'd check them after dequeueing the latest duplicate, and skip the other duplicates because they'd already be checked by then.
 
 
         - DFS: # O(n + e) t (n = nodes, e = edges) ; O(~n) s (stack only nodes with 2+ unchecked neighbors back & forth)
@@ -1915,10 +1916,118 @@ class DataStructures:
                 g.insert_edge(4, 5)
                 g.print()
 
-        class WeightedGraph: # All edges are assigned a weight/cost value (to calculate costs from node to node)
+        class DirectedWeightedGraphWithAdjacencyList: # All edges are assigned a weight/cost value (to calculate costs from node to node)
+
+            def __init__(self):
+                self.graph = defaultdict(list)
+            
+            def get_root(self): return self.graph[self.graph.keys()[0]]
+            
+            def insert_edge(self, v1, c, v2): # c for cost of v1 to v2
+                self.graph[v1].append((c, v2))
+            
+            def print(self):
+                for node in self.graph:
+                    for v in self.graph[node]:
+                        print(node, ' -(', v[0], ')> ', v[1])
+            
+            def test(self):
+                g = DataStructures.Graph.DirectedWeightedGraphWithAdjacencyList()
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print()
+
+        class DirectedWeightedGraphWithAdjacencyMatrix:
 
             def __init__(self, num_nodes):
                 self.num_nodes = num_nodes + 1
+                self.graph = [
+                    [0 for x in range(self.num_nodes)]
+                    for y in range(self.num_nodes)
+                ]
+            
+            def get_root(self): return self.graph[0][0]
+            
+            def within_bounds(self, v1, v2):
+                return (v1 >= 0 and v1 <= self.num_nodes) \
+                    and (v2 >= 0 and v2 <= self.num_nodes)
+            
+            def insert_edge(self, v1, c, v2):
+                if self.within_bounds(v1, v2):
+                    self.graph[v1][v2] = (c, 1)
+                    self.graph[v2][v1] = (c, 1)
+            
+            def print(self):
+                for i in range(self.num_nodes):
+                    for j in range(len(self.graph[i])):
+                        if self.graph[i][j] is not None:
+                            c = self.graph[i][j][0]
+                            print(i, ' -(', c, ')> ', j)
+            
+            def test(self):
+                g = DataStructures.Graph.DirectedWeightedGraphWithAdjacencyMatrix(5)
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print()
+
+        class UndirectedWeightedGraphWithAdjacencyList:
+
+            def __init__(self):
+                self.graph = defaultdict(list)
+            
+            def get_root(self): return self.graph[self.graph.keys()[0]]
+            
+            def insert_edge(self, v1, c, v2):
+                self.graph[v1].append((c, v2))
+                self.graph[v2].append((c, v1))
+            
+            def print(self):
+                for node in self.graph:
+                    for v in self.graph[node]:
+                        print(node, ' -(', v[0], ')> ', v[1])
+            
+            def test(self):
+                g = DataStructures.Graph.UndirectedWeightedGraphWithAdjacencyList()
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print()
+
+        class UndirectedWeightedGraphWithAdjacencyMatrix:
+
+            def __init__(self, num_nodes):
+                self.num_nodes = num_nodes + 1
+                self.graph = [
+                    [0 for x in range(self.num_nodes)]
+                    for y in range(self.num_nodes)
+                ]
+            
+            def get_root(self): return self.graph[0][0]
+            
+            def within_bounds(self, v1, v2):
+                return (v1 >= 0 and v1 <= self.num_nodes) \
+                    and (v2 >= 0 and v2 <= self.num_nodes)
+            
+            def insert_edge(self, v1, c, v2):
+                if self.within_bounds(v1, v2):
+                    self.graph[v1][v2] = (c, 1)
+                    self.graph[v2][v1] = (c, 1)
+            
+            def print(self):
+                for i in range(self.num_nodes):
+                    for j in range(len(self.graph[i])):
+                        if self.graph[i][j] is not None:
+                            c = self.graph[i][j][0]
+                            print(i, ' -(', c, ')> ', j)
+            
+            def test(self):
+                g = DataStructures.Graph.UndirectedWeightedGraphWithAdjacencyMatrix(5)
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print()
         
         class ShortestPathAlgorithms:
 
@@ -1975,6 +2084,62 @@ class DataStructures:
                     algo = DataStructures.Graph.ShortestPathAlgorithms.Dijkstra(m, 0)
                     algo.calculate()
                     algo.print_distance()
+                
+                # TODO: Understand 'network_delay_time' fully & Test completely
+
+                def network_delay_time(self, times: List[List[int]], n: int, k: int, \
+                    graph: 'DataStructures.Graph.DirectedWeightedGraphWithAdjacencyList') -> int: # k - start node
+
+                    # node u to v, with cost c
+                    for u, v, c in times:
+                        graph.insert_edge(u, c, v)
+                    
+                    min_heap = [(0, k)]
+                    visited = set()
+                    distances = { i: float('inf') for i in range(1, n + 1) }
+                    distances[k] = 0
+
+                    while min_heap and len(min_heap) > 0:
+                        d, u = heapq.heappop(min_heap)
+                        if u in visited: continue
+                        visited.add(u)
+                        # check if all nodes have been visited
+                        if len(visited) == n: return d
+                        # now check remaining nodes
+                        for distance, node in graph[u]:
+                            if d + distance < distances[node] and \
+                                node not in visited:
+                                distances[node] = d + distance
+                                heapq.heappush(min_heap, (distances[node], node))
+                    
+                    return -1
+                
+                def network_delay_time(self, times: List[List[int]], n: int, k: int) -> int: # k - start node
+                    graph = defaultdict(list) # working with a directed weighted graph with adjacency list
+
+                    # node u to v, with cost c
+                    for u, v, c in times:
+                        graph[u].append((c, v))
+                    
+                    min_heap = [(0, k)]
+                    visited = set()
+                    distances = { i: float('inf') for i in range(1, n + 1) }
+                    distances[k] = 0
+
+                    while min_heap and len(min_heap) > 0:
+                        d, u = heapq.heappop(min_heap)
+                        if u in visited: continue
+                        visited.add(u)
+                        # check if all nodes have been visited
+                        if len(visited) == n: return d
+                        # now check remaining nodes
+                        for distance, node in graph[u]:
+                            if d + distance < distances[node] and \
+                                node not in visited:
+                                distances[node] = d + distance
+                                heapq.heappush(min_heap, (distances[node], node))
+                    
+                    return -1
 
             class BellmanFord: 
                 pass
