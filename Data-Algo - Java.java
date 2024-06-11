@@ -1,3 +1,5 @@
+package Data_Ago;
+
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -868,8 +870,144 @@ public class DataAlgoJava {
                 return head;
             }
 
-            public ListNode flattenBinaryTreeToLinkedList(TreeNode root) {
-                // TODO: 
+            public LinkedList flattenBinaryTreeToLinkedList(Tree.TreeNode root) { // O(n) t ; O(n) s (not done in-place; LinkedList with n nodes required)
+
+                if (root == null) return null;
+                ListNode lRoot = new ListNode(root.value(), null);
+
+                Tree.TreeNode node = null;
+                ListNode lNode = lRoot;
+
+                // bfs
+
+                Queue q = new Queue();
+                q.push(root);
+                
+                while (!q.isEmpty()) {
+
+                    node = (Tree.TreeNode) q.pop();
+                    // no need to store node.value()s into ListNodes
+                    // because root.value() has been stored
+                    // only store node.left() & .right() .value()s
+
+                    if (node.left() != null) {
+                        lNode.setNext(new ListNode(node.left().value(), null));
+                        q.push(node.left());
+                        lNode = lNode.getNext();
+                    }
+
+                    if (node.right() != null) {
+                        lNode.setNext(new ListNode(node.right().value(), null));
+                        q.push(node.right());
+                        lNode = lNode.getNext();
+                    }
+
+                }
+
+                // dfs - average
+
+                Consumer<Tree.TreeNode>[] dfs = new Consumer[1];
+                dfs[0] = (node) -> {
+                    if (node == null) return;
+
+                    // no need to store node.value()s into ListNodes
+                    // because root.value() has been stored
+                    // only store node.left() & .right() .value()s
+
+                    // dfs - depth-traversing to left-side of B-Tree, adding .left of each node
+                    // before depth-traversing to right-side of B-Tree, then adding .right of each node
+                    // this works as pre-order - left only
+
+                    if (node.left() != null) {
+                        lNode.setNext(new ListNode(node.left().value(), null));
+                        lNode = lNode.getNext();
+                        dfs[0].apply(node.left());
+                    }
+
+                    // * or, depth-traverse to right-side of B-Tree 1st
+                    // this works as pre-order - right only
+
+                    if (node.right() != null) {
+                        lNode.setNext(new ListNode(node.right().value(), null));
+                        lNode = lNode.getNext();
+                        dfs[0].apply(node.right());
+                    }
+
+                    // dfs - .left & .right of each node
+                    // before depth-traversing to left-side of B-Tree, then to right-side
+
+                    if (node.left() != null) {
+                        lNode.setNext(new ListNode(node.left().value(), null));
+                        lNode = lNode.getNext();
+                    }
+
+                    if (node.left() != null) {
+                        lNode.setNext(new ListNode(node.right().value(), null));
+                        lNode = lNode.getNext();
+                    }
+
+                    if (node.left() != null)
+                        dfs[0].apply(node.left());
+                    
+                    if (node.right() != null)
+                        dfs[0].apply(node.right());
+                    
+                };
+
+                dfs[0].apply(root);
+
+                // dfs - best
+
+                dfs[0] = (node) -> {
+                    if (node == null) return;
+
+                    // need to store only node.value()s into ListNodes
+                    // so root.value() will be re-stored
+                    // only recurse through node.left() & .right() nodes
+
+                    // dfs - depth-traversing pre/post/in - orders
+                    // these can work as left->right / vice-versa
+
+                    // pre-order
+                    
+                    lNode.setValue(node.value());
+                    lNode.setNext(new ListNode(null, null));
+                    lNode = lNode.getNext();
+
+                    dfs[0].apply(node.left());
+                    dfs[0].apply(node.right());
+
+                    // post-order
+
+                    dfs[0].apply(node.left());
+                    dfs[0].apply(node.right());
+                    
+                    lNode.setValue(node.value());
+                    lNode.setNext(new ListNode(null, null));
+                    lNode = lNode.getNext();
+
+                    // in-order
+
+                    dfs[0].apply(node.left());
+                    
+                    lNode.setValue(node.value());
+                    lNode.setNext(new ListNode(null, null));
+                    lNode = lNode.getNext();
+
+                    dfs[0].apply(node.right());
+
+                };
+
+                dfs[0].apply(root);
+
+                // now return LinkedList / ListNode root
+
+                return new LinkedList(lRoot, lNode); // or lRoot
+
+            }
+
+            public Tree.TreeNode flattenBinaryTreeToLinkedList(Tree.TreeNode root) { // O(n) t ; O(1) s (done in-place; NO LinkedList with n nodes required)
+                
             }
 
             // Stacks & Queues
@@ -911,7 +1049,7 @@ public class DataAlgoJava {
                     this.root = root;
                 }
 
-                // Traversal
+                // 3rd-Party (Tutorial) DFS Traversal
                 public LinkedList.ListNode flattenBinaryTreeToLinkedList(TreeNode root) {
                     if (root == null) return null;
                     TreeNode lastNode = null;
@@ -925,11 +1063,11 @@ public class DataAlgoJava {
                     TreeNode right = root.right; // root might be changed
                     this.flattenBinaryTreeToLinkedList(root.left);
                     this.flattenBinaryTreeToLinkedList(right);
-                    // recurse on the right var node instead, because root might be changed
+                    // recurse on the right node instead, because root might be changed
                     // this.flattenBinaryTreeToLinkedList(root.right);
                 }
 
-                // Divide & Conquer
+                // DFS Divide & Conquer
                 public TreeNode DCflattenBinaryTreeToLinkedList(TreeNode root) {
                     if (root == null) return null;
 
@@ -1007,7 +1145,7 @@ public class DataAlgoJava {
                             if (node == null)
                                 return new ResultType(null, Integer.MAX_VALUE, 0);
                             
-                            // Divide & Conquer - can exec left & right concurrently
+                            // Divide & Conquer - exec left & right concurrently
                             ResultType lRes = helper[0].apply(node.left());
                             ResultType rRes = helper[0].apply(node.right());
                             ResultType res = new ResultType(
@@ -1186,6 +1324,113 @@ public class DataAlgoJava {
                         if (res.n1Exists && res.n2Exists)
                             return res.node;
                         else return null;
+
+                    }
+
+                }
+
+                // Q - Flatten a Binary Tree (In-Place) to a Linked List in DFS Pre-order Traversal
+                // * Best Option
+
+                public class FlattenBinaryTreeToLinkedList {
+
+                    private TreeNode lastNode = null;
+
+                    // DFS Traversal
+                    public void flattenBinaryTreeToLinkedList(TreeNode root) { // O(n) t ; O(1) s (done in-place, no LinkedList data structure required)
+                        if (root == null) return;
+
+                        if (lastNode != null) {
+                            lastNode.left(null);
+                            lastNode.right(root);
+                        }
+
+                        lastNode = root;
+                        // Traversal drawback - root might be changed
+                        TreeNode right = root.right();
+                        flattenBinaryTreeToLinkedList(root.left());
+                        flattenBinaryTreeToLinkedList(right);
+                        // flattenBinaryTreeToLinkedList(root.left());
+                        // flattenBinaryTreeToLinkedList(root.right());
+                    }
+
+                    // DFS Divide & Conquer - return last node in pre-order
+                    public TreeNode DCFlattenBinaryTreeToLinkedList(TreeNode root) {
+                        if (root == null) return null;
+
+                        TreeNode left = DCFlattenBinaryTreeToLinkedList(root.left());
+                        TreeNode right = DCFlattenBinaryTreeToLinkedList(root.right());
+
+                        // connect last left-side node to root.right()
+                        if (left != null) {
+                            left.right(root.right());
+                            root.right(root.left());
+                            root.left(null);
+                        }
+
+                        if (right != null) return right;
+                        if (left != null) return left;
+
+                        return root;
+
+                    }
+
+                }
+
+                // Q - Find the kth-smallest element in a BST
+
+                public class KthSmallestElementBST {
+
+                    private int result = 0;
+                    private int index = 0;
+
+                    public int kthSmallest(TreeNode root, int kth) {
+
+                        BiConsumer<TreeNode, Integer>[] helper = BiConsumer[1];
+                        helper[0] = (r, k) -> {
+                            if (r == null) return;
+                            helper[0].apply(r.left(), k);
+                            index++;
+                            if (index == k) result = r.value();
+                            helper[0].apply(r.right(), k);
+                        };
+
+                        helper[0].apply(root, kth);
+                        return result;
+
+                    }
+
+                    @FunctionalInterface
+                    interface QuickSelect {
+                        int onTree(TreeNode r, int k, Map<TreeNode, Integer> c);
+                    }
+
+                    public int kthSmallest2(TreeNode root, int kth) { // O(h) ~ O(n) t (h - tree height) ; O(n) s
+
+                        BiConsumer<TreeNode, Map<TreeNode, Integer>>[] countNodes = new BiConsumer<TreeNode, Map<TreeNode, Integer>>[1];
+                        countNodes[0] = (r, c) -> {
+                            if (r == null) return 0;
+                            int left = countNodes[0].apply(r.left(), c);
+                            int right = countNodes[0].apply(r.right(), c);
+                            int count = left + right + 1;
+                            c.put(r, count);
+                            return count;
+                        };
+
+                        QuickSelect[] quickSelect = QuickSelect[1];
+                        quickSelect[0] = (r, k, c) -> {
+                            if (r == null) return -1;
+                            int left = r.left() == null ? 0 : c.get(r.left());
+                            if (left >= k) return quickSelect[0].onTree(r.left(), k, c);
+                            if (left + 1 == k) return r.value();
+
+                            return quickSelect[0].onTree(r.right(), k - left - 1, c);
+                        };
+
+                        Map<TreeNode, Integer> children = new HashMap<>();
+                        countNodes[0].apply(root, children);
+                        return quickSelect[0].onTree(root, kth, children);
+
                     }
 
                 }

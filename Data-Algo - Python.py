@@ -1287,7 +1287,8 @@ class DataStructures:
         ''' 
 
 
-        def bfs(self, root): # uses queue in while loop
+        def bfs(self, root): #  # O(n) t ; O(1) s
+            # * uses queue in while loop
             if root is None or type(root) is not DataStructures.Tree.Node:
                 return
 
@@ -1311,7 +1312,7 @@ class DataStructures:
                 for child in node.children[::-1]:
                     queue.append(child)
         
-        def cfs(self, root=None, cb=None): 
+        def cfs(self, root=None, cb=None): # O(log n) t : O(1) s
             if root is None or cb is None: return None
 
             while root is not None and root.value is not None:
@@ -1320,7 +1321,8 @@ class DataStructures:
                 elif res == 'r': self.cfs(root.right, cb)
                 else: return res # or root / root.value
         
-        def dfs(self, root): # uses recursion
+        def dfs(self, root): # O(n) t ; O(1) s
+            # * uses recursion
             if root is None or type(root) is not DataStructures.Tree.Node:
                 return
 

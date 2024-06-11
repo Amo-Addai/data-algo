@@ -1,4 +1,4 @@
-// package main / lib
+package main // / lib
 
 import (
 	"fmt"
@@ -33,40 +33,68 @@ type Searching struct {
 	i int
 }
 
-func (x Searching) LinearSearch(a []int, x int) int {
-	for i in a if x == i return i else return nil
+func (x Searching) LinearSearch(a []int, n int) int {
+	for _, i := range a { // index _, item i
+		if n == i {
+			return i
+		}
+	}
+	return -1 // nil if return type was a pointer *int, so address of &i should be returned instead
 }
 
-func (x Searching) BinarySearch(a []int, x int) int {
-    // a = sort.Sort(a)
-	if len(a) == 0 return nil
-
-	RBinarySearch := func (a []int, x int) int {
-		if len(a) == 0 return nil
-		m := len(a) / 2
-		if x < a[m] return RBinarySearch(a[:m-1], x)
-		if x > a[m] return RBinarySearch(a[m+1:], x)
-		else return m
+func (x Searching) BinarySearch(a []int, n int) int {
+    // sort.Sort(a) // accepts any collection that implements the sort.Interface, which requires three methods: Len(), Less(i, j int), and Swap(i, j int).
+	sort.Ints(a) // convenience function for sorting slices of built-in types (.Ints - []int ; .Float64s/Strings/IntsAreSorted/Float64sAreSorted/StringsAreSorted)
+	if len(a) == 0 {
+		return -1
 	}
 
-	RBinarySearch2p := func (a []int, x int, f int, l int) int { 
-		if len(a) == 0 return nil
+	var RBinarySearch func([]int, int) int // declare function data type var 1st
+	RBinarySearch = func (a []int, n int) int { // var has to exist before function value assignment, since it's a recursive function
+		if len(a) == 0 {
+			return -1
+		}
 		m := len(a) / 2
-		if x < a[m] return RBinarySearch2p(a, x, f, m - 1)
-		if x > a[m] return RBinarySearch2p(a, x, m + 1, l)
-		else return m
+		if n < a[m] {
+			return RBinarySearch(a[:m-1], n)
+		}
+		if n > a[m] {
+			return RBinarySearch(a[m+1:], n)
+		} else {
+			return m
+		}
 	}
 
-	var (f int = 0, l int = a.size - 1, m int)
+	var RBinarySearch2p func([]int, int, int, int) int
+	RBinarySearch2p = func (a []int, n int, f int, l int) int { 
+		if len(a) == 0 {
+			return -1
+		}
+		m := len(a) / 2
+		if n < a[m] {
+			return RBinarySearch2p(a, n, f, m - 1)
+		}
+		if n > a[m] {
+			return RBinarySearch2p(a, n, m + 1, l)
+		} else {
+			return m
+		}
+	}
+
+	var (f int = 0; l int = len(a) - 1; m int)
 	RBinarySearch(a, 7); RBinarySearch2p(a, 7, f, l)
 
 	for f < l {
 		m = (f + l) / 2
-		if x < a[m] l = m - 1
-		else if x > a[m] f = m + 1
-		else return m
+		if n < a[m] {
+			l = m - 1
+		} else if n > a[m] {
+			f = m + 1
+		} else {
+			return m
+		}
 	}
-    return nil
+    return -1
 }
 
 
@@ -84,6 +112,6 @@ func (x Searching) BinarySearch(a []int, x int) int {
 //  TEST CASES
 ////////////////////////////////////////
 
-func main(args []string) {
+func main() {
     fmt.println("Hello, World!")
 }
