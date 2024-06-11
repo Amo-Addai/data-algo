@@ -1435,6 +1435,147 @@ public class DataAlgoJava {
 
                 }
 
+                // Q - Pre-order, In-order, Post-order Traversals
+                // No B/C/D-FS; No Recursion, only while loop
+
+                public class BinaryTreeTraversal {
+
+                    // In-order Traversal
+
+                    public class InOrder {
+                    
+                        // todo: NB: (3rd-Party) Most-common iteration method for Tree-Traversals
+                        public List<Integer> iterate(TreeNode root) { // O(n) t ; O(h ~ 1) s (h - max height)
+                            // Stack takes in nodes until max-height h, and pops them out alongside algo; doesn't maintain all nodes for algo's exec
+                            // List (despite n - total) is only used to record traversed values to be returned, not within algo's actual complexity
+                            // could do away with List by just printing out node.value()s
+
+                            List<Integer> res = new ArrayList<>();
+                            if (root == null) return res;
+
+                            TreeNode node = root;
+                            Stack<TreeNode> stack = new Stack<>();
+
+                            // TODO: Alt loop in-order logic
+                            while (node != null || !stack.isEmpty()) {
+                                if (node != null) {
+                                    stack.push(node);
+                                    node = node.left();
+                                } else {
+                                    node = stack.pop();
+                                    res.add(node.value());
+                                    node = node.right();
+                                }
+                            }
+                            return res;
+                        }
+
+                        public List<Integer> recurse(TreeNode root) {
+                            List<Integer> res = new ArrayList<>();
+                            if (root == null) return res;
+
+                            BiConsumer<TreeNode, List<Integer>>[] helper = new BiConsumer[1];
+                            helper[0] = (n, r) -> { // no need to pass List<Int> by reference
+                                if (n == null) return;
+                                if (n.left() != null) helper[0].apply(n.left(), r);
+                                r.add(n.value()); // can also work with res directly
+                                if (n.right() != null) helper[0].apply(n.right(), r);
+                            };
+
+                            helper[0].apply(root, res);
+                            return res;
+                        }
+                    
+                    }
+
+                    // Pre-Order Traversal
+
+                    public class PreOrder {
+
+                        public List<Integer> iterate(TreeNode root) {
+                            List<Integer> res = new ArrayList<>();
+                            if (root == null) return res;
+
+                            TreeNode node = root;
+                            Stack<TreeNode> stack = new Stack<>();
+
+                            // TODO: Alt loop pre-order logic
+                            while (node != null || !stack.isEmpty()) {
+                                if (node != null) {
+                                    res.add(node.value());
+                                    stack.push(node);
+                                    node = node.left();
+                                } else {
+                                    node = stack.pop();
+                                    node = node.right();
+                                }
+                            }
+                            return res;
+                        }
+
+                        public List<Integer> recurse(TreeNode root) {
+                            List<Integer> res = new ArrayList<>();
+                            if (root == null) return res;
+
+                            Consumer<TreeNode> helper = new Consumer[1];
+                            helper[0] = (r) -> {
+                                if (r == null) return;
+                                res.add(n.value()); // can work with res directly
+                                if (n.left() != null) helper[0].apply(n.left());
+                                if (n.right() != null) helper[0].apply(n.right());
+                            };
+
+                            helper[0].apply(root);
+                            return res;
+                        }
+
+                    }
+
+                    // Post-Order Traversal
+
+                    public class PostOrder {
+
+                        public List<Integer> iterate(TreeNode root) {
+                            List<Integer> res = new ArrayList<>();
+                            if (root == null) return res;
+
+                            TreeNode node = root;
+                            Stack<TreeNode> stack = new Stack<>();
+
+                            // TODO: Alt loop post-order logic
+                            while (node != null || !stack.isEmpty()) {
+                                if (node != null) {
+                                    res.add(0, node.value()); // todo: NB: this time, .add(0, ..) (prepend) to beginning of list
+                                    stack.push(node);
+                                    node = node.right();
+                                } else {
+                                    node = stack.pop();
+                                    node = node.left();
+                                }
+                            }
+                            return res;
+                        }
+
+                        public List<Integer> recurse(TreeNode root) {
+                            List<Integer> res = new ArrayList<>();
+                            if (root == null) return res;
+
+                            BiConsumer<TreeNode, List<Integer>>[] helper = new BiConsumer[1];
+                            helper[0] = (n, r) -> {
+                                if (n == null) return;
+                                helper[0].apply(n.left(), r);
+                                helper[0].apply(n.right(), r);
+                                r.add(n.value());
+                            };
+
+                            helper[0].apply(root, res);
+                            return res;
+                        }
+                        
+                    }
+
+                }
+
             }
 
             // Tries

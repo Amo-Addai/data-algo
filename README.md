@@ -59,9 +59,9 @@ Some of the programming languages (mostly ordered in-terms of total skill-level)
 
 - Python
 - Javascript
+- Typescript
 - Java
 - C#
-- Typescript
 - C
 - C++
 - Php
