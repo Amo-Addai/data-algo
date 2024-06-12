@@ -27,7 +27,7 @@ Data structures included:
 - Strings
 - Lists
 - Array Lists
-- Matrices (N-dimensional arrays)
+- Matrices (N-dimensional Arrays)
 - Sets
 - Vectors
 - Tuples
@@ -36,6 +36,8 @@ Data structures included:
 - Tables
 - HashMaps
 - HashTables
+- WeakMaps
+- WeakSets
 - Linked Lists
 - Stacks
 - Queues

@@ -1,15 +1,21 @@
-package Data_Ago;
+// package NoPackage;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Stack;
+import java.util.Queue;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.function.Function;
 import java.util.function.BiFunction;
 
-// TODO: Work with in-built DataStructure classes, from all java source libs
-// import javax.swing.tree.TreeNode; // eg. Swing
+/*
+ * // TODO: Change Filename from 'Data-Algo - Java.java' to 'DataAlgoJava.java' (to avoid all errors)
+ * Work with in-built DataStructure classes, from all java source libs 
+ */
 
 /*
 
@@ -17,6 +23,7 @@ Functional Interfaces (Function, Consumer, Predicate, BiFunction, BiConsumer, ..
 ..
 
 */
+
 
 public class DataAlgoJava {
 
@@ -40,6 +47,7 @@ public class DataAlgoJava {
 
             public int[] quickSort(int[] arr) {
                 // TODO
+                return arr;
             }
 
         }
@@ -54,7 +62,8 @@ public class DataAlgoJava {
             public Searching() {}
 
             public int linearSearch(int[] a, int x) {
-                for (int i = 0; i < a.length; i++) if (x == a[i]) return i; 
+                for (int i = 0; i < a.length; i++) if (x == a[i]) return i; // index 
+                return -1;
             }
 
             // No in-built functional interface for more than 2 args (create custom interface)
@@ -162,7 +171,7 @@ public class DataAlgoJava {
                 return new int[0];
             
                 BiFunction<int[], Integer, Integer> findLowerClosest = (a, x) -> {
-                    int start = 0, end = a.length - 1, mid;
+                    int start = 0, end = a.length - 1, mid = -1;
                     while (start + 1 < end) {
                         mid = start + (end - start) / 2;
                         if (a[mid] < x) start = mid;
@@ -549,6 +558,8 @@ public class DataAlgoJava {
                         matrix[i][N - 1 - j] = temp;
                     }
                 }
+
+                return matrix;
             }
 
             // This diagonal iteration solution only works on square matrices
@@ -676,6 +687,7 @@ public class DataAlgoJava {
                 private Function<ListNode, ListNode> remove = (node) -> {
 
                     // TODO: 'ClassCastException' Error-prone (for downcasts from ListNode to DListNode, if node was SListNode)
+                    
                     ListNode prev = ((DListNode) node).getPrev();
                     DListNode next = (DListNode) node.getNext();
                     prev.setNext(next); next.setPrev(prev);
@@ -733,282 +745,287 @@ public class DataAlgoJava {
                     });
                     return duplicateNode;
                 }
-                
+            
 
-            }
+                // Extra Functions
 
-            // Extra Functions
+                ListNode middleNode(LinkedList ll) { // O(n/2 ~ n) t ; O(1) s
+                    ListNode slow = ll.getHead();
+                    if (slow == null || slow.getNext() == null) return slow;
+                    // shorthand for next 2 lines
+                    // if (slow == null) return null;
+                    // if (slow.getNext() == null) return slow;
+                    ListNode fast = slow; // start from head, not next-to-head, so slow is at middle after loop-end
+                    while (
+                        fast.getNext() != null &&
+                        fast.getNext().getNext() != null
+                    ) {
+                        slow = slow.getNext();
+                        fast = fast.getNext().getNext();
+                    } 
+                    // 3rd party logic - check fast.next, in case loop ended with fast.next.next
+                    ListNode middle = fast.getNext() == null ? slow : slow.getNext();
+                    return middle;
+                }
 
-            ListNode middleNode(LinkedList ll) { // O(n/2 ~ n) t ; O(1) s
-                ListNode slow = ll.getHead();
-                if (slow == null || slow.getNext() == null) return slow;
-                // shorthand for next 2 lines
-                // if (slow == null) return null;
-                // if (slow.getNext() == null) return slow;
-                ListNode fast = slow; // start from head, not next-to-head, so slow is at middle after loop-end
-                while (fast.getNext() != null && fast.getNext().getNext()) {
-                    slow = slow.getNext();
-                    fast = fast.getNext().getNext();
-                } 
-                // 3rd party logic - check fast.next, in case loop ended with fast.next.next
-                ListNode middle = fast.getNext() == null ? slow : slow.getNext();
-                return middle;
-            }
+                boolean hasCycle(LinkedList ll) { // O(n) t ; O(1) s
+                    // could be O(2n or 3n or 4n) based on the multiplied jump of the fast node
 
-            boolean hasCycle(LinkedList ll) { // O(n) t ; O(1) s
-                // could be O(2n or 3n or 4n) based on the multiplied jump of the fast node
-
-                ListNode slow = ll.getHead();
-                if (slow == null || slow.getNext() == null)
+                    ListNode slow = ll.getHead();
+                    if (slow == null || slow.getNext() == null)
+                        return false;
+                    ListNode fast = slow.getNext();
+                    while (fast.getNext() != null && fast.getNext().getNext() != null) {
+                        if (slow == fast) return true;
+                        slow = slow.getNext();
+                        fast = fast.getNext().getNext();
+                    }
                     return false;
-                ListNode fast = slow.getNext();
-                while (fast.getNext() != null && fast.getNext().getNext() != null) {
-                    if (slow == fast) return true;
-                    slow = slow.getNext();
-                    fast = fast.getNext().getNext();
                 }
-                return false;
-            }
 
-            // todo: test - generic logic (working for both Singly & Doubly-linked ListNodes)
-            LinkedList reverse(LinkedList ll) { // O(n) t ; O(1) s
-                ListNode node = ll.getHead(), next;
-                if (node == null || node.getNext()) return node;
-                
-                // ListNode next = node.getNext(); // * not required - only prev & node are required for the loop
-                // ListNode tmp = null; // * not required - only prev & node are required for the loop
-                ListNode prev = null;
-
-                // first reset both head & tail of linked list
-                ll.setHead(ll.getTail());
-                ll.setTail(node);
-                
-                // now, reverse ll regardless of whether it each pair of adjacent ListNodes are singly or doubly - linked
-
-                while (node != null) {
-                    next = node.getNext(); // for the 'next' iteration
-                    // tmp = next.getNext(); // * not required - using next for 'next' iteration instead
+                // todo: test - generic logic (working for both Singly & Doubly-linked ListNodes)
+                LinkedList reverse(LinkedList ll) { // O(n) t ; O(1) s
+                    ListNode node = ll.getHead(), next;
+                    if (node == null || node.getNext() == null) return ll;
                     
-                    node.setNext(prev); // * only 2 changes required, for each iteration
-                    if (node instanceof DListNode) node.setPrev(next); // * changes would be propagated in each node throughout loop
+                    // ListNode next = node.getNext(); // * not required - only prev & node are required for the loop
+                    // ListNode tmp = null; // * not required - only prev & node are required for the loop
+                    ListNode prev = null;
 
-                    // next.setNext(node); // * not required - node would .setNext(prev) on next iteration
+                    // first reset both head & tail of linked list
+                    ll.setHead(ll.getTail());
+                    ll.setTail(node);
                     
-                    // * not required - node execs .setPrev(next) now, in this iteration
-                    // prev != null && -> not required because it needs to be instantiated before taking any of ListNode's child classes
-                    // either SListNode / DListNode
-                    // if (prev instanceof DListNode) prev.setPrev(node);
+                    // now, reverse ll regardless of whether it each pair of adjacent ListNodes are singly or doubly - linked
 
-                    prev = node; node = next; // next = tmp; // * tmp not required; next is used for 'next' iteration
+                    while (node != null) {
+                        next = node.getNext(); // for the 'next' iteration
+                        // tmp = next.getNext(); // * not required - using next for 'next' iteration instead
+                        
+                        node.setNext(prev); // * only 2 changes required, for each iteration
+                        if (node instanceof DListNode) ((DListNode) node).setPrev(next); // * changes would be propagated in each node throughout loop
+
+                        // next.setNext(node); // * not required - node would .setNext(prev) on next iteration
+                        
+                        // * not required - node execs .setPrev(next) now, in this iteration
+                        // prev != null && -> not required because it needs to be instantiated before taking any of ListNode's child classes
+                        // either SListNode / DListNode
+                        // if (prev instanceof DListNode) prev.setPrev(node);
+
+                        prev = node; node = next; // next = tmp; // * tmp not required; next is used for 'next' iteration
+                    }
+                    return ll;
                 }
-                return ll;
-            }
 
-            // todo: Test all remaining Alt 3rd-Party (Tutorials) logic methods
-            // * create a new ListNode class with all properties public
+                // todo: Test all remaining Alt 3rd-Party (Tutorials) logic methods
+                // * create a new ListNode class with all properties public
 
-            public boolean hasCycle(ListNode head) {
-                if (head == null || head.next == null) return false;
-                ListNode slow = head;
-                ListNode fast = head.next;
-                while (fast.next != null && fast.next.next != null) {
-                    slow = slow.next;
-                    fast = fast.next.next;
-                    if (slow == fast) return true;
+                public boolean hasCycle(ListNode head) {
+                    if (head == null || head.next == null) return false;
+                    ListNode slow = head;
+                    ListNode fast = head.next;
+                    while (fast.next != null && fast.next.next != null) {
+                        slow = slow.next;
+                        fast = fast.next.next;
+                        if (slow == fast) return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
 
-            public ListNode middleNode(ListNode head) {
-                if (head == null || head.next == null) return head;
-                ListNode slow = head;
-                ListNode fast = head;
-                while (fast.next != null && fast.next.next != null) {
-                    slow = slow.next;
-                    fast = fast.next.next;
+                public ListNode middleNode(ListNode head) {
+                    if (head == null || head.next == null) return head;
+                    ListNode slow = head;
+                    ListNode fast = head;
+                    while (fast.next != null && fast.next.next != null) {
+                        slow = slow.next;
+                        fast = fast.next.next;
+                    }
+                    ListNode middle = head;
+                    if (fast.next == null) middle = slow;
+                    else middle = slow.next;
+                    return middle;
                 }
-                ListNode middle = head;
-                if (fast.next == null) middle = slow;
-                else middle = slow.next;
-                return middle;
-            }
 
-            // works perfectly for singly-linked listnodes
-            // reset node's value to next's value, then set node's .next to next's .next     
-            public void deleteNode(ListNode node) {
-                if (node == null || node.next == null) return;
-                ListNode nextNext = node.next.next;
-                node.value = node.next.value;
-                node.next = nextNext;
-            }
-
-            public ListNode deleteDuplicates(ListNode head) {
-                if (head == null || head.next == null) return head;
-                ListNode node = head;
-                while (node.next != null) {
-                    if (node.value == node.next.value)
-                        node.next = node.next.next;
-                    else node = node.next;
-                    // else statement this time, forces iteration to stay with current node until all in-line duplicates are removed
+                // works perfectly for singly-linked listnodes
+                // reset node's value to next's value, then set node's .next to next's .next     
+                public void deleteNode(ListNode node) {
+                    if (node == null || node.next == null) return;
+                    ListNode nextNext = node.next.next;
+                    node.value = node.next.value;
+                    node.next = nextNext;
                 }
-                return head;
-            }
 
-            // Alt 3rd-Party logic - Singly-linked list only, without a set tail ListNode
-            public ListNode reverse(ListNode head) { 
-                if (head == null || head.next == null) return head;
-                ListNode prev = null, node = head, next = head.next;
-
-                while (node != null) {
-                    node.next = prev;
-                    prev = node;
-                    node = next;
-                    if (next != null)
-                        next = next.next;
+                public ListNode deleteDuplicates(ListNode head) {
+                    if (head == null || head.next == null) return head;
+                    ListNode node = head;
+                    while (node.next != null) {
+                        if (node.value == node.next.value)
+                            node.next = node.next.next;
+                        else node = node.next;
+                        // else statement this time, forces iteration to stay with current node until all in-line duplicates are removed
+                    }
+                    return head;
                 }
-                head = prev;
-                return head;
-            }
 
-            public LinkedList flattenBinaryTreeToLinkedList(Tree.TreeNode root) { // O(n) t ; O(n) s (not done in-place; LinkedList with n nodes required)
+                // Alt 3rd-Party logic - Singly-linked list only, without a set tail ListNode
+                public ListNode reverse(ListNode head) { 
+                    if (head == null || head.next == null) return head;
+                    ListNode prev = null, node = head, next = head.next;
 
-                if (root == null) return null;
-                ListNode lRoot = new ListNode(root.value(), null);
+                    while (node != null) {
+                        node.next = prev;
+                        prev = node;
+                        node = next;
+                        if (next != null)
+                            next = next.next;
+                    }
+                    head = prev;
+                    return head;
+                }
 
-                Tree.TreeNode node = null;
-                ListNode lNode = lRoot;
+                public LinkedList flattenBinaryTreeToLinkedList(Tree.TreeNode root) { // O(n) t ; O(n) s (not done in-place; LinkedList with n nodes required)
 
-                // bfs
+                    if (root == null) return null;
+                    ListNode lRoot = new ListNode(root.value(), null);
 
-                Queue q = new Queue();
-                q.push(root);
-                
-                while (!q.isEmpty()) {
+                    Tree.TreeNode node = null;
+                    ListNode lNode = lRoot;
 
-                    node = (Tree.TreeNode) q.pop();
-                    // no need to store node.value()s into ListNodes
-                    // because root.value() has been stored
-                    // only store node.left() & .right() .value()s
+                    // bfs
 
-                    if (node.left() != null) {
-                        lNode.setNext(new ListNode(node.left().value(), null));
-                        q.push(node.left());
-                        lNode = lNode.getNext();
+                    Queue q = new Queue();
+                    q.push(root);
+                    
+                    while (!q.isEmpty()) {
+
+                        node = (Tree.TreeNode) q.pop();
+                        // no need to store node.value()s into ListNodes
+                        // because root.value() has been stored
+                        // only store node.left() & .right() .value()s
+
+                        if (node.left() != null) {
+                            lNode.setNext(new ListNode(node.left().value(), null));
+                            q.push(node.left());
+                            lNode = lNode.getNext();
+                        }
+
+                        if (node.right() != null) {
+                            lNode.setNext(new ListNode(node.right().value(), null));
+                            q.push(node.right());
+                            lNode = lNode.getNext();
+                        }
+
                     }
 
-                    if (node.right() != null) {
-                        lNode.setNext(new ListNode(node.right().value(), null));
-                        q.push(node.right());
+                    // dfs - average
+
+                    Consumer<Tree.TreeNode>[] dfs = new Consumer[1];
+
+                    dfs[0] = (node) -> {
+                        if (node == null) return;
+
+                        // no need to store node.value()s into ListNodes
+                        // because root.value() has been stored
+                        // only store node.left() & .right() .value()s
+
+                        // dfs - depth-traversing to left-side of B-Tree, adding .left of each node
+                        // before depth-traversing to right-side of B-Tree, then adding .right of each node
+                        // this works as pre-order - left only
+
+                        if (node.left() != null) {
+                            lNode.setNext(new ListNode(node.left().value(), null));
+                            lNode = lNode.getNext();
+                            dfs[0].apply(node.left());
+                        }
+
+                        // * or, depth-traverse to right-side of B-Tree 1st
+                        // this works as pre-order - right only
+
+                        if (node.right() != null) {
+                            lNode.setNext(new ListNode(node.right().value(), null));
+                            lNode = lNode.getNext();
+                            dfs[0].apply(node.right());
+                        }
+
+                        // dfs - .left & .right of each node
+                        // before depth-traversing to left-side of B-Tree, then to right-side
+
+                        if (node.left() != null) {
+                            lNode.setNext(new ListNode(node.left().value(), null));
+                            lNode = lNode.getNext();
+                        }
+
+                        if (node.left() != null) {
+                            lNode.setNext(new ListNode(node.right().value(), null));
+                            lNode = lNode.getNext();
+                        }
+
+                        if (node.left() != null)
+                            dfs[0].apply(node.left());
+                        
+                        if (node.right() != null)
+                            dfs[0].apply(node.right());
+                        
+                    };
+
+                    dfs[0].apply(root);
+
+                    // dfs - best
+
+                    dfs[0] = (node) -> {
+                        if (node == null) return;
+
+                        // need to store only node.value()s into ListNodes
+                        // so root.value() will be re-stored
+                        // only recurse through node.left() & .right() nodes
+
+                        // dfs - depth-traversing pre/post/in - orders
+                        // these can work as left->right / vice-versa
+
+                        // pre-order
+                        
+                        lNode.setValue(node.value());
+                        lNode.setNext(new ListNode(null, null));
                         lNode = lNode.getNext();
-                    }
 
-                }
-
-                // dfs - average
-
-                Consumer<Tree.TreeNode>[] dfs = new Consumer[1];
-                dfs[0] = (node) -> {
-                    if (node == null) return;
-
-                    // no need to store node.value()s into ListNodes
-                    // because root.value() has been stored
-                    // only store node.left() & .right() .value()s
-
-                    // dfs - depth-traversing to left-side of B-Tree, adding .left of each node
-                    // before depth-traversing to right-side of B-Tree, then adding .right of each node
-                    // this works as pre-order - left only
-
-                    if (node.left() != null) {
-                        lNode.setNext(new ListNode(node.left().value(), null));
-                        lNode = lNode.getNext();
                         dfs[0].apply(node.left());
-                    }
-
-                    // * or, depth-traverse to right-side of B-Tree 1st
-                    // this works as pre-order - right only
-
-                    if (node.right() != null) {
-                        lNode.setNext(new ListNode(node.right().value(), null));
-                        lNode = lNode.getNext();
                         dfs[0].apply(node.right());
-                    }
 
-                    // dfs - .left & .right of each node
-                    // before depth-traversing to left-side of B-Tree, then to right-side
+                        // post-order
 
-                    if (node.left() != null) {
-                        lNode.setNext(new ListNode(node.left().value(), null));
-                        lNode = lNode.getNext();
-                    }
-
-                    if (node.left() != null) {
-                        lNode.setNext(new ListNode(node.right().value(), null));
-                        lNode = lNode.getNext();
-                    }
-
-                    if (node.left() != null)
                         dfs[0].apply(node.left());
-                    
-                    if (node.right() != null)
                         dfs[0].apply(node.right());
+                        
+                        lNode.setValue(node.value());
+                        lNode.setNext(new ListNode(null, null));
+                        lNode = lNode.getNext();
+
+                        // in-order
+
+                        dfs[0].apply(node.left());
+                        
+                        lNode.setValue(node.value());
+                        lNode.setNext(new ListNode(null, null));
+                        lNode = lNode.getNext();
+
+                        dfs[0].apply(node.right());
+
+                    };
+
+                    dfs[0].apply(root);
+
+                    // now return LinkedList / ListNode root
+
+                    return new LinkedList(lRoot, lNode); // or lRoot
+
+                }
+
+                public Tree.TreeNode flattenBinaryTreeToLinkedList2(Tree.TreeNode root) { // O(n) t ; O(1) s (done in-place; NO LinkedList with n nodes required)
                     
-                };
-
-                dfs[0].apply(root);
-
-                // dfs - best
-
-                dfs[0] = (node) -> {
-                    if (node == null) return;
-
-                    // need to store only node.value()s into ListNodes
-                    // so root.value() will be re-stored
-                    // only recurse through node.left() & .right() nodes
-
-                    // dfs - depth-traversing pre/post/in - orders
-                    // these can work as left->right / vice-versa
-
-                    // pre-order
-                    
-                    lNode.setValue(node.value());
-                    lNode.setNext(new ListNode(null, null));
-                    lNode = lNode.getNext();
-
-                    dfs[0].apply(node.left());
-                    dfs[0].apply(node.right());
-
-                    // post-order
-
-                    dfs[0].apply(node.left());
-                    dfs[0].apply(node.right());
-                    
-                    lNode.setValue(node.value());
-                    lNode.setNext(new ListNode(null, null));
-                    lNode = lNode.getNext();
-
-                    // in-order
-
-                    dfs[0].apply(node.left());
-                    
-                    lNode.setValue(node.value());
-                    lNode.setNext(new ListNode(null, null));
-                    lNode = lNode.getNext();
-
-                    dfs[0].apply(node.right());
-
-                };
-
-                dfs[0].apply(root);
-
-                // now return LinkedList / ListNode root
-
-                return new LinkedList(lRoot, lNode); // or lRoot
+                }
 
             }
 
-            public Tree.TreeNode flattenBinaryTreeToLinkedList(Tree.TreeNode root) { // O(n) t ; O(1) s (done in-place; NO LinkedList with n nodes required)
-                
-            }
 
             // Stacks & Queues
 
@@ -1049,14 +1066,15 @@ public class DataAlgoJava {
                     this.root = root;
                 }
 
+                private TreeNode lastNode = null;
+
                 // 3rd-Party (Tutorial) DFS Traversal
-                public LinkedList.ListNode flattenBinaryTreeToLinkedList(TreeNode root) {
-                    if (root == null) return null;
-                    TreeNode lastNode = null;
+                public void flattenBinaryTreeToLinkedList(TreeNode root) {
+                    if (root == null) return;
 
                     if (lastNode != null) {
-                        lastNode.left = null;
-                        lastNode.right = root;
+                        lastNode.left(null);
+                        lastNode.right(root);
                     }
 
                     lastNode = root;
@@ -1068,11 +1086,11 @@ public class DataAlgoJava {
                 }
 
                 // DFS Divide & Conquer
-                public TreeNode DCflattenBinaryTreeToLinkedList(TreeNode root) {
+                public TreeNode DCFlattenBinaryTreeToLinkedList(TreeNode root) {
                     if (root == null) return null;
 
-                    TreeNode left = this.DCflattenBinaryTreeToLinkedList((root.left));
-                    TreeNode right = this.DCflattenBinaryTreeToLinkedList(root.right);
+                    TreeNode left = this.DCFlattenBinaryTreeToLinkedList(root.left);
+                    TreeNode right = this.DCFlattenBinaryTreeToLinkedList(root.right);
 
                     if (left != null) {
                         left.right = root.right;
@@ -1185,13 +1203,15 @@ public class DataAlgoJava {
                         List<String> leftPaths = binaryTreePaths(root.left());
                         List<String> rightPaths = binaryTreePaths(root.right());
 
+                        // todo: test implicit castings from .value()'s Object -> String
+
                         for (String path : leftPaths) 
                             paths.add(root.value() + " -> " + path);
                         for (String path : rightPaths) 
                             paths.add(root.value() + " -> " + path);
                         
                         if (paths.size() == 0) // root is a leaf node
-                            paths.add("", root.value());
+                            paths.add("" + root.value());
                         
                         return paths;
 
@@ -1248,7 +1268,7 @@ public class DataAlgoJava {
                  * A node is allowed to be a descendant of itself
                  */
 
-                public static class LowestCommonAncestor {
+                public class LowestCommonAncestor {
 
                     /*
                     * Start from the tree root
@@ -1293,7 +1313,7 @@ public class DataAlgoJava {
                         ResultType help(TreeNode r, TreeNode a, TreeNode b);
                     }
 
-                    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode n1, TreeNode n2) {
+                    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode n1, TreeNode n2) {
 
                         Helper[] helper = new Helper[1];
                         helper[0] = (r, a, b) -> {
@@ -1407,7 +1427,7 @@ public class DataAlgoJava {
 
                     public int kthSmallest2(TreeNode root, int kth) { // O(h) ~ O(n) t (h - tree height) ; O(n) s
 
-                        BiConsumer<TreeNode, Map<TreeNode, Integer>>[] countNodes = new BiConsumer<TreeNode, Map<TreeNode, Integer>>[1];
+                        BiConsumer<TreeNode, Map<TreeNode, Integer>>[] countNodes = new BiConsumer[1];
                         countNodes[0] = (r, c) -> {
                             if (r == null) return 0;
                             int left = countNodes[0].apply(r.left(), c);
@@ -1435,16 +1455,18 @@ public class DataAlgoJava {
 
                 }
 
-                // Q - Pre-order, In-order, Post-order Traversals
-                // TODO: Check DFS / Custom Logic
+                // Q - Pre-order, In-order, Post-order / Iterator Traversals
 
-                public class BinaryTreeTraversal {
+                public class BinaryTreeTraversals {
+
+                    // * DFS Traversals
 
                     // In-order Traversal
 
                     public class InOrder {
                     
-                        // todo: NB: (3rd-Party) Most-common iteration method for Tree-Traversals
+                        // todo: NB: Alt 3rd-Party (Tutorials) Logic - (Stack-Loop) iteration method for Tree-Traversals
+                        
                         public List<Integer> iterate(TreeNode root) { // O(n) t ; O(h ~ 1) s (h - max height)
                             // Stack takes in nodes until max-height h, and pops them out alongside algo; doesn't maintain all nodes for algo's exec
                             // List (despite n - total) is only used to record traversed values to be returned, not within algo's actual complexity
@@ -1502,7 +1524,7 @@ public class DataAlgoJava {
                             // TODO: Alt loop pre-order logic
                             while (node != null || !stack.isEmpty()) {
                                 if (node != null) {
-                                    res.add(node.value());
+                                    res.add((Integer) node.value());
                                     stack.push(node);
                                     node = node.left();
                                 } else {
@@ -1542,10 +1564,11 @@ public class DataAlgoJava {
                             TreeNode node = root;
                             Stack<TreeNode> stack = new Stack<>();
 
-                            // TODO: Alt loop post-order logic
+                            // TODO: Alt loop post-order logic - .right() to .left()
+
                             while (node != null || !stack.isEmpty()) {
                                 if (node != null) {
-                                    res.add(0, node.value()); // todo: NB: this time, .add(0, ..) (prepend) to beginning of list
+                                    res.add(0, (Integer) node.value()); // todo: NB: this time, .add(0, ..) (prepend) to beginning of list
                                     stack.push(node);
                                     node = node.right();
                                 } else {
@@ -1574,7 +1597,309 @@ public class DataAlgoJava {
                         
                     }
 
+                    // * BFS Traversals
+
+
+                    // * Other Traversals
+
+                    // Iterator Traversal - In-order
+                    
+                    /*
+                     * Q - Design an iterator over a BST with following rules:
+                     * Elements are visited in ascending order (in-order traversal)
+                     * hasNext() & next() queries run in O(1) time in average
+                     */
+
+                    public class Iterator {
+
+                        TreeNode node;
+                        Stack<TreeNode> stack;
+
+                        public Iterator(TreeNode root) {
+                            node = root;
+                            stack = new Stack<>();
+                        }
+
+                        // check if there's a next smallest-value node
+                        private boolean hasNext() {
+                            return node != null || !stack.isEmpty();
+                        }
+
+                        // return the next smallest-value node
+                        public int next() {
+                            while (hasNext()) {
+                                if (node != null) {
+                                    stack.push(node);
+                                    node = node.left();
+                                } else {
+                                    node = stack.pop();
+                                    int res = (Integer) node.value(); // can declare this var in the loop because it's being returned in this iteration
+                                    node = node.right();
+                                    return res;
+                                }
+                            }
+                            return Integer.MIN_VALUE;
+                        }
+
+                        public void test() {
+                            Iterator it = new Iterator(new TreeNode(0, null, null));
+                            System.out.println(it.next());
+                            System.out.println(it.next());
+                            System.out.println(it.hasNext());
+                            System.out.println(it.next());
+                            System.out.println(it.next());
+                            System.out.println(it.hasNext());
+                        }
+
+                    }
+
+                    // Successor - In-order
+
+                    /*
+                     * Q - Given a BST and a node in it, find the in-order successor of that node
+                     * The successor of a node n is the node with the smallest key greater than n.value()
+                     */
+
+                    public class Successor {
+
+                        TreeNode node;
+                        Stack<TreeNode> stack;
+                        TreeNode successor;
+
+                        // General Method
+                        public TreeNode successor(TreeNode root, TreeNode n) {
+                            if (root == null || n == null) return null;
+
+                            stack = new Stack<>();
+                            successor = null;
+                            boolean flag = false;
+
+                            while (!stack.isEmpty() || node != null) {
+                                if (node != null) {
+                                    stack.push(node);
+                                    node = node.left();
+                                } else {
+                                    node = stack.pop();
+                                    if (node.value() == n.value())
+                                        flag = true;
+                                    else if (flag) {
+                                        successor = node;
+                                        break;
+                                    }
+                                    node = node.right();
+                                }
+                            }
+                            return successor;
+                        }
+
+                        // Iteration Method
+                        public TreeNode successor2(TreeNode root, TreeNode n) {
+                            
+                            successor = null;
+
+                            while (root != null && root.value() != n.value()) {
+                                // todo: reminder for generic casting issues with Object value()
+                                if ((Integer) n.value() < (int) root.value()) {
+                                    successor = root;
+                                    root = root.left();
+                                } else root = root.right();
+                            }
+
+                            if (root == null) return null;
+                            if (root.right() == null) return successor;
+
+                            root = root.right();
+                            while (root.left() != null)
+                                root = root.left();
+                            
+                            return root;
+                        }
+
+                        // Recursive Method
+                        public TreeNode successor3(TreeNode root, TreeNode n) {
+                            if (root == null || n == null)
+                                return null;
+                            
+                            // todo: reminder for generic casting issues with Object value()
+                            if ((int) n.value() >= (Integer) root.value())
+                                return successor3(root.right(), n);
+                            else {
+                                TreeNode left = successor3(root.left(), n);
+                                return (left != null) ? left : root;
+                            }
+                            
+                        }
+
+                    }
+
                 }
+
+                // TODO: Q - Given a non-empty BST and a target value, find the value in the BST that is closest to the target
+
+                public class ClosestBST {
+                    
+                    public Double closestValue(TreeNode root, Double target) {
+                        if (root == null) return 0.0; // can't return -1 (valid closest return value)
+
+                        BiFunction<TreeNode, Double, TreeNode>[] lowerBound = new BiFunction[1];
+                        lowerBound[0] = (r, t) -> {
+                            if (r == null) return null;
+
+                            if (t <= (Double) r.value())
+                                return lowerBound[0].apply(r.left(), t);
+                            
+                            // target > root.value()
+                            TreeNode lowerNode = lowerBound[0].apply(r.right(), t);
+                            if (lowerNode != null) return lowerNode;
+
+                            return r;
+                        };
+
+                        BiFunction<TreeNode, Double, TreeNode>[] upperBound = new BiFunction[1];
+                        upperBound[0] = (r, t) -> {
+                            if (r == null) return null;
+                            
+                            if (t > (Double) r.value())
+                                return upperBound[0].apply(r.right(), t);
+                            
+                            // target <= root.value()
+                            TreeNode upperNode = upperBound[0].apply(r.left(), t);
+                            if (upperNode != null) return upperNode;
+
+                            return r;
+                        };
+
+                        TreeNode lowerNode = lowerBound[0].apply(root, target);
+                        TreeNode upperNode = upperBound[0].apply(root, target);
+
+                        if (lowerNode == null) return (Double) upperNode.value();
+                        if (upperNode == null) return (Double) lowerNode.value();
+                        
+                        if (
+                            target - (Double) lowerNode.value() > 
+                            (Double) upperNode.value() - target
+                        ) return (Double) upperNode.value();
+
+                        return (Double) lowerNode.value();
+
+                    }
+
+                }
+
+                // TODO: Q - Given a non-empty BST and a target value, find k values that are closest to the target
+
+                /*
+                 * Given target value is a floating point, you can assume k is always valid (k <= total nodes)
+                 * Guaranteed to have only 1 unique set of k values in BST that are closest to target
+                 * Assume the BST is balanced
+                 * 
+                 * Attempt solving in < O(n) t
+                 * 
+                 * Perhaps O(k + log n) t / O(k log n) t ?
+                 * 
+                 */
+
+                public class ClosestBST2 {
+
+                    // In-order - O(n) t ; O(n) s
+                    // Best-case - O(k + log n) t ; O(log n) s (because Tree is Balanced)
+
+                    public List<Integer> closestKValues(TreeNode root, double target, int k) {
+                        List<Integer> values = new ArrayList<>();
+                        if (k == 0 || root == null) return values;
+
+                        Stack<TreeNode> lowerStack = createStack(root, target);
+                        Stack<TreeNode> upperStack = new Stack<>();
+
+                        upperStack.addAll(lowerStack);
+
+                        if (target < (double) lowerStack.peek().value())
+                            moveLower(lowerStack);
+                        else moveUpper(upperStack);
+
+                        for (int i = 0; i < k; i++) {
+                            if (
+                                lowerStack.isEmpty() ||
+                                !upperStack.isEmpty() &&
+                                // todo: check arithmetic order without parentheses in this case
+                                target - (double) lowerStack.peek().value() > (double) upperStack.peek().value() - target
+                            ) {
+                                values.add((Integer) upperStack.peek().value());
+                                moveUpper(upperStack);
+                            } else {
+                                values.add((Integer) lowerStack.peek().value());
+                                moveLower(lowerStack);
+                            }
+                        }
+
+                        return values;
+                    }
+
+                    // Store the nodes on the path from root to target (not including target node)
+                    private Stack<TreeNode> createStack(TreeNode root, double target) {
+                        Stack<TreeNode> stack = new Stack<>();
+
+                        while (root != null) {
+                            stack.push(root);
+
+                            if (target < (double) root.value())
+                                root = root.left();
+                            else root = root.right();
+                        }
+                        
+                        return stack;
+                    }
+
+                    // Successor
+                    private void moveUpper(Stack<TreeNode> stack) {
+                        TreeNode node = stack.peek();
+
+                        if (node.right() == null) {
+                            node = stack.pop();
+                            while (
+                                !stack.isEmpty() &&
+                                stack.peek().right() == node
+                            ) node = stack.pop();
+                            return;
+                        }
+
+                        node = node.right();
+
+                        while (node != null) {
+                            stack.push(node);
+                            node = node.left();
+                        }
+                    }
+
+                    private void moveLower(Stack<TreeNode> stack) {
+                        TreeNode node = stack.peek();
+
+                        if (node.left() == null) {
+                            node = stack.pop();
+                            while (
+                                !stack.isEmpty() &&
+                                stack.peek().left() == node
+                            ) node = stack.pop();
+                            return;
+                        }
+
+                        node = node.left();
+
+                        while (node != null) {
+                            stack.push(node);
+                            node = node.right();
+                        }
+                    }
+
+                }
+
+                /*
+                 * // TODO: Other BST Problems
+                 * 
+                 * - Insert into / Delete from BST
+                 * - Morris Algo
+                 */
+                
 
             }
 
@@ -1599,20 +1924,21 @@ public class DataAlgoJava {
 
 
 
-
-
-
         ////////////////////////////////////////
-        // CODESIGNAL - ARCADE TESTS (increasing difficulty)
+        // LEETCODE
         ////////////////////////////////////////
 
         // 
 
 
         ////////////////////////////////////////
-        // CODESIGNAL - SAMPLE INTERVIEW QUESTIONS 
+        // CODESIGNAL
         ////////////////////////////////////////
 
+        // ARCADE TESTS (increasing difficulty)
+
+        // SAMPLE INTERVIEW QUESTIONS
+        
 
         // A top secret message containing uppercase letters from 'A' to 'Z' has been encoded as numbers using the following mapping:
         // You are an FBI agent and you need to determine the total number of ways that the message can be decoded.
@@ -1684,6 +2010,6 @@ public class DataAlgoJava {
 
 
 /** 
- * NOTES:
+ * NOTES: 
 
 */

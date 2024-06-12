@@ -1291,6 +1291,12 @@ class DataStructures:
             # * uses queue in while loop
             if root is None or type(root) is not DataStructures.Tree.Node:
                 return
+            
+            '''
+            BFS always traverses horizontally (whether from left/right first), layer by layer
+            '''
+
+            # BFS - Queue-Loop traversal
 
             queue = deque()
             queue.append(root)
@@ -1300,13 +1306,13 @@ class DataStructures:
                 node = queue.popleft() # queue - fifo, so pop oldest item (no .popright())
                 print(node.value)
 
-                # BFS "Straight" order - .left before .right
+                # BFS "Straight" order - .left to .right
                 queue.append(node.left)
                 queue.append(node.right)
                 for child in node.children:
                     queue.append(child)
         
-                # NB: BFS "Reverse" - order - .right before .left
+                # NB: BFS "Reverse" - order - .right to .left
                 queue.append(node.right)
                 queue.append(node.left)
                 for child in node.children[::-1]:
@@ -1325,22 +1331,48 @@ class DataStructures:
             # * uses recursion
             if root is None or type(root) is not DataStructures.Tree.Node:
                 return
+            
+            '''
 
-            # DFS pre-order
+            DFS always traverses from top-bottom nodes (whether from left/right first)
+            but works with each tree/sub-tree (triangular node-family, with 1 parent) in a specific order (pre/in/post)
+            Visualize traversals here: https://tree-visualizer.netlify.app/
+            
+            Pre/In/Post-Orders always transcend through all trees/sub-trees
+            whether outermost tree, or in-between, or innermost sub-trees
+
+            eg. for the entire tree (no matter the size):
+            Post-order left-before-right:
+            For the outermost tree / triangular node-family (surrounding the entire tree):
+
+            (Top) Root node will always be traversed through first
+            (Bottom) left-most node will always be worked with (or used) first
+            aside all other DFS post-order traversals and node usages in-between (with inner sub-trees)
+            (Bottom) right-most node will be worked with next
+            aside all other DFS post-order traversals and node usages in-between (with inner sub-trees)
+            (Top) Root node will always be worked with (or used) last
+            (despite it being always traversed through first)
+
+            # TODO: Try out this logic for other scenarios:
+            (tree size/height/depth) / (pre/in-orders) / (right-before-left) / (other sub-trees)
+
+            '''
+
+            # DFS pre-order - Recursive traversal
             print(root.value)
             self.dfs(root.left)
             self.dfs(root.right)
             for child in root.children:
                 self.dfs(child)
 
-            # DFS post-order
+            # DFS post-order - Recursive traversal
             self.dfs(root.left)
             self.dfs(root.right)
             for child in root.children:
                 self.dfs(child)
             print(root.value)
 
-            # DFS in-order
+            # DFS in-order - Recursive traversal
             self.dfs(root.left)
             print(root.value)
             self.dfs(root.right)
@@ -1364,6 +1396,85 @@ class DataStructures:
             if root.children:
                 self.dfs(root.children[-1])
             print(root.value)
+
+
+            # Stack-Loop Tree-Traversals (all .left to .right, except post-order)
+            
+            # O(n) t ; O(h ~ 1) s (h - max height)
+            
+            # Stack takes in nodes until max-height h, and pops them out alongside algo; doesn't maintain all nodes for algo's exec
+            # List (despite n - total) is only used to record traversed values to be returned, not within algo's actual complexity
+            # could do away with List by just printing out node.value()s
+
+
+            # DFS pre-order - Stack-Loop traversal
+            stack, node = [], root
+
+            while node or len(stack) > 0:
+                if node:
+                    print(node.value)
+                    stack.append(node)
+                    node = node.left
+                else:
+                    node = stack.pop()
+                    node = node.right
+
+            # DFS in-order - Stack-Loop traversal
+            stack = [], node = None
+
+            while node or len(stack) > 0:
+                if node:
+                    stack.append(node)
+                    node = node.left
+                else:
+                    node = stack.pop()
+                    print(node.value)
+                    node = node.right
+
+            # DFS post-order - Stack-Loop traversal - .right to .left
+            stack = [], node = None
+
+            while node or len(stack) > 0:
+                if node:
+                    print(node.value)
+                    stack.append(node)
+                    node = node.right
+                else:
+                    node = stack.pop()
+                    node = node.left
+            
+
+            # Iterator Traversals
+
+            class Iterator:
+
+                def __init__(self, root):
+                    self.node = root
+                    self.stack = []
+                
+                def has_next(self): self.node or len(self.stack) > 0
+
+                def next(self):
+                    while self.has_next():
+                        if self.node:
+                            stack.append(self.node)
+                            self.node = self.node.left
+                        else:
+                            self.node = self.stack.pop()
+                            res = self.node.value
+                            self.node = self.node.right
+                            return res
+                    return sys.maxsize
+                
+                def test(self):
+                    it = Iterator()
+                    print(it.next())
+                    print(it.next())
+                    print(it.has_next())
+                    print(it.next())
+                    print(it.next())
+                    print(it.has_next())
+
 
         def diameter(self): pass
 
@@ -2788,7 +2899,7 @@ def lru_cache(): pass
 
 
 ########################################
-#  LeetCode
+#  LEETCODE
 ########################################
 
 
@@ -2902,7 +3013,7 @@ def getLengthOfOptimalCompression(self, s: str, k: int) -> int: # todo
 
 
 ########################################
-#  CodeSignal
+#  CODESIGNAL
 ########################################
 
 
