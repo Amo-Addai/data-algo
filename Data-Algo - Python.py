@@ -1500,6 +1500,94 @@ class DataStructures:
 
     # Binary (Search) Trees
 
+    class BTree(Tree): # only 2 (.left & .right) children
+        
+        def __init__(self, n=None):
+            super().__init__(n)
+        
+        def is_symmetric(self): # O(~ n) t (check may complete early) ; O(1) s
+            
+            # TODO: New concept - O(log n) s (for a balanced tre)e / O(n) s (due to recursive calls)
+            # since we can't tell if tree is "passive" or not
+
+            if self.root is None: return
+            root = self.root
+            if not (root.left and root.right):
+                return True # only self.root node
+            if not root.left \
+                or not root.right \
+                or root.left.value != root.right.value:
+                return False
+            
+            is_symmetric = True
+            
+            ''' # todo: Recursion-wise
+                Best to keep the base-case checks on the current args' state
+                then recurse to next state
+
+                instead of checking base-case on the next args' state (recursive call)
+            '''
+            def check(n1, n2):
+                ''' # todo: double & single - based checks
+                    Best to check double case 1st [(not) (x and y)]
+                    then check both single cases [(not) x or (not) y]
+                '''
+                if not (n1 and n2): return True
+                if not n1 \
+                    or not n2 \
+                    or n1.value != n2.value: 
+                    return False
+                
+                is_symmetric = True # won't have to reset is_symmetric to True, if it already was
+                # also won't have to return a boolean since "global" is_symmetric is the final return value
+                
+                # if construct pre-empting recursion before reaching base-case
+                if not check(n1.left, n2.right) \
+                    or not check(n1.right, n2.left):
+                    return False
+                
+                return True
+
+            is_symmetric = check(root.left, root.right)
+            
+            def check2(n1, n2):
+                if not (n1 and n2): 
+                    is_symmetric = True # won't have to reset is_symmetric to True, if it already was
+                    return
+                if not n1 \
+                    or not n2 \
+                    or n1.value != n2.value: 
+                    is_symmetric = False
+                    return
+                
+                is_symmetric = True # won't have to reset is_symmetric to True, if it already was
+                # no need for if-check pre-empt because above base-case checks are enough
+                
+                check2(n1.left, n2.right)
+                check2(n1.right, n2.left)
+
+            check2(root.left, root.right)
+
+            # todo: Alt / 3rd-Party (Tutorial) Logic
+            def check3(n1, n2):
+                if n1 is None and n2 is None:
+                    return True
+                if n1 is None or n2 is None:
+                    return False
+                
+                return (n1.value == n2.value) \
+                    and check3(n1.right, n2.left) \
+                    and check3(n1.left, n2.right)
+                
+            is_symmetric = check3(root, root)
+
+            return is_symmetric
+        
+        def maximum_depth(self, v):
+            if self.root is None: return None
+            pass
+            # 
+
     class BST(Tree): # .left.value <= .value <= .right.value (vice versa)
         
         def __init__(self, n=None):
