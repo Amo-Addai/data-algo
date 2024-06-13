@@ -4,13 +4,17 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Stack;
 import java.util.Queue;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.ArrayDeque;
 import java.util.function.Function;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 /*
  * // TODO: Change Filename from 'Data-Algo - Java.java' to 'DataAlgoJava.java' (to avoid all errors)
@@ -19,7 +23,9 @@ import java.util.function.BiFunction;
 
 /*
 
-Functional Interfaces (Function, Consumer, Predicate, BiFunction, BiConsumer, ... ), Lombok, 
+Functional Interfaces (all in-built & custom)
+eg. Function, Consumer, Predicate, BiFunction, BiConsumer, BiPredicate, Supplier, UnaryOperator, BinaryOperator,  ... 
+Lombok, 
 ..
 
 */
@@ -696,26 +702,24 @@ public class DataAlgoJava {
                     // or - Alt 3rd Party logic - works perfectly for Singly-linked-lists (because no need to work with previous node)
                     // using this logic below, change all DListNode calls to ListNode, so logic would work for both Singly (SListNode) & Doubly (DListNode) linked-lists
 
+                    /*
+                     * Error - variable next is already defined in instance initializer of class
+                     * Need to re-use variable 'next'
+                     */
+
                     // Nullify the reference to make the object eligible for garbage collection
                     next = null;
                     // Suggest the JVM to perform garbage collection
                     System.gc();
+
                     // Redeclare the variable with a different type in a new scope
-                    {
-                        /*
-
-                        * variable next is already defined in instance initializer of class DataStructures.LinkedList(compiler.err.already.defined.in.clinit)
-
-                        */
-
-                        // no need to call .getPrev() at all
+                    { // todo: test next line (some editors still call syntax error)
                         ListNode next = node.getNext();
                         ListNode nextNext = next.getNext();
                         node.setValue(next.getValue());
                         node.setNext(nextNext);
-                        ((DListNode) nextNext).setPrev(node);
                         // no need to call .setPrev(), if DListNode isn't forced
-                        
+                        ((DListNode) nextNext).setPrev(node);
                     }
 
                     return node;
@@ -893,25 +897,34 @@ public class DataAlgoJava {
 
                     // bfs
 
-                    Queue q = new Queue();
-                    q.push(root);
+                    java.util.Queue<Tree.TreeNode> q = new java.util.LinkedList<Tree.TreeNode>(); // not Queue(); 
+                    // Java Queue cannot be instantiated directly
+                    // can only be instantiated by classes that implement it as an interface
+                    // eg. LinkedList, PriorityQueue, ArrayDeque, customs, etc
+
+                    /*
+                     * Enqueue: Adding elements to the queue is done using add() or offer().
+                     * Dequeue: Removing elements from the queue is done using poll(), remove(), peek(), or element().
+                     */
+
+                    q.add(root); // not .enqueue() / .push();
                     
                     while (!q.isEmpty()) {
 
-                        node = (Tree.TreeNode) q.pop();
+                        node = (Tree.TreeNode) q.poll(); // not .dequeue() / .pop();
                         // no need to store node.value()s into ListNodes
                         // because root.value() has been stored
                         // only store node.left() & .right() .value()s
 
                         if (node.left() != null) {
                             lNode.setNext(new ListNode(node.left().value(), null));
-                            q.push(node.left());
+                            q.add(node.left());
                             lNode = lNode.getNext();
                         }
 
                         if (node.right() != null) {
                             lNode.setNext(new ListNode(node.right().value(), null));
-                            q.push(node.right());
+                            q.add(node.right());
                             lNode = lNode.getNext();
                         }
 
@@ -921,105 +934,105 @@ public class DataAlgoJava {
 
                     Consumer<Tree.TreeNode>[] dfs = new Consumer[1];
 
-                    dfs[0] = (node) -> {
-                        if (node == null) return;
-
-                        // no need to store node.value()s into ListNodes
+                    dfs[0] = (n) -> {
+                        if (n == null) return;
+                    
+                        // no need to store n.value()s into ListNodes
                         // because root.value() has been stored
-                        // only store node.left() & .right() .value()s
-
+                        // only store n.left() & .right() .value()s
+                    
                         // dfs - depth-traversing to left-side of B-Tree, adding .left of each node
                         // before depth-traversing to right-side of B-Tree, then adding .right of each node
                         // this works as pre-order - left only
-
-                        if (node.left() != null) {
-                            lNode.setNext(new ListNode(node.left().value(), null));
+                    
+                        if (n.left() != null) {
+                            lNode.setNext(new ListNode(n.left().value(), null));
                             lNode = lNode.getNext();
-                            dfs[0].apply(node.left());
+                            dfs[0].accept(n.left());
                         }
-
+                    
                         // * or, depth-traverse to right-side of B-Tree 1st
                         // this works as pre-order - right only
-
-                        if (node.right() != null) {
-                            lNode.setNext(new ListNode(node.right().value(), null));
+                    
+                        if (n.right() != null) {
+                            lNode.setNext(new ListNode(n.right().value(), null));
                             lNode = lNode.getNext();
-                            dfs[0].apply(node.right());
+                            dfs[0].accept(n.right());
                         }
-
+                    
                         // dfs - .left & .right of each node
                         // before depth-traversing to left-side of B-Tree, then to right-side
-
-                        if (node.left() != null) {
-                            lNode.setNext(new ListNode(node.left().value(), null));
+                    
+                        if (n.left() != null) {
+                            lNode.setNext(new ListNode(n.left().value(), null));
                             lNode = lNode.getNext();
                         }
-
-                        if (node.left() != null) {
-                            lNode.setNext(new ListNode(node.right().value(), null));
+                    
+                        if (n.left() != null) {
+                            lNode.setNext(new ListNode(n.right().value(), null));
                             lNode = lNode.getNext();
                         }
-
-                        if (node.left() != null)
-                            dfs[0].apply(node.left());
+                    
+                        if (n.left() != null)
+                            dfs[0].accept(n.left());
                         
-                        if (node.right() != null)
-                            dfs[0].apply(node.right());
+                        if (n.right() != null)
+                            dfs[0].accept(n.right());
                         
                     };
-
-                    dfs[0].apply(root);
-
+                    
+                    dfs[0].accept(root);
+                    
                     // dfs - best
-
-                    dfs[0] = (node) -> {
-                        if (node == null) return;
-
-                        // need to store only node.value()s into ListNodes
+                    
+                    dfs[0] = (n) -> {
+                        if (n == null) return;
+                    
+                        // need to store only n.value()s into ListNodes
                         // so root.value() will be re-stored
-                        // only recurse through node.left() & .right() nodes
-
+                        // only recurse through n.left() & .right() nodes
+                    
                         // dfs - depth-traversing pre/post/in - orders
                         // these can work as left->right / vice-versa
-
+                    
                         // pre-order
                         
-                        lNode.setValue(node.value());
+                        lNode.setValue(n.value());
                         lNode.setNext(new ListNode(null, null));
                         lNode = lNode.getNext();
-
-                        dfs[0].apply(node.left());
-                        dfs[0].apply(node.right());
-
+                    
+                        dfs[0].accept(n.left());
+                        dfs[0].accept(n.right());
+                    
                         // post-order
-
-                        dfs[0].apply(node.left());
-                        dfs[0].apply(node.right());
+                    
+                        dfs[0].accept(n.left());
+                        dfs[0].accept(n.right());
                         
-                        lNode.setValue(node.value());
+                        lNode.setValue(n.value());
                         lNode.setNext(new ListNode(null, null));
                         lNode = lNode.getNext();
-
+                    
                         // in-order
-
-                        dfs[0].apply(node.left());
+                    
+                        dfs[0].accept(n.left());
                         
-                        lNode.setValue(node.value());
+                        lNode.setValue(n.value());
                         lNode.setNext(new ListNode(null, null));
                         lNode = lNode.getNext();
-
-                        dfs[0].apply(node.right());
-
+                    
+                        dfs[0].accept(n.right());
+                    
                     };
-
-                    dfs[0].apply(root);
-
+                    
+                    dfs[0].accept(root);
+                    
                     // now return LinkedList / ListNode root
-
+                    
                     return new LinkedList(lRoot, lNode); // or lRoot
-
+                    
                 }
-
+                
                 public Tree.TreeNode flattenBinaryTreeToLinkedList2(Tree.TreeNode root) { // O(n) t ; O(1) s (done in-place; NO LinkedList with n nodes required)
                     
                 }
@@ -1409,13 +1422,13 @@ public class DataAlgoJava {
                         BiConsumer<TreeNode, Integer>[] helper = BiConsumer[1];
                         helper[0] = (r, k) -> {
                             if (r == null) return;
-                            helper[0].apply(r.left(), k);
+                            helper[0].accept(r.left(), k);
                             index++;
                             if (index == k) result = r.value();
-                            helper[0].apply(r.right(), k);
+                            helper[0].accept(r.right(), k);
                         };
 
-                        helper[0].apply(root, kth);
+                        helper[0].accept(root, kth);
                         return result;
 
                     }
@@ -1430,8 +1443,8 @@ public class DataAlgoJava {
                         BiConsumer<TreeNode, Map<TreeNode, Integer>>[] countNodes = new BiConsumer[1];
                         countNodes[0] = (r, c) -> {
                             if (r == null) return 0;
-                            int left = countNodes[0].apply(r.left(), c);
-                            int right = countNodes[0].apply(r.right(), c);
+                            int left = countNodes[0].accept(r.left(), c);
+                            int right = countNodes[0].accept(r.right(), c);
                             int count = left + right + 1;
                             c.put(r, count);
                             return count;
@@ -1448,7 +1461,7 @@ public class DataAlgoJava {
                         };
 
                         Map<TreeNode, Integer> children = new HashMap<>();
-                        countNodes[0].apply(root, children);
+                        countNodes[0].accept(root, children);
                         return quickSelect[0].onTree(root, kth, children);
 
                     }
@@ -1485,7 +1498,7 @@ public class DataAlgoJava {
                                     node = node.left();
                                 } else {
                                     node = stack.pop();
-                                    res.add(node.value());
+                                    res.add((Integer) node.value());
                                     node = node.right();
                                 }
                             }
@@ -1499,12 +1512,12 @@ public class DataAlgoJava {
                             BiConsumer<TreeNode, List<Integer>>[] helper = new BiConsumer[1];
                             helper[0] = (n, r) -> { // no need to pass List<Int> by reference
                                 if (n == null) return;
-                                if (n.left() != null) helper[0].apply(n.left(), r);
+                                if (n.left() != null) helper[0].accept(n.left(), r);
                                 r.add(n.value()); // can also work with res directly
-                                if (n.right() != null) helper[0].apply(n.right(), r);
+                                if (n.right() != null) helper[0].accept(n.right(), r);
                             };
 
-                            helper[0].apply(root, res);
+                            helper[0].accept(root, res);
                             return res;
                         }
                     
@@ -1543,11 +1556,11 @@ public class DataAlgoJava {
                             helper[0] = (r) -> {
                                 if (r == null) return;
                                 res.add(n.value()); // can work with res directly
-                                if (n.left() != null) helper[0].apply(n.left());
-                                if (n.right() != null) helper[0].apply(n.right());
+                                if (n.left() != null) helper[0].accept(n.left());
+                                if (n.right() != null) helper[0].accept(n.right());
                             };
 
-                            helper[0].apply(root);
+                            helper[0].accept(root);
                             return res;
                         }
 
@@ -1586,12 +1599,12 @@ public class DataAlgoJava {
                             BiConsumer<TreeNode, List<Integer>>[] helper = new BiConsumer[1];
                             helper[0] = (n, r) -> {
                                 if (n == null) return;
-                                helper[0].apply(n.left(), r);
-                                helper[0].apply(n.right(), r);
+                                helper[0].accept(n.left(), r);
+                                helper[0].accept(n.right(), r);
                                 r.add(n.value());
                             };
 
-                            helper[0].apply(root, res);
+                            helper[0].accept(root, res);
                             return res;
                         }
                         
