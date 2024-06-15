@@ -1191,7 +1191,7 @@ class DataStructures:
 
     class Tree(): # Acyclic Undirected Graph - a tree if connected, and a forest if not connected
             
-        class Node():
+        class TreeNode():
 
             def __init__(self, v=None, l=None, r=None, c=[], p=None):
                 self.value = v
@@ -1201,7 +1201,7 @@ class DataStructures:
                 self.children = c # for more than 2 children
                 self.depth = None # length of the path from the tree root-node to this node
         
-            def add_child(self, n: 'DataStructures.Tree.Node'): # * using a Forward Reference for the current class as an argument's data type
+            def add_child(self, n: 'DataStructures.Tree.TreeNode'): # * using a Forward Reference for the current class as an argument's data type
                 # using a string containing the class name as a type hint, when defining methods that take or return instances of the same class
                 
                 self.children.append(n)
@@ -1289,7 +1289,7 @@ class DataStructures:
 
         def bfs(self, root): #  # O(n) t ; O(1) s
             # * uses queue in while loop
-            if root is None or type(root) is not DataStructures.Tree.Node:
+            if root is None or type(root) is not DataStructures.Tree.TreeNode:
                 return
             
             '''
@@ -1329,7 +1329,7 @@ class DataStructures:
         
         def dfs(self, root): # O(n) t ; O(1) s
             # * uses recursion
-            if root is None or type(root) is not DataStructures.Tree.Node:
+            if root is None or type(root) is not DataStructures.Tree.TreeNode:
                 return
             
             '''
@@ -1489,10 +1489,10 @@ class DataStructures:
         # TODO: Test
 
         def tests(self):
-            root = DataStructures.Tree.Node(4)
-            root.left = DataStructures.Tree.Node(5)
-            root.right = DataStructures.Tree.Node(6)
-            root.left.left = DataStructures.Tree.Node(7)
+            root = DataStructures.Tree.TreeNode(4)
+            root.left = DataStructures.Tree.TreeNode(5)
+            root.right = DataStructures.Tree.TreeNode(6)
+            root.left.left = DataStructures.Tree.TreeNode(7)
             root.print()
             # 
             self.print_tree(root)
@@ -1583,11 +1583,198 @@ class DataStructures:
 
             return is_symmetric
         
-        def maximum_depth(self, v):
+        def maximum_depth_of_value(self, v): # O(n) t ; O(h) s (height of tree, due to recursive calls with new argument variables d)
             if self.root is None: return None
-            pass
-            # 
 
+            depth = 0 # 0 for root height, 1 for root's child's height
+            
+            # pass in depth, because it'll be incremented 1st on the root's child's recursive call
+            def dfs_depth_1(node, d): 
+                if node is None: return -1 # no depth (value v not found)
+                if node.value == v:
+                    # todo: Option 1 - if return value is required
+                    # return all recursive calls too
+                    return d # so incremented d's current value is returned to base/1st call
+                
+                    # todo: Option 2 - in case return value isn't required, 
+                    # NB: also can't update d-2-depth directly because (int) depth isn't passed by reference
+                    # depth = d # increment "global" depth var
+                    # return # then just return
+                
+                # todo: can't return both simult, so would have to check 1st recursive calls' value before 2nd
+                # unnecessary, so Option 2 - better
+                # * could return both together if boolean return values (with and/or conditions)
+                return dfs_depth_1(node.left, d + 1)
+                return dfs_depth_1(node.right, d + 1)
+
+            # in case return value isn't required, increment depth var inside recursive function
+            depth = dfs_depth_1(self.root, depth)
+
+            depth = 0
+
+            def dfs_depth_2(node, d):
+                if node is None: return
+                if node.value == v:
+                    depth = d
+                    return
+                dfs_depth_2(node.left, d + 1)
+                dfs_depth_2(node.right, d + 1)
+            
+            dfs_depth_2(self.root, depth)
+
+            return depth
+
+        def maximum_depth(self): # O(n) t ; O(1) s (no tree-height space, h required, due to recursive calls with new argument variables d)
+            # unlike the previous method .maximum_depth_of_value(...)
+
+            d = -1 # can start at -1, so root's depth is 0
+            if self.root is None: return d
+
+            # -1 is returned, if self.root is None
+            def dfs_depth(node):
+                if node is None: return
+                d = d + 1 # d is incremented directly here (so O(1) space - no recursive variable is created ; only node - object passed in by reference)
+                dfs_depth(node.left)
+                dfs_depth(node.right)
+
+            dfs_depth(self.root)
+            return d
+
+        # 3rd-Party (Tutorial) Logic - Self-method recursion
+        def maximum_depth(self, node):
+            if node is None: return 0
+            if node.left is None \
+                and node.right is None:
+                return 1
+            
+            left = self.maximum_depth(node.left)
+            right = self.maximum_depth(node.right)
+
+            return max(left, right) + 1 # + 1 for the current node
+
+        # Find if a root to any sub-node path exists where sum of path's node values equals target
+        def path_sum(self, target):
+            if self.root is None: return None
+
+            found = False
+
+            def dfs_path_sum(node, s):
+                if node is None: return None
+                s += node.value # increment s before check & recursive calls
+                if s == target:
+                    found = True
+                    return node
+                dfs_path_sum(node.left, s)
+                dfs_path_sum(node.right, s)
+                
+                return None
+
+            tail = dfs_path_sum(self.root, 0) # or return boolean found
+            return DataStructures.LinkedList(self.root, tail) if tail else None
+        
+        # 3rd-Party (Tutorial) Logic
+        # This time, root to any leaf-node
+        def path_to_leafsum(self, target): # O(n) t ; O(n) s (recursive calls with args' new memory)
+            if self.root is None: return None
+
+            def is_leaf(node):
+                return not (node.left and node.right)
+
+            def has_sum(node, t, s):
+                if node is None: return False
+                s += node.value
+                if s == t and is_leaf(node):
+                    return True
+                
+                return (
+                    has_sum(node.left, t, s) or \
+                    has_sum(node.right, t, s)
+                )
+            
+            return has_sum(self.root, target, 0)
+        
+        # TODO: Visualize logic before understanding
+        def lowest_common_ancestor(self, node1, node2): # O(n) t ; O(1) s (no extra vars created in recursion; only 2 target node vars)
+            if self.root is None: return None
+            
+            def lca(node, n1, n2):
+                if node is None: return None
+                if node.value == n1.value \
+                    or node.value == n2.value:
+                    return node
+
+                # Divide
+                left = lca(node.left, n1, n2)
+                right = lca(node.right, n1, n2)
+
+                # Conquer
+                if not (left and right): return None
+                if left and right: return node # lca - recursive returns eventually meet at lca node
+                return left if left else right
+                # todo: since valid left & right nodes keep getting returned, after 'Divide'
+                # their returns will eventually meet at the lca node
+                
+                ''' # TODO: Compare with main .java file LCA
+                // Conquer
+                if (left == null && right == null)
+                    return null;
+                if (left != null && right != null)
+                    return root;
+                if (left != null) return left;
+                if (right != null) return right;
+
+                return null;
+
+                3rd-Party pseudo
+                if !left -> return right
+                return left
+                '''
+            
+            return lca(self.root, node1, node2)
+
+        def kth_smallest_elem(self, kth): # O(n^2) t ; O(log n) s (in a balanced tree) / O(n) s (due to recursion)
+            if self.root is None: return None
+
+            def kth_smallest(node, k):
+                # if node is None: return None
+                count_nodes = lambda n: 0 if n is None else \
+                    1 + count_nodes(n.left) + count_nodes(n.right)
+
+                count = count_nodes(node.left)
+                if count + 1 == k: return node
+                elif count + 1 > k:
+                    return kth_smallest(node.left, k)
+                elif count + 1 < k: 
+                    return kth_smallest(node.right, k - 1 - count)
+                
+                return -1
+
+            return kth_smallest(self.root, kth)
+        
+        def serialize(self): # O(n) t ; O(n) s (recursion)
+            if self.root is None: return 'X#'
+
+            def serialize(node):
+                if node is None: return 'X#'
+                left = serialize(node.left)
+                right = serialize(node.right)
+                return str(node.value) + '#' + left + right
+                
+            return serialize(self.root)
+
+        def deserialize(self, data): # O(n) t ; O(n) s (recursion)
+            
+            def deserialize():
+                value = next(data)
+                if value == 'X': return None
+                node = DataStructures.Tree.TreeNode(int(value))
+                node.left = deserialize()
+                node.right = deserialize()
+                return node
+            
+            data = iter(data.split('#'))
+            return deserialize()
+        
     class BST(Tree): # .left.value <= .value <= .right.value (vice versa)
         
         def __init__(self, n=None):
@@ -1621,7 +1808,7 @@ class DataStructures:
             )
         
         def insert(self, v):
-            node = DataStructures.BST.Node(v)
+            node = DataStructures.BST.TreeNode(v)
             if not self.root: # if no root, insert node as root
                 self.root = node
                 return
@@ -1696,7 +1883,7 @@ class DataStructures:
     # todo: Test next set of Alt (3rd-Party - Tutorials) Logic Samples
 
     
-    def find(self, root: 'DataStructures.BST.Node', v):
+    def find(self, root: 'DataStructures.BST.TreeNode', v):
         if root is None: return None
         node = root
         if node.value == v: return node
@@ -1704,7 +1891,7 @@ class DataStructures:
             return self.find(node.right, v)
         return self.find(node.left, v)
 
-    def insert(self, root: 'DataStructures.BST.Node', node: 'DataStructures.BST.Node'):
+    def insert(self, root: 'DataStructures.BST.TreeNode', node: 'DataStructures.BST.TreeNode'):
         if root is None:
             root = node
             return
@@ -1715,7 +1902,7 @@ class DataStructures:
             if root.left is None: root.left = node
             else: self.insert(root.left, node)
     
-    def remove(self, root: 'DataStructures.BST.Node', v):
+    def remove(self, root: 'DataStructures.BST.TreeNode', v):
         if root is None: return root
         node = root
 
@@ -1744,10 +1931,10 @@ class DataStructures:
         return node
     
     def tests(self):
-        tree = DataStructures.BST.Node(5)
-        self.insert(tree, DataStructures.BST.Node(4))
-        self.insert(tree, DataStructures.BST.Node(3))
-        self.insert(tree, DataStructures.BST.Node(2))
+        tree = DataStructures.BST.TreeNode(5)
+        self.insert(tree, DataStructures.BST.TreeNode(4))
+        self.insert(tree, DataStructures.BST.TreeNode(3))
+        self.insert(tree, DataStructures.BST.TreeNode(2))
         node = self.find(tree, 3)
         self.remove(tree, node)
         tree.print()

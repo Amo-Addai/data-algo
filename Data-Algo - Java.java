@@ -1301,10 +1301,14 @@ public class DataAlgoJava {
                         TreeNode right = lowestCommonAncestor(root.right(), n1, n2);
 
                         // Conquer
+                        if (left == null && right == null)
+                            return null;
                         if (left != null && right != null)
-                            return root;
+                            return root; // lca - recursive returns eventually meet at lca node
                         if (left != null) return left;
                         if (right != null) return right;
+                        // todo: since valid left & right nodes keep getting returned, after 'Divide'
+                        // their returns will eventually meet at the lca node
 
                         return null;
 
