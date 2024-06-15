@@ -1228,6 +1228,7 @@ class DataStructures:
         def __init__(self, n):
             self.root = n
             self.height = 1 # length of the longest path from the root to a leaf node
+            # todo: depth - height (less the 1st root node) from root node to any given node
         
         def set_root(self, n):
             n.left = self.root.left
@@ -1774,6 +1775,35 @@ class DataStructures:
             
             data = iter(data.split('#'))
             return deserialize()
+        
+        def maximum_path_sum(self):
+            if self.root is None: return None
+
+            ans = float('inf')
+
+            def max_path_sum(node):
+                if node is None: return 0
+
+                left = max_path_sum(node.left)
+                right = max_path_sum(node.right)
+
+                max_side = max(
+                    node.value,
+                    max(
+                        left, right
+                    ) + node.value
+                )
+                max_top = max(
+                    max_side,
+                    left + right + node.value
+                )
+                
+                ans = max(ans, max_top)
+                return max_side
+
+            max_path_sum(self.root)
+            # ans is updated within recursive function
+            return ans
         
     class BST(Tree): # .left.value <= .value <= .right.value (vice versa)
         
