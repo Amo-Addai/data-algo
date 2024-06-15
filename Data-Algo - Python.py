@@ -1776,6 +1776,7 @@ class DataStructures:
             data = iter(data.split('#'))
             return deserialize()
         
+        # TODO: Visualize logic before understanding
         def maximum_path_sum(self):
             if self.root is None: return None
 
@@ -1789,15 +1790,13 @@ class DataStructures:
 
                 max_side = max(
                     node.value,
-                    max(
-                        left, right
-                    ) + node.value
+                    node.value + max(left, right)
                 )
                 max_top = max(
                     max_side,
-                    left + right + node.value
+                    node.value + left + right
                 )
-                
+
                 ans = max(ans, max_top)
                 return max_side
 
