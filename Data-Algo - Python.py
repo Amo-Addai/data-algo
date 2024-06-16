@@ -1328,6 +1328,20 @@ class DataStructures:
                 elif res == 'r': self.cfs(root.right, cb)
                 else: return res # or root / root.value
         
+        def dfs(self, root, order='pre-order'):
+            if root is None: return
+
+            if order == 'pre-order': print(root.value)
+            self.dfs(root.left)
+            if order == 'in-order': print(root.value)
+            self.dfs(root.right)
+            if order == 'post-order': print(root.value)
+
+            ''' # in this case, consider ways of working with root.value around/within loop
+            for child in root.children:
+                self.dfs(child)
+            ''' # TODO: Also check different dfs scenarios in override below 
+        
         def dfs(self, root): # O(n) t ; O(1) s
             # * uses recursion
             if root is None or type(root) is not DataStructures.Tree.TreeNode:
@@ -1445,36 +1459,36 @@ class DataStructures:
                     node = node.left
             
 
-            # Iterator Traversals
+        # Iterator Traversals
 
-            class Iterator:
+        class Iterator:
 
-                def __init__(self, root):
-                    self.node = root
-                    self.stack = []
-                
-                def has_next(self): self.node or len(self.stack) > 0
+            def __init__(self, root):
+                self.node = root
+                self.stack = []
+            
+            def has_next(self): self.node or len(self.stack) > 0
 
-                def next(self):
-                    while self.has_next():
-                        if self.node:
-                            stack.append(self.node)
-                            self.node = self.node.left
-                        else:
-                            self.node = self.stack.pop()
-                            res = self.node.value
-                            self.node = self.node.right
-                            return res
-                    return sys.maxsize
-                
-                def test(self):
-                    it = Iterator()
-                    print(it.next())
-                    print(it.next())
-                    print(it.has_next())
-                    print(it.next())
-                    print(it.next())
-                    print(it.has_next())
+            def next(self):
+                while self.has_next():
+                    if self.node:
+                        stack.append(self.node)
+                        self.node = self.node.left
+                    else:
+                        self.node = self.stack.pop()
+                        res = self.node.value
+                        self.node = self.node.right
+                        return res
+                return sys.maxsize
+            
+            def test(self):
+                it = Iterator()
+                print(it.next())
+                print(it.next())
+                print(it.has_next())
+                print(it.next())
+                print(it.next())
+                print(it.has_next())
 
 
         def diameter(self): pass
@@ -1853,13 +1867,27 @@ class DataStructures:
                     node.parent = root # set parent before or after add leaf-node
                     if v < root.value: root.left = node
                     else: root.right = node # v == root.value - already checked
+                    
+                    print(f"Done with inserting Node({v})")
                     return self.root # not the newly added node
+                
                 else: # check traverse left/right
                     if root.value < v: return 'l'
                     else: return 'r' # root.value == v - already checked
                     
             return self.cfs(self.root, cb=cb)
         
+        # 3rd-Party (Tutorial) Logic
+        def insert(self, v):
+            if v == self.value:
+                print(f"Node({v}) already exists")
+            elif v < self.value:
+                if self.left: self.left.insert(v)
+                else: self.left = DataStructures.BST.TreeNode(v)
+            else: # v > self.value:
+                if self.right: self.right.insert(v)
+                else: self.right = DataStructures.BST.TreeNode(v)
+
         def remove(self, v):
             if not self.root: return None
             node = None

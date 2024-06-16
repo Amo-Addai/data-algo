@@ -362,7 +362,7 @@ function wordSearch(mat) { // O(nm) t | O(1) s
 
 // Linked Lists
 
-function Node(value, next, prev) {
+function ListNode(value, next, prev) {
     this.value = value
     this.next = next
     this.prev = prev
@@ -374,14 +374,14 @@ var LinkedList = function() {
 }
 
 LinkedList.prototype.addToHead = function(value) { // O(1) t ; 
-    var node = new Node(value, this.head, null)
+    var node = new ListNode(value, this.head, null)
     if (this.head) this.head.prev = node
     else this.tail = node // if no head, ll was empty
     this.head = node
 }
 
 LinkedList.prototype.addToTail = function(value) { // O(1) t ; 
-    var node = new Node(value, null, this.tail)
+    var node = new ListNode(value, null, this.tail)
     if (this.tail) this.tail.next = node
     else if (this.head) this.head.next = node // if no tail & head, 
     else this.head = node // if no head either, ll was empty
@@ -464,7 +464,7 @@ function removeNthFromEnd(ll, n) { // O(nl / n) t (nl = ll node num) ; O(1) s
 // Leetcode #21
 function merge2SortedLinkedLists(l1, l2) { // O(n1 + n2) t ; O(1) s
     let l1Node = l1.head, l2Node = l2.head
-    let dummyHead = Node(0, null, null)
+    let dummyHead = new ListNode(0, null, null)
     let ll = LinkedList(); ll.addToHead(dummyHead.value)
     // todo: test Option 1: ensure this adds longer ll's remaining nodes' values
     while (l1Node.next || l2Node.next) {
@@ -667,7 +667,8 @@ var LL = {
 
 class LL {
 
-    static Node = class {
+    // todo: remove 'static' if proves non-feasible when testing
+    static ListNode = class {
 
         constructor(v, n = null) {
             this.value = v
@@ -676,7 +677,7 @@ class LL {
         
     }
 
-    static SNode = class extends Node {
+    static SListNode = class extends ListNode {
 
         constructor(v, n = null) {
             super(v, n)
@@ -684,7 +685,7 @@ class LL {
 
     }
 
-    static DNode = class extends Node {
+    static DListNode = class extends ListNode {
 
         constructor(v, n = null, p = null) {
             super(v, n)
@@ -696,7 +697,7 @@ class LL {
     constructor(v) {
         this.head = {
             value: v, next: null, prev: null
-        } // todo: or new Node(v) / DNode(v)
+        } // todo: or new ListNode(v) / DListNode(v)
         this.tail = this.head
         this.length = 1
     }
@@ -909,6 +910,59 @@ stack.peek()
 
 // Trees
 
+class Tree {
+
+    static TreeNode = class {
+
+        constructor(value=null, left=null, right=null, children=[], parent=null) {
+            this.value = value
+            this.left = left
+            this.right = right
+            this.children = children // only for 3+ N-ary Trees
+            this.parent = parent // only for doubly-linked tree-nodes (implement STreeNode & DTreeNode)
+        }
+
+        dfs() { // Self-DFS, so check child nodes before using them
+            // pre-order
+            console.log(this.value)
+            if (!!this.left) this.left.dfs()
+            if (!!this.right) this.right.dfs()
+            // in-order
+            if (!!this.left) this.left.dfs()
+            console.log(this.value)
+            if (!!this.right) this.right.dfs()
+            // post-order
+            if (!!this.left) this.left.dfs()
+            if (!!this.right) this.right.dfs()
+            console.log(this.value)
+        }
+
+        bfs() { // Self-BFS // todo: test out working with an inner queue (inside the recursion)
+            console.log(this.value)
+            let queue = [this.left, this.right]
+            // wrong logic - push 'this' node as starting node
+            // then continue with Tree iteration (not recursion) logic
+        }
+
+        bfs() { // Self-BFS - correct logic
+            let queue = [this], node = null
+            while (queue.length) { // same as (queue.length > 0)
+                node = queue.shift() // pop out 1st FIFO node
+                console.log(node.value)
+                if (node.left) queue.push(node.left)
+                if (node.right) queue.push(node.right)
+            }
+        }
+
+    }
+
+    constructor(root=null, tail=null) {
+        this.root = root
+        this.tail = tail
+    }
+
+}
+
 function isSameTree(t1, t2) { // O(n1 + n2 ~ n) t (n - if trees are same); O(1) s
 
     // traverse both trees simultaneously (with b/c/d-fs) and compare current node values at each iteration
@@ -972,6 +1026,259 @@ function isSameTree(t1, t2) { // O(n1 + n2 ~ n) t (n - if trees are same); O(1) 
 
 // Binary (Search) Trees
 
+class BTree extends Tree {
+
+    constructor() {
+        // TODO:
+    }
+
+    // Next 2 methods' logic work best for Binary Trees (NOT Binary SEARCH Trees)
+
+    getMinValue() {
+        if (!this.root) return null
+        let min = Number.MAX_VALUE
+
+        let cb = (n) => {
+            if (n.value < min) min = n.value
+        }
+
+        this.dfs(this.root, cb)
+
+        return min
+    }
+
+    getMaxValue() {
+        if (!this.root) return null
+        let max = 0
+
+        let cb = (n) => {
+            if (n.value > max) max = n.value
+        }
+
+        this.dfs(this.root, cb)
+
+        return max
+    }
+
+}
+
+class BST extends Tree {
+
+    constructor(head=null, tail=null) {
+        super(head, tail)
+    }
+
+    createNode(value=null, left=null, right=null) {
+        return new Tree.TreeNode(value, left, right)
+    }
+
+    print() {
+        console.log(this)
+    }
+
+    insert(v) {
+        const node = new Tree.TreeNode(v)
+        if (!this.root) {
+            this.root = this.tail = node
+            return this
+        }
+
+        // Code (Value) - 1st Search // todo: Compare with .py (with callback)
+        const cfs = (n) => {
+            if (!n) return null
+
+            if (n.value === v) {
+                console.log(`Node(${v}) already exists`)
+                return n
+            } else if (!n.left && !n.right) { // leaf node
+                if (n.value < v) {
+                    node.parent = n
+                    n.right = node
+
+                    console.log(`Done with inserting Node(${v})`)
+                    return this.root // return tree root node after insertion
+                } else {
+                    node.parent = n
+                    n.left = node
+
+                    console.log(`Done with inserting Node({v})`)
+                    return this.root // return tree root node after insertion
+                } // n.value == v already checked
+            } else { // not leaf node, so recurse // todo: implement iteration version of cfs()
+                if (n.value < v) return cfs(n.right)
+                else return cfs(n.left)
+                // n.value == v already checked
+            }
+
+        }
+
+        return cfs(this.root) // can also insert node with callback (decouple cfs traversal from insertion - function's name)
+        // todo: Compare with .py (with callback - for decoupled insertion logic)
+    }
+
+    contains(v) {
+        if (!this.root) return false
+        let contains = false
+
+        // use inner variable function here, or a outer .dfs(cb) method with a callback
+        const dfs = (n) => {
+            if (!n) return
+
+            if (n.value == v) {
+                contains = true
+                return
+            }
+            dfs(n.left)
+            dfs(n.right)
+        }
+
+        dfs(this.root)
+        return contains
+    }
+
+    dfs() {
+        return this.dfs(this.root)
+    }
+
+    dfs(n, cb=null) { // use as a helper method to dfs() override
+        // cannot access this.root via named param value (dfs(n=this.root))
+        // todo: try that option if/when .js feature is out
+        if (!n) return
+
+        // pre-order (check .py for others)
+        if (!!cb) cb(n)
+        else console.log(n.value)
+        this.dfs(n.left, cb)
+        this.dfs(n.right, cb)
+    }
+
+    bfs() { // todo: goto class TreeNode .bfs (Self-BFS)
+        // push this Tree's root node first
+        let q = [this.root], n = null
+        while (q.length) {
+            n = q.shift()
+            console.log(n.value)
+            if (n.left) q.push(n.left)
+            if (n.right) q.push(n.right)
+        }
+    }
+
+    // TODO: No need to check for min/max values with dfs (like in Binary Trees)
+    getMinValue() {
+        if (!this.root) return null
+        if (this.left) return this.left.getMinValue()
+        else return this.value
+    }
+    // For Binary SEARCH Trees, just depth-first straight to the left (for min) or right (max)
+    getMaxValue() {
+        if (!this.root) return null
+        if (this.right) return this.right.getMaxValue()
+        else return this.value
+    }
+
+}
+
+BST.prototype.anotherMethod = () => {} // also possible with class BST {} syntax
+
+
+function BST2(v) { // this time, BST2 class is a TreeNode itself
+    this.value = v
+    this.left = null
+    this.right = null
+}
+
+BST2.prototype.print = () => console.log(this)
+
+// todo: 3rd-Party (Tutorial) Logic
+
+BST2.prototype.insert = (v) => {
+    if (v === this.value)
+        console.log(`Node(${v}) already exists`)
+    else if (v < this.value) {
+        if (!this.left) this.left = new BST(v)
+        else this.left.insert(v)
+    } else { // v > this.value
+        if (!this.right) this.right = new BST(v)
+        else this.right.insert(v)
+    }
+}
+
+BST2.prototype.contains = (v) => {
+    if (v === this.value) return true
+    else if (v < this.value) {
+        if (!this.left) return false
+        else return this.left.contains(v)
+    } else {
+        if (!this.right) return false
+        else return this.right.contains(v)
+    }
+}
+
+BST2.prototype.dfs = () => {
+    if (this.left) this.left.dfs()
+    console.log(this.value) // in-order
+    if (this.right) this.right.dfs()
+}
+
+BST2.prototype.dfs = (order) => {
+
+    if (order === 'pre-order')
+        console.log(this.value)
+
+    if (this.left) this.left.dfs(order)
+
+    if (order === 'in-order')
+        console.log(this.value)
+
+    if (this.right) this.right.dfs(order)
+
+    if (order === 'post-order')
+        console.log(this.value)
+
+    // split-up if-checks (instead of singular switch) is fine
+    // order will never be 2 different enums at the same time
+}
+
+BST2.prototype.bfs = () => {
+    let queue = [this], node = null
+    while (queue.length) { // same as (queue.length > 0)
+        node = queue.shift() // pop out 1st FIFO node
+        console.log(node.value)
+        if (node.left) queue.push(node.left)
+        if (node.right) queue.push(node.right)
+    }
+}
+
+BST2.prototype.getMinValue = () => {
+    if (this.left) return this.left.getMinVal()
+    else return this.value
+}
+
+BST2.prototype.getMaxValue = () => {
+    if (this.right) return this.right.getMaxVal()
+    else return this.value
+}
+
+// todo: End of 3rd-Party (Tutorial) Logic
+
+/* // TODO: Test
+
+var bst = new BST2(10) // or BST(10)
+
+bst.insert(20)
+bst.insert(30)
+bst.print()
+bst.contains(20)
+
+bst.dfs()
+bst.dfs('in-order')
+bst.bfs()
+
+bst.getMinValue()
+bst.getMaxValue()
+
+*/
+
 function isValidBST(tree) { // O(n) t ; O(1) s
 
     // traverse tree while current node is always max to left-side and min to right-side
@@ -1033,7 +1340,7 @@ function levelOrder(tree) { // O(n) t ; O(1) s
     let order = [arr]
 
     // bfs traversal with queue in while loop
-    while (queue.length > 0) {
+    while (queue.length > 0) { // (queue.length) - enough for this specific bool check (Boolean(queue.length) is false)
         // node = queue.pop(0) // todo: .pop(takes no arguments) - .pop() always removes last item
         node = queue.shift()
         arr.push(node.value)
@@ -1247,7 +1554,11 @@ class Recursion {
 
     factorial(num) { // O(n) t [not O(n!)]
         if (num === 1) return num
-        else return num * factorial(num - 1);
+        else return num * factorial(num - 1)
+    }
+
+    fibonacci(num) {
+
     }
 
 }
@@ -1505,27 +1816,13 @@ function removeDuplicates(l) { // doubly-linked
 }
 
 function kthToLast(l, k) {
-    
+    // TODO:
 }
 
 
 // Trees
 
-
 // Graphs
-
-
-
-
-
-////////////////////////////////////////
-//  Cracking Coding Interview Qs
-////////////////////////////////////////
-
-
-// Arrays & Strings
-
-// ...
 
 
 
