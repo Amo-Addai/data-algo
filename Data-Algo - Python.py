@@ -1319,7 +1319,7 @@ class DataStructures:
                 for child in node.children[::-1]:
                     queue.append(child)
         
-        def cfs(self, root=None, cb=None): # O(log n) t : O(1) s
+        def cfs(self, root=None, cb=None): # O(log n) t (binary-search through tree) ; O(1) s
             if root is None or cb is None: return None
 
             while root is not None and root.value is not None:
