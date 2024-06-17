@@ -91,6 +91,8 @@ class DataStructures
 
     // Sets & Sequences
 
+    // WeakMaps & WeakSets
+
     // HashMaps & HashTables
 
     // Matrices

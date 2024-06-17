@@ -82,6 +82,8 @@ class TSearching {
 
 // Sets & Sequences
 
+// WeakMaps & WeakSets
+
 // HashMaps & HashTables
 
 // Matrices

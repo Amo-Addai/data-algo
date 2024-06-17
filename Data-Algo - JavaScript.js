@@ -176,6 +176,43 @@ var Searching = function() {
 
 // Sets & Sequences
 
+// WeakMaps & WeakSets
+
+class Weak_DStructs {
+
+    // TODO: Create & Implement Map & Set Data Structures
+
+    constructor () {}
+
+    playground () {
+
+        // Maps
+
+        let m = new Map()
+        m.set('key', 'value')
+        m.set('key 2', 'value')
+        // keys are ordered; insertion & retrieval always in same order
+        m.set(true, 1)
+        console.log(m.size)
+        console.log(m)
+        console.log(m.has('key'))
+        m['key'] = 'new value'
+        m.set(1, true).set(false, 0)
+        m.delete('key 2')
+        console.log(m)
+        // m - .entries() .keys() .values() .forEach((value, key, map) => {})
+        let obj = Object.fromEntries(m.entries()) // convert map to js obj
+        let m2 = new Map(Object.entries(obj)) // convert back
+        m.clear()
+
+        // Sets
+
+        // ..
+
+    }
+
+}
+
 // HashMaps & HashTables
 
 class HashTable {

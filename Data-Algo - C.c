@@ -79,6 +79,8 @@ int binarySearch(int a[], int x) {
 
 // Sets & Sequences
 
+// WeakMaps & WeakSets
+
 // HashMaps & HashTables
 
 // Matrices
