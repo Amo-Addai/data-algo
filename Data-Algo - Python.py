@@ -920,8 +920,10 @@ class DataStructures:
         
         def removeNthFromEnd(self, head: ListNode, i: int) -> ListNode:
             ans = ListNode(0)
-            node = next = ans
-            ans.next = head
+            node = next = ans # todo: node & next would be set by reference on abstract objects (and primitive arrays, dicts, etc), but not the most basic primitive literals (like int 0)
+            # updating next obj would also update node the same way (ans is an obj of abstract class ListNode)
+            ans.next = head # like this, would update both node & next, being already assigned ans by reference
+            # unless node / next var is assigned an entirely new value, they would both point to ans's value in memory
             for i in range(1, i + 1):
                 node = node.next
             while node is not None:
@@ -1082,7 +1084,8 @@ class DataStructures:
         # with n > base 10's extra digit carried over as a multiple of 10 (10, 100, 1000, ...) to the next 
 
         l1, l2, ls = l1.head, l2.head, ListNode()
-        s = c = 0; ll = DataStructures.LinkedList(h=ls)
+        s = c = 0 # todo: s & c would be set by reference on abstract objects (and primitive arrays, dicts, etc), but not the most basic primitive literals (like int 0)
+        ll = DataStructures.LinkedList(h=ls)
         while l1 or l2:
             s = int(l1.value if l1 and l1.value else 0) + \
                 int(l2.value if l2 and l2.value else 0) + c
@@ -1162,7 +1165,7 @@ class DataStructures:
     def add2Nums(self, l1, l2): 
         ans = DataStructures.LinkedList.ListNode()
         node = ans
-        s = c = 0
+        s = c = 0 # todo: s & c would be set by reference on abstract objects (and primitive arrays, dicts, etc), but not the most basic primitive literals (like int 0)
         while l1 or l2:
             s = c
             if l1:
@@ -1263,8 +1266,9 @@ class DataStructures:
 
             return stack.len() == 0 # is_valid if all items in stack have been popped out
         
+        # DFS - Pre/In/Post-Order Traversals (with Stack-Iteration, without recursion)
         def binary_tree_dfs(self, tree: 'DataStructures.Tree'): 
-            # Stack-Iteration Traversal (without recursion)
+            if tree.root is None: return
             
             stack = DataStructures.Stacks.Stack()
             node = tree.root
@@ -1307,6 +1311,43 @@ class DataStructures:
                 # todo: decide when to work with node.value during loop 
                 # (for pre/in/post - orders)
                 '''
+        
+        # todo: Alt 3rd-Party (Tutorial) Logic
+        def binary_tree_bfs(self, root: 'DataStructures.Tree.TreeNode'): # O(n) t ; O(1~n) s (explanation of 1~n s in Tree Class's DFS - Stack Iteration algo)
+            
+            # BFS - Post-Order Traversal - Stack-Iteration method (without 'Queues', not 'recursion' like with DFS)
+            
+            ''' # By "BFS Post-Order Traversal" .. 
+            # assume question is asking for "BFS Right-to-Left Level-Order Traversal"
+            # and not "DFS Post-Order Traversal", because of the "Post-Order" term
+
+            While popping out & working with Stack 1's current iteration node,
+            Push it to Stack 2, and its children to Stack 1, for next iterations
+
+            After Stack 1's loop, pop out all nodes from Stack 2
+            LIFO pop from Stack 2 logic is for Post-Order Traversal
+            ''' # TODO: Implement Left to Right BFS Level-Order Traversal with 2 Stacks (if the 2nd Stack is required)
+            # TODO: If Possible, Ponder on Pre & In - Order Traversals, but with BFS (not DFS) this time
+
+            ans = []
+            if not root: return ans
+
+            s1, s2 = [], []
+            s1.append(root)
+
+            while s1:
+                n1 = s1[-1]
+                s1.pop()
+                s2.append(n1)
+                if n1.left: s1.append(n1.left)
+                if n1.right: s2.append(n1.right)
+            
+            while s2:
+                n2 = s2[-1]
+                s2.pop()
+                ans.append(n2.value)
+            
+            return ans
 
 
     # Queues
@@ -1317,6 +1358,9 @@ class DataStructures:
 
             def __init__(self):
                 self.queue = [] # or deque()
+            
+            def queue(self):
+                return self.queue
             
             def enqueue(self, v):
                 self.queue.append(v) # deque - .append(v)
@@ -1340,8 +1384,9 @@ class DataStructures:
         
         # Other Methods
 
+        # BFS - Level-Order Traversal (with Queue-Iteration)
         def binary_tree_bfs(self, tree: 'DataStructures.Tree'): 
-            # Queue-Iteration
+            if tree.root is None: return
             
             queue = DataStructures.Queues.Queue()
             queue.enqueue(tree.root)
@@ -1367,6 +1412,113 @@ class DataStructures:
                 for c in node.children[::-1]:
                     queue.enqueue(c)
                 '''
+        
+        # todo: Alt 3rd-Party (Tutorial) Logic
+        def binary_tree_bfs(self, root: 'DataStructures.Tree.TreeNode') -> List[List[int]]:
+            ans = []
+            if root is None: return ans
+
+            q = deque([root])
+
+            while q:
+                tmp = []
+
+                # todo: this time, first work with all current-level items in queue
+                for i in range(0, len(q)):
+                    node = q.popleft()
+
+                    # work with n.value, before / after appending children
+                    tmp.append(node.value) # in this case, add to tmp array, to be added in bulk to ans array after this loop
+
+                    if node.left: q.append(node.left)
+                    if node.right: q.append(node.right)
+                    # enqueue all the next level items, while working with this current level
+
+                if len(tmp) > 0:
+                    ans.append(tmp[:]) # append the tmp (current tree level / height) array of current level's items
+                    tmp.clear()
+            
+            return ans
+        
+        # BFS - ZigZag Level-Order Traversal (with Queue-Iteration)
+        # left to right in 1 layer, then right to left in next layer
+        def binary_tree_zigzag_bfs(self, tree: 'DataStructures.Tree'): 
+            
+            # enqueue left to right, then right to left
+            # or enqueue in 1 direction, then dequeue first item, then last item
+
+            if tree.root is None: return None
+
+            ans, reverse = [], False
+            queue = DataStructures.Queues.Queue()
+            queue.enqueue(tree.root)
+
+            while queue.len() > 0:
+                tmp = []
+                
+                # todo: this time, firstly working with all current-level items in queue, makes zig-zag traversal easier
+                # reverse direction after each level's iteration
+
+                for i in range(0, queue.len()):
+                    node = queue.dequeue() # remove 1st fifo item
+                    tmp.append(node.value)
+
+                    ''' # longer checks required, to check if .left / .right exists, before enqueueing
+                    queue.enqueue(node.left if not reverse else node.right)
+                    queue.enqueue(node.right if not reverse else node.left)
+                    '''
+
+                    if reverse:
+                        if node.left: queue.enqueue(node.left)
+                        if node.right: queue.enqueue(node.right)
+                    else: # this time, enqueue from right to left
+                        if node.right: queue.enqueue(node.right)
+                        if node.left: queue.enqueue(node.left)
+                    
+                    # todo: or, enqueue in 1 direction, but dequeue from (fifo) start / (lifo) end, based on reverse bool
+                    # wouldn't be exact zig-zag; in reverse-order lifo dequeues with left->right enqueues would have many mini-zags (with 1 zig in non-reverse order - vice versa)
+                
+                if len(tmp) > 0:
+                    ans.append(tmp[:])
+                    tmp.clear()
+                    reverse = not reverse
+            
+            return ans
+        
+        # todo: Alt 3rd-Party (Tutorial) Logic
+        def binary_tree_zigzag_bfs(self, root: 'DataStructures.Tree.TreeNode') -> List[List[int]]: 
+            ans = []
+            if not root: return ans
+
+            zigzag = False
+            q = deque()
+            q.append(root)
+
+            while q:
+                tmp = []
+                for _ in range(len(q)):
+
+                    '''
+                    in this case, in non-reverse order, fifo pop, enqueue to end, from left to right
+                    in reverse order, lifo pop, enqueue to start, from right to left
+                    '''
+
+                    if zigzag:
+                        node = q.pop()
+                        tmp.append(node.value)
+                        if node.right: q.appendleft(node.right)
+                        if node.left: q.appendleft(node.left)
+                    else:
+                        node = q.popleft()
+                        tmp.append(node.value)
+                        if node.left: q.append(node.left)
+                        if node.right: q.append(node.right)
+                
+                if len(tmp) > 0:
+                    ans.append(tmp)
+                    zigzag = not zigzag
+            
+            return ans
 
 
     # Heaps (max & min)
@@ -1476,8 +1628,18 @@ class DataStructures:
         ''' 
 
 
-        def bfs(self, root): #  # O(n) t ; O(1) s
-            # * uses queue in while loop
+        # BFS / Level-Order Traversal
+        def bfs(self, root): #  # O(n) t ; O(1 ~ n) s
+
+            '''
+            O(n) s argument due to Queue usage
+            but O(1) t to both enqueue & dequeue, so queue's length is increased & decreased constantly
+            if Binary Tree, queue's enqueued 2x, dequeued once, making O(n/2) s ~ O(n) s (removing constant term 1/2)
+            if N-ary Tree, queue's enqueued n-ary times (avg number of children per node), dequeued once, making (n / n-ary) s ~ O(n) s
+            but by algo's end, queue is emptied, making O(1) s
+            # todo: keep researching on this argument
+            '''
+
             if root is None or type(root) is not DataStructures.Tree.TreeNode:
                 return
             
@@ -1485,10 +1647,11 @@ class DataStructures:
             BFS always traverses horizontally (whether from left/right first), layer by layer
             '''
 
-            # BFS - Queue - Iteration traversal
+            # BFS  - Queue - Iteration
+            # * uses queue in while loop
 
             queue = deque() # DoubleQueue ('Deque')
-            queue.append(root)
+            queue.append(root) # or = deque([root])
 
             while queue: # No pre/post/in - order in BFS
 
@@ -1610,7 +1773,17 @@ class DataStructures:
             # could do away with List by just printing out node.value()s
 
 
-            # DFS pre-order - Stack - Iteration traversal
+            # DFS pre-order - Stack - Iteration - O(1 ~ n) s
+
+            '''
+            O(n) s argument due to Stack usage
+            but O(1) t to push & O(1 ~ n) t to pop, so stack's length is increased & decreased constantly
+            if Binary Tree, stack's pushed into 2x, popped once, making O(n/2) s ~ O(n) s (removing constant term 1/2)
+            if N-ary Tree, stack's pushed into n-ary times (avg number of children per node), popped once, making (n / n-ary) s ~ O(n) s
+            but by algo's end, stack is emptied, making O(1) s
+            # todo: keep researching on this argument
+            '''
+
             stack, node = [], root
 
             while node or len(stack) > 0:
@@ -1622,7 +1795,7 @@ class DataStructures:
                     node = stack.pop()
                     node = node.right
 
-            # DFS in-order - Stack - Iteration traversal
+            # DFS in-order - Stack - Iteration
             stack, node = [], root
 
             while node or len(stack) > 0:
@@ -1634,7 +1807,7 @@ class DataStructures:
                     print(node.value)
                     node = node.right
 
-            # DFS post-order - Stack - Iteration traversal - .right to .left
+            # DFS post-order - Stack - Iteration - .right to .left
             stack, node = [], root
 
             while node or len(stack) > 0:
@@ -2107,7 +2280,7 @@ class DataStructures:
                         if parent.left == root: parent.left = root.left
                         elif parent.right == root: parent.right = root.left
                     else: # both root .left & .right children-nodes
-                        loop_node = root.right; leaf_left = None
+                        loop_node = root.right
                         while loop_node and loop_node.left:
                             loop_node = loop_node.left
                         loop_node.left = root.left
