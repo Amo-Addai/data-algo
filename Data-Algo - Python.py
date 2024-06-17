@@ -1313,21 +1313,19 @@ class DataStructures:
                 '''
         
         # todo: Alt 3rd-Party (Tutorial) Logic
-        def binary_tree_bfs(self, root: 'DataStructures.Tree.TreeNode'): # O(n) t ; O(1~n) s (explanation of 1~n s in Tree Class's DFS - Stack Iteration algo)
+        def binary_tree_dfs(self, root: 'DataStructures.Tree.TreeNode'): # O(n) t ; O(1~n) s (explanation of 1~n s in Tree Class's DFS - Stack Iteration algo)
             
-            # BFS - Post-Order Traversal - Stack-Iteration method (without 'Queues', not 'recursion' like with DFS)
+            # DFS - Post-Order Traversal - 2-Stack-Iteration method (without 'recursion')
             
-            ''' # By "BFS Post-Order Traversal" .. 
-            # assume question is asking for "BFS Right-to-Left Level-Order Traversal"
-            # and not "DFS Post-Order Traversal", because of the "Post-Order" term
-
+            '''
             While popping out & working with Stack 1's current iteration node,
             Push it to Stack 2, and its children to Stack 1, for next iterations
 
             After Stack 1's loop, pop out all nodes from Stack 2
-            LIFO pop from Stack 2 logic is for Post-Order Traversal
-            ''' # TODO: Implement Left to Right BFS Level-Order Traversal with 2 Stacks (if the 2nd Stack is required)
-            # TODO: If Possible, Ponder on Pre & In - Order Traversals, but with BFS (not DFS) this time
+            LIFO pop from Stack 2 logic is for DFS Post-Order Traversal
+            ''' # TODO: Visualize entire algo with tree and 2 stacks to understand better
+            # lifo popping out last item of s1, while appending n1's children from left to right ..
+            # plus lifo popping out last item of s2 after s1's loop is what achieves DFS Post-Order
 
             ans = []
             if not root: return ans
@@ -1348,6 +1346,26 @@ class DataStructures:
                 ans.append(n2.value)
             
             return ans
+        
+        # TODO: 
+        def binary_tree_bfs(self, root: 'DataStructures.Tree.TreeNode'):
+            
+            # BFS - Post-Order Traversal - Stack-Iteration method (without 'Queues', not 'recursion' like with DFS)
+            
+            ''' # By "BFS Post-Order Traversal" .. 
+            # assume question is asking for "BFS Right-to-Left Level-Order Traversal"
+            # and not "DFS Post-Order Traversal", because of the "Post-Order" term
+
+            While popping out & working with Stack 1's current iteration node,
+            Push it to Stack 2, and its children to Stack 1, for next iterations
+
+            After Stack 1's loop, pop out all nodes from Stack 2
+            LIFO pop from Stack 2 logic is for Post-Order Traversal
+            ''' # TODO: Implement Left to Right BFS Level-Order Traversal with 2 Stacks (if the 2nd Stack is required)
+            # TODO: If Possible, Ponder on Pre & In - Order Traversals, but with BFS (not DFS) this time
+
+            # TODO
+            pass
 
 
     # Queues
