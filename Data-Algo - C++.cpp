@@ -314,11 +314,15 @@ int testMain() {
 // */
 
 
-// Stacks & Queues
+// Stacks
+
+// Queues
 
 // Heaps (max & min)
 
-// Binary Heaps & Priority Queues
+// Binary Heaps
+
+// Priority Queues
 
 // Trees
 

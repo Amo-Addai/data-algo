@@ -33,9 +33,11 @@ Data structures included:
 - Tuples
 - Dictionaries
 - Maps
+- MapLists
 - Tables
 - HashMaps
 - HashTables
+- HashSets
 - WeakMaps
 - WeakSets
 - Linked Lists
@@ -45,6 +47,7 @@ Data structures included:
 - Trees
 - Binary Search Trees (BST)
 - TreeMaps
+- TreeSets
 - Heaps
 - Binary Heaps (Min & Max Heaps)
 - Tries

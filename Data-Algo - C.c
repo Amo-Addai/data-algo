@@ -85,11 +85,15 @@ int binarySearch(int a[], int x) {
 
 // Linked Lists
 
-// Stacks & Queues
+// Stacks
+
+// Queues
 
 // Heaps (max & min)
 
-// Binary Heaps & Priority Queues
+// Binary Heaps
+
+// Priority Queues
 
 // Trees
 

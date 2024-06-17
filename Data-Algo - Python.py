@@ -1181,15 +1181,203 @@ class DataStructures:
     # todo: End of set of Alt (3rd-Party) Logic Samples
 
 
-    # Stacks & Queues
+    # Stacks
+
+    class Stacks:
+
+        class Stack:
+
+            def __init__(self):
+                self.stack = []
+            
+            def stack(self):
+                return self.stack
+            
+            def push(self, v):
+                self.stack.append(v)
+            
+            def top(self):
+                if self.len() > 0:
+                    return self.stack[-1] # return last item, without removing
+                return None
+
+            def pop(self):
+                if self.len() > 0:
+                    return self.stack.pop() # remove last item (LIFO) | Queue .pop(0) - 1st elem
+                return None
+
+            def len(self):
+                return len(self.stack)
+
+            def find_min(self): # O(n) t ; O(1) s
+                # todo: O(1) t - if min/max is monitored on every push/pop
+                if self.len() == 0: return None
+                min_ = sys.max_size
+                for _, v in enumerate(self.stack[::-1]): # iterate from behind for 'stack' (not required)
+                    if v < min_: min_ = v
+                return min_
+
+
+        def __init__(self):
+            self.stack = DataStructures.Stacks.Stack()
+        
+        # Other Methods
+
+        def find_min(self): # O(n) t ; O(1) s
+            if self.stack.len() == 0: return None
+            min_ = sys.max_size
+            for _, v in enumerate(self.stack.stack()[::-1]): # iterate from behind for 'stack' (not required)
+                if v < min_: min_ = v
+            return min_
+        
+        # Given a string that can contain (, ), {, }, [, and ], check if it is valid
+        # (parentheses are arranged in standard order, with no overlaps)
+        # Any open brackets must be closed by the same type of brackets
+        # Open brackets must be closed in the correct order
+
+        def valid_parenthesis(self, s):
+            '''
+            Check if string s has valid enclosing parentheses: () / {} / []
+            your eg. " [ ... ( ... ' ${} ' ... ) ... ] " - if any parenthesis mixes up 'syntactical-order': not_valid
+            actual eg. "[({})]" (no extra chars in string, except for the different types of parentheses)
+            Better to use a stack here (instead of an array) so you can lifo-pop items to compare with string characters
+            stack's i is 1st half-char of parenthesis, string's c is 2nd half-char
+            '''
+
+            def is_parenthesis(c1, c2): # check for all kinds of parentheses
+                if (c1 == '(' and c2 == ')') \
+                    or (c1 == '[' and c2 == ']') \
+                    or (c1 == '{' and c2 == '}'):
+                    return True
+                return False
+
+            # * Init new stack obj to use
+            stack = DataStructures.Stacks.Stack()
+            for c in s:
+                if stack.len() != 0:
+                    i = stack.top() # check top 1st, then pop if is_parenthesis()
+                    if is_parenthesis(i, c):
+                        stack.pop() # take out the last item
+                        continue
+                stack.push(c)
+
+            return stack.len() == 0 # is_valid if all items in stack have been popped out
+        
+        def binary_tree_dfs(self, tree: 'DataStructures.Tree'): 
+            # Stack-Iteration Traversal (without recursion)
+            
+            stack = DataStructures.Stacks.Stack()
+            node = tree.root
+
+            while node or stack.len() > 0: 
+
+                # Pre-Order Traversal
+
+                if node:
+                    print(node.value)
+                    stack.push(node)
+                    node = node.left
+                else:
+                    node = stack.pop()
+                    node = node.right
+                
+                # In-Order Traversal
+
+                if node:
+                    stack.push(node)
+                    print(node.value)
+                    node = node.left
+                else:
+                    node = stack.pop()
+                    node = node.right
+                
+                # Post-Order Traversal - .right to .left
+
+                if node:
+                    print(node.value)
+                    stack.push(node)
+                    node = node.right
+                else:
+                    node = stack.pop()
+                    node = node.left
+
+                ''' # if N-ary Tree (3+ children)
+                for c in node.children:
+                    queue.enqueue(c)
+                # todo: decide when to work with node.value during loop 
+                # (for pre/in/post - orders)
+                '''
+
+
+    # Queues
+
+    class Queues:
+
+        class Queue:
+
+            def __init__(self):
+                self.queue = [] # or deque()
+            
+            def enqueue(self, v):
+                self.queue.append(v) # deque - .append(v)
+            
+            def first(self):
+                if self.len() > 0:
+                    return self.queue[0] # return 1st item, without removing
+                return None
+            
+            def dequeue(self):
+                if self.len() > 0:
+                    return self.queue.pop(0) # remove first item (FIFO) | deque .popleft()
+                return None
+        
+            def len(self):
+                return len(self.queue)
+
+
+        def __init__(self):
+            self.queue = DataStructures.Queues.Queue()
+        
+        # Other Methods
+
+        def binary_tree_bfs(self, tree: 'DataStructures.Tree'): 
+            # Queue-Iteration
+            
+            queue = DataStructures.Queues.Queue()
+            queue.enqueue(tree.root)
+
+            while queue.len() > 0:
+                node = queue.dequeue()
+                print(node.value)
+                
+                # .left - side to .right - side
+
+                if node.left: queue.enqueue(node.left)
+                if node.right: queue.enqueue(node.right)
+                ''' # if N-ary Tree (3+ children)
+                for c in node.children:
+                    queue.enqueue(c)
+                '''
+
+                # Reverse-order - .right - side to .left - side
+
+                if node.right: queue.enqueue(node.right)
+                if node.left: queue.enqueue(node.left)
+                ''' # N-ary Tree
+                for c in node.children[::-1]:
+                    queue.enqueue(c)
+                '''
+
 
     # Heaps (max & min)
     
-    # Binary Heaps & Priority Queues
+    # Binary Heaps
+
+    # Priority Queues
 
     # Trees
 
-    class Tree(): # Acyclic Undirected Graph - a tree if connected, and a forest if not connected
+    class Tree: # Acyclic Undirected Graph - a tree if connected, and a forest if not connected
             
         class TreeNode():
 
@@ -1297,9 +1485,9 @@ class DataStructures:
             BFS always traverses horizontally (whether from left/right first), layer by layer
             '''
 
-            # BFS - Queue-Loop traversal
+            # BFS - Queue - Iteration traversal
 
-            queue = deque()
+            queue = deque() # DoubleQueue ('Deque')
             queue.append(root)
 
             while queue: # No pre/post/in - order in BFS
@@ -1308,14 +1496,14 @@ class DataStructures:
                 print(node.value)
 
                 # BFS "Straight" order - .left to .right
-                queue.append(node.left)
-                queue.append(node.right)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
                 for child in node.children:
                     queue.append(child)
         
                 # NB: BFS "Reverse" - order - .right to .left
-                queue.append(node.right)
-                queue.append(node.left)
+                if node.right: queue.append(node.right)
+                if node.left: queue.append(node.left)
                 for child in node.children[::-1]:
                     queue.append(child)
         
@@ -1413,7 +1601,7 @@ class DataStructures:
             print(root.value)
 
 
-            # Stack-Loop Tree-Traversals (all .left to .right, except post-order)
+            # Stack - Iteration Tree-Traversals (all .left to .right, except post-order)
             
             # O(n) t ; O(h ~ 1) s (h - max height)
             
@@ -1422,7 +1610,7 @@ class DataStructures:
             # could do away with List by just printing out node.value()s
 
 
-            # DFS pre-order - Stack-Loop traversal
+            # DFS pre-order - Stack - Iteration traversal
             stack, node = [], root
 
             while node or len(stack) > 0:
@@ -1434,8 +1622,8 @@ class DataStructures:
                     node = stack.pop()
                     node = node.right
 
-            # DFS in-order - Stack-Loop traversal
-            stack = [], node = None
+            # DFS in-order - Stack - Iteration traversal
+            stack, node = [], root
 
             while node or len(stack) > 0:
                 if node:
@@ -1446,8 +1634,8 @@ class DataStructures:
                     print(node.value)
                     node = node.right
 
-            # DFS post-order - Stack-Loop traversal - .right to .left
-            stack = [], node = None
+            # DFS post-order - Stack - Iteration traversal - .right to .left
+            stack, node = [], root
 
             while node or len(stack) > 0:
                 if node:
@@ -1461,9 +1649,9 @@ class DataStructures:
 
         # Iterator Traversals
 
-        class Iterator:
+        class DFS_Iterator_Traversal:
 
-            def __init__(self, root):
+            def __init__(self, root: 'DataStructures.Tree.TreeNode'):
                 self.node = root
                 self.stack = []
             
@@ -1472,7 +1660,7 @@ class DataStructures:
             def next(self):
                 while self.has_next():
                     if self.node:
-                        stack.append(self.node)
+                        self.stack.append(self.node)
                         self.node = self.node.left
                     else:
                         self.node = self.stack.pop()
@@ -1482,7 +1670,7 @@ class DataStructures:
                 return sys.maxsize
             
             def test(self):
-                it = Iterator()
+                it = DataStructures.Tree.Iterator()
                 print(it.next())
                 print(it.next())
                 print(it.has_next())
@@ -2092,7 +2280,8 @@ class DataStructures:
                 # if queue = [], .pop(0) 1st item
                 print(node, end=' ')
                 for n in self.graph[node]:
-                    if n not in visited:
+                    if n not in visited: # consider whether to check for n not None (in case graph has null-value items)
+                        # before adding to visited set or queue
                         visited.add(n)
                         queue.append(n)
 
@@ -2101,7 +2290,7 @@ class DataStructures:
             while len(queue) > 0:
                 node = queue.popleft() # deque: .popleft() 1st item (.pop() last item ; .pop(0) error - takes no argument)
                 # if queue = [], .pop(0) 1st item
-                if node not in checked:
+                if node and node not in checked:
                     print(node, end=' ')
                     checked.add(node)
                 for n in self.graph[node]:
@@ -2594,6 +2783,12 @@ class DataStructures:
 
 
     # Blobs
+
+
+    ''' # TODO: Note other data-structure combos of Prefixes & Suffixes
+    Prefixes - Array, Map, Hash, Table, Weak, Linked, Tree, Graph, Skip, Binary, Priority, Double (Queue) / Deque, Binary-Search (Tree), Red-Black (Tree), Trie, B+ (Tree), Bloom (Filter), Segment (Tree), Disjoint (Set),  ...
+    Suffixes - Array, Map, Table, Set, List, LinkedList, Stack, Queue, Deque, Heap, Tree, Graph, (Tree) Forest, (Bloom) Filter,  ...
+    '''
 
     def func(self): pass
 

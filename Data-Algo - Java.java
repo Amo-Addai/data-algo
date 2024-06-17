@@ -897,6 +897,7 @@ public class DataAlgoJava {
 
                     // bfs
 
+                    // todo: Use Java's in-built Queue class, because Trees is the current study
                     java.util.Queue<Tree.TreeNode> q = new java.util.LinkedList<Tree.TreeNode>(); // not Queue(); 
                     // Java Queue cannot be instantiated directly
                     // can only be instantiated by classes that implement it as an interface
@@ -913,8 +914,10 @@ public class DataAlgoJava {
 
                         node = (Tree.TreeNode) q.poll(); // not .dequeue() / .pop();
                         // no need to store node.value()s into ListNodes
-                        // because root.value() has been stored
-                        // only store node.left() & .right() .value()s
+                        // because root.value() has been stored, as lRoot (lNode in 1st iteration)
+                        // only store node.left() & .right() .value()s (left to right in this case; or reverse-order - right to left)
+
+                        // or a dummy root can be used, so only current node's value would be linked, before enqueueing left & right children
 
                         if (node.left() != null) {
                             lNode.setNext(new ListNode(node.left().value(), null));
@@ -927,6 +930,19 @@ public class DataAlgoJava {
                             q.add(node.right());
                             lNode = lNode.getNext();
                         }
+
+                        // todo: or a dummy root could've been used; so only current node's value would be linked, before enqueueing left & right children
+
+                        /* lNode = lDummy (before root)
+
+                        node = (Tree.TreeNode) q.poll();
+                        lNode.setNext(new ListNode(node.value(), null));
+                        lNode = lNode.getNext();
+                        if (node.left() != null) q.add(node.left());
+                        if (node.right() != null) q.add(node.right());
+
+                        after loop, return lDummy.getNext(); as new root (set as new 'llRoot'; set lDummy = null; return new 'llRoot')
+                        */
 
                     }
 
@@ -1040,11 +1056,15 @@ public class DataAlgoJava {
             }
 
 
-            // Stacks & Queues
+            // Stacks
+
+            // Queues
 
             // Heaps (max & min)
 
-            // Binary Heaps & Priority Queues
+            // Binary Heaps
+            
+            // Priority Queues
 
             // Trees
 
@@ -1493,7 +1513,9 @@ public class DataAlgoJava {
                             if (root == null) return res;
 
                             TreeNode node = root;
-                            Stack<TreeNode> stack = new Stack<>();
+                            java.util.Stack<TreeNode> stack = new Stack<>();
+                            // todo: Use Java's in-built Data-type (Stack) in this case
+                            // because Trees is the current study
 
                             // TODO: Alt loop in-order logic
                             while (node != null || !stack.isEmpty()) {
@@ -1538,7 +1560,7 @@ public class DataAlgoJava {
                             TreeNode node = root;
                             Stack<TreeNode> stack = new Stack<>();
 
-                            // TODO: Alt loop pre-order logic
+                            // TODO: Alt Stack - Iteration pre-order logic
                             while (node != null || !stack.isEmpty()) {
                                 if (node != null) {
                                     res.add((Integer) node.value());
@@ -1616,6 +1638,31 @@ public class DataAlgoJava {
 
                     // * BFS Traversals
 
+                    // Level-Order Traversal
+
+                    public class LevelOrder {
+
+                        public List<Integer> iterate(TreeNode root) {
+                            List<Integer> res = new ArrayList<>();
+                            if (root == null) return res;
+
+                            TreeNode node = null;
+                            java.util.Queue<TreeNode> queue = new ArrayDeque<>(
+                                Arrays.asList(
+                                    { root } // todo: forced-indentation for memory
+                                )
+                            );
+                            // todo: Use Java's in-built Queue class
+                            // because Trees is the current study
+                            // or queue.add(root) after init (not .enqueue() / .push())
+
+                            while (node != null || !queue.isEmpty()) {
+                                node = (TreeNode) queue.poll(); // not .dequeue() / .pop();
+                            }
+                            return res;
+                        }
+
+                    }
 
                     // * Other Traversals
 

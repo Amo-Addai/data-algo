@@ -818,9 +818,10 @@ class LL {
 }
 
 
-// Stacks & Queues
+// Stacks
 
-class Stack {
+class LinkedStack {
+    // * A stack data structure that uses a linked list for managing elements.
 
     // private fields
     #length
@@ -894,7 +895,7 @@ class Stack {
 
 
 /*
-const stack = new Stack()
+const stack = new LinkedStack()
 stack.push('google')
 stack.push('youtube')
 stack.push('microsoft')
@@ -904,9 +905,13 @@ stack.peek()
 // */
 
 
+// Queues
+
 // Heaps (max & min)
 
-// Binary Heaps & Priority Queues
+// Binary Heaps
+
+// Priority Queues
 
 // Trees
 
@@ -1344,9 +1349,9 @@ function levelOrder(tree) { // O(n) t ; O(1) s
         // node = queue.pop(0) // todo: .pop(takes no arguments) - .pop() always removes last item
         node = queue.shift()
         arr.push(node.value)
-        queue.push(node.left)
-        queue.push(node.right)
-        // hack-check only works because tree is binary 
+        if (node.left) queue.push(node.left)
+        if (node.right) queue.push(node.right)
+        // hack-check - only works because tree is binary 
         // (only 2 children - left & right)
         if (arr.length == 2) {
             order.push(arr)
@@ -1436,8 +1441,8 @@ function invertBinaryTree(tree) { // O(n) t ; O(1) s
         tmp = node.left
         node.left = node.right
         node.right = tmp
-        q.push(node.right)
-        q.push(node.left)
+        if (node.right) q.push(node.right)
+        if (node.left) q.push(node.left)
         // you can still enqueue new .left before new .right
     }
 }
