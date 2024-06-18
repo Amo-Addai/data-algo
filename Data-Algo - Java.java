@@ -21,8 +21,9 @@ import java.util.function.BiConsumer;
  * Work with in-built DataStructure classes, from all java source libs 
  */
 
-/*
+/* // TODO: To-Use
 
+Generics
 Functional Interfaces (all in-built & custom)
 eg. Function, Consumer, Predicate, BiFunction, BiConsumer, BiPredicate, Supplier, UnaryOperator, BinaryOperator,  ... 
 Lombok, 

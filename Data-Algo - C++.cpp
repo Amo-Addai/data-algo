@@ -7,8 +7,9 @@
 
 using namespace std;
 
-/*
+/* // TODO: To-Use
 
+Generics
 MemMan, ..
 ..
 

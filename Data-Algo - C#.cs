@@ -1,10 +1,11 @@
 using System;
 using System.Linq;
 
-// TODO: Work with in-built DataStructure classes, from all c# source libs
 
-/*
+/* // TODO: To-Use
 
+Generics
+In-built DataStructure classes
 ..
 
 */

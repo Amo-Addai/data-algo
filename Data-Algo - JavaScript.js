@@ -1,8 +1,8 @@
 'use strict';
 
-/*
+/* // TODO: To-Use
 
-Js/Ts/Sw
+Generics
 ..
 
 */
@@ -180,7 +180,7 @@ var Searching = function() {
 
 class Weak_DStructs {
 
-    // TODO: Create & Implement Map & Set Data Structures
+    // TODO: Create & Implement Map, Set, WeakMap, & WeakSet Data Structures
 
     constructor () {}
 
@@ -196,6 +196,7 @@ class Weak_DStructs {
         console.log(m.size)
         console.log(m)
         console.log(m.has('key'))
+        console.log(m.get('key'))
         m['key'] = 'new value'
         m.set(1, true).set(false, 0)
         m.delete('key 2')
@@ -205,9 +206,61 @@ class Weak_DStructs {
         let m2 = new Map(Object.entries(obj)) // convert back
         m.clear()
 
-        // Sets
+        // Sets - unique value items
 
-        // ..
+        let s = new Set()
+        s.add('1st')
+        s.add('2nd')
+        s.add('3rd')
+        console.log(s.size)
+        console.log(s)
+        s.delete('2nd')
+        s.delete('4th') // no error if not found
+        // s = .entries() .values() .forEach((v1, v2, s) => {}) - no need for variadic param syntax for s (...s)
+        s.clear()
+
+        // WeakMaps - Garbage Collection removes keys which are null referenced object vars
+        // WeakSets - Garbage Collection removes items which are null referenced object vars
+        
+        // Maps & Sets strongly hold onto objects which are null referenced, when GC is executed
+        // eg. obj = {}; m.set(obj, 'val'); obj = null; // m will not lose 'obj' var as its key
+
+        // WeakMaps can only (weakly) hold objects as keys; cannot have any primitive data types as keys
+        // will lose 'obj' var as its key, if obj ever becomes null referenced
+        // eg. obj = {}; wm.set(obj, 'val'); obj = null; // wm will lose 'obj' as its key
+
+        // WeakSets can only (weakly) hold objects as items; cannot have any primitive data types as items
+        // will lose 'obj' var as an item, if obj ever becomes null referenced
+        // eg. obj = {}; ws.add(obj, 'val'); obj = null; // wm will lose 'obj' as its item
+
+        // Weak keys (in WeakMaps) are obj var weakmap-keys which have now been null referenced
+        // Weak items (in WeakSets) are obj var weakset-items which have now been null referenced
+
+        // Because of weak keys/items, Weak Maps/Sets don't have iterable methods (.entries() .keys() .values())
+
+        let wm = new WeakMap()
+        wm.set('key', 'value')
+        wm.set('key 2', 'value 2')
+        obj = {}
+        wm(obj, 'value 2')
+        console.log(wm)
+        console.log(wm.has(obj))
+        console.log(wm.get(obj))
+        obj = null
+        console.log(wm.get(obj))
+        wm.delete('key 2')
+        console.log(wm)
+
+        let ws = WeakSet()
+        obj = {}
+        let obj1 = {}, obj2 = {}
+        ws.add(obj, 1)
+        ws.add(obj1, 2)
+        ws.add(obj2, 3)
+        console.log(wm)
+        obj = null
+        wm.delete(obj1)
+        console.log(ws)
 
     }
 

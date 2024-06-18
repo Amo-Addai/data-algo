@@ -1,8 +1,8 @@
 'use strict';
 
-/*
+/* // TODO: To-Use
 
-Compare Js/Ts/Sw/C#
+Generics
 ..
 
 */

@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
 
-/*
+/* // TODO: To-Use
 
+Generics
 MemMan, ..
 ..
 

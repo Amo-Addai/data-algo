@@ -1,7 +1,8 @@
 #include <stdio.h>
 
-/*
+/* // TODO: To-Use
 
+Generics
 MemMan, ..
 ..
 

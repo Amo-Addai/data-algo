@@ -29,10 +29,12 @@ Data structures included:
 - Array Lists
 - Matrices (N-dimensional Arrays)
 - Sets
+- Sequences
 - Vectors
 - Tuples
 - Dictionaries
 - Maps
+- Objects
 - Tables
 - Linked Lists
 - Stacks
