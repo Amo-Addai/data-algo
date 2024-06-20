@@ -33,7 +33,7 @@ class TSearching {
     }
 
     binarySearch(a: number[], x: number): number | null {
-        // a.sort()
+        // * a.sort()
         if (a.length === 0) return null
 
         var rBinarySearch = (a: number[], x: number): number | null => {
@@ -781,36 +781,36 @@ function isCryptSolution(crypt: string[], solution: string[][]): boolean {
 
 // Doubly-linked list class
 
-class ListNode<T> {
+class TListNode<T> {
 
     value: T;
-    next: ListNode<T> | null;
-    prev: ListNode<T> | null;
+    next: TListNode<T> | null;
+    prev: TListNode<T> | null;
 
-    constructor(value: T, next: ListNode<T> | null = null, prev: ListNode<T> | null = null) {
+    constructor(value: T, next: TListNode<T> | null = null, prev: TListNode<T> | null = null) {
         this.value = value; this.next = next; this.prev = prev
     }
 
-    beNextOf(left: ListNode<T>) {
+    beNextOf(left: TListNode<T>) {
         left.next = this;
         return left;
     }
 
-    bePrevOf(right: ListNode<T>) {
+    bePrevOf(right: TListNode<T>) {
         right.prev = this;
         return right;
     }
 
-    // Create a ListNode from an array
+    // Create a TListNode from an array
     static fromArray<T>(arr: T[]) {
-        const nodes = arr.map(i => new ListNode(i));
+        const nodes = arr.map(i => new TListNode(i));
 
         return nodes.reduceRight((acc, cur) => {
             return acc.beNextOf(cur);
         });
     }
 
-    // Exec cb forEach ListNode
+    // Exec cb forEach TListNode
     forEach(cb: (i: T, idx: number) => void, idx = 0) {
         cb(this.value, idx);
         // recursive exec this.forEach when this.next is not null 
@@ -820,9 +820,9 @@ class ListNode<T> {
 }
 
 
-function removeKFromList(l: ListNode<number>, k: number): ListNode<number> | null {
+function removeKFromList(l: TListNode<number>, k: number): TListNode<number> | null {
     if (l == null) return l
-    let arr: any[] = [], x: ListNode<number> = l
+    let arr: any[] = [], x: TListNode<number> = l
     while (true) {
         if (x.value !== k) arr.push(x)
         if (!!x.next) x = x.next
@@ -836,7 +836,7 @@ function removeKFromList(l: ListNode<number>, k: number): ListNode<number> | nul
 }
 
 // Given a singly linked list of integers, determine whether or not it's a palindrome.
-function isListPalindrome(l: ListNode<number>): boolean {
+function isListPalindrome(l: TListNode<number>): boolean {
     if (l == null || l.next == null) return true
     let arr: number[] = []
     while (true) {

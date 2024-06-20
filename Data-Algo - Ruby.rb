@@ -36,14 +36,14 @@ class Searching
     end
 
     def binary_search(a, x)
-        # a.sort()
+        # * a.sort()
         if len(a) == 0 return nil
         
         def r_binary_search(a, x)
             if len(a) == 0 return nil
             m = len(a) / 2
-            if x < a[m] return r_binary_search(a[:m-1], x) # slice a
-            elsif x > a[m] return r_binary_search(a[m+1:], x) # slice a
+            if x < a[m] return r_binary_search(a[:m-1], x)
+            elsif x > a[m] return r_binary_search(a[m+1:], x)
             else return m
         end
         
@@ -74,7 +74,6 @@ end
 ########################################
 
 #
-
 
 
 

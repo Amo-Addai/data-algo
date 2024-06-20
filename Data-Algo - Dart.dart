@@ -30,21 +30,21 @@ class Searching {
   Searching([this._i]);
 
   int? linearSearch(List<dynamic> a, int x) {
-    for (var i = 0; i < a.length; i++) { // length
-      if (x == a[i]) return i;
-    }
+    for (var i = 0; i < a.length; i++)// length
+      if (x == a[i]) 
+        return i;
     return null;
   }
 
   int? binarySearch(List<dynamic> a, int x) {
-    // a.sort()
+    // * a.sort()
     if (a.length == 0) return null;
 
     Function rBinarySearch = (List<dynamic> a, int x) {
       if (a.length == 0) return null;
       int m = (a.length / 2).truncate();
-      if (x < a[m]) return rBinarySearch(a, x); // slice a
-      else if (x > a[m]) return rBinarySearch(a, x); // slice a
+      if (x < a[m]) return rBinarySearch(a, x); // todo: slice a
+      else if (x > a[m]) return rBinarySearch(a, x); // todo: slice a
       else return m;
     };
 
@@ -78,7 +78,6 @@ class Searching {
 ////////////////////////////////////////
 
 //
-
 
 
 

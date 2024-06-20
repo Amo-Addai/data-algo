@@ -13,19 +13,50 @@ MemMan, ..
 //  SORTING ALGO'S
 ////////////////////////////////////////
 
-int* insertionSort(int a[]);
-int* selectionSort(int a[]);
+// private
+
+int* check(int a[]);
+int* swap(int a[]);
+int* compare(int a[]);
+
+// regular
+
+int* insertion(int a[]);
+int* selection(int a[]);
+int* shell(int a[]);
+
+// bad
+
+int* bubble(int a[]);
+int* slow(int a[]);
+
+// special
+
+int* counting(int a[]);
+int* radix(int a[]);
+int* topological(int a[]);
+
+// hybrid
+
+int* intro(int a[]);
+
+// fast
+
+int* heap(int a[]);
+int* merge(int a[]);
+int* quick(int a[]);
+
+
+
+////////////////////////////////////////
+//  SEARCHING ALGO'S
+////////////////////////////////////////
 
 
 int linearSearch(int a[], int x);
 int binarySearch(int a[], int x);
 int rBinarySearch(int a[], int x);
 int rBinarySearch2p(int a[], int x, int f, int l);
-
-
-////////////////////////////////////////
-//  SEARCHING ALGO'S
-////////////////////////////////////////
 
 int linearSearch(int a[], int x) {
     for (int i = 0; i < sizeof(a); i++) {
@@ -36,8 +67,8 @@ int linearSearch(int a[], int x) {
 int rBinarySearch(int a[], int x) {
     if (sizeof(a) == 0) return;
     int m = sizeof(a) / 2;
-    if (x < a[m]) return rBinarySearch(a, x); // slice a
-    else if (x > a[m]) return rBinarySearch(a, x); // slice a
+    if (x < a[m]) return rBinarySearch(a, x); // todo: slice a
+    else if (x > a[m]) return rBinarySearch(a, x); // todo: slice a
     else return m;
 }
 
@@ -50,7 +81,7 @@ int rBinarySearch2p(int a[], int x, int f, int l) {
 }
 
 int binarySearch(int a[], int x) {
-    // a = rsort(a);
+    // * a = rsort(a);
     if (sizeof(a) == 0) return;
 
     int f = 0, l = sizeof(a) - 1, m;

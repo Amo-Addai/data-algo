@@ -30,7 +30,7 @@ pub mod Searching {
     }
 
     fn binarySearch(a: Vec<i32>, mut x: i32) -> Option<i32> {
-        // a.sort()
+        // * a.sort()
         if a.len() == 0 return None; // length
 
         let rBinarySearch: fn(Vec<i32>, i32) -> Option<i32> = | a: Vec<i32>, x: i32 | -> i32 {

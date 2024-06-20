@@ -34,7 +34,7 @@ class Searching {
     }
 
     func binarySearch(a: [Int], x: Int) -> Int? {
-        // a.sort()
+        // * a.sort()
         guard a.count > 0 else {
             return nil
         }

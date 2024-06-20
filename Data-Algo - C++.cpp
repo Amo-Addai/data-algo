@@ -55,7 +55,7 @@ public:
     }
 
     int binarySearch(int a[], int x) {
-        // a = rsort(a);
+        // * a = rsort(a);
         
         if (size(a) == 0)
             return -1;
@@ -80,9 +80,9 @@ public:
             return -1;
         int m = size(a) / 2;
         if (x < a[m])
-            return rBinarySearch(a, x); // slice a
+            return rBinarySearch(a, x); // todo: slice a
         else if (x > a[m])
-            return rBinarySearch(a, x); // slice a
+            return rBinarySearch(a, x); // todo: slice a
         else
             return m;
     }

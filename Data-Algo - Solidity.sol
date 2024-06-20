@@ -36,7 +36,7 @@ contract Searching {
     }
 
     function binarySearch(uint[] memory a, uint x) public returns (uint) {
-        // a.sort()
+        // * a.sort()
         if (a.length == 0) return 0;
 
         uint f = 0; uint l = a.length - 1; uint m;
@@ -54,8 +54,8 @@ contract Searching {
     function rBinarySearch(uint[] memory a, uint x) private returns (uint) {
         if (a.length == 0) return 0;
         uint m = a.length / 2;
-        if (x < a[m]) return rBinarySearch(a, x); // slice a
-        if (x > a[m]) return rBinarySearch(a, x); // slice a
+        if (x < a[m]) return rBinarySearch(a, x); // todo: slice a
+        if (x > a[m]) return rBinarySearch(a, x); // todo: slice a
         else return m;
     }
 
@@ -85,6 +85,6 @@ contract Searching {
 ////////////////////////////////////////
 
 function main(string[] calldata args) pure returns (uint) {
-    // console.log('')
+    // todo: print('Hello, World!')
     return 0;
 }

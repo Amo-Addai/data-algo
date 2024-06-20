@@ -92,8 +92,8 @@ public class DataAlgoJava {
                     int m = a.length / 2;
 
                     // todo: test - calling rBinarySearch[0].apply(..) before assignment might fail
-                    if (x < a[m]) return rBinarySearch[0].apply(Arrays.copyOfRange(a, 0, m - 1), x); // slice a
-                    else if (x > a[m]) return rBinarySearch[0].apply(Arrays.copyOfRange(a, m + 1, a.length - 1), x); // slice a
+                    if (x < a[m]) return rBinarySearch[0].apply(Arrays.copyOfRange(a, 0, m - 1), x); // todo: slice a
+                    else if (x > a[m]) return rBinarySearch[0].apply(Arrays.copyOfRange(a, m + 1, a.length - 1), x); // todo: slice a
                     else return m;
                 };
 
@@ -1339,14 +1339,20 @@ public class DataAlgoJava {
                     }
 
                     class ResultType {
-                        public boolean n1Exists, n2Exists;
-                        public TreeNode node;
+
+                        private boolean n1Exists, n2Exists;
+                        private TreeNode node;
 
                         ResultType(boolean n1, boolean n2, TreeNode n) {
                             n1Exists = n1;
                             n2Exists = n2;
                             node = n;
                         }
+
+                        public boolean n1Exists() { return n1Exists; }
+                        public boolean n2Exists() { return n2Exists; }
+                        public TreeNode node() { return node; }
+
                     }
 
                     @FunctionalInterface
@@ -1364,8 +1370,8 @@ public class DataAlgoJava {
                             ResultType left = helper[0].help(r.left(), a, b);
                             ResultType right = helper[0].help(r.right(), a, b);
 
-                            boolean aExists = left.n1Exists || right.n1Exists || r == a;
-                            boolean bExists = left.n2Exists || right.n2Exists || r == b;
+                            boolean aExists = left.n1Exists() || right.n1Exists() || r == a;
+                            boolean bExists = left.n2Exists() || right.n2Exists() || r == b;
 
                             if (r == a || r == b)
                                 return new ResultType(aExists, bExists, r);
@@ -1382,8 +1388,8 @@ public class DataAlgoJava {
                         };
 
                         ResultType res = helper[0].help(root, n1, n2);
-                        if (res.n1Exists && res.n2Exists)
-                            return res.node;
+                        if (res.n1Exists() && res.n2Exists())
+                            return res.node();
                         else return null;
 
                     }
@@ -1447,12 +1453,12 @@ public class DataAlgoJava {
 
                     public int kthSmallest(TreeNode root, int kth) {
 
-                        BiConsumer<TreeNode, Integer>[] helper = BiConsumer[1];
+                        BiConsumer<TreeNode, Integer>[] helper = new BiConsumer[1];
                         helper[0] = (r, k) -> {
                             if (r == null) return;
                             helper[0].accept(r.left(), k);
                             index++;
-                            if (index == k) result = r.value();
+                            if (index == k) result = (Integer) r.value();
                             helper[0].accept(r.right(), k);
                         };
 
@@ -1468,28 +1474,28 @@ public class DataAlgoJava {
 
                     public int kthSmallest2(TreeNode root, int kth) { // O(h) ~ O(n) t (h - tree height) ; O(n) s
 
-                        BiConsumer<TreeNode, Map<TreeNode, Integer>>[] countNodes = new BiConsumer[1];
+                        BiFunction<TreeNode, Map<TreeNode, Integer>, Integer>[] countNodes = new BiFunction[1];
                         countNodes[0] = (r, c) -> {
                             if (r == null) return 0;
-                            int left = countNodes[0].accept(r.left(), c);
-                            int right = countNodes[0].accept(r.right(), c);
+                            int left = countNodes[0].apply(r.left(), c);
+                            int right = countNodes[0].apply(r.right(), c);
                             int count = left + right + 1;
                             c.put(r, count);
                             return count;
                         };
 
-                        QuickSelect[] quickSelect = QuickSelect[1];
+                        QuickSelect[] quickSelect = new QuickSelect[1];
                         quickSelect[0] = (r, k, c) -> {
                             if (r == null) return -1;
                             int left = r.left() == null ? 0 : c.get(r.left());
                             if (left >= k) return quickSelect[0].onTree(r.left(), k, c);
-                            if (left + 1 == k) return r.value();
+                            if (left + 1 == k) return (Integer) r.value();
 
                             return quickSelect[0].onTree(r.right(), k - left - 1, c);
                         };
 
                         Map<TreeNode, Integer> children = new HashMap<>();
-                        countNodes[0].accept(root, children);
+                        countNodes[0].apply(root, children);
                         return quickSelect[0].onTree(root, kth, children);
 
                     }
@@ -1543,7 +1549,7 @@ public class DataAlgoJava {
                             helper[0] = (n, r) -> { // no need to pass List<Int> by reference
                                 if (n == null) return;
                                 if (n.left() != null) helper[0].accept(n.left(), r);
-                                r.add(n.value()); // can also work with res directly
+                                r.add((Integer) n.value()); // can also work with res directly
                                 if (n.right() != null) helper[0].accept(n.right(), r);
                             };
 
@@ -1585,7 +1591,7 @@ public class DataAlgoJava {
                             Consumer<TreeNode> helper = new Consumer[1];
                             helper[0] = (r) -> {
                                 if (r == null) return;
-                                res.add(n.value()); // can work with res directly
+                                res.add((Integer) n.value()); // can work with res directly
                                 if (n.left() != null) helper[0].accept(n.left());
                                 if (n.right() != null) helper[0].accept(n.right());
                             };
@@ -1631,7 +1637,7 @@ public class DataAlgoJava {
                                 if (n == null) return;
                                 helper[0].accept(n.left(), r);
                                 helper[0].accept(n.right(), r);
-                                r.add(n.value());
+                                r.add((Integer) n.value());
                             };
 
                             helper[0].accept(root, res);
@@ -1653,7 +1659,7 @@ public class DataAlgoJava {
                             TreeNode node = null;
                             java.util.Queue<TreeNode> queue = new ArrayDeque<>(
                                 Arrays.asList(
-                                    { root } // todo: forced-indentation for memory
+                                    { root } // todo: forced-indentation for your memory
                                 )
                             );
                             // todo: Use Java's in-built Queue class
@@ -1662,6 +1668,8 @@ public class DataAlgoJava {
 
                             while (node != null || !queue.isEmpty()) {
                                 node = (TreeNode) queue.poll(); // not .dequeue() / .pop();
+                                res.add((Integer) node.value());
+                                // todo: find out other Level-Order methods from .py
                             }
                             return res;
                         }

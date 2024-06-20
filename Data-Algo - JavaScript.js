@@ -287,6 +287,9 @@ class HashTable {
         if (!this.data[address])
             this.data[address] = []
         this.data[address].push([key, value])
+        // each address hash's value is an array, for multiple values, to handle collisions
+        // Collisions - multiple values with the same key / hash (so they have to be grouped together)
+        // todo: can also use LinkedList as hash value to handle collisions
         return this.data
     }
 
@@ -314,13 +317,146 @@ class HashTable {
 
 }
 
+
+function HashTable2(size) {
+    this.buckets = Array(size)
+    this.numBuckets = this.buckets.length
+}
+// HashTable2's buckets has hash indices pointing to HashNodes
+
+// HashNode is a LinkedList node, for hashed value indices
+function HashNode(key, value, next = null) {
+    this.key = key
+    this.value = value
+    this.next = next
+}
+
+/* // todo:
+O(1) t to hash, insert, get, update, remove, with hash table
+
+even in the case where hashed keys point to linked lists .. 
+different keys pointing to different linked lists / singular nodes / primitive value types
+is what keeps time complexity constant (all lists have different number of nodes, but they all exist in the same hash table)
+
+O(n) t to getAll() nodes from hash table, because that iterates through all of its nodes/values (inside its linked lists / singular nodes / primitives)
+*/
+
+HashTable2.prototype.hash = (key) => {
+    let total = 0
+    for (let i = 0; i < key.length; i++)
+        total += key.charCodeAt(i)
+    let bucketIndex = total % this.numBuckets
+    return bucketIndex
+}
+
+HashTable2.prototype.insert = (key, value) => {
+    let bucketIndex = this.hash(key)
+    let hashNode = new HashNode(key, value)
+    if (!this.buckets[bucketIndex]) 
+        this.buckets[bucketIndex] = hashNode
+    else {
+        let currentNode = this.buckets[bucketIndex]
+        while (currentNode.next) // ends on last node (.next == null)
+            currentNode = currentNode.next
+        currentNode.next = hashNode
+    }
+}
+
+HashTable2.prototype.get = (key) => {
+    let bucketIndex = this.hash(key)
+    if (!this.buckets[bucketIndex]) {
+        console.error('Bucket/value does not exist')
+        return null
+    }
+    // return this.buckets[bucketIndex] // don't just return the hashed key's value
+    // in case this node was linked to others, iterate through them first
+    else { // find the HashNode with the same key, then return its value (not the HashNode itself)
+        let currentNode = this.buckets[bucketIndex]
+        while (currentNode) {
+            if (currentNode.key === key)
+                return currentNode.value
+            currentNode = currentNode.next
+        }
+        return null
+    }
+}
+
+HashTable2.prototype.update = (key, value) => {
+    let bucketIndex = this.hash(key)
+    if (!this.buckets[bucketIndex])
+        console.error('Bucket/value to update does not exist')
+    else {
+        let currentNode = this.buckets[bucketIndex]
+        while (currentNode) {
+            if (currentNode.key === key) {
+                currentNode.value = value
+                return // end loop/method
+            }
+            currentNode = currentNode.next
+        }
+    }
+}
+
+HashTable2.prototype.remove = (key) => {
+    let bucktIndex = this.hash(key)
+    if (!this.buckets[bucktIndex]) {
+        console.error('Bucket/value does not exist')
+        return false
+    } else {
+        let currentNode = this.buckets[bucktIndex]
+        while (currentNode) { // treat as a singly-linked list
+            // can iterate with 2 pointers (for prev & current), then point prev to next
+            // or iterate with 1 pointer for current, then shift next to current
+            // by taking next's key (due to HashNode) & value, and pointing to nextNext
+            if (currentNode.key === key) {
+                // can create new var in this scope, because this iteration will be broken by return
+                let tmp = currentNode // assign to tmp by copy because currentNode will be updated, and tmp will be returned
+                if (!!currentNode.next) {
+                    currentNode.key = currentNode.next.key
+                    currentNode.value = currentNode.next.value
+                    currentNode.next = currentNode.next?.next
+                    // .next will point to null by default, due to optional chaining
+                } else currentNode = null
+                return tmp // todo: make sure tmp was assigned to by copy, so it doesn't get updated by pointer reference
+            }
+            currentNode = currentNode.next
+        }
+    }
+}
+
+HashTable2.prototype.getAll = () => {
+    let arr = []
+    this.buckets.forEach((_, currentNode) => {
+        while (currentNode) {
+            arr.push(currentNode) // or .key / .value
+            currentNode = currentNode.next
+        }
+    })
+    return arr
+}
+
+
 /* // todo: Test
 const ht = new HashTable(50)
 ht.set('grapes', 10000)
 ht.get('grapes')
-ht.set('apples', 9)
+ht.set('apples', 7)
 ht.get('apples')
 ht.keys()
+console.log(ht)
+
+const ht2 = new HashTable2(30)
+console.log(ht2.hash('key'))
+ht2.insert('key', 'value')
+ht2.insert('key 2', 'value 2')
+ht2.insert('apples', 7)
+console.log(ht2.get('apples'))
+console.log(ht2)
+console.log(ht2.buckets)
+ht2.update('apples', 1)
+ht2.remove('key 2')
+console.log(ht2)
+console.log(ht2.getAll())
 */
 
 

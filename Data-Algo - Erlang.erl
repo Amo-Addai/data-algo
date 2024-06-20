@@ -26,12 +26,12 @@ fun linearSearch({A, X}) when length(A) =/= 0 ->
 
 
 fun binarySearch({A, X}) when length(A) =/= 0 ->
-    % A = lists:sort(A);
+    % * A = lists:sort(A);
 
     RBinarySearch = fun({A, X}) when length(A) =/= 0 ->
         M = length(A) div 2;
-        if (X < M) -> RBinarySearch({A, X}). % slice A
-            (X > M) -> RBinarySearch({A, X}). % slice A
+        if (X < M) -> RBinarySearch({A, X}). % todo: slice a
+            (X > M) -> RBinarySearch({A, X}). % todo: slice a
             true -> M.
         end.
     end

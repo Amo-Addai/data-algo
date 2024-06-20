@@ -29,7 +29,7 @@ class Searching(val prop: Any) {
     }
 
     def binarySearch(a: Array[Int], x: Int): Int = {
-        // a.sort()
+        // * a.sort()
         if (a.length == 0) return Nil
 
         var rBinarySearch = (a: Array[Int], x: Int): Int => {

@@ -40,14 +40,14 @@ MemMan, ..
     }
 
     -(int) binarySearch: (int[]) a, arg2: (int) x {
-        // a = rsort(a);
+        // * a = rsort(a);
         if (sizeof(a) == 0) return;
 
         int (^ rBinarySearch)(int, int) = ^(int a[], int x) {
             if (sizeof(a) == 0) return;
             int m = sizeof(a) / 2;
-            if (x < a[m]) return rBinarySearch(a, x); // slice a
-            if (x > a[m]) return rBinarySearch(a, x); // slice a
+            if (x < a[m]) return rBinarySearch(a, x); // todo: slice a
+            if (x > a[m]) return rBinarySearch(a, x); // todo: slice a
             else return m;
         }
 
@@ -69,6 +69,7 @@ MemMan, ..
             else return m;
         }
     }
+    
 @end
 
 

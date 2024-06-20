@@ -38,14 +38,14 @@ type SearchigAlgorithms (constructor-arguments) = class
             if x = a[i] then return i // index
 
     let binarySearch a: int32[], x: int32 -> int32 =
-        // a.sort()
+        // * a.sort()
         if (x.length = 0) then return null
 
         let rec rBinarySearch a: int32[], x: int32 -> int32 =
             if x.length = 0 then return null
             let m = a.length / 2
-            if x < a[m] then return rBinarySearch(a, x) // slice a
-            elif x > a[m] then return rBinarySearch(a, x) // slice a
+            if x < a[m] then return rBinarySearch(a, x) // todo: slice a
+            elif x > a[m] then return rBinarySearch(a, x) // todo: slice a
             else return m
 
         let rec rBinarySearch2p a: int32[], x: int32 f: int32, l: int32 -> int32 =

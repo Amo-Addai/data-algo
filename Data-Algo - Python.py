@@ -11,6 +11,10 @@ import pandas as pd
 
 ''' # TODO: To-Use
 
+Data-Structures:
+Done - arrays/strings (sorting/searching), lists/tuples, matrices, hash/weak-maps/tables/sets, linked-lists, stacks/queues, trees/b(s)ts, graphs,  …  
+# todo - sets/seqs/vectors, dicts/maps/objs, tree-maps/sets, tries, max/min heaps, bi-heaps/p-queues, bits, blobs,  …  
+
 Generics
 ..
 
@@ -206,7 +210,12 @@ class Searching:
         return None
 
     def binary_search(self, a, x):
-        a.sort() # or - sorted(a) # O(n log n) t
+
+        a.sort() # or - sorted(a) # O(n log n) t 
+        # TODO: NB: .sort() isn't a method in case 'a' was a string literal
+        # & sorted(str) returns a sorted array/list of str's characters
+        # so for strings, call "".join(sorted(str)) on a new string literal "" (list doesn't have .join() method)
+
         if len(a) is 0: return None
 
         def r_binary_search(a, x):
@@ -260,6 +269,182 @@ class DataStructures:
     # WeakMaps & WeakSets
 
     # HashMaps & HashTables
+
+    class Hash:
+
+        # TODO: Implement custom HashMaps & HashTables (view sample in .js)
+
+
+        class HashMap:
+            pass
+
+        class HashTable:
+            pass
+
+        
+        ''' # TODO: HashMap/Table solutions to problems are mostly sub-optimized placeholders, because they involve utilizing extra space (mostly O(n) s)
+        because accessing hash-values by hash-keys is in constant time (O(1) t), using them doesn't add any extra time complexity (only space)
+
+        Most-optimized algo solutions to all hashmap/table problems mostly exist and do not involve with hashmaps/tables, 
+        but sometimes have to compensate with extra (but insignificant) time complexity, like sorting the data structure in question first, before executing them
+        With these most-optimized algos, not requiring hashmaps/tables keeps them at O(1) constant space (or their own base-level space complexity)
+        And sometimes required extra compensation (like sorting 1st) inc's their time complexities by some (but insignificant) time
+
+        eg. the Two-Pointer algo can be used for the Two-Sum / Pairs with Sum problem, with constant O(1) space (without hashmaps/tables)
+        but having to sort the array in question first (if it's not already sorted) moves time complexity from O(n) t, up to O(n log n + n)
+        now with O(n log n + n), by BCR, we can ignore log n 's insignificant effect making ~ O(2n), and then by ignoring constants' effect
+        we can end up with the same O(n) t (but only in best-case scenarios)
+
+        - now with the 2-Pointer having ~ O(n) t & definite O(1) s, is arguably a better solution, then using HashMaps/Tables
+
+        Check this out - https://docs.google.com/document/d/1KWwbliK1PYVXpt_njYhlCq8t373SC78eb_XJdECacTQ/edit?usp=sharing
+
+        '''
+
+
+        # Q - Given an array of integers, return all pairs that add up to a target
+        # sometimes array may have only distinct (no repeating) integers, or target may be 0 (so there'll be -ve integers)
+
+        def pairs_with_sum(self, arr, target): # O(n) t ; O(n) s (dict)
+            # todo: use Two-Pointer algo (sort arr 1st) to avoid dicts (O(1) s)
+            if len(arr) < 2: return
+            m, p = {}, [] # p = pairs with sum
+            for n in arr:
+                d = target - n
+                if n in m: # or - if d in m
+                    p.append((d, n)) # todo: or return (d, n) if two_sum() (finding only 1st pair)
+                if d not in m: # only needed if arr doesn't have distinct elements
+                    m[d] = 1 # or - if n not in m: m[n] = 1
+            return p
+            # todo: this time, we check for current i in m, and add current d to m
+            # we could also check for current d in m, and add current i to m
+            # because of target, i now will be d later, and d now will be i later
+
+        def two_sum_indices(self, arr, target): # O(n) t ; O(n) s (dict)
+            # todo: use Two-Pointer algo (sort arr 1st) to avoid dicts (O(1) s)
+            if len(arr) < 2: return
+            m = {}
+            for i, n in enumerate(arr):
+                d = target - n
+                if n in m: return (m[d], i) 
+                # return index of d (1st number of pair) and index i of current (2nd) number v
+                if d not in m: # only needed if arr doesn't have distinct elements
+                    m[d] = i
+            return None
+            # todo: this time, we check for current n in m, and add current d to m
+
+        def two_sum_indices(nums, target): 
+            # todo: use Two-Pointer algo (sort arr 1st) to avoid dicts (O(1) s)
+            if len(nums) < 2: return
+            m = {}
+            for i, n in enumerate(nums):
+                d = target - n
+                if d in m: return [i, m[d]]
+                if n not in m: # only needed if arr doesn't have distinct elements
+                    m[n] = i
+            return None
+            # todo: this time, we check for current d in m, and add current n to m
+
+        def contains_duplicates(self, arr): # O(n) t ; O(n) s
+            if len(arr) < 2: return
+            m = {}
+            for n in arr:
+                if n in m: return True
+                m[n] = 1
+            return False
+            ''' # todo: Other Options
+            - sort array; if 2 consecutive elems are equal, return true
+            - add all elems to a set; if set & array sizes are equal, return true
+            '''
+        
+        # 3rd-Party
+        def contains_duplicates(self, arr): 
+            # defaultdict simplifies code and avoids the need for explicit initialization of counts for each character
+            m = defaultdict(int)
+            for n in arr:
+                # in case n wasn't found in m, 0 would be returned, and not KeyError
+                if m[n]: # but bool(m[n]) when default 0 is returned is still False, not True
+                    return True
+                m[n] = 1 # m[n] is initialized by 0 by default
+            return False
+        
+        def majority_element(self, arr): # O(n + d ~ 2n ~ n) t ; O(n) s
+            m = defaultdict(int)
+            for n in arr: # O(n) t
+                m[n] += 1 # m[n] is initialized by 0 by default, before being incremented
+            max_n = max_c = 0 # max number & count
+            for i, v in enumerate(m): # O(d) t
+                if v > max_c:
+                    max_n = i
+                    max_c = v
+            return (max_n, max_c) # return max number with its count
+
+        ''' # todo: 3rd-Party - check if an element's count is greater than half the length of the array
+        NOT Optimal, because an elem's count may be majority, but not more than array's half-length
+        eg. [1, 2, 3, 4, 5, 1] - 1 is majority (count = 2), but 2 < 3 (6/2)
+        '''
+        def majority_element(self, arr): # O(n) t ; O(n) s
+            m = {}
+            for n in arr:
+                m[n] = m.get(n, 0) + 1
+            for n in arr:
+                if m[n] > (len(arr)//2): # if count > half-length of array
+                    return n
+
+        # Q - Given an array of strings, group all anagrams together
+        # anagrams are words which have the exact same letters (can be re-arranged to become the same word)
+        
+        def group_anagrams(self, arr): # O(n slogs + k) t ; O(n) s (last returned list of maps's array values isn't included in algo's exec)
+            # k = number of unique words / anagram groups (can be treated as a constant term, if arr & its unique anagram groups are not too large)
+            # s = length of longest string / average length of strings (longest string is a better assignment)
+            
+            ''' # todo: NB:
+            last returned list of maps's array values may not be included in algo's exec
+            but should be taken into consideration in real-world algo scenarios
+            because in those cases, they're still in the system ("the algo never stops")
+            '''
+
+            m = {}
+            for str in arr: # O(n) t
+
+                # TODO: Find all the fastest &/ possible ways of sorting a string (in-place is best)
+
+                key = ''.join(sorted(str)) # O(n log n) t quick sort | # todo: O(t) for ''.join() ?
+                
+                ''' # todo: .sort() a list method only (not for strings)
+                # sorted(str) returns a sorted list of str's characters, so call ''.join(..) with a new string literal
+
+                key = str
+                key.sort() # O(s log s) t (quick sort in-place - key is now a "hashed value")
+                '''
+                
+                if key in m: m[key].append(str) # or also check if str in m[key]
+                else: m[key] = [str]
+            
+            return list(m.values()) # list of anagram groups # todo: O(k) t or O(?) NB: k = number of anagram groups
+            # or [a for a in m.values()] # array of anagram groups # todo: compare O(t) with above
+            # passing m's .values() to list() constructor might be inherently faster than looping through .values() & manually appending
+        
+        # 3rd-Party
+        def group_anagrams(self, strs: List[str]) -> List[List[str]]:
+
+            sort_str = lambda s: ''.join(sorted(s))
+            m = {}
+
+            for s in strs:
+                key = sort_str(s)
+                if key not in m: m[key] = []
+                m[key].append(s) # this time, no need for else check, m[key] was init'd with [] instead
+            
+            return [a for a in m.values()]
+    
+        # Q - Given 4 lists (arr of 4 lists), find 4 numbers (1 in each list) that add up to sum
+        # sometimes array(s) may have only distinct (no repeating) integers, or target may be 0 (so there'll be -ve integers)
+        # * in this case, find how many tuples there are such that, sum is 0
+        
+        def four_sum(self, arr, target=0): # 
+            pass
+
 
     # Matrices
 
@@ -668,7 +853,7 @@ class DataStructures:
         def odd_evens(self): # O(n) t ; O(1) s
             pass # TODO: 
 
-        # 3rd-Party - Alt-logic # test
+        # 3rd-Party - Alt-logic # todo: test
 
         def odd_evens(self): # O(n) t ; O(1) s (only 3 additional vars are used)
             if not self.head: return None
@@ -3559,23 +3744,27 @@ def sum_swap(a1, a2):
     return None # so complete the solution (unless both arrays have all distinct values)
 
 def pairs_with_sum(a, s): 
-    # O(2n) t | O(d+p) s
+    if len(a) < 2: return
+
+    # Option 1 - O(2n) t | O(d) s # todo: not O(d + p) s (pairs array not 'part' of algo's implementation; only value to be returned)
+
     p, d = [], {}
     for i in a:
         if i not in d: d[i] = i
     for i in a:
         if (s-i) in d: p.append((i, s-i))
 
-    # O(n) t | O(d+p) s
-    for i in a: # combining 2 loops into 1
+    # Option 2 - O(n) t | O(d) s
+    
+    for i in a: # using 1 loop
         if (s-i) in d: p.append((i, s-i))
-        if i not in d: # needed if a doesn't have distinct elements
+        if i not in d: # only needed if a doesn't have distinct elements
             d[i] = i
 
-    # two-pointer technique (sorted arr)
+    # Option 3 - Two-Pointer technique (with a sorted arr)
     # O(nlogn + n) t | O(1) s
 
-    a.sort() # O(nlogn) (quick) sort
+    a.sort() # O(n log n) (quick) sort 1st if not already sorted
     i, j = 0, len(a) - 1
 
     while(i < j):
@@ -3584,13 +3773,15 @@ def pairs_with_sum(a, s):
         if (a[i] + a[j] == s): p.append((a[i], a[j]))
  
         # If sum of elements at current
-        # pointers is less, we move towards
-        # higher values by incrementing i += 1
+        # pointers is less than target sum s,
+        # we move towards higher values
+        # by incrementing i += 1
         elif(a[i] + a[j] < s): i += 1
  
         # If sum of elements at current
-        # pointers is more, we move towards
-        # lower values by decrementing j -= 1
+        # pointers is more than target sum s,
+        # we move towards lower values
+        # by decrementing j -= 1
         else: j -= 1
     
     return p
@@ -3948,7 +4139,7 @@ def tree_paths_sum(t, v):
 ##  EXTRA TESTS
 ########################################
 
-def wave_array(arr): #nlogn + (n/2)
+def wave_array(arr): # O(nlogn + (n/2)) t
     arr.sort() # O(n log n)
     for i in range(1, len(arr), 2): # O(n / 2)
         arr[i], arr[i-1] = arr[i-1], arr[i]

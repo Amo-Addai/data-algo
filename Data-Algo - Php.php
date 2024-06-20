@@ -35,7 +35,7 @@ class Searching {
     }
 
     function binarySearch($a, $x) {
-        // sort($a);
+        // * sort($a);
         if (empty($a) || count($a) == 0) return null; // only 1 check required
 
         function rBinarySearch($a, $x) {

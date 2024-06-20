@@ -30,14 +30,14 @@ linearSearch <- function (a, x) {
 }
 
 binarySearch <- function (a, x) {
-    # a <- sort(a)
+    # * a <- sort(a)
     if (length(a) == 0) NULL
 
     rBinarySearch <- function (a, x) {
         if (length(a) == 0) NULL
         m <- length(a) / 2
-        if (x < a[m]) rBinarySearch(a, x) # slice a
-        if (x > a[m]) rBinarySearch(a, x) # slice a
+        if (x < a[m]) rBinarySearch(a, x) # todo: slice a
+        if (x > a[m]) rBinarySearch(a, x) # todo: slice a
         else m
     }
 
