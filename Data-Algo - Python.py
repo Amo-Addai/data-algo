@@ -272,11 +272,34 @@ class DataStructures:
 
     class Hash:
 
-        # TODO: Implement custom HashMaps & HashTables (view sample in .js)
-
-
         class HashMap:
-            pass
+
+            map = {} # same dict being used here; should be an array config'd into a custom dict/map
+
+            def __init__(self, map={}):
+                self.map = map
+            
+            def map(self):
+                return self.map
+            
+            def size(self):
+                return len(self.map.items())
+            
+            def print(self):
+                print(self.map) # todo: Pattern-Program
+
+            def check(self, key):
+                return key in self.map
+
+            def get(self, key): 
+                return self.map[key] if self.check() else None
+
+            def put(self, key, value): 
+                self.map[key] = value
+            
+            def remove(self, key):
+                return self.map.pop(key)
+                # or - del self.map[key] 
 
         class HashTable:
             pass
@@ -438,12 +461,202 @@ class DataStructures:
             
             return [a for a in m.values()]
     
+        # TODO: TEST 4-SUM Qs
+
         # Q - Given 4 lists (arr of 4 lists), find 4 numbers (1 in each list) that add up to sum
         # sometimes array(s) may have only distinct (no repeating) integers, or target may be 0 (so there'll be -ve integers)
         # * in this case, find how many tuples there are such that, sum is 0
         
-        def four_sum(self, arr, target=0): # 
-            pass
+        def four_sum(self, arr: List[List[int]], target: int = 0) -> int: # 
+            m, pairs = defaultdict(list), []
+            [A, B, C, D] = arr # or - A, B, C, D = arr
+
+            for x in A:
+                for y in B:
+                    s = x + y
+                    m[s].append((x, y)) # m[s] = [] if s not in m
+            
+            for x in C:
+                for y in D:
+                    d = target - (x + y) # now, in case target != 0
+                    # target - s (this sum's difference) should be the sum (if target == 0, -ve mirror of the sum) from previous loop
+                   
+                    # now d, should be in m
+                    if d in m:
+                        for p in m[d]: pairs.append((*p, x, y))
+            
+            return pairs
+        
+        # 3rd-Party - Count number of 4-group numbers that sum u pto 0 (target=0 by default)
+        def four_sum_count(self, arr: List[List[int]]) -> int: # 
+            m = {}; c = 0
+            [A, B, C, D] = arr # or - A, B, C, D = arr
+
+            # Because , target=0 this time ..
+            # Check 1st 2 lists for all pairs & their sums
+            # Check next 2 lists for all pairs with a -ve sum mirror of any sum from the 1st check
+
+            for x in A: # or - for i in range(0, len(A)):
+                for y in B:
+                    s = x + y
+                    if s not in m: m[s] = 0
+                    m[s] += 1 # or use defaultdict(int)
+                    ''' # todo: or save the pairs instead
+                    if s not in m: m[s] = [] # or use defaultdict(list)
+                    m[s].append((x, y))
+                    '''
+            
+            for x in C:
+                for y in D:
+                    s = -(x + y) # s should be the -ve mirror of the sum from previous loop 
+                    # so reverse its sign - just like `target - (x + y)` in previous Q (but target = 0 now)
+                    
+                    # now s, should be in m
+                    if s in m: c += m[s] # not 1
+                    # Not 1, because each increment of all s-finds should be multiplied by all increments of their mirror s counts (from the previous loop)
+                    # permutations - if previous loop increment m[s] times, each match-pair here should match with all match-pairs (increments) there
+                    
+                    ''' # or - 
+                    for p in m[s]: pairs.append((*p, x, y)) 
+                    if m[s] was a list of tuples, each of a pair from the previous loop
+                    '''
+
+            return c # or pairs
+        
+
+        # TODO: Test more complex LRU Cache
+
+        class LRU_Cache(HashMap):
+            
+            # HashMaps for fast lookups
+            # Double-ended Queues for fast removals
+
+            cache = {}
+            keys = []
+            
+            def __init__(self, capacity):
+                
+                self.cache = {}
+                super().__init__(map=self.cache) # todo: confirm if self.cache is passed in by reference
+                # self.cache = self.map # {} # instead of assigning self.map to self.cache here
+                # todo: YES - self.cache is passed by reference (so this class' obj has twin props self.map & self.cache)
+                # so making changes to self.map affects self.cache (vice versa)
+                
+                self.keys = DataStructures.Queues.Queue()
+                # for implementing LRU policy - double-ended (L/FIFO) key-placement
+                # based on LRUsage
+                
+                self.capacity = capacity
+            
+            def print(self):
+                print("LRU Cache:", '\n')
+                self.keys.print()
+                super().print()
+
+            def check_capacity(self):
+                # todo: sync checks between keys-queue length & cache-map size
+                # if self.keys.len() == self.capacity:
+                if self.size() == self.capacity:
+                    return False
+                elif self.size() > self.capacity:
+                    print('Cache Overflow Error: Invalidate & Remove LRU items until capacity')
+                else: return True # cache-map size / keys-queue length < capacity
+            
+            def get(self, key):
+                # * don't self.check(key) before calling super.get() - parent meth already checks if key exists
+                value = super().get(key)
+                return value if value else -1
+            
+            def get_lru_item(self): # gets Least-Recently-Used key's value
+                # * this time, self.check(key) before re-arranging it as lru key
+                # already checking if key exists in super.get() - parent meth should be almost insignificant now
+                key = self.get_lru_key()
+                if self.check(key):
+                    # todo: ensure that key == self.set_lru_key()'s return key always
+                    return self.get(self.set_lru_key()) # todo: and that this return value is never None
+                    # because key exists; get_lru_key() & set_lru_key() work in sync
+                return -1
+            
+            def get_lru_key(self): # keys-queue's last item is least-recently-used
+                return self.keys.last() # deque[-1] 
+            
+            def set_lru_key(self): # dequeueing last item in keys-queue, then enqueueing it to the beginning
+                key = self.keys.dequeue_last() # deque.pop()
+                self.keys.enqueue_first(key) # deque.appendleft()
+                return key
+            
+            def get_item(self, key): # gets specific key's value
+                if self.check(key): # if exists, move key to keys-queue's beginning, then get its cache-map value
+                    self.keys.dequeue(value=key)
+                    self.keys.enqueue_first(key)
+                    return self.get(key)
+                return -1
+
+            def put_item(self, key, value):
+                if not self.check(key):
+                    if self.check_capacity(): # * if at capacity, invalidate LRU item 1st
+                        # pop last item from keys deque & remove it from cache map
+                        # todo: NB: This is the Least-Recently-Used key
+                        last_key = self.keys.dequeue_last()
+                        self.remove(last_key)
+                    # now, put key-value in cache-map, then enqueue key at beginning
+                    # * this will increment keys-queue's length & cache-map's size
+                    super().put(key, value)
+                    self.keys.enqueue_first(key) # * not .enqueue(key) (- queue's end), because key is now the Most-Recently-Used
+                else: # then, dequeue this specific key from keys deque ..
+                    # set the key-value in cache-map (parent class) ..
+                    # then enqueue it back to the beginning
+                    self.keys.dequeue(value=key)
+                    super().put(key, value)
+                    self.keys.enqueue_first(key)
+                
+                ''' # todo: OR: move last 2 calls from both condition-cases out of if-else check
+                else: self.keys.dequeue(value=key)
+
+                # now, put key-value in cache-map, then enqueue key at beginning
+                super().put(key, value)
+                self.keys.enqueue_first(key)
+                '''
+
+        # * Simpler Implementation
+        class LRU_Cache_2:
+
+            def __init__(self, capacity: int):
+                self.capacity = capacity
+                self.cache = dict()
+                self.keys = deque()
+            
+            def print(self):
+                print("LRU Cache - Simplified", '\n')
+                print(self.keys)
+                print(self.cache)
+            
+            def get(self, key: int) -> int:
+                if key in self.cache:
+                    value = self.cache[key]
+                    self.keys.remove(key)
+                    self.keys.appendleft(key)
+                    return value
+                return -1
+
+            def put(self, key: int, value: int):
+                if key not in self.cache:
+                    if len(self.keys) == self.capacity:
+                        oldest = self.keys.popleft()
+                        del self.cache[oldest]
+                else: self.keys.remove(key)
+
+                # now, add key-value to cache map
+                # then enqueue key to queue's beginning
+                self.cache[key] = value
+                self.keys.appendleft(key)
+
+
+        # Q - Design & implement a data-structure for the Least-Recently-Used Cache
+
+        def lru_cache(self, cache: 'LRU_Cache_2'): 
+            complex = DataStructures.Hash.LRU_Cache()
+            cache.print(); complex.print()
 
 
     # Matrices
@@ -1560,29 +1773,78 @@ class DataStructures:
 
     class Queues:
 
-        class Queue:
+        class Queue: # * Works as a Double-Ended Queue (can enqueue/dequeue from both beginning & end)
 
             def __init__(self):
                 self.queue = [] # or deque()
             
             def queue(self):
                 return self.queue
-            
-            def enqueue(self, v):
-                self.queue.append(v) # deque - .append(v)
+        
+            def len(self):
+                return len(self.queue)
+
+            def print(self):
+                print(f"Queue - {self.queue}")
             
             def first(self):
                 if self.len() > 0:
                     return self.queue[0] # return 1st item, without removing
                 return None
             
+            def last(self):
+                if self.len() > 0:
+                    return self.queue[-1] # return last item, without removing | deque[-1] 
+                return None
+            
+            def enqueue(self, v):
+                self.queue.append(v) # insert item to end of queue | deque - .append(v)
+            
             def dequeue(self):
                 if self.len() > 0:
                     return self.queue.pop(0) # remove first item (FIFO) | deque .popleft()
                 return None
-        
-            def len(self):
-                return len(self.queue)
+
+            def find(self, index=-1):
+                if index < self.len():
+                    return self.queue[index] # return item item, without removing
+                return None
+            
+            # * Only works well if items are unique (no repetitions)
+            def find(self, value=None): # return index of v
+                try: return self.queue.index(value) # deque - convert to list 1st, then .index()
+                except: return -1 # returns ValueError if v isn't in queue
+            
+
+            # * Other Methods
+            
+
+            def dequeue(self, value=None):
+                if value and self.len() > 0:
+                    i = self.find(value=value)
+                    if i > -1: # valid index (.find only returns valid indices, or -1 - for None/Errors)
+                        # * deque - .remove(value) straight-away;
+                        return self.queue.pop(i) # so out-of-bounds exception will never be called # todo: optimize
+                        # self.dequeue_at(i) will also .find(index=) before dequeueing, so call .pop(i) directly
+                return None
+            
+            def enqueue_first(self, v):
+                self.queue.insert(0, v) # insert item to beginning of queue | deque - .appendleft(v)
+            
+            def dequeue_last(self):
+                if self.len() > 0:
+                    return self.queue.pop() # remove last item (Forced LIFO) | deque - .pop()
+                return None
+            
+            def enqueue_at(self, i, v):
+                if i < self.len():
+                    self.queue.insert(i, v) # insert item to index of queue | deque - .appendleft(v)
+                return False
+
+            def dequeue_at(self, i):
+                if self.find(index=i):
+                    return self.queue.pop(i) # remove ith item | del self.queue[index] | deque - convert to list, delete at index, then convert back to deque
+                return None
 
 
         def __init__(self):
@@ -3795,6 +4057,7 @@ def two_sum(nums, target):
         if (target - n) in d: return [i, d[target - n]]
         d[n] = i
 
+# TODO
 def lru_cache(): pass
 
 
@@ -3802,6 +4065,7 @@ def lru_cache(): pass
 
 
 # HashMaps & HashTables
+
 
 # Linked Lists
 
