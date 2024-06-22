@@ -34,19 +34,36 @@ class Searching {
         // * a.sort()
         if (arr.size == 0) return null
 
-        val rBinarySearch: (Array<Int>, Int) -> Int? = { a, x ->
+        /*
+         * With Recursive lambdas (like Java's recursive lambdas for Functional Interfaces), define function var (not val) before assigning the lambda value
+         * defined function var must initialized before being invoked recursively too, so should be assigned a null value
+         * this means that it's overall function data type definition should also be Optional
+         * to invoke (or re-invoke - recursively) call the ?.invoke() method
+         */
+
+        /* // todo: Similar to Java's new Functional Interfaces
+         * Sample:
+         Function<ArrayList<Integer>, Integer, Integer>[] meth = new Function[1]; // * should be defined as a array when required for recursive-calls, because the 1st item is held in memory during the lambda's implementation as it's being assigned to the same 1st item
+         meth[0] = (x, y) -> { ... meth[0].apply(..); ... }; meth[0].apply(..);
+         * NB: ?.invoke(..) works similar to Java's .apply(..) .accept(..) , etc invoke-methods for its Functional Interfaces
+        */
+
+        var rBinarySearch: ((Array<Int>, Int) -> Int?)? = null // * use var in this case (val cannot be reassigned)
+        rBinarySearch = { a, x ->
             if (a.size == 0) null // return keyword is optional in lambda expressions and single-expression functions
             val m = a.size / 2
-            if (x < a[m]) rBinarySearch(a, x) // todo: slice a
-            else if (x > a[m]) rBinarySearch(a, x) // todo: slice a
+            // * Optional / "Safe" call reference is required in the recursive calls, because rBinarySearch may be null
+            if (x < a[m]) rBinarySearch?.invoke(a, x) // todo: slice a
+            else if (x > a[m]) rBinarySearch?.invoke(a, x) // todo: slice a
             else m
         }
 
-        val rBinarySearch2p: (Array<Int>, Int, Int, Int) -> Int? = { a, x, f, l -> 
+        var rBinarySearch2p: ((Array<Int>, Int, Int, Int) -> Int?)? = null
+        rBinarySearch2p = { a, x, f, l -> 
             if (a.size == 0) null
             val m = (f + l) / 2
-            if (x < a[m]) rBinarySearch2p(a, x, f, m - 1)
-            else if (x > a[m]) rBinarySearch2p(a, x, m + 1, l)
+            if (x < a[m]) rBinarySearch2p?.invoke(a, x, f, m - 1)
+            else if (x > a[m]) rBinarySearch2p?.invoke(a, x, m + 1, l)
             else m
         }
 
@@ -55,7 +72,9 @@ class Searching {
         var l: Int = arr.size - 1
         var m: Int
 
-        rBinarySearch(arr, 7); rBinarySearch2p(arr, 7, f, l)
+        // * Optional / "Safe" call reference is not totally necessary in these outer calls, 
+        // because rBinarySearch (even though Optional, so may be null) has been assigned a lambda function value
+        rBinarySearch.invoke(arr, 7); rBinarySearch2p.invoke(arr, 7, f, l)
 
         while (f < l) {
             m = (f + l) / 2
