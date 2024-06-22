@@ -553,27 +553,25 @@ public class DataAlgoJava {
                 int N = matrix.length;
                 int temp;
 
-                for (int i = 0; i < N; i++) {
+                for (int i = 0; i < N; i++)
                     for (int j = i; j < N; j++) {
                         temp = matrix[i][j];
                         matrix[i][j] = matrix[j][i];
                         matrix[j][i] = temp;
                     }
-                }
 
-                for (int i = 0; i < N; i++) {
+                for (int i = 0; i < N; i++)
                     for (int j = 0; j < N / 2; j++) {
                         temp = matrix[i][j];
                         matrix[i][j] = matrix[i][N - 1 - j];
                         matrix[i][N - 1 - j] = temp;
                     }
-                }
 
                 return matrix;
             }
 
             // This diagonal iteration solution only works on square matrices
-            void setZeroesDiagonally (int[][] matrix) {
+            void setZeroesDiagonally(int[][] matrix) {
                 int r = 0; int c = 0; Boolean isZ = false; int r2 = 0;
                 int rs = matrix.length;
                 int cs = matrix[0].length;
@@ -590,6 +588,249 @@ public class DataAlgoJava {
                     } 
                     r++; c++;
                 }
+            }
+
+            // Q - Given 2 sparse matrices A & B, return AB (assume A's cols.length == B's rows.length)
+
+            int[][] sparseMatrixMultiplication(int[][] A, int[][] B) {
+                int n = A.length,
+                    m = B[0].length,
+                    t = A[0].length; // A's column length should == B's row length, for matrix multiplication to be possible
+                int[][] res = new int[n][m];
+
+                List<List<Integer>> col = new ArrayList<>();
+                int i, j, k;
+
+                for (i = 0; i < t; i++) {
+                    col.add(new ArrayList<>());
+                    for (j = 0; j < m; j++)
+                        if (B[i][j] != 0) 
+                            col.get(i).add(j);                        
+                }
+                for (i = 0; i < n; i++)
+                    for (k = 0; k < t; k++) {
+                        if (A[i][k] == 0) continue;
+                        for (int x : col.get(k)) // todo: foreach loops always require declared datatype on iterator var
+                            res[i][x] += A[i][k] * B[k][x];
+                    }
+
+                return res;
+            }
+
+            /*
+             * Q - With an array of ith prices of a given stock on day i
+             * and a permit for only 1 transaction per day,
+             * Design an algo to find maximum profit
+             * Cannot sell a stock before buying one
+             */
+
+            // or maximumProfit(..)
+            int bestTimeToBuySellStock(int[] prices) {
+                if (prices == null || prices.length == 0)
+                    return 0;
+                
+                int min = Integer.MAX_VALUE,
+                    profit = 0;
+                
+                for (int i : prices) {
+                    min = i < min ? i : min;
+                    profit = (i - min) > profit 
+                        ? i - min 
+                        : profit;
+                }
+                
+                return profit;
+            }
+
+            // Q - Given an nxm 2d grid map of 1s (land) & 0s (water), return number of islands
+            // Island = land (1) surrounded by water (0s) & is formed by connecting adjacent lands horizontally / vertically
+            // Can assume all 4 edges of the grid are all surrounded by water
+
+            @FunctionalInterface
+            interface BFS {
+                void bfs(char[][] grid, int x, int y);
+            }
+
+            @FunctionalInterface
+            interface IsValid {
+                boolean check(int x, int y, char[][] grid);
+            }
+
+            int numberOfIslands(char[][] grid) {
+
+                if (
+                    grid == null ||
+                    grid.length == 0 ||
+                    grid[0].length == 0
+                ) return 0;
+
+                IsValid isValid = (x, y, g) -> {
+                    int n = g.length, m = g[0].length;
+                    return x >= 0
+                        && x < n
+                        && y >= 0
+                        && y < m
+                        && g[x][y] == '1';
+                };
+
+                BFS bfs = (g, x, y) -> {
+                    int[][] directions = {
+                        {0, 1}, {0, -1}, 
+                        {-1, 0}, {1, 0}
+                    };
+                    Queue<int[]> queue = new java.util.LinkedList<>();
+                    queue.offer(new int[] {x, y});
+                    g[x][y] = '2'; // '2' means marked as 'visited' (or create a visited set)
+
+                    int[] node = null;
+                    int i, nextX, nextY;
+
+                    while (!queue.isEmpty()) {
+                        node = queue.poll();
+                        for (i = 0; i < 4; i++) {
+                            nextX = node[0] + directions[i][0];
+                            nextY = node[1] + directions[i][1];
+
+                            if (!isValid.check(nextX, nextY, grid))
+                                continue;
+                            
+                            g[nextX][nextY] = '2';
+                            queue.offer(new int[] { nextX, nextY });
+                        }
+                    }
+
+                };
+
+                int n = grid.length,
+                    m = grid[0].length,
+                    islands = 0;
+                
+                for (int i = 0; i < n; i++)
+                    for (int j = 0; j < m; j++)
+                        if (grid[i][j] == '1') {
+                            bfs.bfs(grid, i, j);
+                            islands++;
+                        }
+                
+                return islands;
+            }
+
+            /*
+             * In an infinite chess board with coordinates from -inf to +inf, there's a knight at square [0, 0]
+             * A knight has 8 possible moves it can make. Each move is 2 squares in a cardinal direction, 
+             * then 1 square in an orthogonal direction.
+             * 
+             * Return the minimum number of steps needed to move the knight to the square [x, y].
+             * It is guaranteed the answer exists
+             * 
+             * Constraint - |x| + |y| <= 300
+             */
+
+            @FunctionalInterface
+            interface IsValid2 {
+                boolean check(int x, int y, boolean[][] visited);
+            }
+
+            int knightShortestPath(int x, int y) {
+                if (x == 0 && y == 0) return 0;
+                
+                IsValid2 isValid = (x1, y1, v) -> {
+                    if (
+                        Math.abs(x1 - 300) 
+                        + Math.abs(y1 - 300) 
+                        <= 300 
+                        && !v[x1][y1]
+                    ) return true;
+                    return false;
+                };
+
+                int[][] Directions = new int[][]{
+                    {1,2}, {2,1}, {-1,2}, {1,-2}, 
+                    {-1,-2}, {-2,1}, {-2,-1}, {2,-1}
+                };
+                Queue<int[]> queue = new java.util.LinkedList<>();
+                boolean[][] visited = new boolean[601][601];
+
+                int step = 0, size, nextX, nextY;
+                int[] node;
+
+                queue.offer(new int[]{ 300, 300 });
+                visited[300][300] = true;
+
+                while (!queue.isEmpty()) {
+                    size = queue.size();
+                    while (size-- > 0) {
+                        node = queue.poll();
+                        for (int[] dir : Directions) {
+                            nextX = node[0] + dir[0];
+                            nextY = node[1] + dir[1];
+                            if (
+                                nextX == x + 300 &&
+                                nextY == y + 300
+                            ) return step + 1;
+                            if (isValid.check(nextX, nextY, visited)) {
+                                queue.offer(new int[] { nextX, nextY });
+                                visited[nextX][nextY] = true;
+                            }
+                        }
+                    }
+                    step++;
+                }
+
+                return step;
+            }
+
+            /*
+             * Given a matrix and a target, return number of non-empty submatrices that sum up to target
+             * A submatrix [(x1, y1), (x2, y2)] is a set of all cells matrix[x][y],
+             * with x1 <= x <= x2 and y1 <= y <= y2
+             * 2 submatrices (x1, y1, x2, y2) and (x1', y1', x2', y2') are different if they have some coordinate that's different
+             */
+
+            // Use prefix sum & convert it to. a 1-D Array
+            // Find the subarray with sum that equals target
+
+            int numberOfSubmatrixSumToTarget(int[][] mat, int target) {
+                int n = mat.length, m = mat[0].length;
+                int[][] prefixSum = new int[n][m];
+
+                // calc prefix sum for each row
+                int i, j;
+                for (i = 0; i < n; i++) 
+                    for (j = 0; j < m; j++)
+                        prefixSum[i][j] = 
+                            j > 0
+                            ? mat[i][j]
+                            + prefixSum[i][j - 1]
+                            : mat[i][j];
+                
+                int res = 0;
+                HashMap<Integer, Integer> map = new HashMap<>();
+
+                int startCol, endCol, sum, row;
+
+                for (startCol = 0; startCol < m; startCol++) 
+                    for (endCol == startCol; endCol < m; endCol++) {
+                        map.clear(); map.put(0, 1);
+                        sum = 0;
+
+                        // convert it to 1-D Array, find a subarray sum to target
+                        for (row = 0; row < m; row++) {
+                            if (startCol == 0)
+                                sum += prefixSum[row][endCol];
+                            else sum += endCol > startCol
+                                    ? (
+                                        prefixSum[row][endCol]
+                                        - prefixSum[row][startCol - 1]
+                                    )
+                                    : mat[row][startCol];
+                            
+                            res += map.getOrDefault(sum - target, 0);
+                            map.put(sum, map.getOrDefault(sum, 0) + 1);
+                        }
+                    }
+
+                return res;
             }
 
 
@@ -1588,7 +1829,7 @@ public class DataAlgoJava {
                             List<Integer> res = new ArrayList<>();
                             if (root == null) return res;
 
-                            Consumer<TreeNode> helper = new Consumer[1];
+                            Consumer<TreeNode>[] helper = new Consumer[1];
                             helper[0] = (r) -> {
                                 if (r == null) return;
                                 res.add((Integer) n.value()); // can work with res directly

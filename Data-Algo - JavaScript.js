@@ -460,9 +460,13 @@ console.log(ht2.getAll())
 */
 
 
-// Matrices
+// Matrices - // TODO
 
-function spiralMatrix(mat) { // spiralOrder | O(n) / O(nm) t; O(n) / O(nm) s
+// spiralOrder
+function spiralMatrix(mat) { // O(n) / O(nm) t ; O(1) / O(n) / O(nm) s (n - square-matrix / n - length, m - width) 
+    // or O(1) s if you ignore result array, because it's not actually a part of the algo's execution
+    // (if current matrix item was only printed out, and not pushed to any result array to be returned, O(s) would be constant = O(1) s)
+
     let arr = []
     if (mat.length === 0) return arr
 
@@ -491,46 +495,46 @@ function spiralMatrix(mat) { // spiralOrder | O(n) / O(nm) t; O(n) / O(nm) s
                 break
         }
     }
+
     return arr
 }
 
+// Q - Given an m x n matrix, if an element is 0, set its entire row & column to 0
+// Brute-force - create another matrix with the expected output - O(nm) s
+// Optimized - Do it in-place - O(1) s
+
 function setMatrixZeroes(mat) { // O(nm) t | O(1) s
+
     let firstColHasZero = firstRowHasZero = false
     let rs = mat.length, cs = mat[0].length
 
     // check if 1st col has zero
-    for (let i = 0; i < rs; i++) {
+    for (let i = 0; i < rs; i++)
         if (mat[i][0] === 0) {
             firstColHasZero = true
             break
         }
-    }
 
     // check if 1st row has zero
-    for (let i = 0; i < cs; i++) {
+    for (let i = 0; i < cs; i++)
         if (mat[0][i] === 0) {
             firstRowHasZero = true
             break
         }
-    }
 
-    // use 1st row & col as flags, if rest of cells have zeroes
-    for (let r = 1; r < rs; r++) {
-        for (let c = 1; c < cs; c++) {
+    // use 1st row & col as flags, if rest of row-col-pair cells have zeroes
+    for (let r = 1; r < rs; r++)
+        for (let c = 1; c < cs; c++)
             if (mat[r][c] === 0) {
                 mat[0][c] = 0
                 mat[r][0] = 0
             }
-        }
-    }
 
-    // zero out cells based on flags in 1st row & col
-    for (let r = 1; r < rs; r++) {
-        for (let c = 1; c < cs; c++) {
+    // zero out row-col-pair cells based on flags in 1st row & col
+    for (let r = 1; r < rs; r++)
+        for (let c = 1; c < cs; c++)
             if (mat[r][0] === 0 || mat[0][c] === 0)
                 mat[r][c] = 0
-        }
-    }
 
     // zero out 1st col
     if (firstColHasZero)
@@ -541,18 +545,20 @@ function setMatrixZeroes(mat) { // O(nm) t | O(1) s
     if (firstRowHasZero)
         for (let i = 0; i < cs; i++)
             mat[0][i] = 0
+
+    return mat // matrix updated in-place
 }
 
-function wordSearch(mat) { // O(nm) t | O(1) s
+function wordSearch(mat, word='word') { // O(nm) t | O(1) s
     // check if word exists in matrix of letters
 
-    const exist = (mat, word) => {
+    const wordExists = (mat, word) => {
 
-        let found = false, rs = mat.length, cs = mat[0].length
-
+        // Graph-Matrix DFS (Depth-First Search)
         const dfs = (r, c, count, word) => {
             if (count === word.length) {
-                found = true; return
+                found = true
+                return
             }
             if (
                 r < 0 || r >= rs ||
@@ -562,27 +568,29 @@ function wordSearch(mat) { // O(nm) t | O(1) s
             ) return
 
             let tmp = mat[r][c]
-            mat[r][c] = ''
+            mat[r][c] = '' // empty's current cell so can't be re-used 
+            // "marks it as visited" before the next 4 recursive calls
 
             dfs(r + 1, c, count + 1, word)
             dfs(r - 1, c, count + 1, word)
             dfs(r, c + 1, count + 1, word)
             dfs(r, c - 1, count + 1, word)
 
-            mat[r][c] = tmp
+            mat[r][c] = tmp // reset current cell for outmost dfs() calls 
+            // so outer for-loop can still traverse
         }
 
-        for (let r = 0; r < rs; r++) {
-            for (let c = 0; c < cs; c++) {
+        let found = false, rs = mat.length, cs = mat[0].length
+
+        for (let r = 0; r < rs; r++)
+            for (let c = 0; c < cs; c++)
                 if (mat[r][c] === word[0])
                     dfs(r, c, 0, word)
-            }
-        }
 
         return found
     }
 
-    return exist(mat, 'word')
+    return wordExists(mat, word)
 }
 
 

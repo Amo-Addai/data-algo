@@ -657,6 +657,52 @@ class DataStructures:
         def lru_cache(self, cache: 'LRU_Cache_2'): 
             complex = DataStructures.Hash.LRU_Cache()
             cache.print(); complex.print()
+        
+        # Q - Given a string S and sub-string T, find the minimum window in S which will contain all characters in sub-string T
+
+        def minimum_window_substring(self, str, s):
+            pass # TODO
+
+        # TODO: 3rd-Party - Understand logic
+        def minimum_window_substring(self, s1: str, s2: str) -> str:
+            l1, l2 = len(s1), len(s2)
+            if l1 < l2: return '' # no way for pattern s to exist in str
+            
+            m1, m2 = {}, {} # assigning 1 object is by reference
+
+            for i in range(0, l1):
+                if m2.get(s2[i]) is None:
+                    m2[s2[i]] = 0
+                m2[s2[i]] += 1
+            
+            count, left, start_i, min_l = 0, 0, -1, float('inf')
+
+            for right in range(0, l1):
+
+                if m1[s1[right]] is None:
+                    m1[s1[right]] = 0
+                m1[s1[right]] += 1
+
+                if m2[s1[right]] is None:
+                    m2[s1[right]] = 0
+
+                if m1[s1[right]] <= m2[s1[right]]:
+                    count += 1
+
+                if count == l2:
+
+                    while m1[s1[left]] > m2[s1[left]]:
+                        m1[s1[left]] -= 1
+                        left += 1
+            
+                    window_length = right - left + 1
+                    if min_l > window_length:
+                        min_l = window_length
+                        start_i = left
+            
+            # outside for loop
+            if start_i == -1: return ''
+            return s1[start_i : start_i + min_l] # minimum substring window
 
 
     # Matrices
