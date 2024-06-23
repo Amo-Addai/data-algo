@@ -38,7 +38,7 @@ public class DataAlgoJava {
         Main.main(args);
     }
 
-    static class Main {
+    public static class Main {
 
         // Error - The member interface RBinarySearch can only be defined inside a top-level class or interface or in a static contextJava(536870938)
 
@@ -731,6 +731,7 @@ public class DataAlgoJava {
                 boolean check(int x, int y, boolean[][] visited);
             }
 
+            // minimumKnightMoves()
             int knightShortestPath(int x, int y) {
                 if (x == 0 && y == 0) return 0;
                 
@@ -810,7 +811,7 @@ public class DataAlgoJava {
                 int startCol, endCol, sum, row;
 
                 for (startCol = 0; startCol < m; startCol++) 
-                    for (endCol == startCol; endCol < m; endCol++) {
+                    for (endCol = startCol; endCol < m; endCol++) {
                         map.clear(); map.put(0, 1);
                         sum = 0;
 
@@ -1313,7 +1314,9 @@ public class DataAlgoJava {
 
             // Trees
 
-            public class Tree {
+            public static class Tree { // todo: Static even though it doesn't contain any custom-defined @FunctionalInterface
+                // Should be static because its child-class is static; and the child-class instantiates super(..) in its constructor
+                // * Child-class is static because it contains 1+ custom-defined @FunctionalInterfaces
 
                 public class TreeNode {
 
@@ -1385,7 +1388,7 @@ public class DataAlgoJava {
 
             // Binary (Search) Trees
 
-            public class BST extends Tree {
+            public static class BST extends Tree {
 
                 public BST(TreeNode root) {
                     super(root);
@@ -1472,7 +1475,7 @@ public class DataAlgoJava {
 
                 // Q - Given a Binary Tree, return all root-to-leaf paths
 
-                public class BinaryTreePaths {
+                public static class BinaryTreePaths {
 
                     // Option 1 - ..
                     public List<String> binaryTreePaths(TreeNode root) {
@@ -1546,7 +1549,7 @@ public class DataAlgoJava {
                  * A node is allowed to be a descendant of itself
                  */
 
-                public class LowestCommonAncestor {
+                public static class LowestCommonAncestor {
 
                     /*
                     * Start from the tree root
@@ -1687,7 +1690,7 @@ public class DataAlgoJava {
 
                 // Q - Find the kth-smallest element in a BST
 
-                public class KthSmallestElementBST {
+                public static class KthSmallestElementBST {
 
                     private int result = 0;
                     private int index = 0;
@@ -1830,11 +1833,11 @@ public class DataAlgoJava {
                             if (root == null) return res;
 
                             Consumer<TreeNode>[] helper = new Consumer[1];
-                            helper[0] = (r) -> {
-                                if (r == null) return;
-                                res.add((Integer) n.value()); // can work with res directly
-                                if (n.left() != null) helper[0].accept(n.left());
-                                if (n.right() != null) helper[0].accept(n.right());
+                            helper[0] = (node) -> {
+                                if (node == null) return;
+                                res.add((Integer) node.value()); // can work with res directly
+                                if (node.left() != null) helper[0].accept(node.left());
+                                if (node.right() != null) helper[0].accept(node.right());
                             };
 
                             helper[0].accept(root);
@@ -1898,17 +1901,19 @@ public class DataAlgoJava {
                             if (root == null) return res;
 
                             TreeNode node = null;
-                            java.util.Queue<TreeNode> queue = new ArrayDeque<>(
-                                Arrays.asList(
+                            TreeNode[] list = { root }; // have to define the array object before being passed into Arrays.asList()
+                            java.util.Queue<TreeNode> queue = new ArrayDeque<>(java.util.Arrays.asList(list));
+                            /* // passing in { .. } primitive array value causes a syntax symbol error
+                                java.util.Arrays.asList(
                                     { root } // todo: forced-indentation for your memory
                                 )
                             );
-                            // todo: Use Java's in-built Queue class
-                            // because Trees is the current study
-                            // or queue.add(root) after init (not .enqueue() / .push())
+                            */
+                            // or - queue.add(root) after init (not .enqueue() / .push())
+                            // * NB: Used Java's in-built Queue class, because Trees is the current study
 
                             while (node != null || !queue.isEmpty()) {
-                                node = (TreeNode) queue.poll(); // not .dequeue() / .pop();
+                                node = queue.poll(); // not .dequeue() / .pop();
                                 res.add((Integer) node.value());
                                 // todo: find out other Level-Order methods from .py
                             }

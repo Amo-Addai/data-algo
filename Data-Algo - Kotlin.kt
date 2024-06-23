@@ -55,17 +55,21 @@ class Searching {
             // * Optional / "Safe" call reference is required in the recursive calls, because rBinarySearch may be null
             if (x < a[m]) rBinarySearch?.invoke(a, x) // todo: slice a
             else if (x > a[m]) rBinarySearch?.invoke(a, x) // todo: slice a
-            else m
+            else m // * return keyword can be omitted in lambda implementations
         }
 
-        var rBinarySearch2p: ((Array<Int>, Int, Int, Int) -> Int?)? = null
-        rBinarySearch2p = { a, x, f, l -> 
-            if (a.size == 0) null
-            val m = (f + l) / 2
-            if (x < a[m]) rBinarySearch2p?.invoke(a, x, f, m - 1)
-            else if (x > a[m]) rBinarySearch2p?.invoke(a, x, m + 1, l)
-            else m
-        }
+        // * Lambda with the run keyword - scope
+        val rBinarySearch2p: (Array<Int>, Int, Int, Int) -> Int? = run {
+            fun rbs2p(a: Array<Int>, x: Int, f: Int, l: Int): Int? {
+                if (a.size == 0) return null
+                val m = (f + l) / 2
+                if (x < a[m]) return rbs2p(a, x, f, m - 1)
+                else if (x > a[m]) return rbs2p(a, x, m + 1, l)
+                else return m
+            }
+            ::rbs2p
+        }//() // todo: test instant-exec
+    
 
         // var f = 0, l = arr.size - 1, m = -1
         var f: Int = 0
@@ -74,7 +78,8 @@ class Searching {
 
         // * Optional / "Safe" call reference is not totally necessary in these outer calls, 
         // because rBinarySearch (even though Optional, so may be null) has been assigned a lambda function value
-        rBinarySearch.invoke(arr, 7); rBinarySearch2p.invoke(arr, 7, f, l)
+        rBinarySearch.invoke(arr, 7)
+        rBinarySearch2p(arr, 7, f, l) // * this version of lambda function doesn't require .invoke()
 
         while (f < l) {
             m = (f + l) / 2
