@@ -2894,6 +2894,73 @@ class DataStructures:
         # Acyclic Undirected Graph - a tree if connected, and a forest if not connected
 
 
+        class DirectedGraph: # All edges are 1/uni-directional (point in 1 specific direction)
+            # * Same as class DirectedGraphWithAdjacencyMatrix
+        
+            def __init__(self, num_nodes):
+                self.num_nodes = num_nodes + 1
+                self.graph = [ # Graph is setup as an Adjacency Matrix (not Adj List)
+                    [0 for x in range(self.num_nodes)] 
+                    for y in range(self.num_nodes)
+                ]
+            
+            def get_root(self): return self.graph[0][0]
+            
+            def within_bounds(self, v1, v2):
+                return (v1 >= 0 and v1 <= self.num_nodes) \
+                    and (v2 >= 0 and v2 <= self.num_nodes)
+
+            def insert_edge(self, v1, v2):
+                if self.within_bounds(v1, v2): self.graph[v1][v2] = 1
+            
+            def print(self):
+                for i in range(self.num_nodes):
+                    for j in range(len(self.graph[i])):
+                        if self.graph[i][j] is not None:
+                            print(f"{i} -> {j}")
+            
+            def test(self):
+                g = DataStructures.Graph.DirectedGraph(5)
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print()
+
+        class UndirectedGraph: # All edges are bi-directional (do not point in any 1 specific direction)
+            # * Same as class UndirectedGraphWithAdjacencyMatrix
+        
+            def __init__(self, num_nodes):
+                self.num_nodes = num_nodes + 1
+                self.graph = [ # Graph is setup as an Adjacency Matrix (not Adj List)
+                    [0 for x in range(self.num_nodes)]
+                    for y in range(self.num_nodes)
+                ]
+            
+            def get_root(self): return self.graph[0][0]
+            
+            def within_bounds(self, v1, v2):
+                return (v1 >= 0 and v1 <= self.num_nodes) \
+                    and (v2 >= 0 and v2 <= self.num_nodes)
+
+            def insert_edge(self, v1, v2):
+                if self.within_bounds(v1, v2):
+                    self.graph[v1][v2] = 1
+                    self.graph[v2][v1] = 1 # Undirected / Bi-directional edges (both directions)
+            
+            def print(self):
+                for i in range(self.num_nodes):
+                    for j in range(len(self.graph[i])):
+                        if self.graph[i][j] is not None:
+                            print(f"{i} -> {j}")
+            
+            def test(self):
+                g = DataStructures.Graph.UndirectedGraph(5)
+                g.insert_edge(1, 2)
+                g.insert_edge(2, 3)
+                g.insert_edge(4, 5)
+                g.print()
+        
+        
         '''
 
         Traversal Actions: Visit node; Check node; Push to stack; Pop from stack (also a visit);
@@ -3061,39 +3128,6 @@ class DataStructures:
                 gl.insert_edge(5, 8); gl.insert_edge(6, 9); gl.insert_edge(5, 6)
                 self.bfs(gl); self.cfs(gl); self.dfs(gl)
         
-        
-        class DirectedGraph: # All edges are 1/uni-directional (point in 1 specific direction)
-            # * Same as class DirectedGraphWithAdjacencyMatrix
-        
-            def __init__(self, num_nodes):
-                self.num_nodes = num_nodes + 1
-                self.graph = [ # Graph is setup as an Adjacency Matrix (not Adj List)
-                    [0 for x in range(self.num_nodes)] 
-                    for y in range(self.num_nodes)
-                ]
-            
-            def get_root(self): return self.graph[0][0]
-            
-            def within_bounds(self, v1, v2):
-                return (v1 >= 0 and v1 <= self.num_nodes) \
-                    and (v2 >= 0 and v2 <= self.num_nodes)
-
-            def insert_edge(self, v1, v2):
-                if self.within_bounds(v1, v2): self.graph[v1][v2] = 1
-            
-            def print(self):
-                for i in range(self.num_nodes):
-                    for j in range(len(self.graph[i])):
-                        if self.graph[i][j] is not None:
-                            print(f"{i} -> {j}")
-            
-            def test(self):
-                g = DataStructures.Graph.DirectedGraph(5)
-                g.insert_edge(1, 2)
-                g.insert_edge(2, 3)
-                g.insert_edge(4, 5)
-                g.print()
-
         class DirectedGraphWithAdjacencyList:
 
             def __init__(self):
@@ -3142,40 +3176,6 @@ class DataStructures:
             
             def test(self):
                 g = DataStructures.Graph.DirectedGraphWithAdjacencyMatrix()
-                g.insert_edge(1, 2)
-                g.insert_edge(2, 3)
-                g.insert_edge(4, 5)
-                g.print()
-
-        class UndirectedGraph: # All edges are bi-directional (do not point in any 1 specific direction)
-            # * Same as class UndirectedGraphWithAdjacencyMatrix
-        
-            def __init__(self, num_nodes):
-                self.num_nodes = num_nodes + 1
-                self.graph = [ # Graph is setup as an Adjacency Matrix (not Adj List)
-                    [0 for x in range(self.num_nodes)]
-                    for y in range(self.num_nodes)
-                ]
-            
-            def get_root(self): return self.graph[0][0]
-            
-            def within_bounds(self, v1, v2):
-                return (v1 >= 0 and v1 <= self.num_nodes) \
-                    and (v2 >= 0 and v2 <= self.num_nodes)
-
-            def insert_edge(self, v1, v2):
-                if self.within_bounds(v1, v2):
-                    self.graph[v1][v2] = 1
-                    self.graph[v2][v1] = 1 # Undirected / Bi-directional edges (both directions)
-            
-            def print(self):
-                for i in range(self.num_nodes):
-                    for j in range(len(self.graph[i])):
-                        if self.graph[i][j] is not None:
-                            print(f"{i} -> {j}")
-            
-            def test(self):
-                g = DataStructures.Graph.UndirectedGraph(5)
                 g.insert_edge(1, 2)
                 g.insert_edge(2, 3)
                 g.insert_edge(4, 5)

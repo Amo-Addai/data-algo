@@ -625,7 +625,7 @@ public class DataAlgoJava {
              */
 
             // or maximumProfit(..)
-            int bestTimeToBuySellStock(int[] prices) {
+            int bestTimeToBuyOrSellStock(int[] prices) {
                 if (prices == null || prices.length == 0)
                     return 0;
                 
@@ -812,7 +812,8 @@ public class DataAlgoJava {
 
                 for (startCol = 0; startCol < m; startCol++) 
                     for (endCol = startCol; endCol < m; endCol++) {
-                        map.clear(); map.put(0, 1);
+                        map.clear();
+                        map.put(0, 1);
                         sum = 0;
 
                         // convert it to 1-D Array, find a subarray sum to target
