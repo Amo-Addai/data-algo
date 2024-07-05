@@ -2137,7 +2137,7 @@ class DataStructures:
 
         '''
             breadth - first search
-            code (value) - first search
+            code (value) - first (binary) search
             depth - first search
         ''' 
 
