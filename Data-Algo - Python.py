@@ -2184,14 +2184,47 @@ class DataStructures:
                 for child in node.children[::-1]:
                     queue.append(child)
         
-        def cfs(self, root=None, cb=None): # O(log n) t (binary-search through tree) ; O(1) s
+        # todo: binary-search through BSTs only
+        def cfs(self, root=None, cb: function=None): # O(log n) t ; O(1) s
             if root is None or cb is None: return None
+
+            # TODO: implement .is_BST() validation
+            # if not DataStructures.Tree.is_BST(root): return None
+
+            # Option 1 - Recursion
 
             while root is not None and root.value is not None:
                 res = cb(root)
-                if res == 'l': self.cfs(root.left, cb)
-                elif res == 'r': self.cfs(root.right, cb)
+                if res == 'l': self.cfs(root.left, cb) # todo: or root = root.left (iteration method)
+                elif res == 'r': self.cfs(root.right, cb) # todo: or root = root.right (iteration method)
                 else: return res # or root / root.value
+            
+            # Option 2 - Iteration
+
+            res = cb(root) # todo: cb() should return node or node.value being searched
+            # or 'l' or 'r' for traversal only (direct search in next method option)
+            while root and root.value != res:
+                if res == 'l': root = root.left
+                elif res == 'r': root = root.right
+                res = cb(root)
+            return res
+        
+        def cfs(self, root=None, v: int=None):
+            if root is None or v is None: return None
+
+            def iteration(root, v):
+                while root and root.value != v:
+                    if root.value > v: root = root.left
+                    else: root = root.right
+                return root
+            
+            def recursion(root, v):
+                if root.value == v: return root
+                elif root.value > v: return recursion(root.left, v)
+                else: return recursion(root.right, v)
+            
+            print(iteration(root, v))
+            print(recursion(root, v))
         
         def dfs(self, root, order='pre-order'):
             if root is None: return
@@ -2370,6 +2403,7 @@ class DataStructures:
 
         def max_depth_or_height(self): pass
 
+        @staticmethod
         def is_BST(self): pass
 
         def lowest_common_ancestor(self): pass
@@ -2717,12 +2751,12 @@ class DataStructures:
             self.height += 1
         
         def find(self, v):
-            return self.cfs(
+            return self.cfs( # todo: Remember, cfs (code-1st / binary searches) only work on Binary Search Trees
                 self.root, 
                 cb=lambda root: None if not (root and root.value) \
                     else root if root.value == v \
-                    else 'l' if root.value < v \
-                    else 'r'
+                    else 'l' if root.value > v \
+                    else 'r' # BST left children less values, right children greater values
             )
         
         def insert(self, v):
@@ -2747,7 +2781,7 @@ class DataStructures:
                     return self.root # not the newly added node
                 
                 else: # check traverse left/right
-                    if root.value < v: return 'l'
+                    if root.value > v: return 'l'
                     else: return 'r' # root.value == v - already checked
                     
             return self.cfs(self.root, cb=cb)
@@ -2806,7 +2840,7 @@ class DataStructures:
                     root = None
                     return node
                 else: # check traverse left/right
-                    if root.value < v: return 'l'
+                    if root.value > v: return 'l'
                     else: return 'r' # root.value == v - already checked
                     
             return self.cfs(self.root, cb=cb)

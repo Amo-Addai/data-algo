@@ -1394,6 +1394,33 @@ public class DataAlgoJava {
                 public BST(TreeNode root) {
                     super(root);
                 }
+                
+                public Object cfs(TreeNode root, Object key) {
+
+                    BiFunction<TreeNode, Object, Object> iteration = (TreeNode root, Object key) -> {
+                        while (root != null && (Integer) root.value != (Integer) key) {
+                            if (key < root.value)
+                                root = root.left;
+                            else root = root.right;
+                        }
+                        return root; // Will be null if not found
+                    };
+                
+                    BiFunction<TreeNode, Object, Object>[] recursion = BiFunction<TreeNode, Object, Object>[1];
+                    recursion[0] = (TreeNode root, Object key) -> {
+                        if (root == null || (Integer) root.value == (Integer) key)
+                            return root;
+                
+                        if (key < root.value)
+                            return recursion[0].apply(root.left, key);
+                        else return recursion[0].apply(root.right, key);
+                    };
+                
+                    System.out.println(iteration.apply(root, key));
+                    System.out.println(recursion[0].apply(root, key));
+                    
+                }
+
 
                 // Q - With a Binary Tree, find a sub-tree with minimum sum
 

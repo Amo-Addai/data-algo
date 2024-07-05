@@ -1315,6 +1315,26 @@ class BST extends Tree {
         console.log(this)
     }
 
+    contains(v) {
+        if (!this.root) return false
+        let contains = false
+
+        // use inner variable function here, or a outer .dfs(cb) method with a callback
+        const dfs = (n) => {
+            if (!n) return
+
+            if (n.value == v) {
+                contains = true
+                return
+            }
+            dfs(n.left)
+            dfs(n.right)
+        }
+
+        dfs(this.root)
+        return contains
+    }
+
     insert(v) {
         const node = new Tree.TreeNode(v)
         if (!this.root) {
@@ -1322,7 +1342,8 @@ class BST extends Tree {
             return this
         }
 
-        // Code (Value) - 1st Search // todo: Compare with .py (with callback)
+        // * Code (Value) - 1st (Binary) through BSTs only 
+        // todo: Compare with .py (with callback)
         const cfs = (n) => {
             if (!n) return null
 
@@ -1355,24 +1376,29 @@ class BST extends Tree {
         // todo: Compare with .py (with callback - for decoupled insertion logic)
     }
 
-    contains(v) {
-        if (!this.root) return false
-        let contains = false
+    cfs(root, v) {
 
-        // use inner variable function here, or a outer .dfs(cb) method with a callback
-        const dfs = (n) => {
-            if (!n) return
-
-            if (n.value == v) {
-                contains = true
-                return
+        const iteration = (root, v) => {
+            while (root != null && root.value != v) {
+                if (v < root.value)
+                    root = root.left
+                else root = root.right
             }
-            dfs(n.left)
-            dfs(n.right)
+            return root // Will be null if not found
         }
-
-        dfs(this.root)
-        return contains
+    
+        const recursion = (root, v) => {
+            if (root == null || root.value == v)
+                return root
+    
+            if (v < root.value)
+                return search(root.left, v)
+            else return search(root.right, v)
+        }
+    
+        console.log(iteration(root, v))
+        console.log(recursion(root, v))
+        
     }
 
     dfs() {
