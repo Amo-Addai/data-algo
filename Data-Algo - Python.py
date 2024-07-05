@@ -2045,7 +2045,7 @@ class DataStructures:
 
     class Tree: # Acyclic Undirected Graph - a tree if connected, and a forest if not connected
             
-        class TreeNode():
+        class TreeNode:
 
             def __init__(self, v=None, l=None, r=None, c=[], p=None):
                 self.value = v
