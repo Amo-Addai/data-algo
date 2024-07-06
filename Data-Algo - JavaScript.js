@@ -1380,9 +1380,10 @@ class BST extends Tree {
 
         const iteration = (root, v) => {
             while (root != null && root.value != v) {
-                if (v < root.value)
-                    root = root.left
-                else root = root.right
+                // todo: if-ternary in-place of if-else
+                v < root.value
+                ? root = root.left
+                : root = root.right
             }
             return root // Will be null if not found
         }
@@ -1390,10 +1391,10 @@ class BST extends Tree {
         const recursion = (root, v) => {
             if (root == null || root.value == v)
                 return root
-    
-            if (v < root.value)
-                return search(root.left, v)
-            else return search(root.right, v)
+            
+            return v < root.value
+            ? search(root.left, v)
+            : search(root.right, v)
         }
     
         console.log(iteration(root, v))
