@@ -1380,10 +1380,13 @@ class BST extends Tree {
 
         const iteration = (root, v) => {
             while (root != null && root.value != v) {
-                // todo: if-ternary in-place of if-else
                 v < root.value
                 ? root = root.left
                 : root = root.right
+                // todo: if-ternary in-place of if-else
+                /* // * longer syntax
+                bool ? ( stmt, stmt, stmt ) : ( stmt, stmt, stmt )
+                */
             }
             return root // Will be null if not found
         }
