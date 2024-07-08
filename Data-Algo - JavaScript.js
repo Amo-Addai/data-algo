@@ -121,7 +121,8 @@ var Sorting = function() {
 var Searching = function() {
 
     function linearSearch(a, x) { // O(n)
-        for (i of a) if (i === x) return i
+        for (i of a) if (i === x) return i // * 2 constructs can be used in 1 line
+        // * never force 1-line or tabs in production (only scopes {}) | unless in-built - .py/rb/sh/erl/fs/qs/..
         return null
     }
 
