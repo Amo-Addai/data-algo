@@ -1,5 +1,9 @@
 'use strict';
 
+// * setup package.json & install
+import * as R from 'ramda'
+import * as RA from 'ramda-adjunct'
+
 /* // TODO: To-Use
 
 Generics
