@@ -36,7 +36,7 @@ func (x Searching) LinearSearch(a []int, n int) int {
 			return i
 		}
 	}
-	return -1 // nil if return type was a pointer *int, so address of &i should be returned instead
+	return -1 // * nil if return type was a pointer *int, so i's address &i should be returned instead
 }
 
 func (x Searching) BinarySearch(a []int, n int) int {
