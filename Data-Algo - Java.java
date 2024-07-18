@@ -1394,25 +1394,25 @@ public class DataAlgoJava {
                 
                 public Object cfs(TreeNode root, Object key) {
 
-                    BiFunction<TreeNode, Object, Object> iteration = (TreeNode root, Object key) -> {
-                        while (root != null && (Integer) root.value != (Integer) key) {
-                            if (key < root.value)
-                                root = root.left;
-                            else root = root.right;
+                    BiFunction<TreeNode, Object, Object> iteration = (TreeNode node, Object k) -> {
+                        while (node != null && (Integer) node.value != (Integer) k) {
+                            if ((Integer) k < (Integer) node.value)
+                                node = node.left;
+                            else node = node.right;
                         }
-                        return root; // Will be null if not found
+                        return node; // Will be null if not found
                     };
+                    
+                    BiFunction<TreeNode, Object, Object>[] recursion = new BiFunction[1];
+                    recursion[0] = (TreeNode node, Object k) -> {
+                        if (node == null || (Integer) node.value == (Integer) k)
+                            return node;
                 
-                    BiFunction<TreeNode, Object, Object>[] recursion = BiFunction<TreeNode, Object, Object>[1];
-                    recursion[0] = (TreeNode root, Object key) -> {
-                        if (root == null || (Integer) root.value == (Integer) key)
-                            return root;
-                
-                        if (key < root.value)
-                            return recursion[0].apply(root.left, key);
-                        else return recursion[0].apply(root.right, key);
+                        if ((Integer) k < (Integer) node.value)
+                            return recursion[0].apply(node.left, k);
+                        else return recursion[0].apply(node.right, k);
                     };
-                
+                    
                     System.out.println(iteration.apply(root, key));
                     System.out.println(recursion[0].apply(root, key));
                     
