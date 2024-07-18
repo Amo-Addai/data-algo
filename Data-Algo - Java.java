@@ -40,9 +40,6 @@ public class DataAlgoJava {
 
     public static class Main {
 
-        // Error - The member interface RBinarySearch can only be defined inside a top-level class or interface or in a static contextJava(536870938)
-
-
         ////////////////////////////////////////
         //  SORTING ALGO'S
         ////////////////////////////////////////

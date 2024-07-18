@@ -1,6 +1,6 @@
 'use strict';
 
-// * setup package.json & install
+// * install globally
 import * as R from 'ramda'
 import * as RA from 'ramda-adjunct'
 
