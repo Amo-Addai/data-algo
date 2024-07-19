@@ -2353,9 +2353,3 @@ public class DataAlgoJava {
     }
 
 }
-
-
-/** 
- * NOTES: 
-
-*/
