@@ -7,15 +7,15 @@ Implementations of data-structures & algorithms for coding interview questions, 
 
 <br />
 
-Also includes some coding styles and design patterns' implementations.
+This side-project showcases proficiency in handling algorithmic challenges across multiple technology stacks.
 
 <br />
 
-This side-project showcases my proficiency in handling algorithmic challenges across multiple technology stacks.
+Also includes some coding styles and design pattern implementations.
 
 <br />
 
-One of my side-projects I work on, to keep my language skills from atrophying.
+One of my side-projects to keep my language skills from atrophying.
 
 <br />
 
