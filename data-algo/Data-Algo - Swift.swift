@@ -140,7 +140,7 @@ func rabinKarp(t: String, p: String) -> Int {
             dropped: tArr[i - 1],
             added: tArr[endIndex],
             patternSize: pArr.count - 1
-        ) as Int
+        )
 
         if window == [pHash], let newPArr = window {
             return i

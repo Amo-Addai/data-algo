@@ -3,7 +3,11 @@
 
 <br />
 
-Implementations of algorithms for coding interview questions, leveraging some data structures and programming languages.
+Implementations of data-structures & algorithms for coding interview questions, leveraging some data structures and programming languages.
+
+<br />
+
+Also includes some coding styles and design patterns' implementations.
 
 <br />
 
