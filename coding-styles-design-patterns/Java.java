@@ -112,7 +112,7 @@ public class Java {
 
         }
 
-        public class Declarative {
+        public static class Declarative {
 
             public static void test(String[] args) {
                 List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
@@ -154,7 +154,7 @@ public class Java {
 
         }
 
-        public class Callback {
+        public static class Callback {
 
             interface ReadFileCallback {
                 void done(Exception error, String data);
@@ -207,7 +207,7 @@ public class Java {
                 }
             }
 
-            class Person {
+            class Person1 {
                 private EatBehavior eatBehavior = new Eat();
                 private WalkBehavior walkBehavior = new Walk();
 
@@ -220,10 +220,41 @@ public class Java {
                 }
             }
 
+            class Person2 {
+                private EatBehavior eatBehavior = null;
+                private WalkBehavior walkBehavior = null;
+
+                public Person2(EatBehavior eatBehavior, WalkBehavior walkBehavior) {
+                    this.eatBehavior = eatBehavior;
+                    this.walkBehavior = walkBehavior;
+                }
+
+                public void eat() {
+                    eatBehavior.eat();
+                }
+
+                public void walk() {
+                    walkBehavior.walk();
+                }
+            }
+
+            /*
+            static class Test {
+                static void test() {
+                    Person1 person1 = new Person1();
+                    Person2 person2 = new Person2(new Eat(), new Walk());
+                    person1.eat(); person2.eat();
+                    person1.walk(); person2.walk();
+                }
+            }
+            */
+
             public static void test(String[] args) {
-                Person person = new Person();
-                person.eat();
-                person.walk();
+                // Test.test();
+                Person1 person1 = new Person1();
+                Person2 person2 = new Person2(new Eat(), new Walk());
+                person1.eat(); person2.eat();
+                person1.walk(); person2.walk();
             }
 
         }
@@ -262,7 +293,7 @@ public class Java {
             
         }
         
-        public static class Middleware {
+        public static class MiddlewarePattern {
 
             interface MiddlewareFunction {
                 void apply(String context, Runnable next);
@@ -350,11 +381,15 @@ public class Java {
         ////////////////////////////////////////
 
         public static void main(String[] args) {
-            // User u = null;
-            // Main.Obj.User o = null;
             System.out.println("Hello, World!");
         }
 
     }
 
 }
+
+
+/* NOTES:
+ * non-static variables cannot be referenced from a static context (unlike c#)
+ * 
+ */

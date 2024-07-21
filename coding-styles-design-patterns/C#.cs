@@ -36,7 +36,6 @@ namespace CSharp
 
         public static class UserModule
         {
-            // * all non-class members in a static class should be static (unlike Java)
             private static List<User> users = new List<User>();
 
             public static void AddUser(User user)
@@ -399,3 +398,8 @@ namespace CSharp
 
     }
 }
+
+/* NOTES:
+ * all non-class members in a static class should be static (unlike Java)
+ *
+ */

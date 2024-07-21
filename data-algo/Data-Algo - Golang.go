@@ -110,5 +110,5 @@ func (x Searching) BinarySearch(a []int, n int) int {
 ////////////////////////////////////////
 
 func main() {
-	fmt.Println("Hello, World!") // 'c' - single quotes for characters only
+	fmt.Println("Hello, World!") 
 }
