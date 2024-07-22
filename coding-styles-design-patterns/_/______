@@ -46,8 +46,6 @@ void handleUser() {
 void test() {
     processOrder();
     handleUser();
-
-
 }
 
 // Microservices (C):
@@ -369,8 +367,6 @@ void processData() {
 
 void test() {
     processData();
-
-
 }
 
 // 3-Tier (C):
@@ -421,8 +417,6 @@ void displayData() {
 
 void test() {
     displayData();
-
-
 }
 
 // N-Tier (C):
