@@ -1,0 +1,784 @@
+
+// Observer
+
+// #include <stdio.h>
+// #include <stdlib.h>
+
+typedef struct Observer Observer;
+typedef struct Subject Subject;
+
+struct Observer {
+    void (*update)(Observer*);
+};
+
+struct Subject {
+    Observer** observers;
+    int observerCount;
+    void (*attach)(Subject*, Observer*);
+    void (*detach)(Subject*, Observer*);
+    void (*notify)(Subject*);
+};
+
+void attach(Subject* subject, Observer* observer) {
+    subject->observers = realloc(subject->observers, sizeof(Observer*) * (subject->observerCount + 1));
+    subject->observers[subject->observerCount++] = observer;
+}
+
+void detach(Subject* subject, Observer* observer) {
+    for (int i = 0; i < subject->observerCount; i++) {
+        if (subject->observers[i] == observer) {
+            for (int j = i; j < subject->observerCount - 1; j++) {
+                subject->observers[j] = subject->observers[j + 1];
+            }
+            subject->observerCount--;
+            subject->observers = realloc(subject->observers, sizeof(Observer*) * subject->observerCount);
+            return;
+        }
+    }
+}
+
+void notify(Subject* subject) {
+    for (int i = 0; i < subject->observerCount; i++) {
+        subject->observers[i]->update(subject->observers[i]);
+    }
+}
+
+void update(Observer* observer) {
+    printf("Observer updated\n");
+}
+
+void test() {
+    Subject subject = {NULL, 0, attach, detach, notify};
+    Observer observer1 = {update};
+    Observer observer2 = {update};
+
+    subject.attach(&subject, &observer1);
+    subject.attach(&subject, &observer2);
+
+    subject.notify(&subject);
+
+    subject.detach(&subject, &observer1);
+
+    subject.notify(&subject);
+
+    free(subject.observers);
+
+}
+
+// #include <iostream>
+// #include <vector>
+// #include <memory>
+
+class Observer {
+public:
+    virtual void update() = 0;
+    virtual ~Observer() = default;
+};
+
+class Subject {
+private:
+    std::vector<std::shared_ptr<Observer>> observers;
+public:
+    void attach(std::shared_ptr<Observer> observer) {
+        observers.push_back(observer);
+    }
+    void detach(std::shared_ptr<Observer> observer) {
+        observers.erase(std::remove(observers.begin(), observers.end(), observer), observers.end());
+    }
+    void notify() {
+        for (auto& observer : observers) {
+            observer->update();
+        }
+    }
+};
+
+class ConcreteObserver : public Observer {
+public:
+    void update() override {
+        std::cout << "Observer updated" << std::endl;
+    }
+};
+
+void test() {
+    Subject subject;
+    auto observer1 = std::make_shared<ConcreteObserver>();
+    auto observer2 = std::make_shared<ConcreteObserver>();
+
+    subject.attach(observer1);
+    subject.attach(observer2);
+
+    subject.notify();
+
+    subject.detach(observer1);
+
+    subject.notify();
+
+}
+
+// Command
+
+// #include <stdio.h>
+
+typedef struct Command Command;
+
+struct Command {
+    void (*execute)(Command*);
+};
+
+void execute_command(Command* command) {
+    printf("Command executed\n");
+}
+
+void test() {
+    Command command = {execute_command};
+    command.execute(&command);
+
+}
+
+// #include <iostream>
+// #include <vector>
+// #include <memory>
+
+class Command {
+public:
+    virtual void execute() = 0;
+    virtual ~Command() = default;
+};
+
+class ConcreteCommand : public Command {
+public:
+    void execute() override {
+        std::cout << "Command executed" << std::endl;
+    }
+};
+
+class Invoker {
+private:
+    std::vector<std::shared_ptr<Command>> commands;
+public:
+    void addCommand(std::shared_ptr<Command> command) {
+        commands.push_back(command);
+    }
+    void executeCommands() {
+        for (auto& command : commands) {
+            command->execute();
+        }
+    }
+};
+
+void test() {
+    Invoker invoker;
+    auto command1 = std::make_shared<ConcreteCommand>();
+    auto command2 = std::make_shared<ConcreteCommand>();
+
+    invoker.addCommand(command1);
+    invoker.addCommand(command2);
+
+    invoker.executeCommands();
+
+}
+
+// Strategy
+
+// #include <stdio.h>
+
+typedef struct Strategy Strategy;
+
+struct Strategy {
+    void (*execute)(Strategy*);
+};
+
+void execute_strategy(Strategy* strategy) {
+    printf("Executing strategy\n");
+}
+
+void test() {
+    Strategy strategy = {execute_strategy};
+    strategy.execute(&strategy);
+
+}
+
+// #include <iostream>
+// #include <memory>
+
+class Strategy {
+public:
+    virtual void execute() = 0;
+    virtual ~Strategy() = default;
+};
+
+class ConcreteStrategyA : public Strategy {
+public:
+    void execute() override {
+        std::cout << "Executing Strategy A" << std::endl;
+    }
+};
+
+class ConcreteStrategyB : public Strategy {
+public:
+    void execute() override {
+        std::cout << "Executing Strategy B" << std::endl;
+    }
+};
+
+class Context {
+private:
+    std::shared_ptr<Strategy> strategy;
+public:
+    void setStrategy(std::shared_ptr<Strategy> newStrategy) {
+        strategy = newStrategy;
+    }
+    void executeStrategy() {
+        strategy->execute();
+    }
+};
+
+void test() {
+    Context context;
+    auto strategyA = std::make_shared<ConcreteStrategyA>();
+    auto strategyB = std::make_shared<ConcreteStrategyB>();
+
+    context.setStrategy(strategyA);
+    context.executeStrategy();
+
+    context.setStrategy(strategyB);
+    context.executeStrategy();
+
+}
+
+// Iterator
+
+// #include <stdio.h>
+
+typedef struct Iterator Iterator;
+
+struct Iterator {
+    int* collection;
+    int size;
+    int current;
+    int (*hasNext)(Iterator*);
+    int (*next)(Iterator*);
+};
+
+int has_next(Iterator* iterator) {
+    return iterator->current < iterator->size;
+}
+
+int next(Iterator* iterator) {
+    return iterator->collection[iterator->current++];
+}
+
+void test() {
+    int collection[] = {1, 2, 3, 4, 5};
+    Iterator iterator = {collection, 5, 0, has_next, next};
+
+    while (iterator.hasNext(&iterator)) {
+        printf("%d\n", iterator.next(&iterator));
+    }
+
+}
+
+// #include <iostream>
+// #include <vector>
+// #include <memory>
+
+class Iterator {
+private:
+    std::vector<int> collection;
+    size_t current;
+public:
+    Iterator(const std::vector<int>& collection) : collection(collection), current(0) {}
+    bool hasNext() {
+        return current < collection.size();
+    }
+    int next() {
+        return collection[current++];
+    }
+};
+
+void test() {
+    std::vector<int> collection = {1, 2, 3, 4, 5};
+    Iterator iterator(collection);
+
+    while (iterator.hasNext()) {
+        std::cout << iterator.next() << std::endl;
+    }
+
+}
+
+// Template
+
+// #include <stdio.h>
+
+typedef struct Template Template;
+
+struct Template {
+    void (*step1)(Template*);
+    void (*step2)(Template*);
+    void (*step3)(Template*);
+    void (*execute)(Template*);
+};
+
+void step1(Template* template) {
+    printf("Step 1\n");
+}
+
+void step2(Template* template) {
+    printf("Step 2\n");
+}
+
+void step3(Template* template) {
+    printf("Step 3\n");
+}
+
+void execute(Template* template) {
+    template->step1(template);
+    template->step2(template);
+    template->step3(template);
+}
+
+void test() {
+    Template template = {step1, step2, step3, execute};
+    template.execute(&template);
+
+}
+
+// #include <iostream>
+// #include <memory>
+
+class AbstractClass {
+protected:
+    virtual void step1() = 0;
+    virtual void step2() = 0;
+    virtual void step3() = 0;
+public:
+    void execute() {
+        step1();
+        step2();
+        step3();
+    }
+    virtual ~AbstractClass() = default;
+};
+
+class ConcreteClass : public AbstractClass {
+protected:
+    void step1() override {
+        std::cout << "Step 1" << std::endl;
+    }
+    void step2() override {
+        std::cout << "Step 2" << std::endl;
+    }
+    void step3() override {
+        std::cout << "Step 3" << std::endl;
+    }
+};
+
+void test() {
+    ConcreteClass concreteClass;
+    concreteClass.execute();
+
+}
+
+// Mediator
+
+// #include <stdio.h>
+// #include <stdlib.h>
+
+typedef struct Mediator Mediator;
+
+typedef struct {
+    Mediator* mediator;
+    void (*sendMessage)(const char*);
+    void (*receiveMessage)(const char*);
+} Colleague;
+
+struct Mediator {
+    Colleague* colleague1;
+    Colleague* colleague2;
+    void (*mediate)(const char*);
+};
+
+void send_message(const char* message) {
+    printf("Sending message: %s\n", message);
+}
+
+void receive_message(const char* message) {
+    printf("Received message: %s\n", message);
+}
+
+void mediate(const char* message) {
+    printf("Mediating message: %s\n", message);
+}
+
+void test() {
+    Mediator mediator = {NULL, NULL, mediate};
+    Colleague colleague1 = {&mediator, send_message, receive_message};
+    Colleague colleague2 = {&mediator, send_message, receive_message};
+
+    mediator.colleague1 = &colleague1;
+    mediator.colleague2 = &colleague2;
+
+    colleague1.sendMessage("Hello from Colleague 1");
+    mediator.mediate("Message from Colleague 1");
+    colleague2.receiveMessage("Message from Colleague 1");
+
+}
+
+// #include <iostream>
+// #include <memory>
+// #include <string>
+
+class Mediator;
+
+class Colleague {
+protected:
+    Mediator* mediator;
+public:
+    Colleague(Mediator* mediator) : mediator(mediator) {}
+    virtual void sendMessage(const std::string& message) = 0;
+    virtual void receiveMessage(const std::string& message) = 0;
+    virtual ~Colleague() = default;
+};
+
+class Mediator {
+public:
+    virtual void mediate(const std::string& message, Colleague* sender) = 0;
+    virtual ~Mediator() = default;
+};
+
+class ConcreteColleague1 : public Colleague {
+public:
+    using Colleague::Colleague;
+    void sendMessage(const std::string& message) override;
+    void receiveMessage(const std::string& message) override {
+        std::cout << "Colleague 1 received: " << message << std::endl;
+    }
+};
+
+class ConcreteColleague2 : public Colleague {
+public:
+    using Colleague::Colleague;
+    void sendMessage(const std::string& message) override;
+    void receiveMessage(const std::string& message) override {
+        std::cout << "Colleague 2 received: " << message << std::endl;
+    }
+};
+
+class ConcreteMediator : public Mediator {
+private:
+    ConcreteColleague1* colleague1;
+    ConcreteColleague2* colleague2;
+public:
+    void setColleague1(ConcreteColleague1* colleague) {
+        colleague1 = colleague;
+    }
+    void setColleague2(ConcreteColleague2* colleague) {
+        colleague2 = colleague;
+    }
+    void mediate(const std::string& message, Colleague* sender) override {
+        if (sender == colleague1) {
+            colleague2->receiveMessage(message);
+        } else if (sender == colleague2) {
+            colleague1->receiveMessage(message);
+        }
+    }
+};
+
+void ConcreteColleague1::sendMessage(const std::string& message) {
+    std::cout << "Colleague 1 sending: " << message << std::endl;
+    mediator->mediate(message, this);
+}
+
+void ConcreteColleague2::sendMessage(const std::string& message) {
+    std::cout << "Colleague 2 sending: " << message << std::endl;
+    mediator->mediate(message, this);
+}
+
+void test() {
+    ConcreteMediator mediator;
+    ConcreteColleague1 colleague1(&mediator);
+    ConcreteColleague2 colleague2(&mediator);
+
+    mediator.setColleague1(&colleague1);
+    mediator.setColleague2(&colleague2);
+
+    colleague1.sendMessage("Hello from Colleague 1");
+    colleague2.sendMessage("Hello from Colleague 2");
+
+}
+
+// Memento
+
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+typedef struct {
+    char* state;
+} Memento;
+
+typedef struct {
+    char* state;
+    Memento* (*saveStateToMemento)();
+    void (*getStateFromMemento)(Memento*);
+} Originator;
+
+Memento* saveStateToMemento(Originator* originator) {
+    Memento* memento = malloc(sizeof(Memento));
+    memento->state = strdup(originator->state);
+    return memento;
+}
+
+void getStateFromMemento(Originator* originator, Memento* memento) {
+    free(originator->state);
+    originator->state = strdup(memento->state);
+}
+
+void test() {
+    Originator originator = {"Initial State", saveStateToMemento, getStateFromMemento};
+    Memento* memento = originator.saveStateToMemento(&originator);
+
+    originator.state = "New State";
+    printf("Current State: %s\n", originator.state);
+
+    originator.getStateFromMemento(&originator, memento);
+    printf("Restored State: %s\n", originator.state);
+
+    free(memento->state);
+    free(memento);
+    free(originator.state);
+
+}
+
+// #include <iostream>
+// #include <string>
+// #include <memory>
+
+class Memento {
+private:
+    std::string state;
+public:
+    Memento(const std::string& state) : state(state) {}
+    std::string getState() const {
+        return state;
+    }
+};
+
+class Originator {
+private:
+    std::string state;
+public:
+    void setState(const std::string& state) {
+        this->state = state;
+    }
+    std::string getState() const {
+        return state;
+    }
+    std::shared_ptr<Memento> saveStateToMemento() const {
+        return std::make_shared<Memento>(state);
+    }
+    void getStateFromMemento(const std::shared_ptr<Memento>& memento) {
+        state = memento->getState();
+    }
+};
+
+void test() {
+    Originator originator;
+    originator.setState("Initial State");
+
+    auto memento = originator.saveStateToMemento();
+
+    originator.setState("New State");
+    std::cout << "Current State: " << originator.getState() << std::endl;
+
+    originator.getStateFromMemento(memento);
+    std::cout << "Restored State: " << originator.getState() << std::endl;
+
+}
+
+// Visitor
+
+// #include <stdio.h>
+
+typedef struct Element Element;
+typedef struct Visitor Visitor;
+
+struct Visitor {
+    void (*visitElementA)(Visitor*, Element*);
+    void (*visitElementB)(Visitor*, Element*);
+};
+
+struct Element {
+    void (*accept)(Element*, Visitor*);
+};
+
+void visit_element_a(Visitor* visitor, Element* element) {
+    printf("Visiting Element A\n");
+}
+
+void visit_element_b(Visitor* visitor, Element* element) {
+    printf("Visiting Element B\n");
+}
+
+void accept_element_a(Element* element, Visitor* visitor) {
+    visitor->visitElementA(visitor, element);
+}
+
+void accept_element_b(Element* element, Visitor* visitor) {
+    visitor->visitElementB(visitor, element);
+}
+
+void test() {
+    Visitor visitor = {visit_element_a, visit_element_b};
+    Element elementA = {accept_element_a};
+    Element elementB = {accept_element_b};
+
+    elementA.accept(&elementA, &visitor);
+    elementB.accept(&elementB, &visitor);
+
+}
+
+// #include <iostream>
+// #include <memory>
+
+class Element;
+class ConcreteElementA;
+class ConcreteElementB;
+
+class Visitor {
+public:
+    virtual void visitElementA(ConcreteElementA* element) = 0;
+    virtual void visitElementB(ConcreteElementB* element) = 0;
+    virtual ~Visitor() = default;
+};
+
+class Element {
+public:
+    virtual void accept(Visitor* visitor) = 0;
+    virtual ~Element() = default;
+};
+
+class ConcreteElementA : public Element {
+public:
+    void accept(Visitor* visitor) override {
+        visitor->visitElementA(this);
+    }
+};
+
+class ConcreteElementB : public Element {
+public:
+    void accept(Visitor* visitor) override {
+        visitor->visitElementB(this);
+    }
+};
+
+class ConcreteVisitor : public Visitor {
+public:
+    void visitElementA(ConcreteElementA* element) override {
+        std::cout << "Visiting Element A" << std::endl;
+    }
+    void visitElementB(ConcreteElementB* element) override {
+        std::cout << "Visiting Element B" << std::endl;
+    }
+};
+
+void test() {
+    ConcreteVisitor visitor;
+    ConcreteElementA elementA;
+    ConcreteElementB elementB;
+
+    elementA.accept(&visitor);
+    elementB.accept(&visitor);
+
+}
+
+// Chain of Responsibility
+
+// #include <stdio.h>
+// #include <stdlib.h>
+
+typedef struct Handler Handler;
+
+struct Handler {
+    Handler* next;
+    void (*handleRequest)(Handler*, int);
+};
+
+void handle_request(Handler* handler, int request) {
+    if (request < 10) {
+        printf("Handled by handler with request: %d\n", request);
+    } else if (handler->next != NULL) {
+        handler->next->handleRequest(handler->next, request);
+    }
+}
+
+Handler* create_handler() {
+    Handler* handler = malloc(sizeof(Handler));
+    handler->next = NULL;
+    handler->handleRequest = handle_request;
+    return handler;
+}
+
+void test() {
+    Handler* handler1 = create_handler();
+    Handler* handler2 = create_handler();
+    handler1->next = handler2;
+
+    handler1->handleRequest(handler1, 5);
+    handler1->handleRequest(handler1, 15);
+
+    free(handler1);
+    free(handler2);
+
+}
+
+// #include <iostream>
+// #include <memory>
+
+class Handler {
+protected:
+    std::shared_ptr<Handler> next;
+public:
+    void setNext(std::shared_ptr<Handler> nextHandler) {
+        next = nextHandler;
+    }
+    virtual void handleRequest(int request) {
+        if (next) {
+            next->handleRequest(request);
+        }
+    }
+    virtual ~Handler() = default;
+};
+
+class ConcreteHandler1 : public Handler {
+public:
+    void handleRequest(int request) override {
+        if (request < 10) {
+            std::cout << "Handled by ConcreteHandler1 with request: " << request << std::endl;
+        } else {
+            Handler::handleRequest(request);
+        }
+    }
+};
+
+class ConcreteHandler2 : public Handler {
+public:
+    void handleRequest(int request) override {
+        if (request >= 10) {
+            std::cout << "Handled by ConcreteHandler2 with request: " << request << std::endl;
+        } else {
+            Handler::handleRequest(request);
+        }
+    }
+};
+
+void test() {
+    auto handler1 = std::make_shared<ConcreteHandler1>();
+    auto handler2 = std::make_shared<ConcreteHandler2>();
+
+    handler1->setNext(handler2);
+
+    handler1->handleRequest(5);
+    handler1->handleRequest(15);
+
+}

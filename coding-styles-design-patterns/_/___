@@ -1,0 +1,371 @@
+
+// Observer
+
+// #include <stdio.h>
+// #include <stdlib.h>
+
+typedef struct Observer Observer;
+
+typedef void (*UpdateFunc)(Observer*, const char*);
+
+struct Observer {
+    UpdateFunc update;
+};
+
+typedef struct {
+    Observer** observers;
+    int numObservers;
+    char* state;
+} Subject;
+
+void add_observer(Subject* subject, Observer* observer) {
+    subject->observers = (Observer**)realloc(subject->observers, sizeof(Observer*) * (subject->numObservers + 1));
+    subject->observers[subject->numObservers++] = observer;
+}
+
+void set_state(Subject* subject, const char* state) {
+    subject->state = (char*)state;
+    for (int i = 0; i < subject->numObservers; ++i) {
+        subject->observers[i]->update(subject->observers[i], state);
+    }
+}
+
+void observer_update(Observer* observer, const char* state) {
+    printf("Observer updated with state: %s\n", state);
+}
+
+void test() {
+    Subject subject = {NULL, 0, NULL};
+
+    Observer observer1 = {observer_update};
+    Observer observer2 = {observer_update};
+
+    add_observer(&subject, &observer1);
+    add_observer(&subject, &observer2);
+
+    set_state(&subject, "New State");
+
+    free(subject.observers);
+
+}
+
+// #include <iostream>
+// #include <vector>
+// #include <string>
+
+class Observer {
+public:
+    virtual void update(const std::string& state) = 0;
+    virtual ~Observer() = default;
+};
+
+class Subject {
+private:
+    std::vector<Observer*> observers;
+    std::string state;
+public:
+    void addObserver(Observer* observer) {
+        observers.push_back(observer);
+    }
+    void setState(const std::string& newState) {
+        state = newState;
+        notifyObservers();
+    }
+    void notifyObservers() {
+        for (auto observer : observers) {
+            observer->update(state);
+        }
+    }
+};
+
+class ConcreteObserver : public Observer {
+public:
+    void update(const std::string& state) override {
+        std::cout << "Observer updated with state: " << state << std::endl;
+    }
+};
+
+void test() {
+    Subject subject;
+
+    ConcreteObserver observer1;
+    ConcreteObserver observer2;
+
+    subject.addObserver(&observer1);
+    subject.addObserver(&observer2);
+
+    subject.setState("New State");
+
+}
+
+// Command
+
+// #include <stdio.h>
+// #include <stdlib.h>
+
+typedef struct Command Command;
+
+typedef void (*ExecuteFunc)(Command*);
+
+struct Command {
+    ExecuteFunc execute;
+};
+
+void execute_command(Command* command) {
+    command->execute(command);
+}
+
+typedef struct {
+    Command base;
+    void (*action)(void);
+} ConcreteCommand;
+
+void action(void) {
+    printf("Action executed\n");
+}
+
+void concrete_command_execute(Command* command) {
+    ConcreteCommand* concreteCommand = (ConcreteCommand*)command;
+    concreteCommand->action();
+}
+
+void test() {
+    ConcreteCommand concreteCommand = {{concrete_command_execute}, action};
+    execute_command((Command*)&concreteCommand);
+
+}
+
+// #include <iostream>
+// #include <vector>
+// #include <memory>
+
+class Command {
+public:
+    virtual void execute() = 0;
+    virtual ~Command() = default;
+};
+
+class ConcreteCommand : public Command {
+public:
+    void execute() override {
+        std::cout << "Action executed" << std::endl;
+    }
+};
+
+class Invoker {
+private:
+    std::vector<std::shared_ptr<Command>> commands;
+public:
+    void setCommand(std::shared_ptr<Command> command) {
+        commands.push_back(command);
+    }
+    void executeCommands() {
+        for (auto& command : commands) {
+            command->execute();
+        }
+    }
+};
+
+void test() {
+    std::shared_ptr<ConcreteCommand> command = std::make_shared<ConcreteCommand>();
+    Invoker invoker;
+
+    invoker.setCommand(command);
+    invoker.executeCommands();
+
+}
+
+// Strategy
+
+// #include <stdio.h>
+
+typedef struct Strategy Strategy;
+
+typedef void (*AlgorithmFunc)(void);
+
+struct Strategy {
+    AlgorithmFunc algorithm;
+};
+
+void algorithm1(void) {
+    printf("Executing algorithm 1\n");
+}
+
+void algorithm2(void) {
+    printf("Executing algorithm 2\n");
+}
+
+void execute_strategy(Strategy* strategy) {
+    strategy->algorithm();
+}
+
+void test() {
+    Strategy strategy1 = {algorithm1};
+    Strategy strategy2 = {algorithm2};
+
+    execute_strategy(&strategy1);
+    execute_strategy(&strategy2);
+
+}
+
+// #include <iostream>
+// #include <memory>
+
+class Strategy {
+public:
+    virtual void algorithm() = 0;
+    virtual ~Strategy() = default;
+};
+
+class ConcreteStrategy1 : public Strategy {
+public:
+    void algorithm() override {
+        std::cout << "Executing algorithm 1" << std::endl;
+    }
+};
+
+class ConcreteStrategy2 : public Strategy {
+public:
+    void algorithm() override {
+        std::cout << "Executing algorithm 2" << std::endl;
+    }
+};
+
+class Context {
+private:
+    std::shared_ptr<Strategy> strategy;
+public:
+    void setStrategy(std::shared_ptr<Strategy> newStrategy) {
+        strategy = newStrategy;
+    }
+    void executeStrategy() {
+        strategy->algorithm();
+    }
+};
+
+void test() {
+    Context context;
+    std::shared_ptr<ConcreteStrategy1> strategy1 = std::make_shared<ConcreteStrategy1>();
+    std::shared_ptr<ConcreteStrategy2> strategy2 = std::make_shared<ConcreteStrategy2>();
+
+    context.setStrategy(strategy1);
+    context.executeStrategy();
+
+    context.setStrategy(strategy2);
+    context.executeStrategy();
+
+}
+
+// Template Method
+
+// #include <stdio.h>
+
+typedef struct {
+    void (*step1)(void);
+    void (*step2)(void);
+} Template;
+
+void template_method(Template* template) {
+    template->step1();
+    template->step2();
+}
+
+void step1(void) {
+    printf("Step 1 executed\n");
+}
+
+void step2(void) {
+    printf("Step 2 executed\n");
+}
+
+void test() {
+    Template template = {step1, step2};
+    template_method(&template);
+
+}
+
+// #include <iostream>
+
+class AbstractClass {
+public:
+    void templateMethod() {
+        step1();
+        step2();
+    }
+    virtual ~AbstractClass() = default;
+protected:
+    virtual void step1() = 0;
+    virtual void step2() = 0;
+};
+
+class ConcreteClass : public AbstractClass {
+protected:
+    void step1() override {
+        std::cout << "Step 1 executed" << std::endl;
+    }
+    void step2() override {
+        std::cout << "Step 2 executed" << std::endl;
+    }
+};
+
+void test() {
+    ConcreteClass concreteClass;
+    concreteClass.templateMethod();
+
+}
+
+// Mediator
+
+// #include <stdio.h>
+// #include <stdlib.h>
+
+typedef struct Mediator Mediator;
+
+typedef struct {
+    Mediator* mediator;
+    void (*sendMessage)(const char*);
+    void (*receiveMessage)(const char*);
+} Colleague;
+
+struct Mediator {
+    Colleague* colleague1;
+    Colleague* colleague2;
+    void (*mediate)(const char*);
+};
+
+void send_message(const char* message) {
+    printf("Sending message: %s\n", message);
+}
+
+void receive_message(const char* message) {
+    printf("Received message: %s\n", message);
+}
+
+void mediate(const char* message) {
+    printf("Mediator: Relaying message: %s\n", message);
+}
+
+void test() {
+    Mediator mediator = {NULL, NULL, mediate};
+    Colleague colleague1 = {&mediator, send_message, receive_message};
+    Colleague colleague2 = {&mediator, send_message, receive_message};
+
+    mediator.colleague1 = &colleague1;
+    mediator.colleague2 = &colleague2;
+
+    colleague1.sendMessage("Hello from Colleague1");
+    colleague2.receiveMessage("Hello from Colleague1");
+
+}
+
+// #include <iostream>
+// #include <memory>
+
+class Mediator;
+
+class Colleague {
+protected:
+    Mediator* mediator;
+public:
+    Colleague(Mediator* med) : mediator(med) {}
+    virtual void send(const std::
