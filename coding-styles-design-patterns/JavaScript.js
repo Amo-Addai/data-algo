@@ -11,6 +11,14 @@ Generics
 //  CODING STYLES
 ////////////////////////////////////////
 
+const Imperative = _ => {
+    let sum = 0
+    for (let i = 1; i <= 10; i++) {
+        sum += i
+    }
+    console.log(sum) // Output: 55
+}
+
 const Functional = (_ => {
     const users = [
         { id: 1, name: 'Alice', age: 25 },
@@ -39,20 +47,15 @@ define(['Declarative'], _ => { // AMD (Asynchronous Module Definition)
         }
     }
 
-    /* // * main.js
-        require(['Declarative'], function(module) {
-            module.sayHello()
-        })
-    */
-
 })
 
 const OOP = (_ => {
+
     class User {
         constructor (id, name, age) {
-        this.id = id
-        this.name = name
-        this.age = age
+            this.id = id
+            this.name = name
+            this.age = age
         }
 
         getDetails () {
@@ -129,6 +132,7 @@ const ObjectComposition = (_ => {
     }
 })()
 
+
 ////////////////////////////////////////
 //  DESIGN PATTERNS
 ////////////////////////////////////////
@@ -171,7 +175,83 @@ const Prototype = (_ => {
 
 const Module = (_ => {
 
-    // todo: Sample Modules 1st (un-used)
+    const UserModule = (function() {
+        const users = []
+        
+        const addUser = (user) => {
+            users.push(user)
+        }
+        
+        const getUser = (id) => users.find(user => user.id === id)
+        
+        return {
+            addUser,
+            getUser,
+        }
+    })()
+  
+    return {
+        test() {
+            UserModule.addUser({ id: 1, name: 'Alice', age: 25 })
+            console.log(UserModule.getUser(1)) // { id: 1, name: 'Alice', age: 25 }
+        }
+    }    
+})()
+
+const Middleware = (_ => {
+    const express = require('express')
+    const app = express()
+
+    const logger = (req, res, next) => {
+        console.log(`${req.method} ${req.url}`)
+        next()
+    }
+
+    app.use(logger)
+
+    app.get('/', (req, res) => {
+        res.send('Hello, world!')
+    })
+
+    app.listen(3000, () => {
+        console.log('Server is running on port 3000')
+    })
+
+    return {
+        test() {
+            return app
+        }
+    }
+})()
+
+
+////////////////////////////////////////
+//  OTHER PATTERNS
+////////////////////////////////////////
+
+const EventDriven = (_ => {
+    const EventEmitter = require('events')
+    class UserEmitter extends EventEmitter {}
+
+    const userEmitter = new UserEmitter()
+
+    userEmitter.on('userCreated', (user) => {
+        console.log(`User created: ${user.name}`)
+    })
+
+    const triggerEmit = _ => 
+        userEmitter.emit('userCreated', { name: 'Alice' }) // User created: Alice
+
+    return {
+        test() {
+            triggerEmit()
+        }
+    }
+})()
+
+
+
+const ModuleTypes = (_ => {
 
     { // CommonJS (Node.js)
 
@@ -342,80 +422,6 @@ const Module = (_ => {
 
     }
 
-    // todo: Now, main User Module (used)
-
-    const UserModule = (function() {
-        const users = []
-        
-        const addUser = (user) => {
-            users.push(user)
-        }
-        
-        const getUser = (id) => users.find(user => user.id === id)
-        
-        return {
-            addUser,
-            getUser,
-        }
-    })
-  
-    return {
-        test() {
-            UserModule.addUser({ id: 1, name: 'Alice', age: 25 })
-            console.log(UserModule.getUser(1)) // { id: 1, name: 'Alice', age: 25 }
-        }
-    }    
-})()
-
-const Middleware = (_ => {
-    const express = require('express')
-    const app = express()
-
-    const logger = (req, res, next) => {
-        console.log(`${req.method} ${req.url}`)
-        next()
-    }
-
-    app.use(logger)
-
-    app.get('/', (req, res) => {
-        res.send('Hello, world!')
-    })
-
-    app.listen(3000, () => {
-        console.log('Server is running on port 3000')
-    })
-
-    return {
-        test() {
-            return app
-        }
-    }
-})()
-
-
-////////////////////////////////////////
-//  OTHER PATTERNS
-////////////////////////////////////////
-
-const EventDriven = (_ => {
-    const EventEmitter = require('events')
-    class UserEmitter extends EventEmitter {}
-
-    const userEmitter = new UserEmitter()
-
-    userEmitter.on('userCreated', (user) => {
-        console.log(`User created: ${user.name}`)
-    })
-
-    const triggerEmit = _ => 
-        userEmitter.emit('userCreated', { name: 'Alice' }) // User created: Alice
-
-    return {
-        test() {
-            triggerEmit()
-        }
-    }
 })()
 
 

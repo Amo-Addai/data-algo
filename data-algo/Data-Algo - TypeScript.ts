@@ -92,7 +92,7 @@ class TSearching {
 
 class TLinkedList {
 
-    private _head: TLinkedList.TListNode? = null
+    private _head: TListNode? = null
     private _tail: TLinkedList.TListNode? = null
     
     constructor() {
