@@ -13,7 +13,7 @@ Generics
 class Sorting
 
     def initialize()
-        @i = 0
+        @prop = nil
     end
 
 end
@@ -38,19 +38,19 @@ class Searching
     def binary_search(a, x)
         if len(a) == 0 return nil
             
-        # todo: a.sort()
+        a = a.sort
         
         def r_binary_search(a, x)
             if len(a) == 0 return nil
-            m = floor(len(a) / 2) # todo: math.floor(..)
+            m = (len(a) / 2).floor
             if x == a[m] return a[m]
-            elsif x < a[m] return r_binary_search(a[:m], x) # todo: slice a (test end index inclusiveness)
-            else return r_binary_search(a[m+1:], x)
+            elsif x < a[m] return r_binary_search(a[..m-1], x) # or [:m] (exclusive) | [..inclusive_end_index]
+            else return r_binary_search(a[m+1..], x) # or [m+1:]
         end
         
         def r_binary_search(a, x, f, l)
             if len(a) == 0 return nil
-            m = floor(f + (l - f) / 2)
+            m = (f + (l - f) / 2).floor
             if x == a[m] return m
             elsif x < a[m] return r_binary_search(a, x, f, m - 1)
             else return r_binary_search(a, x, m + 1, l)
@@ -60,7 +60,7 @@ class Searching
         r_binary_search(a, 7); r_binary_search(a, 7, f, l)
 
         while f < l
-            m = floor(f + (l - f) / 2)
+            m = (f + (l - f) / 2).floor
             if x == a[m] return m
             elsif x < a[m] l = m - 1 end # TODO: Test check & statement in 1-line
             else f = m + 1 end

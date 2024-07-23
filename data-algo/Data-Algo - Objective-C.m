@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import <math.h>
 
 /* // TODO: To-Use
 
@@ -28,44 +29,70 @@ MemMan, ..
 
 @interface Searching : NSObject
     -(int) length: (int[]) a;
-    -(int[]) slice: (int[]) a;
+    -(void) slice: (int[]) a;
+    -(int) sortCompare: (const void* a, const void* b);
 
     -(int) linearSearch: (int[]) a, arg2: (int) x;
     -(int) binarySearch: (int[]) a, arg2: (int) x;
+    -(NSArray) binarySearch: (NSArray*) a, arg2: (NSInteger) x;
 @end
 
 @implementation Searching
 
+    -(int) length: (int* a) {
+        return sizeof(a) / sizeof(a[0]);
+    }
+
+    -(void) slice: (int* src, int start, int end, int** dest, int* length) {
+        if (start < 0 || end > *length || start >= end) {
+            *dest = NULL;
+            *length = 0;
+            return;
+        }
+
+        *length = end - start;
+        *dest = (int*)malloc(*length * sizeof(int));
+
+        for (int i = 0; i < *length; ++i) {
+            (*dest)[i] = src[start + i];
+        }
+    }
+
+    -(int) sortCompare(const void *a, const void* b) {
+        return (
+            *(int*) a - *(int*) b
+        );
+    }
+
+
     -(int) linearSearch: (int[]) a, arg2: (int) x {
-        for (int i = 0; i < sizeof(a); i++) {
+        for (int i = 0; i < length(a); i++) {
             if (x == a[i]) return i;
         }
     }
 
-    // TODO: sort, length, floor, slice (exclusive), x == return a[m] & null
-
     -(int) binarySearch: (int[]) a, arg2: (int) x {
-        if (sizeof(a) == 0) return;
+        if (length(a) == 0) return;
 
-        // * a = rsort(a);
+        qsort(a, len, sizeof(int), sortCompare);
 
         int (^ rBinarySearch)(int, int) = ^(int a[], int x) {
-            if (sizeof(a) == 0) return;
-            int m = floor(sizeof(a) / 2); // TODO: math.floor
+            if (length(a) == 0) return;
+            int m = floor(length(a) / 2);
             if (x == a[m]) return a[m];
             else if (x < a[m]) return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
             else return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
         }
 
         int (^ rBinarySearch)(int, int, int, int) = ^(int a[], int x, int f, int l) {
-            if (sizeof(a) == 0) return;
+            if (length(a) == 0) return;
             int m = floor(f + (l - f) / 2);
             if (x == a[m]) return m;
             else if (x < a[m]) return rBinarySearch(a, x, f, m - 1);
             else return rBinarySearch(a, x, m + 1, l);
         }
 
-        int f = 0, l = sizeof(a) - 1, m;
+        int f = 0, l = length(a) - 1, m;
         rBinarySearch(a, x); rBinarySearch(a, x, f, l);
 
         while (f < l) {
@@ -74,6 +101,49 @@ MemMan, ..
             else if (x < a[m]) l = m - 1;
             else f = m + 1;
         }
+
+        return -1;
+    }
+
+    // TODO: Re-work & Test
+    -(NSArray*) binarySearch: (NSArray*) a, arg2: (NSInteger) x {
+        if ([a length] == 0) return nil;
+
+        a = [a sortedArrayUsingSelector: @selector(compare:)];
+        // todo: a = [a sortedArrayUsingSelector: @comparator(compare:)];
+
+        NSInteger (^ rBinarySearch)(NSInteger, NSInteger) = ^(NSArray* a, NSInteger x) {
+            if ([a length] == 0) return nil;
+            NSInteger m = floor([a length] / 2);
+            if (x == a[m]) return a[m];
+            else if (x < a[m]) return rBinarySearch(
+                [a subarrayWithRange: NSMakeRange(0, m)],
+                x
+            ) else return rBinarySearch(
+                [a subarrayWithRange: NSMakeRange(m + 1, [a length])],
+                x
+            )
+        }
+
+        NSInteger (^ rBinarySearch)(NSInteger, NSInteger) = ^(NSArray* a, NSInteger x, NSInteger f, NSInteger l) {
+            if ([a length] == 0) return nil;
+            NSInteger m = floor(f + (l - f) / 2);
+            if (x == a[m]) return m;
+            else if (x < a[m]) return rBinarySearch(a, x, f, m - 1);
+            else return rBinarySearch(a, x, m + 1, l);
+        }
+
+        NSInteger f = 0, l = [a length] - 1, m;
+        rBinarySearch(a, x); rBinarySearch(a, x, f, l);
+
+        while (f < l) {
+            m = floor(f + (l - f) / 2);
+            if (x == a[m]) return m;
+            else if (x < a[m]) l = m - 1;
+            else f = m + 1;
+        }
+        
+        return  nil;
     }
     
 @end
@@ -93,6 +163,9 @@ MemMan, ..
 //  TEST CASES
 ////////////////////////////////////////
 
-void main(int argc, const char* argv[]) {
-    printf(""); NSLog(@"Hello, World!")
+int main(int argc, const char* argv[]) {
+    @autoreleasepool {
+        printf(""); NSLog(@"Hello, World!")
+    }
+    return 0;
 }

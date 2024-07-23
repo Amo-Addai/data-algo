@@ -55,7 +55,7 @@ private:
 
 public:
     Searching() {
-        this->i = 0;
+        this->i = -1;
     }
 
     ~Searching() {
@@ -74,10 +74,20 @@ public:
         if (length == 0) return -1;
         int m = floor(length / 2);
         if (x == a[m]) return a[m];
-        else if (x < a[m])
-            return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
-        else
-            return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
+        else if (x < a[m]) {
+            int start = 0, len = m - 1; // * slice length (not endIndex)
+            // * so m's previous index - 0 (1st item's index) is the accurate length for the slice-through
+            int slice[len];
+            copy(a + start, a + start + len, slice);
+            // * arg1 - pointer to a's 'start' index elem | arg2 - pointer to 'start + len' past the last elem
+            return rBinarySearch(slice, x);
+        } else {
+            int start = (m + 1), len = (length - 1) - (m + 1);
+            // * so last item's index - m's next index is the accurate length for the slice-through
+            int slice[len];
+            copy(a + start, a + start + len, slice);
+            return rBinarySearch(slice, x);
+        }
     }
 
     int rBinarySearch(int a[], int x, int f, int l) {
@@ -94,7 +104,7 @@ public:
         int length = this->length(a);
         if (length == 0) return -1;
 
-        sort(a, a + length);
+        sort(a, a + length); // * a - pointer to a's 1st elem | a + length - pointer to 1 past the last elem
         
         int f = 0, l = length - 1, m;
         rBinarySearch(a, 7);

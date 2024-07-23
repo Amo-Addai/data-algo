@@ -57,7 +57,7 @@ int* quick(int a[]);
 
 int length(int* a);
 void slice(int* src, int start, int end, int** dest, int* length);
-int compare(const void* a, const void* b);
+int sortCompare(const void* a, const void* b);
 
 // functions
 

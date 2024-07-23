@@ -1,3 +1,6 @@
+import kotlin.math.floor
+import kotlin.math.ceil
+
 /* // TODO: To-Use
 
 Generics
@@ -12,7 +15,7 @@ Generics
 
 class Sorting {
 
-    private var i: Int = 0
+    private var prop: Any? = null
     
 }
 
@@ -33,7 +36,7 @@ class Searching {
     fun binarySearch(arr: Array<Int>, num: Int): Int? {
         if (arr.size == 0) return null
 
-        // todo: a.sort()
+        arr.sort()
 
         /*
          * With Recursive lambdas (like Java's recursive lambdas for Functional Interfaces), define function var (not val) before assigning the lambda value
@@ -52,18 +55,18 @@ class Searching {
         var rBinarySearch: ((Array<Int>, Int) -> Int?)? = null // * use var in this case (val cannot be reassigned)
         rBinarySearch = { a, x ->
             if (a.size == 0) null // return keyword is optional in lambda expressions and single-expression functions
-            val m = floor(a.size / 2) // todo: Math.floor(..)
+            val m = floor((a.size / 2) as Double) as Int // tdoo: type-castings
             // * Optional / "Safe" call reference is required in the recursive calls, because rBinarySearch may be null
             if (x == a[m]) a[m] // * return keyword can be omitted in lambda implementations
-            else if (x < a[m]) rBinarySearch?.invoke(a, x) // todo: slice a (test end index inclusiveness)
-            else rBinarySearch?.invoke(a, x) // todo: slice a (test end index inclusiveness)
+            else if (x < a[m]) rBinarySearch?.invoke(a.sliceArray(0..m-1), x) // * slice endIndex is inclusive
+            else rBinarySearch?.invoke(a.sliceArray(m+1..a.size - 1), x) // * cannot auto-slice to end of array (specify .size - 1 inclusive last-item index)
         }
 
         // * Lambda with the run keyword - scope
         val rBinarySearch2p: (Array<Int>, Int, Int, Int) -> Int? = run {
             fun rbs2p(a: Array<Int>, x: Int, f: Int, l: Int): Int? {
                 if (a.size == 0) return null
-                val m = floor(f + (l - f) / 2)
+                val m = floor((f + (l - f) / 2) as Double) as Int
                 if (x == a[m]) return m
                 else if (x < a[m]) return rbs2p(a, x, f, m - 1)
                 else return rbs2p(a, x, m + 1, l)
@@ -83,7 +86,7 @@ class Searching {
         rBinarySearch2p(arr, 7, f, l) // * this version of lambda function doesn't require .invoke()
 
         while (f < l) {
-            m = floor(f + (l - f) / 2)
+            m = floor((f + (l - f) / 2) as Double) as Int
             if (num == arr[m]) return m
             else if (num < arr[m]) l = m - 1
             else f = m + 1

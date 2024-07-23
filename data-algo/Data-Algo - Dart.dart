@@ -12,9 +12,7 @@ Generics
 
 class Sorting {
 
-  var _i;
-
-  Sorting([this._i]);
+  Sorting();
 
 }
 
@@ -39,15 +37,15 @@ class Searching {
   int? binarySearch(List<dynamic> a, int x) {
     if (a.length == 0) return null;
 
-    // todo: a.sort()
+    a.sort();
 
     Function? rBinarySearch = null;
     rBinarySearch = (List<dynamic> a, int x) {
       if (a.length == 0) return null;
-      int m = (a.length / 2).truncate();  // todo: Math.floor(..)).truncate();
+      int m = (a.length / 2).truncate();  // or .floor() / floor(..)
       if (x == a[m]) return a[m]; // todo: Function ? / !
-      else if (x < a[m]) return rBinarySearch!(a, x); // todo: slice a (test end index inclusiveness)
-      else return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
+      else if (x < a[m]) return rBinarySearch!(a.sublist(0, m), x);
+      else return rBinarySearch!(a.sublist(m + 1, a.length), x);
     };
 
     Function? rBinarySearch2p = null;
@@ -55,8 +53,8 @@ class Searching {
       if (a.length == 0) return null;
       int m = (f + (l - f) / 2).truncate();
       if (x == a[m]) return m;
-      else if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1);
-      else return rBinarySearch2p(a, x, m + 1, l);
+      else if (x < a[m]) return rBinarySearch2p!(a, x, f, m - 1);
+      else return rBinarySearch2p!(a, x, m + 1, l);
     };
 
     int f = 0;
@@ -70,6 +68,7 @@ class Searching {
       else if (x < a[m]) l = m - 1;
       else f = m + 1;
     }
+    
     return null;
   }
 

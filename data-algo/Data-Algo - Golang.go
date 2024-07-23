@@ -3,6 +3,7 @@ package main // or lib
 import (
 	"fmt"
 	"sort"
+	"math"
 )
 
 /* // TODO: To-Use
@@ -17,7 +18,7 @@ Generics
 ////////////////////////////////////////
 
 type Sorting struct {
-	i int
+	prop int
 }
 
 func (x Sorting) Func() {}
@@ -53,7 +54,7 @@ func (x Searching) BinarySearch(a []int, n int) int {
 		if len == 0 {
 			return -1
 		}
-		m := floor(len / 2) // todo: Math.floor(..)
+		m := (int) (math.Floor((float64) (len / 2)))
 		if n == a[m] {
 			return a[m]
 		} else if n < a[m] {
@@ -68,7 +69,7 @@ func (x Searching) BinarySearch(a []int, n int) int {
 		if len(a) == 0 {
 			return -1
 		}
-		m := floor(f + (l - f) / 2)
+		m := (int) (math.Floor((float64) (f + (l - f) / 2)))
 		if n == a[m] {
 			return m
 		} else if n < a[m] {
@@ -87,7 +88,7 @@ func (x Searching) BinarySearch(a []int, n int) int {
 	RBinarySearch2p(a, 7, f, l)
 
 	for f < l {
-		m = floor(f + (l - f) / 2)
+		m = (int) (math.Floor((float64) (f + (l - f) / 2)))
 		if n == a[m] {
 			return m
 		} else if n < a[m] {

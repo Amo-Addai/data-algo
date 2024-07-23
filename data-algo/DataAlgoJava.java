@@ -63,7 +63,11 @@ public class DataAlgoJava {
 
         public static class Searching {
 
-            public Searching() {}
+            private int i;
+
+            public Searching() {
+                this.i = -1;
+            }
 
             public int linearSearch(int[] a, int x) {
                 for (int i = 0; i < a.length; i++) if (x == a[i]) return i; // index 
@@ -87,9 +91,7 @@ public class DataAlgoJava {
                 BiFunction<int[], Integer, Integer>[] rBinarySearch = new BiFunction[1];
                 rBinarySearch[0] = (a, x) -> {
                     if (a.length == 0) return -1;
-                    int m = Math.floor(a.length / 2);
-
-                    // todo: test - calling rBinarySearch[0].apply(..) before assignment might fail
+                    int m = (int) Math.floor((double) (a.length / 2));
                     if (x == a[m]) return a[m];
                     else if (x < a[m]) return rBinarySearch[0].apply(Arrays.copyOfRange(a, 0, m), x);
                     else return rBinarySearch[0].apply(Arrays.copyOfRange(a, m + 1, a.length), x);
@@ -98,7 +100,7 @@ public class DataAlgoJava {
                 RBinarySearch[] rbSearch = new RBinarySearch[1];
                 rbSearch[0] = (a, x, f, l) -> {
                     if (a.length == 0) return -1;
-                    int m = Math.floor(f + (l - f) / 2);
+                    int m = (int) Math.floor((double) (f + (l - f) / 2));
                     if (x == a[m]) return m;
                     else if (x < a[m]) return rbSearch[0].rBinarySearch2p(a, x, f, m - 1);
                     else return rbSearch[0].rBinarySearch2p(a, x, m + 1, l);
@@ -109,8 +111,8 @@ public class DataAlgoJava {
                 rbSearch[0].rBinarySearch2p(arr, 7, f, l);
 
                 while (f < l) {
-                    m = Math.floor(f + (l - f) / 2);
-                    if (x == a[m]) return m;
+                    m = (int) Math.floor((double) (f + (l - f) / 2));
+                    if (num == arr[m]) return m;
                     else if (num < arr[m]) l = m - 1;
                     else f = m + 1;
                 }

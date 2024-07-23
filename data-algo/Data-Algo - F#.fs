@@ -35,25 +35,25 @@ type SearchigAlgorithms (constructor-arguments) = class
     let linearSearch a: int32[], x: int32 -> int32 =
         for i = 0 to a.length do
         // for i in a do; for i in 0 .. a.length do
-            if x = a[i] then return i // index
+            if x = a.[i] then return i // index
 
     let binarySearch a: int32[], x: int32 -> int32 =
-        if (x.length = 0) then return null // todo: null ?
+        if (x.length = 0) then return null
 
-        // todo: a.sort()
+        Array.sortInPlace a
 
         let rec rBinarySearch a: int32[], x: int32 -> int32 =
             if x.length = 0 then return null
-            let m = floor(a.length / 2) // todo: Math.floor(..) - mutable
-            if x == a[m] then return a[m]
-            elif x < a[m] then return rBinarySearch(a, x) // todo: slice a (test end index inclusiveness)
-            else return rBinarySearch(a, x) // todo: slice a (test end index inclusiveness)
+            let m = System.Math.Floor (a.length / 2)
+            if x == a.[m] then return a.[m]
+            elif x < a.[m] then return rBinarySearch(a.[..m-1], x)
+            else return rBinarySearch(a.[m+1..], x)
 
         let rec rBinarySearch2p a: int32[], x: int32 f: int32, l: int32 -> int32 =
             if x.length = 0 then return null
-            let m = floor(f + (l - f) / 2)
-            if x == a[m] then return m
-            elif x < a[m] then return rBinarySearch2p(a, x, f, m - 1)
+            let m = System.Math.Floor (f + (l - f) / 2)
+            if x == a.[m] then return m
+            elif x < a.[m] then return rBinarySearch2p(a, x, f, m - 1)
             else return rBinarySearch2p(a, x, m + 1, l)
 
         let f: int32 = 0
@@ -63,9 +63,9 @@ type SearchigAlgorithms (constructor-arguments) = class
         rBinarySearch2p(a, 7, f, l)
 
         while (f < l) do
-            m <- floor(f + (l - f) / 2)
-            if x == a[m] then return m
-            elif x < a[m] then l = m - 1
+            m <- System.Math.Floor (f + (l - f) / 2)
+            if x == a.[m] then return m
+            elif x < a.[m] then l = m - 1
             else f = m + 1
 
         return null

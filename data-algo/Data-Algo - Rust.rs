@@ -12,7 +12,7 @@ Generics
 
 pub mod Sorting {
 
-    priv let i:i32 = 0;
+    priv let i:Any;
     
 }
 
@@ -32,19 +32,19 @@ pub mod Searching {
     fn binarySearch(a: Vec<i32>, mut x: i32) -> Option<i32> {
         if a.len() == 0 return None;
 
-        // todo: a.sort()
+        a.sort();
 
         let rBinarySearch: fn(Vec<i32>, i32) -> Option<i32> = | a: Vec<i32>, x: i32 | -> i32 {
             if a.len() == 0 return None;
-            let m = floor(a.len() / 2); // todo: Math.floor(..)
+            let m = (a.len() / 2).floor();
             if x == a[m] return a[m];
-            else if x < a[m] return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
-            else return rBinarySearch(a, x);
+            else if x < a[m] return rBinarySearch(&a[..m], x);
+            else return rBinarySearch(&a[m+1..], x);
         }
 
         let rBinarySearch2p: fn(Vec<i32>, i32) -> Option<i32> = | a: Vec<i32>, x: i32, f:i32, l:i32 | -> i32 {
             if a.len() == 0 return None;
-            let m = floor(f + (l - f) / 2);
+            let m = (f + (l - f) / 2).floor();
             if x == a[m] return m;
             else if x < a[m] return rBinarySearch2p(a, x, f, m - 1);
             else return rBinarySearch2p(a, x, m + 1, l);
@@ -57,11 +57,12 @@ pub mod Searching {
         rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l);
 
         while f < l {
-            m = floor(f + (l - f) / 2);
+            m = (f + (l - f) / 2).floor();
             if x == a[m] return m;
             else if x < a[m] l = m - 1;
             else f = m + 1;
         }
+        
         return None;
     }
 

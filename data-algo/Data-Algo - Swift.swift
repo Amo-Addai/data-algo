@@ -26,7 +26,11 @@ class Sorting {
 
 class Searching {
 
-    init() {}
+    private var i: Int
+
+    init() {
+        self.i = -1
+    }
 
     func linearSearch(a: [Int], x: Int) -> Int? {
         for i in 0..<a.count where x == a[i] {
@@ -71,7 +75,8 @@ class Searching {
         }
 
         var f: Int = 0, l: Int = a.count - 1, m: Int
-        // rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l)
+        rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l)
+
         let res: Int? = rBinarySearch(a, 7)
         let res2p: Int? = rBinarySearch2p(a, 7, f, l)
         print("\(res ?? -1) | \(res2p ?? -1)")
@@ -86,6 +91,7 @@ class Searching {
                 f = m + 1
             }
         }
+        
         return nil
     }
 }

@@ -24,17 +24,24 @@ class Sorting {
 ////////////////////////////////////////
 
 class Searching {
-    
-    function __construct() {}
-    function __destruct() {}
 
-    function linearSearch($a, $x) {
+    private $i;
+    
+    function __construct() {
+        $this->i = -1;
+    }
+
+    function __destruct() {
+        $this->i = -1;
+    }
+
+    public function linearSearch($a, $x) {
         foreach ($a as $i) if ($x === $i) return $i; // item
         foreach ($a as $i => $v) if ($x === $v) return $i; // index
         for ($i = 0; $i < count($a); $i++) if ($x === $a[$i]) return $i; // index
     }
 
-    function binarySearch($a, $x) {
+    public function binarySearch($a, $x) {
         if (empty($a) || count($a) == 0) return null; // only 1 check required
 
         sort($a);
@@ -46,6 +53,7 @@ class Searching {
             if ($x == $a[$m]) return $a[$m];
             elseif ($x < $a[$m]) return rBinarySearch(
                 array_slice($a, 0, $m - 1),
+                // * so $m's previous index - 0 (1st item's index) is the accurate length for the slice-through
                 $x
             );
             else return rBinarySearch(
