@@ -30,23 +30,24 @@ pub mod Searching {
     }
 
     fn binarySearch(a: Vec<i32>, mut x: i32) -> Option<i32> {
-        // * a.sort()
-        if a.len() == 0 return None; // length
+        if a.len() == 0 return None;
+
+        // todo: a.sort()
 
         let rBinarySearch: fn(Vec<i32>, i32) -> Option<i32> = | a: Vec<i32>, x: i32 | -> i32 {
             if a.len() == 0 return None;
-            let m = a.len() / 2;
-            if x < a[m] return rBinarySearch(a, x);
-            else if x > a[m] return rBinarySearch(a, x);
-            else return m;
+            let m = floor(a.len() / 2); // todo: Math.floor(..)
+            if x == a[m] return a[m];
+            else if x < a[m] return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
+            else return rBinarySearch(a, x);
         }
 
         let rBinarySearch2p: fn(Vec<i32>, i32) -> Option<i32> = | a: Vec<i32>, x: i32, f:i32, l:i32 | -> i32 {
             if a.len() == 0 return None;
-            let m = (f + l) / 2;
-            if x < a[m] return rBinarySearch2p(a, x, f, m - 1);
-            else if x > a[m] return rBinarySearch2p(a, x, m + 1, l);
-            else return m;
+            let m = floor(f + (l - f) / 2);
+            if x == a[m] return m;
+            else if x < a[m] return rBinarySearch2p(a, x, f, m - 1);
+            else return rBinarySearch2p(a, x, m + 1, l);
         }
 
         let mut f:i32 = 0;
@@ -56,10 +57,10 @@ pub mod Searching {
         rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l);
 
         while f < l {
-            m = (f + l) / 2;
-            if x < a[m] l = m - 1;
-            else if x > a[m] f = m + 1;
-            else return m;
+            m = floor(f + (l - f) / 2);
+            if x == a[m] return m;
+            else if x < a[m] l = m - 1;
+            else f = m + 1;
         }
         return None;
     }
@@ -82,5 +83,5 @@ pub mod Searching {
 ////////////////////////////////////////
 
 fn main(args: Vec<String>) {
-    pri32ln!("Hello, World!")
+    println!("Hello, World!") // TODO: pri32ln ?
 }

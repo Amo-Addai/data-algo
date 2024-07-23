@@ -81,26 +81,27 @@ public class DataAlgoJava {
                 // only regular inner functions (when they can be defined, in java) should be defined before all logic
 
                 if (arr.length == 0) return -1;
+                
                 Arrays.sort(arr); // O(n log n) t
 
                 BiFunction<int[], Integer, Integer>[] rBinarySearch = new BiFunction[1];
                 rBinarySearch[0] = (a, x) -> {
                     if (a.length == 0) return -1;
-                    int m = a.length / 2;
+                    int m = Math.floor(a.length / 2);
 
                     // todo: test - calling rBinarySearch[0].apply(..) before assignment might fail
-                    if (x < a[m]) return rBinarySearch[0].apply(Arrays.copyOfRange(a, 0, m - 1), x); // todo: slice a
-                    else if (x > a[m]) return rBinarySearch[0].apply(Arrays.copyOfRange(a, m + 1, a.length - 1), x); // todo: slice a
-                    else return m;
+                    if (x == a[m]) return a[m];
+                    else if (x < a[m]) return rBinarySearch[0].apply(Arrays.copyOfRange(a, 0, m), x);
+                    else return rBinarySearch[0].apply(Arrays.copyOfRange(a, m + 1, a.length), x);
                 };
 
                 RBinarySearch[] rbSearch = new RBinarySearch[1];
                 rbSearch[0] = (a, x, f, l) -> {
                     if (a.length == 0) return -1;
-                    int m = (f + l) / 2; // or - f + (l - f) / 2
-                    if (x < a[m]) return rbSearch[0].rBinarySearch2p(a, x, f, m - 1);
-                    else if (x > a[m]) return rbSearch[0].rBinarySearch2p(a, x, m + 1, l);
-                    else return m;
+                    int m = Math.floor(f + (l - f) / 2);
+                    if (x == a[m]) return m;
+                    else if (x < a[m]) return rbSearch[0].rBinarySearch2p(a, x, f, m - 1);
+                    else return rbSearch[0].rBinarySearch2p(a, x, m + 1, l);
                 };
 
                 int f = 0, l = arr.length - 1, m;
@@ -108,11 +109,12 @@ public class DataAlgoJava {
                 rbSearch[0].rBinarySearch2p(arr, 7, f, l);
 
                 while (f < l) {
-                    m = (f + l) / 2;
-                    if (num < arr[m]) l = m - 1;
-                    else if (num > arr[m]) f = m + 1;
-                    else return m;
+                    m = Math.floor(f + (l - f) / 2);
+                    if (x == a[m]) return m;
+                    else if (num < arr[m]) l = m - 1;
+                    else f = m + 1;
                 }
+
                 return -1;
             }
 

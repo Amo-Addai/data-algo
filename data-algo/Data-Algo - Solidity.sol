@@ -28,43 +28,45 @@ contract Searching {
     // uint, address, mapping, struct
     constructor() {}
 
-    function linearSearch(uint[] memory a, uint x) public pure returns (uint) {
+    function linearSearch(uint[] memory a, uint x) public pure returns (int) {
         for (uint i = 0; i < a.length; i++) {
             if (x == a[i]) return i;
         }
-        return 0;
+        return -1;
     }
 
-    function binarySearch(uint[] memory a, uint x) public returns (uint) {
-        // * a.sort()
-        if (a.length == 0) return 0;
+    function rBinarySearch(uint[] memory a, uint x) private returns (int) {
+        if (a.length == 0) return -1;
+        uint m = floor(a.length / 2); // todo: Math..floor
+        if (x == a[m]) return a[m];
+        else if (x < a[m]) return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
+        else return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
+    }
+
+    function rBinarySearch(uint[] memory a, uint x, uint f, uint l) private returns (int) {
+        if (a.length == 0) return -1;
+        uint m = floor(f + (l - f) / 2);
+        if (x == a[m]) return m;
+        else if (x < a[m]) return rBinarySearch(a, x, f, m - 1);
+        else return rBinarySearch(a, x, m + 1, l);
+    }
+
+    function binarySearch(uint[] memory a, uint x) public returns (int) {
+        if (a.length == 0) return -1;
+
+        // todo: a.sort() 
 
         uint f = 0; uint l = a.length - 1; uint m;
         rBinarySearch(a, 7); rBinarySearch(a, 7, f, l);
 
         while (f < l) {
-            m = (f + l) / 2;
-            if (x < a[m]) l = m - 1;
-            if (x > a[m]) f = m + 1;
-            else return m;
+            m = floor(f + (l - f) / 2);
+            if (x == a[m]) return m;
+            else if (x < a[m]) l = m - 1;
+            else f = m + 1;
         }
-        return 0;
-    }
-
-    function rBinarySearch(uint[] memory a, uint x) private returns (uint) {
-        if (a.length == 0) return 0;
-        uint m = a.length / 2;
-        if (x < a[m]) return rBinarySearch(a, x); // todo: slice a
-        if (x > a[m]) return rBinarySearch(a, x); // todo: slice a
-        else return m;
-    }
-
-    function rBinarySearch(uint[] memory a, uint x, uint f, uint l) private returns (uint) {
-        if (a.length == 0) return 0;
-        uint m = (f + l) / 2;
-        if (x < a[m]) return rBinarySearch(a, x, f, m - 1);
-        if (x > a[m]) return rBinarySearch(a, x, m + 1, l);
-        else return m;
+        
+        return -1;
     }
 
 }
@@ -86,5 +88,5 @@ contract Searching {
 
 function main(string[] calldata args) pure returns (uint) {
     // todo: print('Hello, World!')
-    return 0;
+    return 0; // unsigned int (NO -1)
 }

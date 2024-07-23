@@ -36,36 +36,37 @@ class Searching {
     }
 
     func binarySearch(a: [Int], x: Int) -> Int? {
-        // * a.sort()
         guard a.count > 0 else {
             return nil
         }
+
+        a.sort() //  in-place | or .sorted() - not in-place
 
         let rBinarySearch = { (a: [Int], x: Int) -> Int? in
             guard a.count > 0 else {
                 return nil
             }
-            let m = a.count / 2 // m never mutated, so let constant
-            if x < a[m] {
-                return rBinarySearch(Array(a[0..<m]), x)
-            } else if x > a[m] {
-                return rBinarySearch(Array(a[(m+1)...]), x)
+            let m = floor(a.count / 2) // m never mutated, so let constant
+            if x == a[m] {
+                return a[m]
+            } else if x < a[m] {
+                return rBinarySearch(Array(a[0..<m]), x) // ..< - end exclusive
             } else {
-                return m
-            }
+                return rBinarySearch(Array(a[(m+1)...]), x)
+            } 
         }
         
         let rBinarySearch2p = { (a: [Int], x: Int, f: Int, l: Int) -> Int? in
             guard a.count > 0 else {
                 return nil
             }
-            let m = (f + l) / 2
-            if x < a[m] {
-                return rBinarySearch2p(a, x, f, m - 1)
-            } else if x > a[m] {
-                return rBinarySearch2p(a, x, m + 1, l)
-            } else {
+            let m = floor(f + (l - f) / 2)
+            if (x == a[m]) {
                 return m
+            } else if x < a[m] {
+                return rBinarySearch2p(a, x, f, m - 1)
+            } else {
+                return rBinarySearch2p(a, x, m + 1, l)
             }
         }
 
@@ -76,13 +77,13 @@ class Searching {
         print("\(res ?? -1) | \(res2p ?? -1)")
 
         while f < l {
-            m = (f + l) / 2
-            if x < m {
-                l = m - 1
-            } else if x > m {
-                f = m + 1
-            } else {
+            m = floor(f + (l - f) / 2)
+            if (x == a[m]) {
                 return m
+            } else if x < m {
+                l = m - 1
+            } else {
+                f = m + 1
             }
         }
         return nil

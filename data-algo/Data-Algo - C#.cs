@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generics;
 using System.Linq;
 
 
@@ -39,42 +40,44 @@ namespace DataAlgo
                 
             public Int LinearSearch(Int[] a, Int x) 
             {
+                var FLinearSearch = () => a.Where(i => i == x).Select(i); // Functional Linq Usage
+
                 return from i in a where i == x select i; // todo: return i as index, instead of item
-                // return a.Where(i => i == x).Select(i); // Alternative Linq Usage
             }
 
             public Int BinarySearch(Int[] a, Int x) 
             {
-                // * a = Array.sort(a);
-                // a.BinarySearch(x); // * C# in-built Array Method
-
                 if (a.Length == 0) return null;
+
+                a = Array.Sort(a); // todo: sort
+                // a.BinarySearch(x); // * C# in-built Array Method
 
                 var RBinarySearch = (Int[] a, Int x) => {
                     if (a.Length == 0) return null;
-                    var m = a.Length / 2;
-                    if (x < a[m]) return RBinarySearch(a, x); // todo: slice a
-                    else if (x > a[m]) return RBinarySearch(a, x); // todo: slice a
-                    else return m;
+                    var m = Math.Floor(a.Length / 2); // todo: Math.floor
+                    if (x == a[m]) return a[m];
+                    else if (x < a[m]) return RBinarySearch(a[..m], x);
+                    else return RBinarySearch(a[m+1..], x);
                 };
 
                 var RBinarySearch2p = (Int[] a, Int x, Int f, Int l) => {
                     if (a.Length == 0) return null;
-                    var m = a.Length / 2;
-                    if (x < a[m]) return RBinarySearch2p(a, x, f, m - 1);
-                    else if (x > a[m]) return RBinarySearch2p(a, x, f, m + 1);
-                    else return m;
+                    var m = Math.Floor(f + (l - f) / 2);
+                    if (x == a[m]) return m;
+                    else if (x < a[m]) return RBinarySearch2p(a, x, f, m - 1);
+                    else return RBinarySearch2p(a, x, f, m + 1);
                 };
 
                 Int f = 0, l = a.Length - 1, m;
                 RBinarySearch(a, 7); RBinarySearch2p(a, 7, f, l);
 
                 while (f < l) {
-                    m = (f + l) / 2;
-                    if (x < a[m]) l = m - 1;
-                    else if (x > a[m]) f = m + 1;
-                    else return m;
+                    m = Math.Floor(f + (l - f) / 2);
+                    if (x == a[m]) return m;
+                    else if (x < a[m]) l = m - 1;
+                    else f = m + 1;
                 }
+
                 return null;
             }
 

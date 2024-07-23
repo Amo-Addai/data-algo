@@ -7,7 +7,7 @@ import heapq
 import numpy as np
 import pandas as pd
 
-# TODO: NB: Algo, Correctness, Speed / Execution Time, Uniqueness
+# TODO: NB: Test all files' Algo's - Correctness, Speed / Execution Time, Uniqueness
 
 ''' # TODO: To-Use
 
@@ -106,7 +106,7 @@ class Sorting:
         
         def slow(a, f, l):
             if not f < l: return
-            m = (f + l) / 2
+            m = math.floor(f + (l - f) / 2)
             slow(a, f, m); slow(a, m + 1, l)
             if a[l] < a[m]: self.swap(a[l], a[m])
             slow(a, f, l - 1)
@@ -206,40 +206,47 @@ class Searching:
     
     def linear_search(self, a, x):
         for i in a:
-            if x is i: return x
+            if x is i: return x # todo: all non-type() 'is' comparisons -> ==
         return None
 
     def binary_search(self, a, x):
+
+        if len(a) is 0: return None
 
         a.sort() # or - sorted(a) # O(n log n) t 
         # TODO: NB: .sort() isn't a method in case 'a' was a string literal
         # & sorted(str) returns a sorted array/list of str's characters
         # so for strings, call "".join(sorted(str)) on a new string literal "" (list doesn't have .join() method)
 
-        if len(a) is 0: return None
+        # * NB: sorting array before proceeding also affects indices (in-case actual array's item's index is required)
 
         def r_binary_search(a, x):
-            if len(a) is 0: return None
-            m = len(a) / 2 # better math.floor(len(a) / 2)
-            if x < a[m]: return r_binary_search(a[:m-1], x)
+            l = len(a)
+            if l is 0: return None
+            m = math.floor(l / 2) # avoid float
+            if x < a[m]: return r_binary_search(a[:m], x) # slice excludes endIndex
             elif x > a[m]: return r_binary_search(a[m+1:], x)
-            else: return m
+            # else - x == a[m] - best to check for this before other if-cases (imperfect way chosen, for memory)
+            else: return a[m] # or return a bool instead of same x arg - index m decreasing recursively, as a's length decreases
 
         def r_binary_search(a, x, f, l):
             if len(a) is 0 or f > l: return None
-            m = (f + l) / 2 # better - math.floor(f + (l - f) / 2) (NB: pemdas / bodmas)
-            if x < a[m]: return r_binary_search(a, x, f, m - 1)
-            elif x > a[m]: return r_binary_search(a, x, m + 1, l)
-            else: return m
+            m = math.floor(f + (l - f) / 2) # better than - (f + l) / 2 # * (NB: pemdas / bodmas)
+            if x == a[m]: return m
+            elif x < a[m]: return r_binary_search(a, x, f, m - 1)
+            # else - x > a[m]
+            else: return r_binary_search(a, x, m + 1, l)
 
         f, l = 0, len(a) - 1
         r_binary_search(a, 7); r_binary_search(a, 7, f, l)
 
         while f < l:
-            m = (f + l) / 2 # better - math.floor(f + (l - f) / 2) (NB: pemdas / bodmas)
-            if x < a[m]: l = m - 1
-            elif x > a[m]: f = m + 1
-            else: return m
+            m = math.floor(f + (l - f) / 2) # better than - (f + l) / 2 # * (NB: pemdas / bodmas)
+            if x == a[m]: return m
+            elif x < a[m]: l = m - 1
+            # else - x > a[m]
+            else: f = m + 1
+        
         return None
 
 

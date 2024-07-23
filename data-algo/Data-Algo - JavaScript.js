@@ -124,42 +124,164 @@ var Sorting = function() {
 
 var Searching = function() {
 
-    function linearSearch(a, x) { // O(n)
+    // * R .equals / gt / gte / lt / lte
+
+    Searching.prototype.check = R.curry((c, a, b) => {
+        const ops = {
+            '>': R.gt,
+            '>=': R.gte,
+            '<': R.lt,
+            '<=': R.lte,
+            '=': R.equals,
+            '==': R.equals,
+        }
+        const comparator = ops[c]
+        return comparator 
+            ? comparator(a, b) 
+            : null
+    })
+
+    Searching.prototype.compareNums = (s, a, b) => {
+
+        const check1 = R.ifElse(
+            c => R.equals(c, '>'),
+            _ => R.gt(a, b),
+            R.ifElse(
+                c => R.equals(c, '<'),
+                _ => R.lt(a, b),
+                R.ifElse(
+                    c => R.equals(c, '='),
+                    _ => R.equals(a, b),
+                    _ => null
+                )
+            )
+        )
+
+        const check2 = op => {
+            
+        }
+
+        const res = []
+        s.split('')
+            .map(c => {
+                res.push(
+                    check1(c)
+                )
+            })
+        
+        return R.isNotEmpty(res) // * never wrap return's next syntax elem (in return value) to next line
+            && R.includes(true, res)
+        
+    }
+
+
+    function linearSearch(a, x) { // O(n) t
+
+        const fLinearSearch = (a, x) => a.find(i => i === x) // .find() - also O(n) t
+
         for (i of a) if (i === x) return i // * 2 constructs can be used in 1 line
         // * never force 1-line or tabs in production (only scopes {}) | unless in-built - .py/rb/sh/erl/fs/qs/..
         return null
     }
 
     function binarySearch(a, x) { // O(log n)
+        if (a.length === 0) return null
+
         a.sort((a, b) => a - b); // O(n log n) t // compare func for int arrays only
         // or - .sort() - without compare func for strings & chars (alphabetical order) only 
-        if (a.length === 0) return null
+
+        // * NB: sorting array before proceeding also affects indices (in-case actual array's item's index is required)
 
         function rBinarySearch(a, x) {
             if (a.length === 0) return null
-            m = a.length / 2 // better - Math.floor(a.length / 2)
-            if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x) // or - a.splice(0, m - 1)
-            else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
-            else return m
+            const m = Math.floor(a.length / 2) // avoid float
+            if (x < a[m]) return rBinarySearch(a.slice(0, m), x) // .slice excludes endIndex; .splice(0, m) doesn't 
+            else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length), x)
+            // else - (x === a[m]) - best to check for this before other if-cases (imperfect way for memory)
+            else return a[m] // or return a bool instead of same x arg - index m decreasing recursively, as a's length decreases
+            // * or call - rBinarySearch2p(a, x, 0, a.length - 1) - returns found index
         }
 
-        function rBinarySearch(a, x, f, l) {
+        const fRBinarySearch = (a, x) => {
+
+            // todo: R.ifElse()
+
+            const m = Math.floor(
+                R.divide(a.length, 2)
+            )
+            
+            const wrongRecurse = R.ifElse(
+                x => this.check('<', x, a[m]),
+                x => fBinarySearch(
+                    a.slice(0, m),
+                    x
+                ),
+                R.ifElse(
+                    x => this.check('>', x, a[m]),
+                    x => fBinarySearch(
+                        a.slice(
+                            m + 1,
+                            a.length
+                        ),
+                        x
+                    ),
+                    // * wrongRecurse because:
+                    // else - (x === a[m]) - best to check for this before other if-cases (imperfect way chosen, for memory)
+                    _ => a[m]
+                )
+            )
+
+            const recurse = R.ifElse(
+                x => this.check('=', x, a[m]),
+                _ => a[m], // or return a bool instead of same x arg - index m decreasing recursively, as a's length decreases
+                R.ifElse(
+                    x => this.check('<', x, a[m]),
+                    x => fBinarySearch(
+                        a.slice(0, m),
+                        x
+                    ),
+                    // else - (x > a[m])
+                    x => fBinarySearch(
+                        a.slice(
+                            m + 1,
+                            a.length
+                        ),
+                        x
+                    )
+                )
+            )
+
+            return recurse(x)
+        }
+
+        function rBinarySearch2p(a, x, f, l) {
             if (a.length === 0 || f > l) return null
-            m = (f + l) / 2 // better - Math.floor(f + (l - f) / 2)
-            if (x < a[m]) return rBinarySearch(a, x, f, m - 1)
-            else if (x > a[m]) return rBinarySearch(a, x, m + 1, l)
-            else return m
+            const m = Math.floor(f + (l - f) / 2) // better than - (f + l) / 2
+            if (x === a[m]) return m
+            else if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1)
+            // else - (x > a[m]) 
+            else return rBinarySearch2p(a, x, m + 1, l)
         }
 
-        f = 0, l = a.length - 1 
-        rBinarySearch(a, 3); rBinarySearch(a, 3, f, l)
+        const fRBinarySearch2p = (a, x, f, l) => {
+            // todo: R.ifElse()
+        }
+
+        const fBinarySearch2p = (a, x, f, l) => {
+            // todo: R.ifElse()
+        }
+
+        f = 0, l = a.length - 1, m
+        rBinarySearch(a, 3); rBinarySearch2p(a, 3, f, l)
 
         while (f < l) {
-            m = (f + l) / 2 // better - Math.floor(f + (l - f) / 2)
-            if (x < a[m]) l = m - 1
-            else if (x > a[m]) f = m + 1
-            else return m
+            m = Math.floor(f + (l - f) / 2) // better than - (f + l) / 2
+            if (x === a[m]) return m
+            else if (x < a[m]) l = m - 1
+            // else - (x > a[m]) 
+            else f = m + 1
         }
+
         return null
     }
 

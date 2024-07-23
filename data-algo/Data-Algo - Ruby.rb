@@ -36,34 +36,36 @@ class Searching
     end
 
     def binary_search(a, x)
-        # * a.sort()
         if len(a) == 0 return nil
+            
+        # todo: a.sort()
         
         def r_binary_search(a, x)
             if len(a) == 0 return nil
-            m = len(a) / 2
-            if x < a[m] return r_binary_search(a[:m-1], x)
-            elsif x > a[m] return r_binary_search(a[m+1:], x)
-            else return m
+            m = floor(len(a) / 2) # todo: math.floor(..)
+            if x == a[m] return a[m]
+            elsif x < a[m] return r_binary_search(a[:m], x) # todo: slice a (test end index inclusiveness)
+            else return r_binary_search(a[m+1:], x)
         end
         
         def r_binary_search(a, x, f, l)
             if len(a) == 0 return nil
-            m = (f + l) / 2
-            if x < a[m] return r_binary_search(a, x, f, m - 1)
-            elsif x > a[m] return r_binary_search(a, x, m + 1, l)
-            else return m
+            m = floor(f + (l - f) / 2)
+            if x == a[m] return m
+            elsif x < a[m] return r_binary_search(a, x, f, m - 1)
+            else return r_binary_search(a, x, m + 1, l)
         end
 
         f, l, m = 0, len(a) - 1
         r_binary_search(a, 7); r_binary_search(a, 7, f, l)
 
         while f < l
-            m = (f + l) / 2
-            if x < a[m] l = m - 1 end
-            elsif x > a[m] f = m + 1 end
-            else return m
+            m = floor(f + (l - f) / 2)
+            if x == a[m] return m
+            elsif x < a[m] l = m - 1 end # TODO: Test check & statement in 1-line
+            else f = m + 1 end
         end 
+
         return nil   
     end
 end

@@ -38,34 +38,35 @@ type SearchigAlgorithms (constructor-arguments) = class
             if x = a[i] then return i // index
 
     let binarySearch a: int32[], x: int32 -> int32 =
-        // * a.sort()
-        if (x.length = 0) then return null
+        if (x.length = 0) then return null // todo: null ?
+
+        // todo: a.sort()
 
         let rec rBinarySearch a: int32[], x: int32 -> int32 =
             if x.length = 0 then return null
-            let m = a.length / 2
-            if x < a[m] then return rBinarySearch(a, x) // todo: slice a
-            elif x > a[m] then return rBinarySearch(a, x) // todo: slice a
-            else return m
+            let m = floor(a.length / 2) // todo: Math.floor(..) - mutable
+            if x == a[m] then return a[m]
+            elif x < a[m] then return rBinarySearch(a, x) // todo: slice a (test end index inclusiveness)
+            else return rBinarySearch(a, x) // todo: slice a (test end index inclusiveness)
 
         let rec rBinarySearch2p a: int32[], x: int32 f: int32, l: int32 -> int32 =
             if x.length = 0 then return null
-            let m = (f + l) / 2
-            if x < a[m] then return rBinarySearch2p(a, x, f, m - 1)
-            elif x > a[m] then return rBinarySearch2p(a, x, m + 1, l)
-            else return m
+            let m = floor(f + (l - f) / 2)
+            if x == a[m] then return m
+            elif x < a[m] then return rBinarySearch2p(a, x, f, m - 1)
+            else return rBinarySearch2p(a, x, m + 1, l)
 
         let f: int32 = 0
         let l: int32 = a.length - 1
-        let mutable m: int32 = (f + l) / 2 // mutable
+        let mutable m: int32
         rBinarySearch(a, 7)
         rBinarySearch2p(a, 7, f, l)
 
         while (f < l) do
-            m <- (f + l) / 2
-            if x < a[m] then l = m - 1
-            elif x > a[m] then f = m + 1
-            else return m
+            m <- floor(f + (l - f) / 2)
+            if x == a[m] then return m
+            elif x < a[m] then l = m - 1
+            else f = m + 1
 
         return null
 

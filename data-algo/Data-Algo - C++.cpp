@@ -1,9 +1,11 @@
 // #include <bits/stdc++.h>
 // #include <stdio.h>
 #include <iostream>
+#include <cmath>
 #include <string>
 #include <map>
 #include <iterator>
+#include <array>
 #include <vector>
 
 using namespace std;
@@ -39,6 +41,18 @@ class Searching {
 private:
     int i;
 
+    int length(int a[]) {
+        return sizeof(a) / sizeof(a[0]);
+    }
+
+    vector<int> slice(const vector<int>& src, int start, int end) {
+        if (start < 0 || end > src.size() || start >= end) {
+            return vector<int>();
+        }
+
+        return vector<int>(src.begin() + start, src.begin() + end);
+    }
+
 public:
     Searching() {
         this->i = 0;
@@ -49,56 +63,53 @@ public:
     }
 
     int linearSearch(int a[], int x) {
-        for (int i = 0; i < size(a); i++) { // todo: import size() from list lib
+        for (int i = 0; i < this->length(a); i++) { // or array/vector<int> .size()
             if (x == a[i])
                 return i;
         }
     }
 
-    int binarySearch(int a[], int x) {
-        // * a = rsort(a);
-        
-        if (size(a) == 0)
-            return -1;
+    int rBinarySearch(int a[], int x) {
+        int length = this->length(a);
+        if (length == 0) return -1;
+        int m = floor(length / 2);
+        if (x == a[m]) return a[m];
+        else if (x < a[m])
+            return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
+        else
+            return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
+    }
 
-        int f = 0, l = size(a) - 1, m;
+    int rBinarySearch(int a[], int x, int f, int l) {
+        if (this->length(a) == 0) return -1;
+        int m = floor(f + (l - f) / 2);
+        if (x == a[m]) return m;
+        else if (x < a[m])
+            return rBinarySearch(a, x, f, m - 1);
+        else 
+            return rBinarySearch(a, x, m + 1, l);
+    }
+
+    int binarySearch(int a[], int x) {
+        int length = this->length(a);
+        if (length == 0) return -1;
+
+        sort(a, a + length);
+        
+        int f = 0, l = length - 1, m;
         rBinarySearch(a, 7);
         rBinarySearch(a, 7, f, l);
 
         while (f < l) {
-            m = (f + l) / 2;
-            if (x < a[m])
-                l = m - 1;
-            else if (x > a[m])
-                l = m + 1;
-            else
-                return m;
+            m = floor(f + (l - f) / 2);
+            if (x == a[m]) return m;
+            else if (x < a[m]) l = m - 1;
+            else l = m + 1;
         }
+
+        return -1;
     }
 
-    int rBinarySearch(int a[], int x) {
-        if (size(a) == 0)
-            return -1;
-        int m = size(a) / 2;
-        if (x < a[m])
-            return rBinarySearch(a, x); // todo: slice a
-        else if (x > a[m])
-            return rBinarySearch(a, x); // todo: slice a
-        else
-            return m;
-    }
-
-    int rBinarySearch(int a[], int x, int f, int l) {
-        if (size(a) == 0)
-            return -1;
-        int m = size(a) / 2;
-        if (x < a[m])
-            return rBinarySearch(a, x, f, m - 1);
-        else if (x > a[m])
-            return rBinarySearch(a, x, m + 1, l);
-        else
-            return m;
-    }
 };
 // returnType Searching::method(args) {} // defined outside of class scope
 

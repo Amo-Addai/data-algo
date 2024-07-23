@@ -37,23 +37,26 @@ class Searching {
   }
 
   int? binarySearch(List<dynamic> a, int x) {
-    // * a.sort()
     if (a.length == 0) return null;
 
-    Function rBinarySearch = (List<dynamic> a, int x) {
+    // todo: a.sort()
+
+    Function? rBinarySearch = null;
+    rBinarySearch = (List<dynamic> a, int x) {
       if (a.length == 0) return null;
-      int m = (a.length / 2).truncate();
-      if (x < a[m]) return rBinarySearch(a, x); // todo: slice a
-      else if (x > a[m]) return rBinarySearch(a, x); // todo: slice a
-      else return m;
+      int m = (a.length / 2).truncate();  // todo: Math.floor(..)).truncate();
+      if (x == a[m]) return a[m]; // todo: Function ? / !
+      else if (x < a[m]) return rBinarySearch!(a, x); // todo: slice a (test end index inclusiveness)
+      else return rBinarySearch(a, x); // todo: slice a (test end index inclusiveness)
     };
 
-    Function rBinarySearch2p = (List<dynamic> a, int x, int f, int l) {
+    Function? rBinarySearch2p = null;
+    rBinarySearch2p = (List<dynamic> a, int x, int f, int l) {
       if (a.length == 0) return null;
-      int m = ((f + l) / 2).truncate();
-      if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1);
-      else if (x > a[m]) return rBinarySearch2p(a, x, m + 1, l);
-      else return m;
+      int m = (f + (l - f) / 2).truncate();
+      if (x == a[m]) return m;
+      else if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1);
+      else return rBinarySearch2p(a, x, m + 1, l);
     };
 
     int f = 0;
@@ -62,10 +65,10 @@ class Searching {
     rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l);
 
     while (f < l) {
-      m = ((f + l) / 2).truncate();
-      if (x < a[m]) l = m - 1;
-      else if (x > a[m]) f = m + 1;
-      else return m;
+      m = (f + (l - f) / 2).truncate();
+      if (x == a[m]) return m;
+      else if (x < a[m]) l = m - 1;
+      else f = m + 1;
     }
     return null;
   }

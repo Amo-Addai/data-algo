@@ -40,25 +40,26 @@ func (x Searching) LinearSearch(a []int, n int) int {
 }
 
 func (x Searching) BinarySearch(a []int, n int) int {
-	// sort.Sort(a) // accepts any collection that implements the sort.Interface, which requires three methods: Len(), Less(i, j int), and Swap(i, j int).
-	sort.Ints(a) // convenience function for sorting slices of built-in types (.Ints - []int ; .Float64s/Strings/IntsAreSorted/Float64sAreSorted/StringsAreSorted)
 	if len(a) == 0 {
 		return -1
 	}
 
+	// sort.Sort(a) // accepts any collection that implements the sort.Interface, which requires three methods: Len(), Less(i, j int), and Swap(i, j int).
+	sort.Ints(a) // convenience function for sorting slices of built-in types (.Ints - []int ; .Float64s/Strings/IntsAreSorted/Float64sAreSorted/StringsAreSorted)
+
 	var RBinarySearch func([]int, int) int     // declare function data type var 1st
 	RBinarySearch = func(a []int, n int) int { // var has to exist before function value assignment, since it's a recursive function
-		if len(a) == 0 {
+		len := len(a)
+		if len == 0 {
 			return -1
 		}
-		m := len(a) / 2
-		if n < a[m] {
-			return RBinarySearch(a[:m-1], n)
-		}
-		if n > a[m] {
-			return RBinarySearch(a[m+1:], n)
+		m := floor(len / 2) // todo: Math.floor(..)
+		if n == a[m] {
+			return a[m]
+		} else if n < a[m] {
+			return RBinarySearch(a[:m], n)
 		} else {
-			return m
+			return RBinarySearch(a[m+1:], n)
 		}
 	}
 
@@ -67,14 +68,13 @@ func (x Searching) BinarySearch(a []int, n int) int {
 		if len(a) == 0 {
 			return -1
 		}
-		m := len(a) / 2
-		if n < a[m] {
-			return RBinarySearch2p(a, n, f, m-1)
-		}
-		if n > a[m] {
-			return RBinarySearch2p(a, n, m+1, l)
-		} else {
+		m := floor(f + (l - f) / 2)
+		if n == a[m] {
 			return m
+		} else if n < a[m] {
+			return RBinarySearch2p(a, n, f, m-1)
+		} else {
+			return RBinarySearch2p(a, n, m+1, l)
 		}
 	}
 
@@ -87,15 +87,16 @@ func (x Searching) BinarySearch(a []int, n int) int {
 	RBinarySearch2p(a, 7, f, l)
 
 	for f < l {
-		m = (f + l) / 2
-		if n < a[m] {
-			l = m - 1
-		} else if n > a[m] {
-			f = m + 1
-		} else {
+		m = floor(f + (l - f) / 2)
+		if n == a[m] {
 			return m
+		} else if n < a[m] {
+			l = m - 1
+		} else {
+			f = m + 1
 		}
 	}
+
 	return -1
 }
 
@@ -110,5 +111,5 @@ func (x Searching) BinarySearch(a []int, n int) int {
 ////////////////////////////////////////
 
 func main() {
-	fmt.Println("Hello, World!") 
+	fmt.Println("Hello, World!")
 }

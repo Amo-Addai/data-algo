@@ -30,34 +30,37 @@ linearSearch <- function (a, x) {
 }
 
 binarySearch <- function (a, x) {
-    # * a <- sort(a)
     if (length(a) == 0) NULL
 
+    # todo: a <- sort(a)
+
     rBinarySearch <- function (a, x) {
-        if (length(a) == 0) NULL
-        m <- length(a) / 2
-        if (x < a[m]) rBinarySearch(a, x) # todo: slice a
-        if (x > a[m]) rBinarySearch(a, x) # todo: slice a
-        else m
+        length = length(a)
+        if (length == 0) NULL
+        m <- floor(length / 2) # todo: Math.floor
+        if (x == a[m]) a[m]
+        else if (x < a[m]) rBinarySearch(a, x) # todo: slice a (test end index inclusiveness)
+        else rBinarySearch(a, x) # todo: slice a (test end index inclusiveness)
     }
 
     rBinarySearch2p <- function (a, x, f, l) {
         if (length(a) == 0) NULL
-        m <- (f + l) / 2
-        if (x < a[m]) rBinarySearch2p(a, x, f, m - 1)
-        if (x > a[m]) rBinarySearch2p(a, x, m + 1, l)
-        else m
+        m <- floor(f + (l - f) / 2)
+        if (x == a[m]) m
+        else if (x < a[m]) rBinarySearch2p(a, x, f, m - 1)
+        else rBinarySearch2p(a, x, m + 1, l)
     }
 
     f <- 0; l <- length(a) - 1
     rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l)
 
     while (f < l) {
-        m <- (f + l) / 2
-        if (x < a[m]) l <- m - 1
-        if (x > a[m]) f <- m + 1
-        else m
+        m <- floor(f + (l - f) / 2)
+        if (x == a[m]) m
+        else if (x < a[m]) l <- m - 1
+        else f <- m + 1
     }
+
     NULL
 }
 

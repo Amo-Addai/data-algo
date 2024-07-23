@@ -26,21 +26,22 @@ fun linearSearch({A, X}) when length(A) =/= 0 ->
 
 
 fun binarySearch({A, X}) when length(A) =/= 0 ->
-    % * A = lists:sort(A);
+
+    % todo: A = lists:sort(A);
 
     RBinarySearch = fun({A, X}) when length(A) =/= 0 ->
-        M = length(A) div 2;
-        if (X < M) -> RBinarySearch({A, X}). % todo: slice a
-            (X > M) -> RBinarySearch({A, X}). % todo: slice a
-            true -> M.
+        M = floor(length(A) div 2); % todo: Math.floor & length
+        if (X == M) -> A[M]; % TODO: a[m]
+            (X < M) -> RBinarySearch({A, X}); % todo: slice a (test end index inclusiveness)
+            true -> RBinarySearch({A, X}). % todo: slice a (test end index inclusiveness)
         end.
     end
 
     RBinarySearch2p = fun({A, X, F, L}) when length(A) =/= 0 ->
-        M = (F + L) div 2;
-        if (X < M) -> RBinarySearch2p({A, X, F, M - 1});
-            (X > M) -> RBinarySearch2p({A, X, M + 1, L});
-            true -> M.
+        M = floor(F + (L - F) div 2);
+        if (X == M) -> M;
+            (X < M) -> RBinarySearch2p({A, X, F, M - 1});
+            true -> RBinarySearch2p({A, X, M + 1, L}).
         end.
     end
 
@@ -51,6 +52,9 @@ fun binarySearch({A, X}) when length(A) =/= 0 ->
     RBinarySearch2p({A, X, F, L});
     
     lists:map(fun RBinarySearch/4, [A]);
+
+    % TODO: Iterative BinarySearch
+
     .
 
 

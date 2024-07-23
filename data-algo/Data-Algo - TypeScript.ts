@@ -33,34 +33,39 @@ class TSearching {
     }
 
     binarySearch(a: number[], x: number): number | null {
-        // * a.sort()
         if (a.length === 0) return null
+
+        a.sort((a, b) => a - b); // O(n log n) t // compare func for int arrays only
+        // or - .sort() - without compare func for strings & chars (alphabetical order) only 
+
+        // * NB: sorting array before proceeding also affects indices (in-case actual array's item's index is required)
 
         var rBinarySearch = (a: number[], x: number): number | null => {
             if (a.length === 0) return null
-            let m: number = a.length / 2
-            if (x < a[m]) return rBinarySearch(a.slice(0, m - 1), x)
-            else if (x > a[m]) return rBinarySearch(a.slice(m + 1, a.length - 1), x)
-            else return m
+            let m: number = Math.floor(a.length / 2)
+            if (x === a[m]) return a[m]
+            else if (x < a[m]) return rBinarySearch(a.slice(0, m), x)
+            else return rBinarySearch(a.slice(m + 1, a.length), x)
         }
 
         var rBinarySearch2p = (a: number[], x: number, f: number, l: number): number | null => {
             if (a.length === 0) return null
-            let m: number = (f + l) / 2
-            if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1)
-            else if (x > a[m]) return rBinarySearch2p(a, x, m + 1, l)
-            else return m
+            let m: number = Math.floor(f + (l - f) / 2)
+            if (x === a[m]) return m
+            else if (x < a[m]) return rBinarySearch2p(a, x, f, m - 1)
+            else return rBinarySearch2p(a, x, m + 1, l)
         }
 
         let f: number = 0, l: number = a.length - 1, m: number
         rBinarySearch(a, 3); rBinarySearch2p(a, 3, f, l)
 
         while (f < l) {
-            m = (f + l) / 2
-            if (x < a[m]) l = m - 1
-            else if (x > a[m]) f = m + 1
-            else return m
+            m = Math.floor(f + (l - f) / 2)
+            if (x === a[m]) return m
+            else if (x < a[m]) l = m - 1
+            else f = m + 1
         }
+
         return null
     }
 

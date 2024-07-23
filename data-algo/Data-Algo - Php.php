@@ -35,34 +35,47 @@ class Searching {
     }
 
     function binarySearch($a, $x) {
-        // * sort($a);
         if (empty($a) || count($a) == 0) return null; // only 1 check required
+
+        sort($a);
 
         function rBinarySearch($a, $x) {
             if (empty($a)) return null;
-            $m = count($a) / 2;
-            if ($x < $a[$m]) return rBinarySearch(array_slice($a, 0, $m - 1), $x);
-            elseif ($x > $a[$m]) return rBinarySearch(array_slice($a, $m + 1), $x);
-            else return $m;
+            $l = count($a);
+            $m = floor($l / 2);
+            if ($x == $a[$m]) return $a[$m];
+            elseif ($x < $a[$m]) return rBinarySearch(
+                array_slice($a, 0, $m - 1),
+                $x
+            );
+            else return rBinarySearch(
+                array_slice($a,
+                    $m + 1,
+                    ($l - 1) - ($m + 1) // * slice length (not endIndex)
+                ), // * so last item's index - $m's next index is the accurate length for the slice-through
+                $x
+            ); // todo: length : - 1 exclusiveness
         }
 
         function rBinarySearch2p($a, $x, $f, $l) {
             if (empty($a)) return null;
-            $m = ($f + $l) / 2;
-            if ($x < $a[$m]) return rBinarySearch2p($a, $x, $f, $m - 1);
-            elseif ($x > $a[$m]) return rBinarySearch2p($a, $x, $m + 1, $l);
-            else return $m;
+            $m = floor($f + ($l - $f) / 2);
+            if ($x == $a[$m]) return $m;
+            elseif ($x < $a[$m]) return rBinarySearch2p($a, $x, $f, $m - 1);
+            else return rBinarySearch2p($a, $x, $m + 1, $l);
         }
 
         $f = 0; $l = count($a) - 1;
         rBinarySearch($a, 7); rBinarySearch2p($a, 7, $f, $l);
 
         while ($f < $l) {
-            $m = ($f + $l) / 2;
-            if ($x < $a[$m]) $l =  $m - 1;
-            elseif ($x > $a[$m]) $f = $m + 1;
-            else return $m;
+            $m = floor($f + ($l - $f) / 2);
+            if ($x == $a[$m]) return $m;
+            elseif ($x < $a[$m]) $l =  $m - 1;
+            else $f = $m + 1;
         }
+
+        return null;
     }
 
 }
