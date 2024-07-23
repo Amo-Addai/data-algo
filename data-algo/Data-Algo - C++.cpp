@@ -75,15 +75,15 @@ public:
         int m = floor(length / 2);
         if (x == a[m]) return a[m];
         else if (x < a[m]) {
-            int start = 0, len = m - 1; // * slice length (not endIndex)
-            // * so m's previous index - 0 (1st item's index) is the accurate length for the slice-through
-            int slice[len];
+            int start = 0, len = m; // (not m - 1) // * slice length (not endIndex)
+            // * so m's index - 0 (1st item's index) is the accurate length for the 0 (inclusive) to m - 1 slice-through
+            int slice[m];
             copy(a + start, a + start + len, slice);
             // * arg1 - pointer to a's 'start' index elem | arg2 - pointer to 'start + len' past the last elem
             return rBinarySearch(slice, x);
         } else {
-            int start = (m + 1), len = (length - 1) - (m + 1);
-            // * so last item's index - m's next index is the accurate length for the slice-through
+            int start = (m + 1), len = length - (m + 1);
+            // * so array length (last item's index + 1) - m's next index is the accurate length for the m + 1 to end slice-through
             int slice[len];
             copy(a + start, a + start + len, slice);
             return rBinarySearch(slice, x);

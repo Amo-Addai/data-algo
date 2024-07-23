@@ -35,10 +35,10 @@ fun binarySearch({A, X}) when length(A) =/= 0 ->
         % * :ceil (not :floor) because 1st index - 1 (not 0)
         if (X == M) -> list:nth(M, A);
             (X < M) ->
-                L1 = M - 1, % * so m's previous index - 0 (1st item's index) is the accurate length for the slice-through
+                L1 = M, % (not M - 1) % * so M's index - 0 (1st item's index) is the accurate length for the 0 (inclusive) to M - 1 slice-through
                 RBinarySearch({lists:sublist(A, 0, L1), X});
             true ->
-                L1 = (L - 1) - (M + 1), % * so last item's index - m's next index is the accurate length for the slice-through
+                L1 = L - (M + 1), % * so array length (last item's index + 1) - M's next index is the accurate length for the M + 1 to end slice-through
                 RBinarySearch({lists:sublist(A, M+1, L1), X}).
         end.
     end.

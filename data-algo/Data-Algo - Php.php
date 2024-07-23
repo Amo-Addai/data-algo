@@ -52,15 +52,16 @@ class Searching {
             $m = floor($l / 2);
             if ($x == $a[$m]) return $a[$m];
             elseif ($x < $a[$m]) return rBinarySearch(
-                array_slice($a, 0, $m - 1),
-                // * so $m's previous index - 0 (1st item's index) is the accurate length for the slice-through
+                array_slice($a, 0, $m), // not $m - 1
+                // * so $m's index - 0 (1st item's index) is the accurate length for the 0 (inclusive) to $m - 1 slice-through
                 $x
             );
             else return rBinarySearch(
-                array_slice($a,
+                array_slice(
+                    $a,
                     $m + 1,
-                    ($l - 1) - ($m + 1) // * slice length (not endIndex)
-                ), // * so last item's index - $m's next index is the accurate length for the slice-through
+                    $l - ($m + 1) // * slice length (not endIndex) - if omitted, array_slice from index $m + 1 to end
+                ), // * so array length (last item's index + 1) - $m's next index is the accurate length for the $m + 1 to end slice-through
                 $x
             ); // todo: length : - 1 exclusiveness
         }
