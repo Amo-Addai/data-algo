@@ -1,4 +1,6 @@
 .vscode/
+.metals/
+.scala-build/
 .history/
 .metals/
 .scala-build/
