@@ -9,6 +9,7 @@ import (
 /* // TODO: To-Use
 
 Generics
+fp-go, gonum
 ..
 
 */

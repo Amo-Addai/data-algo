@@ -4,6 +4,7 @@
 /* // TODO: To-Use
 
 Generics
+ReactiveObjC
 MemMan, ..
 ..
 
@@ -92,8 +93,10 @@ MemMan, ..
             else return rBinarySearch(a, x, m + 1, l);
         }
 
-        int f = 0, l = length(a) - 1, m;
+        int f = 0, l = length(a) - 1;
         rBinarySearch(a, x); rBinarySearch(a, x, f, l);
+
+        int m;
 
         while (f < l) {
             m = floor(f + (l - f) / 2);
@@ -133,8 +136,10 @@ MemMan, ..
             else return rBinarySearch(a, x, m + 1, l);
         }
 
-        NSInteger f = 0, l = [a length] - 1, m;
+        NSInteger f = 0, l = [a length] - 1;
         rBinarySearch(a, x); rBinarySearch(a, x, f, l);
+
+        NSInteger m;
 
         while (f < l) {
             m = floor(f + (l - f) / 2);

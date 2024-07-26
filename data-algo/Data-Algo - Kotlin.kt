@@ -4,6 +4,7 @@ import kotlin.math.ceil
 /* // TODO: To-Use
 
 Generics
+Arrow, Kategory
 ..
 
 */
@@ -75,15 +76,15 @@ class Searching {
         }//() // todo: test instant-exec
     
 
-        // var f = 0, l = arr.size - 1, m = -1
         var f: Int = 0
         var l: Int = arr.size - 1
-        var m: Int
 
         // * Optional / "Safe" call reference is not totally necessary in these outer calls, 
         // because rBinarySearch (even though Optional, so may be null) has been assigned a lambda function value
         rBinarySearch.invoke(arr, 7)
         rBinarySearch2p(arr, 7, f, l) // * this version of lambda function doesn't require .invoke()
+
+        var m: Int
 
         while (f < l) {
             m = floor((f + (l - f) / 2) as Double) as Int

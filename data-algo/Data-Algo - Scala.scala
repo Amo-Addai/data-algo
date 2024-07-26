@@ -4,6 +4,7 @@ import scala.math._
 /* // TODO: To-Use
 
 Generics
+Cats, Scalaz
 ..
 
 */
@@ -50,8 +51,10 @@ class Searching(val prop: Any) {
             else return rBinarySearch2p(a, x,  m + 1, l)
         }
 
-        val f: Int = 0, l: Int = a.length - 1, m: Int
+        val f: Int = 0, l: Int = a.length - 1
         rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l)
+
+        val m: Int
 
         while (f < l) {
             m = floor(f + (l - f) / 2).asInstanceOf[Int]

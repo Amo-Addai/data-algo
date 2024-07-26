@@ -5,8 +5,9 @@ using System.Linq;
 
 /* // TODO: To-Use
 
-Generics
 In-built DataStructure classes
+Generics
+LanguageExt, Optional
 ..
 
 */
@@ -72,8 +73,10 @@ namespace DataAlgo
                     else return RBinarySearch2p(a, x, f, m + 1);
                 };
 
-                Int f = 0, l = a.Length - 1, m;
+                Int f = 0, l = a.Length - 1;
                 RBinarySearch(a, 7); RBinarySearch2p(a, 7, f, l);
+
+                Int m;
 
                 while (f < l) {
                     m = Math.Floor(f + (l - f) / 2);

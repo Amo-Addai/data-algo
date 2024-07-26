@@ -16,6 +16,7 @@ Done - arrays/strings (sorting/searching), lists/tuples, matrices, hash/weak-map
 # todo - sets/seqs/vectors, dicts/maps/objs, tree-maps/sets, tries, max/min heaps, bi-heaps/p-queues, bits, blobs,  …  
 
 Generics
+functools, toolz, pyrsistent
 ..
 
 '''

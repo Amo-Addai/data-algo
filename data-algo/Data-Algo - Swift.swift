@@ -2,8 +2,9 @@ import Foundation
 
 /* // TODO: To-Use
 
-Generics
 some, convenience, ..
+Generics
+Swiftz, FunctionalSwift
 ..
 
 */
@@ -74,12 +75,13 @@ class Searching {
             }
         }
 
-        var f: Int = 0, l: Int = a.count - 1, m: Int
-        rBinarySearch(a, 7); rBinarySearch2p(a, 7, f, l)
+        var f: Int = 0, l: Int = a.count - 1
 
         let res: Int? = rBinarySearch(a, 7)
         let res2p: Int? = rBinarySearch2p(a, 7, f, l)
         print("\(res ?? -1) | \(res2p ?? -1)")
+
+        var m: Int
 
         while f < l {
             m = floor(f + (l - f) / 2)

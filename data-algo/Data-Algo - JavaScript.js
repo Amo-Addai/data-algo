@@ -7,6 +7,7 @@ import * as RA from 'ramda-adjunct'
 /* // TODO: To-Use
 
 Generics
+lodash/fp, ramda, immutable.js
 ..
 
 */
@@ -126,7 +127,9 @@ var Searching = function() {
 
     // * R .equals / gt / gte / lt / lte
 
-    Searching.prototype.check = R.curry((c, a, b) => {
+    const _this = Searching.prototype
+
+    _this.check = R.curry((c, a, b) => {
         const ops = {
             '>': R.gt,
             '>=': R.gte,
@@ -141,9 +144,9 @@ var Searching = function() {
             : null
     })
 
-    Searching.prototype.compareNums = (s, a, b) => {
+    _this.compareNums = (s, a, b) => {
 
-        const check1 = R.ifElse(
+        const check = R.ifElse(
             c => R.equals(c, '>'),
             _ => R.gt(a, b),
             R.ifElse(
@@ -156,16 +159,12 @@ var Searching = function() {
                 )
             )
         )
-
-        const check2 = op => {
-            
-        }
-
+        
         const res = []
         s.split('')
             .map(c => {
                 res.push(
-                    check1(c)
+                    check(c)
                 )
             })
         
@@ -174,6 +173,43 @@ var Searching = function() {
         
     }
 
+    _this.while = (predicate, transformer, initialValue) => {
+        const iter = R.ifElse(
+            x => !predicate(x), // when predicate check fails ..
+            x => x, // break while loop
+            x => iter(transformer(x))
+        )
+        return iter(initialValue)
+
+        /* 
+            * Example usage 1
+            const isLessThan10 = x => x < 10;
+            const addOne = x => x + 1;
+            const startValue = 0;
+
+            const result = while(isLessThan10, addOne, startValue);
+            console.log(result); // Outputs: 10
+
+            * Example usage 2
+            const predicate = ({ x, y }) => x < y;
+            const transformer = ({ x, y }) => ({ x: x + 1, y });
+            const initialState = { x: 0, y: 5 };
+            
+            const result = while(predicate, transformer, initialState);
+            console.log(result); // Outputs: { x: 5, y: 5 }
+
+            * Example usage
+            const predicate = ({ x, y }) => x < y;
+            const transformer = ({ x, y }) => {
+            const randomBool = Math.random() >= 0.5;
+            return randomBool ? { x: x + 1, y } : { x, y: y - 1 };
+            };
+            const initialState = { x: 0, y: 5 };
+            
+            const result = while(predicate, transformer, initialState);
+            console.log(result); // Outputs: final state of { x, y }
+        */
+    }
 
     function linearSearch(a, x) { // O(n) t
 
@@ -203,21 +239,21 @@ var Searching = function() {
         }
 
         const fRBinarySearch = (a, x) => {
-
             // todo: R.ifElse()
 
             const m = Math.floor(
                 R.divide(a.length, 2)
             )
+            // * const m = R.compose(Math.floor, R.divide(a.length))(2)
             
             const wrongRecurse = R.ifElse(
-                x => this.check('<', x, a[m]),
+                x => _this.check('<', x, a[m]),
                 x => fBinarySearch(
                     a.slice(0, m),
                     x
                 ),
                 R.ifElse(
-                    x => this.check('>', x, a[m]),
+                    x => _this.check('>', x, a[m]),
                     x => fBinarySearch(
                         a.slice(
                             m + 1,
@@ -232,11 +268,11 @@ var Searching = function() {
             )
 
             const recurse = R.ifElse(
-                x => this.check('=', x, a[m]),
+                x => _this.check('=', x, a[m]),
                 _ => a[m], // or return a bool instead of same x arg - index m decreasing recursively, as a's length decreases
                 R.ifElse(
-                    x => this.check('<', x, a[m]),
-                    x => fBinarySearch(
+                    x => _this.check('<', x, a[m]),
+                    x => fBinarySearch( // couldv've recurse(..)d instead, if it also took in args a & x
                         a.slice(0, m),
                         x
                     ),
@@ -251,7 +287,8 @@ var Searching = function() {
                 )
             )
 
-            return recurse(x)
+            return recurse(x) // * cannot call R.ifElse without an arg
+            // * in case you wanted to do away with re-passing in x
         }
 
         function rBinarySearch2p(a, x, f, l) {
@@ -265,14 +302,90 @@ var Searching = function() {
 
         const fRBinarySearch2p = (a, x, f, l) => {
             // todo: R.ifElse()
+
+            const recurse = (f, l) => {
+                const m = R.compose(
+                    Math.floor,
+                    R.add(f),
+                    R.divide(R.__, 2),
+                    R.subtract(R.__, f)
+                )(l)
+                const check = R.ifElse(
+                    m => _this.check('=', x, a[m]),
+                    m => m,
+                    _ => R.ifElse(
+                        m => _this.check('<', x, a[m]),
+                        m => recurse(f, l=m-1),
+                        m => recurse(f=m+1, l)
+                    )
+                )
+                return check(m)
+            }
+
+            return recurse(f, l)
+
         }
 
         const fBinarySearch2p = (a, x, f, l) => {
             // todo: R.ifElse()
+            
+            let startValue = {f, l, b: false}
+            let predicate = ({f, l, b}) => RA.notEqual(b, true) || R.lt(f, l)
+
+            let decL = ({f, l, m}) => ({ f, l: m - 1 })
+            let incF = ({f, l, m}) => ({ f: m + 1, l })
+
+            let checkFoundX = R.ifElse(
+                ({m}) => _this.check('=', x, a[m]),
+                ({f, l, m}) => ({ res: m, b: true, f, l }), // return m as res; will also 'b'reak out of loop after predicate check fails
+                // * NB: should also return f & l for predicate check, but since result m is found, passed in b: true will fail predicate check before f < l check
+                // * decided to add f & l later; optimizations like that may cause arg buffer issues later
+                R.ifElse(
+                    ({m}) => _this.check('<', x, a[m]),
+                    ({f, l, m}) => ({ b: false, ...decL({f, l, m}) }), // still ensure b == false to keep loop until predicate check fails
+                    ({f, l, m}) => ({ b: false, ...incF({f, l, m}) })
+                )
+            )
+
+            let transformer = ({f, l}) => {
+
+                let m = Math.floor(
+                    R.add(
+                        R.divide(
+                            R.subtract(
+                                l, 
+                                f
+                            ), 
+                            2
+                        ), 
+                        f
+                    ) // f + (l - f) / 2 - 1st f 'addition' can be a 2nd arg
+                )
+                
+                /*
+                m = R.compose(
+                    Math.floor,
+                    R.add(f),
+                    R.divide(R.__, 2),
+                    R.subtract(R.__, f) // * without R.__ 'ignore' arg, would be 'f - l' (divide would also be 2 / result)
+                )(l)
+                */
+               
+                return checkFoundX({f, l, m})
+            }
+
+            let res = _this.while(predicate, transformer, startValue)
+            console.log(res) // should include .res with index m
+
+            return R.propOr(null, 'res')(res)
         }
 
-        f = 0, l = a.length - 1, m
+        let f = 0, l = a.length - 1
+        
         rBinarySearch(a, 3); rBinarySearch2p(a, 3, f, l)
+        fBinarySearch(a, 3); fRBinarySearch(a, 3); fBinarySearch2p(a, 3, f, l)
+
+        let m
 
         while (f < l) {
             m = Math.floor(f + (l - f) / 2) // better than - (f + l) / 2

@@ -4,6 +4,7 @@
 /* // TODO: To-Use
 
 Generics
+Libtcod, Haskell
 MemMan, ..
 ..
 
@@ -122,8 +123,10 @@ int binarySearch(int a[], int x) {
 
     qsort(a, len, sizeof(int), sortCompare);
 
-    int f = 0, l = len - 1, m;
+    int f = 0, l = len - 1;
     rBinarySearch(a, x); rBinarySearch2p(a, x, f, l);
+
+    int m;
 
     while (f < l) {
         m = floor(f + (l - f) / 2);

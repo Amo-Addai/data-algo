@@ -3,6 +3,7 @@
 /* // TODO: To-Use
 
 Generics
+functionalphp, Ramda
 ..
 
 */

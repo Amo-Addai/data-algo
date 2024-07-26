@@ -1,6 +1,7 @@
 " # TODO: To-Use
 
 Generics
+purrr, magrittr
 ..
 
 "

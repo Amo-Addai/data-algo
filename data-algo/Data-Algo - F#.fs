@@ -2,8 +2,9 @@ open System
 
 (* // TODO: To-Use
 
-Generics
 Arrows, Lambdas, ..
+Generics
+FSharp.Core, FSharp.Collections
 ..
 
 *)

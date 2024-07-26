@@ -3,6 +3,7 @@
 /* // TODO: To-Use
 
 Generics
+fp-ts, lodash/fp
 ..
 
 */
@@ -56,8 +57,10 @@ class TSearching {
             else return rBinarySearch2p(a, x, m + 1, l)
         }
 
-        let f: number = 0, l: number = a.length - 1, m: number
+        let f: number = 0, l: number = a.length - 1
         rBinarySearch(a, 3); rBinarySearch2p(a, 3, f, l)
+
+        let m: number
 
         while (f < l) {
             m = Math.floor(f + (l - f) / 2)

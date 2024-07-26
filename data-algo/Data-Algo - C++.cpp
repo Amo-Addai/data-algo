@@ -13,6 +13,7 @@ using namespace std;
 /* // TODO: To-Use
 
 Generics
+Boost.Hana, range-v3
 MemMan, ..
 ..
 
@@ -106,9 +107,12 @@ public:
 
         sort(a, a + length); // * a - pointer to a's 1st elem | a + length - pointer to 1 past the last elem
         
-        int f = 0, l = length - 1, m;
+        int f = 0, l = length - 1;
+
         rBinarySearch(a, 7);
         rBinarySearch(a, 7, f, l);
+
+        int m;
 
         while (f < l) {
             m = floor(f + (l - f) / 2);

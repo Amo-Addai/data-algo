@@ -24,6 +24,7 @@ import java.util.function.BiConsumer;
 /* // TODO: To-Use
 
 Generics
+Vavr, FunctionalJava
 Functional Interfaces (all in-built & custom)
 eg. Function, Consumer, Predicate, BiFunction, BiConsumer, BiPredicate, Supplier, UnaryOperator, BinaryOperator,  ... 
 Lombok, 
@@ -106,9 +107,12 @@ public class DataAlgoJava {
                     else return rbSearch[0].rBinarySearch2p(a, x, m + 1, l);
                 };
 
-                int f = 0, l = arr.length - 1, m;
+                int f = 0, l = arr.length - 1;
+
                 rBinarySearch[0].apply(arr, 7); // todo: int[] to Integer[] - Arrays.from(arr)
                 rbSearch[0].rBinarySearch2p(arr, 7, f, l);
+
+                int m;
 
                 while (f < l) {
                     m = (int) Math.floor((double) (f + (l - f) / 2));
