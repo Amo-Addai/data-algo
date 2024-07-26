@@ -125,7 +125,7 @@ var Sorting = function() {
 
 var Searching = function() {
 
-    // * R .equals / gt / gte / lt / lte
+    // prototype methods
 
     const _this = Searching.prototype
 
@@ -216,6 +216,8 @@ var Searching = function() {
             console.log(result); // Outputs: final state of { x, y }
         */
     }
+
+    // other functions
 
     function linearSearch(a, x) { // O(n) t
 
@@ -422,7 +424,7 @@ var Searching = function() {
             }
 
             return _this.baseCheck(exec)(a)
-            
+
         }
 
         let f = 0, l = a.length - 1
