@@ -19,102 +19,102 @@ lodash/fp, ramda, immutable.js
 
 var Sorting = function() {
 
-    Sorting.prototype.check = (a) => {
+    Sorting.prototype.baseCheck = (a) => {
         return [0, 1].includes(a.length)
     }
-
+    
     Sorting.prototype.swap = (a, b) => {
         let t = a; a = b; b = t
         // (a, b) = (b, a) // faster, but () by value
         return (a, b)
     }
-
+    
     Sorting.prototype.compare = (a, b) => {
         return a < b
     }
-
+    
     // regular
-
+    
     function insertion(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     function selection(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     function shell(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     // bad
-
+    
     function bubble(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     function slow(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     // special
-
+    
     function counting(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     function radix(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     function topological(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     // hybrid
-
+    
     function intro(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     // fast
-
+    
     function heap(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     function merge(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
     function quick(a) {
-        if (this.check(a)) return a
+        if (this.baseCheck(a)) return a
         // 
         return a
     }
-
+    
 }
 
 
@@ -128,6 +128,12 @@ var Searching = function() {
     // * R .equals / gt / gte / lt / lte
 
     const _this = Searching.prototype
+
+    _this.baseCheck = fn => R.ifElse(
+        R.isEmpty, // fn should have an array arg
+        R.always(null), // null if array is empty
+        fn // return as a functor to then exec with array
+    )
 
     _this.check = R.curry((c, a, b) => {
         const ops = {
@@ -239,56 +245,63 @@ var Searching = function() {
         }
 
         const fRBinarySearch = (a, x) => {
-            // todo: R.ifElse()
+            // todo: base check of a.length at function bottom
 
-            const m = Math.floor(
-                R.divide(a.length, 2)
-            )
-            // * const m = R.compose(Math.floor, R.divide(a.length))(2)
-            
-            const wrongRecurse = R.ifElse(
-                x => _this.check('<', x, a[m]),
-                x => fBinarySearch(
-                    a.slice(0, m),
-                    x
-                ),
-                R.ifElse(
-                    x => _this.check('>', x, a[m]),
-                    x => fBinarySearch(
-                        a.slice(
-                            m + 1,
-                            a.length
-                        ),
-                        x
-                    ),
-                    // * wrongRecurse because:
-                    // else - (x === a[m]) - best to check for this before other if-cases (imperfect way chosen, for memory)
-                    _ => a[m]
+            const exec = a => {
+
+                const m = Math.floor(
+                    R.divide(a.length, 2)
                 )
-            )
-
-            const recurse = R.ifElse(
-                x => _this.check('=', x, a[m]),
-                _ => a[m], // or return a bool instead of same x arg - index m decreasing recursively, as a's length decreases
-                R.ifElse(
+                // * const m = R.compose(Math.floor, R.divide(a.length))(2)
+                
+                const wrongRecurse = R.ifElse(
                     x => _this.check('<', x, a[m]),
-                    x => fBinarySearch( // couldv've recurse(..)d instead, if it also took in args a & x
+                    x => fBinarySearch(
                         a.slice(0, m),
                         x
                     ),
-                    // else - (x > a[m])
-                    x => fBinarySearch(
-                        a.slice(
-                            m + 1,
-                            a.length
+                    R.ifElse(
+                        x => _this.check('>', x, a[m]),
+                        x => fBinarySearch(
+                            a.slice(
+                                m + 1,
+                                a.length
+                            ),
+                            x
                         ),
-                        x
+                        // * wrongRecurse because:
+                        // else - (x === a[m]) - best to check for this before other if-cases (imperfect way chosen, for memory)
+                        _ => a[m]
                     )
                 )
-            )
+    
+                const recurse = R.ifElse(
+                    x => _this.check('=', x, a[m]),
+                    _ => a[m], // or return a bool instead of same x arg - index m decreasing recursively, as a's length decreases
+                    R.ifElse(
+                        x => _this.check('<', x, a[m]),
+                        x => fBinarySearch( // couldv've recurse(..)d instead, if it also took in args a & x
+                            a.slice(0, m),
+                            x
+                        ),
+                        // else - (x > a[m])
+                        x => fBinarySearch(
+                            a.slice(
+                                m + 1,
+                                a.length
+                            ),
+                            x
+                        )
+                    )
+                )
+    
+                return recurse(x) // * cannot call R.ifElse without an arg
+                // * in case you wanted to do away with re-passing in x
 
-            return recurse(x) // * cannot call R.ifElse without an arg
-            // * in case you wanted to do away with re-passing in x
+            }
+
+            return _this.baseCheck(exec)(a) // * will return null if a is null / empty
+
         }
 
         function rBinarySearch2p(a, x, f, l) {
@@ -301,83 +314,115 @@ var Searching = function() {
         }
 
         const fRBinarySearch2p = (a, x, f, l) => {
-            // todo: R.ifElse()
 
-            const recurse = (f, l) => {
-                const m = R.compose(
-                    Math.floor,
-                    R.add(f),
-                    R.divide(R.__, 2),
-                    R.subtract(R.__, f)
-                )(l)
-                const check = R.ifElse(
-                    m => _this.check('=', x, a[m]),
-                    m => m,
-                    _ => R.ifElse(
-                        m => _this.check('<', x, a[m]),
-                        m => recurse(f, l=m-1),
-                        m => recurse(f=m+1, l)
+            const exec = a => {
+                
+                const recurse = (f, l) => {
+                    const m = R.compose(
+                        Math.floor,
+                        R.add(f),
+                        R.divide(R.__, 2),
+                        R.subtract(R.__, f)
+                    )(l)
+                    const check = R.ifElse(
+                        m => _this.check('=', x, a[m]),
+                        m => m,
+                        _ => R.ifElse(
+                            m => _this.check('<', x, a[m]),
+                            m => recurse(f, l=m-1),
+                            m => recurse(f=m+1, l)
+                        )
                     )
-                )
-                return check(m)
+                    return check(m)
+                }
+
+                const wrongRecurse = (f, l) => {
+                    const [
+                        check1, 
+                        check2 // only required if check 1 fails
+                    ] = [
+                        R.ifElse(
+                            m => _this.check('=', x, a[m]),
+                            m => m,
+                            m => m, // return same arg even if it fails, for check 2
+                        ),
+                        R.ifElse(
+                            m => _this.check('<', x, a[m]),
+                            m => wrongRecurse(f, l=m-1),
+                            m => wrongRecurse(f=m+1, l)
+                        )
+                    ]
+                    const checks = R.compose(check2, check1)
+                    // composing both checks means check2 will exec even if check1 succeeds
+                    return checks(m) // * so unecessary when chained if-check is bool-dependent
+                }
+
+                return recurse(f, l)
+
             }
 
-            return recurse(f, l)
+            return _this.baseCheck(exec)(a)
 
         }
 
         const fBinarySearch2p = (a, x, f, l) => {
-            // todo: R.ifElse()
-            
-            let startValue = {f, l, b: false}
-            let predicate = ({f, l, b}) => RA.notEqual(b, true) || R.lt(f, l)
 
-            let decL = ({f, l, m}) => ({ f, l: m - 1 })
-            let incF = ({f, l, m}) => ({ f: m + 1, l })
+            const exec = a => {
 
-            let checkFoundX = R.ifElse(
-                ({m}) => _this.check('=', x, a[m]),
-                ({f, l, m}) => ({ res: m, b: true, f, l }), // return m as res; will also 'b'reak out of loop after predicate check fails
-                // * NB: should also return f & l for predicate check, but since result m is found, passed in b: true will fail predicate check before f < l check
-                // * decided to add f & l later; optimizations like that may cause arg buffer issues later
-                R.ifElse(
-                    ({m}) => _this.check('<', x, a[m]),
-                    ({f, l, m}) => ({ b: false, ...decL({f, l, m}) }), // still ensure b == false to keep loop until predicate check fails
-                    ({f, l, m}) => ({ b: false, ...incF({f, l, m}) })
+                let startValue = {f, l, b: false}
+                let predicate = ({f, l, b}) => RA.notEqual(b, true) || R.lt(f, l)
+
+                let decL = ({f, l, m}) => ({ f, l: m - 1 })
+                let incF = ({f, l, m}) => ({ f: m + 1, l })
+
+                let checkFoundX = R.ifElse(
+                    ({m}) => _this.check('=', x, a[m]),
+                    ({f, l, m}) => ({ res: m, b: true, f, l }), // return m as res; will also 'b'reak out of loop after predicate check fails
+                    // * NB: should also return f & l for predicate check, but since result m is found, passed in b: true will fail predicate check before f < l check
+                    // * decided to add f & l later; optimizations like that may cause arg buffer issues later
+                    R.ifElse(
+                        ({m}) => _this.check('<', x, a[m]),
+                        ({f, l, m}) => ({ b: false, ...decL({f, l, m}) }), // still ensure b == false to keep loop until predicate check fails
+                        ({f, l, m}) => ({ b: false, ...incF({f, l, m}) })
+                    )
                 )
-            )
 
-            let transformer = ({f, l}) => {
+                let transformer = ({f, l}) => {
 
-                let m = Math.floor(
-                    R.add(
-                        R.divide(
-                            R.subtract(
-                                l, 
-                                f
+                    let m = Math.floor(
+                        R.add(
+                            R.divide(
+                                R.subtract(
+                                    l, 
+                                    f
+                                ), 
+                                2
                             ), 
-                            2
-                        ), 
-                        f
-                    ) // f + (l - f) / 2 - 1st f 'addition' can be a 2nd arg
-                )
+                            f
+                        ) // f + (l - f) / 2 - 1st f 'addition' can be a 2nd arg
+                    )
+                    
+                    /*
+                    m = R.compose(
+                        Math.floor,
+                        R.add(f),
+                        R.divide(R.__, 2),
+                        R.subtract(R.__, f) // * without R.__ 'ignore' arg, would be 'f - l' (divide would also be 2 / result)
+                    )(l)
+                    */
                 
-                /*
-                m = R.compose(
-                    Math.floor,
-                    R.add(f),
-                    R.divide(R.__, 2),
-                    R.subtract(R.__, f) // * without R.__ 'ignore' arg, would be 'f - l' (divide would also be 2 / result)
-                )(l)
-                */
-               
-                return checkFoundX({f, l, m})
+                    return checkFoundX({f, l, m})
+                }
+
+                let res = _this.while(predicate, transformer, startValue)
+                console.log(res) // should include .res with index m
+
+                return R.propOr(null, 'res')(res)
+        
             }
 
-            let res = _this.while(predicate, transformer, startValue)
-            console.log(res) // should include .res with index m
-
-            return R.propOr(null, 'res')(res)
+            return _this.baseCheck(exec)(a)
+            
         }
 
         let f = 0, l = a.length - 1
