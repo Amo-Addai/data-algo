@@ -28,7 +28,10 @@ class TSearching {
 
     constructor() { }
 
-    linearSearch(a: number[], x: number): number | null {
+    linearSearch(a: number[], x: number): number | null { // O(n) t
+
+        const fLinearSearch = (a, x) => a.find(i => i === x) // .find() - also O(n) t
+
         for (let i of a) if (i in a) return i
         return null
     }
@@ -49,6 +52,10 @@ class TSearching {
             else return rBinarySearch(a.slice(m + 1, a.length), x)
         }
 
+        var fRBinarySearch: (number[], number): number | null = (a, x) => {
+            // TODO: 
+        }
+
         var rBinarySearch2p = (a: number[], x: number, f: number, l: number): number | null => {
             if (a.length === 0) return null
             let m: number = Math.floor(f + (l - f) / 2)
@@ -57,8 +64,17 @@ class TSearching {
             else return rBinarySearch2p(a, x, m + 1, l)
         }
 
+        var fRBinarySearch2p: (number[], number, number, number): number | null = (a, x, f, l) => {
+
+        }
+
+        var fBinarySearch2p: (number[], number, number, number): number | null = (a, x, f, l) => {
+
+        }
+
         let f: number = 0, l: number = a.length - 1
         rBinarySearch(a, 3); rBinarySearch2p(a, 3, f, l)
+        fRBinarySearch(a, 3); fRBinarySearch2p(a, 3, f, l); fBinarySearch2p(a, 3, f, l)
 
         let m: number
 

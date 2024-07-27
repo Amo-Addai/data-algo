@@ -125,10 +125,10 @@ contract Searching {
 //  OTHER ALGO'S
 ////////////////////////////////////////
 
-// Data Structures (Arrays, Strings, Matrices, etc)
+// TODO: library DataStructures
 
 library DataStructures {
-    
+
 }
 
 

@@ -258,13 +258,13 @@ var Searching = function() {
                 
                 const wrongRecurse = R.ifElse(
                     x => _this.check('<', x, a[m]),
-                    x => fBinarySearch(
+                    x => fRBinarySearch(
                         a.slice(0, m),
                         x
                     ),
                     R.ifElse(
                         x => _this.check('>', x, a[m]),
-                        x => fBinarySearch(
+                        x => fRBinarySearch(
                             a.slice(
                                 m + 1,
                                 a.length
@@ -282,12 +282,12 @@ var Searching = function() {
                     _ => a[m], // or return a bool instead of same x arg - index m decreasing recursively, as a's length decreases
                     R.ifElse(
                         x => _this.check('<', x, a[m]),
-                        x => fBinarySearch( // couldv've recurse(..)d instead, if it also took in args a & x
+                        x => fRBinarySearch( // couldv've recurse(..)d instead, if it also took in args a & x
                             a.slice(0, m),
                             x
                         ),
                         // else - (x > a[m])
-                        x => fBinarySearch(
+                        x => fRBinarySearch(
                             a.slice(
                                 m + 1,
                                 a.length
@@ -430,7 +430,7 @@ var Searching = function() {
         let f = 0, l = a.length - 1
         
         rBinarySearch(a, 3); rBinarySearch2p(a, 3, f, l)
-        fBinarySearch(a, 3); fRBinarySearch(a, 3); fBinarySearch2p(a, 3, f, l)
+        fRBinarySearch(a, 3); fRBinarySearch2p(a, 3, f, l); fBinarySearch2p(a, 3, f, l)
 
         let m
 
