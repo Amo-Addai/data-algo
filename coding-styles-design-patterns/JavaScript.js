@@ -49,6 +49,19 @@ define(['Declarative'], _ => { // AMD (Asynchronous Module Definition)
 
 })
 
+
+// TODO: Procedural (study basic, pascal, c..)
+
+
+// TODO: Scripting (study bash, perl, ruby, py, node)
+
+
+// TODO: Logic (study prolog, absys, datalog, alma-0)
+
+
+// TODO: Markup (study html, css, xml - all ns, js, react)
+
+
 const OOP = (_ => {
 
     class User {

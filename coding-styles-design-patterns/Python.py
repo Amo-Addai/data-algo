@@ -15,32 +15,50 @@ Generics
 ##  CODING STYLES (ascending)
 ########################################
 
-# TODO: Use module constructs in-file
-
-class Functional:
+class Obj:
 
     users = [
         {'id': 1, 'name': 'Alice', 'age': 25},
         {'id': 2, 'name': 'Bob', 'age': 30},
     ]
 
+class Imperative:
+
     def get_user_by_id(user_id):
-        return next(
+        user = None
+        for u in Obj.users:
+            if u['id'] == user_id:
+                user = u
+        return user
+    
+    def get_all_user_names():
+        return [user['name'] for user in Obj.users]
+
+    print(get_user_by_id(1))  # {'id': 1, 'name': 'Alice', 'age': 25}
+    print(get_all_user_names())  # ['Alice', 'Bob']
+
+
+class Functional:
+
+    get_user_by_id = \
+        lambda user_id: \
+            next(
             (
                 user 
                 for user 
-                in Functional.users 
+                in Obj.users 
                 if user['id'] == user_id
             ), 
             None
         )
 
-    def get_all_user_names():
-        return [
-            user['name'] 
-            for user 
-            in Functional.users
-        ]
+    get_all_user_names = \
+        lambda _: \
+            [
+                user['name'] 
+                for user 
+                in Obj.users
+            ]
 
     print(get_user_by_id(1))  # {'id': 1, 'name': 'Alice', 'age': 25}
     print(get_all_user_names())  # ['Alice', 'Bob']
@@ -52,6 +70,18 @@ class Declarative:
     doubled = list(map(lambda x: x * 2, numbers))
 
     print(doubled)  # [2, 4, 6, 8, 10]
+
+
+# TODO: Procedural (study basic, pascal, c..)
+
+
+# TODO: Scripting (study bash, perl, ruby, py, node)
+
+
+# TODO: Logic (study prolog, absys, datalog, alma-0)
+
+
+# TODO: Markup (study html, css, xml - all ns, js, react)
 
 
 class OOP:
@@ -77,7 +107,7 @@ class AsyncAwait:
         return {'id': user_id, 'name': 'Alice', 'age': 25}
 
     async def display_user(user_id):
-        user = await fetch_user_data(user_id)
+        user = await AsyncAwait.fetch_user_data(user_id)
         print(user)
 
     asyncio.run(display_user(1))  # {'id': 1, 'name': 'Alice', 'age': 25}
@@ -135,7 +165,7 @@ class Prototype:
             self.age = age
 
         def clone(self):
-            return User(self.id, self.name, self.age)
+            return Prototype.User(self.id, self.name, self.age)
 
     user = User(1, 'Alice', 25)
     user_clone = user.clone()
@@ -157,11 +187,11 @@ class Module:
 
         @staticmethod
         def add_user(user):
-            UserModule._users.append(user)
+            Module.UserModule._users.append(user)
 
         @staticmethod
         def get_user(user_id):
-            return next((user for user in UserModule._users if user['id'] == user_id), None)
+            return next((user for user in Module.UserModule._users if user['id'] == user_id), None)
 
     UserModule.add_user({'id': 1, 'name': 'Alice', 'age': 25})
     print(UserModule.get_user(1))  # {'id': 1, 'name': 'Alice', 'age': 25}
