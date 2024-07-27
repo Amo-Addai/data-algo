@@ -29,7 +29,6 @@ contract Sorting {
         }
     }
 
-
 }
 
 
@@ -126,8 +125,11 @@ contract Searching {
 //  OTHER ALGO'S
 ////////////////////////////////////////
 
-//
+// Data Structures (Arrays, Strings, Matrices, etc)
 
+library DataStructures {
+    
+}
 
 
 
