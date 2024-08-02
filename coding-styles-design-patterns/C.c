@@ -79,6 +79,19 @@ void test() {
     printf("Sum: %d\n", result);
 }
 
+
+// TODO: Procedural (study basic, pascal, c..)
+
+
+// TODO: Scripting (study bash, perl, ruby, py, node)
+
+
+// TODO: Logic (study prolog, absys, datalog, alma-0)
+
+
+// TODO: Markup (study html, css, xml - all ns, js, react)
+
+
 // OOP
 
 // #include <stdio.h>
