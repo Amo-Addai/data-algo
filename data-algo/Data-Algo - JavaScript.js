@@ -231,8 +231,10 @@ var Searching = function() {
     function binarySearch(a, x) { // O(log n)
         if (a.length === 0) return null
 
-        a.sort((a, b) => a - b); // O(n log n) t // compare func for int arrays only
+        a.sort((a, b) => a - b); // O(n log n) t // sort in-place
+        // compare func for int arrays only
         // or - .sort() - without compare func for strings & chars (alphabetical order) only 
+        // NB - .toSorted() - returns copy
 
         // * NB: sorting array before proceeding also affects indices (in-case actual array's item's index is required)
 
