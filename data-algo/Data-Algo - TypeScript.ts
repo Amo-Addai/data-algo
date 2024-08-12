@@ -1102,3 +1102,9 @@ function rkSearch(t: string, p: string): number {
 function mainT() {
     console.log("Hello, World!")
 }
+
+/*
+
+ * number - ints & doubles ; tuples - [] (not ())
+
+*/
