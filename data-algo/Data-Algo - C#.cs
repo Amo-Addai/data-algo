@@ -5,7 +5,10 @@ using System.Linq;
 
 /* // TODO: To-Use
 
+Keywords - sealed, partial, virtual, 
 In-built DataStructure classes
+'event' Handlers
+delegate methods - with Func<..> & lambda functions
 Generics
 LanguageExt, Optional
 ..
