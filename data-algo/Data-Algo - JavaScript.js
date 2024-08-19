@@ -2412,3 +2412,9 @@ function rabinKarp(t, p) {
 function main() {
     document.write("Hello, World!")
 }
+
+/*
+
+strings - "" | chars - '' - forced in most others
+
+*/

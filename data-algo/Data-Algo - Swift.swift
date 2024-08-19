@@ -1,8 +1,11 @@
 import Foundation
 
-/* // TODO: To-Use
+/* // TODO: (or MARK:) To-Use
 
-some, convenience, ..
+some (View), convenience, ..
+@unknown, @escaping, @inlinable, 
+#available - API Availability
+'Directives' - @testable
 Generics
 Swiftz, FunctionalSwift
 ..
@@ -16,6 +19,8 @@ Swiftz, FunctionalSwift
 
 class Sorting {
 
+    private var i: Int
+
     init() {}
     
 }
@@ -27,7 +32,7 @@ class Sorting {
 
 class Searching {
 
-    private var i: Int
+    private let i: Int
 
     init() {
         self.i = -1
@@ -172,3 +177,175 @@ func main(args: [String]? = nil) {
     print("Hello, World!")
 }
 main()
+
+
+""" // * mega-string - like with python (but not a comment here)
+
+
+strings - "" | chars - ''
+func meth(_ x: String) {} - meth("x label can be _ omitted/ignored")
+
+guard condition else { code }
+Error in cases of using it within a closure (solution - return at end of scope)
+- 'guard' body must not fall through, consider using a 'return' or 'throw' to exit the scope
+
+// TODO: Wrong - find out what @escaping means
+func meth( arg: @escaping (..) -> ..) ) .. | meth { closure code for arg: (can be 'escaped') }
+
+
+
+// TODO: SwiftUI
+
+
+in most meths:
+
+- Double (not Int) args
+- width arg precedes height
+
+
+
+Method Definition - 
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+public func withAnimation<Result>(_ animation: Animation? = .default, _ body: () throws -> Result) rethrows -> Result
+
+Call - withAnimation { code for last arg _ body: } (with _ animation: omitted in this case)
+
+
+"""
+
+
+
+
+
+/*
+
+* // TODO: XCode
+
+Collapse scope - Opt + Cmd + Left
+
+
+
+* // TODO: SwiftUI
+
+* Special Data-Types - CGFloat, CGSize, 
+
+* Functions - withHooks (withAnimation, withTransaction, withCGContext, .. ), DispatchQueue.main.asyncAfter(deadline:execute: {..})
+
+* Containers - ZStack (centered alignment), VStack (vertical), HStack (horizontal), Alignment, List, Group, 
+
+* Components - Spacer, Text, Button, Color, URL, Image, AsyncImage, Transaction, Capsule, 
+
+* Shapes - Color, Circle, Line, Capsule, 
+
+* Props / Modifiers - .customORextensionModifiers, padding (always mid-prop by convention, then animation, .. ), 
+opacity, color.opacity, spacing, font, fontWeight, resizable, scaledToFit, frame, foregroundColor, ignoresSafeArea, stroke, offset, imageScale, buttonStyle, buttonBorderShape, controlSize, blur, 
+
+* Animations - animation: / .animation(_ animation:value:) / .customAnimations(..) / withAnimation(.animation(..)){..} - spring, transition (move, scale, rotate, slide, .. ), easeIn, easeOut, easeInOut, easeInOut, repeatForever, linear, scaleEffect, 
+
+* Gestures - .gesture( .. Gesture() .. ) - DragGesture . onChanged {gesture:}, onEnded {_ action:}
+
+* Event Handlers - .modifierEventHandler {}, onAppear(perform:), onTapGesture, onDragGesture, 
+
+* Enumerations (raw) - Enum.enum / .enum / .enumMeth(Type - let var validation / _) / .enumCaseOnly / .enum.concatEnum().concatEnum.. : - 
+.default, .all, color (primary/secondary/white/black/..), system(size:), success(Image), failure(Error), empty, title3, top/right/bottom/left, heavy/light, center, vertical/horizontal, scale, largeTitle, borderedProminent, capsule/.., large, 
+
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+Component(args: value / .enum / { code }, .. ) { content-closure - children } arg: { content-closure - again } .modifier().customModifier().modifier {..}.modifier(.enum).modifier(.enum(value)) .. .padding(value)
+
+
+
+VStack/HStack(spacing:[, 'all' content:]) { children } . spacing, .. , padding, animation(.easeIn(duration:), Bool), animation(.easeInOut(duration:).repeatForever, Bool), 
+
+ZStack(alignment:) {} . frame(height:alignment:), padding() [default padding value given] / padding(10), onAppear(perform: { code }) onTapGesture { code }, gesture(Gesture), blur(radius:), 
+
+Alignment(horizontal:vertical:)
+
+Spacer
+
+Text("") . font(.title3/largeTitle/.. / .system(.title3/.. / size: 50)), fontWeight(.heavy/light/..), foregroundColor(.color), multilineTextAlignment(.center/..), offset(x:y: val/-val), padding(.horizontal, 10)
+
+Button(action: { event-handler }) . buttonStyle(.borderedProminent/..), buttonBorderShape(.capsule/..), controlSize(.large/..)
+
+Image(systemName: "ios.system.img/font.name.id") . resizable, scaledToFit, imageScale(.large), transition(.move(edge: .bottom/top/..)), font(.system(size: 24, weight: .bold))
+
+AsyncImage(url:scale:transaction:content:placeholder:) . padding
+
+Transaction(animation: .spring(..)/..)
+
+Circle . stroke(.white.opacity(0.5), lineWidth: 50), frame(width:height:alignment)
+
+Color("pre/custom-defined color") . ignoresSafeArea(.all/.., edges: all/..)
+
+Capsule() . fill(Color.white.opacity(0.2) / .white.opacity(0.2) / Color("color")), 
+
+
+
+
+
+
+
+* IDE Features
+
+Scaffolding - Screens/Views, Views/Components, Utilities/Utils, 'custom' Assets, 
+StoryBoarding - CocoaTouch UI, 
+X-Assets - Default AccentColor (all default elem-colors), AppIcon (all sizings), Asset Uploads, Image & Color Sets, Data & Symbol Image Sets, 
+Custom 'Assets' folder gets auto-deleted, with AI changing its path in build settings to the closest 'Assets/' path to the app (even outside the app is included)
+    - recreating custom 'Assets/' solves this; but best to not use 'Assets' or any other in-built directory/file names for custom directories/files
+    - Best Solution - go to X-Code in-built 'Assets' GUI-pane; create another 'Assets/' directory, then upload asset files to that directory
+    - Can also create other asset directories like 'Characters, Colors, Images, etc' inside the X-'Assets' GUI-pane
+
+
+
+
+
+* Notes
+
+containers have flattened / absolute (all) children by default, taking up entire available space - each child's alignments, paddings, & frame-sizes re-positions it
+Text("""multi-line string literal content textwrapping to a new line distort alignment on render - re-align beginning syntax with 'Text(' to re-render, then revert to preferred tab-scoping to prevent mis-alignment""")
+Button's children content - horizontally aligned by default
+
+
+
+
+
+* enum / switch cases with let-var validations
+
+public enum AsyncImagePhase {
+    case empty
+    case success(Image)
+    case failure(Error)
+
+    public var image: Image? { get }
+    public var error: Error? { get }
+}
+
+switch phase { // : AsyncImagePhase
+case .success(let image): // * switch / enum case with let-var validation
+    image.imageModifier()
+case .failure(_): // * nullified var (find out if cases with var-lidations 'have' to be handled/nullified - can't be ignored)
+    Image(systemName: "ant.circle.fill")
+        .iconModifier()
+case .empty:
+    Image(systemName: "photo.circle.fill")
+        .iconModifier()
+@unknown default: // todo: find out what @unknown is for
+    ProgressView()
+}
+
+
+@PropertyWrappers - directives for swift frameworks' features
+- uses get-setters under the hood for storing app's state data
+
+@AppStorage("unique-storage-property-key")
+var someVar: Type = initial_value
+
+
+*/

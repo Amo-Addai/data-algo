@@ -4585,3 +4585,8 @@ def gas_stations(strArr):
 if __name__ == "__main__":
     print("Hello, World!")
 
+'''
+
+strings - "" | chars - '' - forced in most others
+
+'''

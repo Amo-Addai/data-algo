@@ -318,7 +318,7 @@ void printNode(node* n) {
 
 void printList(node* head) {
     while (head != NULL) { // can do away with the != NULL force-check
-        cout << head->value << ' ';
+        cout << head->value << ' '; // strings - "" | chars - ''
         head = head->next;
     }
 }

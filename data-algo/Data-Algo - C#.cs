@@ -170,3 +170,9 @@ namespace DataAlgo
         
     }
 }
+
+/*
+
+String.Meths == string.Meths (& other data types)
+
+*/

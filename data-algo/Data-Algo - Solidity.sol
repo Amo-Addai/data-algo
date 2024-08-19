@@ -139,6 +139,6 @@ library DataStructures {
 ////////////////////////////////////////
 
 function main(string[] calldata args) pure returns (uint) {
-    // todo: print('Hello, World!')
+    // todo: print("Hello, World!")
     return 0; // unsigned int (NO -1)
 }
