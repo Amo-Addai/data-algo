@@ -2,8 +2,10 @@ import Foundation
 
 /* // TODO: (or MARK:) To-Use
 
-some (View), convenience, ..
+_const, 
+some (View), convenience, open, 
 @unknown, @escaping, @inlinable, 
+@available @frozen, 
 #available - API Availability
 'Directives' - @testable
 Generics
@@ -179,7 +181,9 @@ func main(args: [String]? = nil) {
 main()
 
 
+
 """ // * mega-string - like with python (but not a comment here)
+
 
 
 strings - "" | chars - ''
@@ -189,15 +193,56 @@ guard condition else { code }
 Error in cases of using it within a closure (solution - return at end of scope)
 - 'guard' body must not fall through, consider using a 'return' or 'throw' to exit the scope
 
-// TODO: Wrong - find out what @escaping means
+// TODO: Wrong usage - find out what @escaping means
 func meth( arg: @escaping (..) -> ..) ) .. | meth { closure code for arg: (can be 'escaped') }
 
 
 
-// TODO: SwiftUI
+
+"""
+
+
+
+
+
+/*
+
+* // TODO: XCode
+
+
+Collapse scope - Opt + Cmd + Left
+
+* Simulators
+
+Toggle Light/Dark mode - Shift + Cmd + A
+
+
+
+* // TODO: XCode - Issues
+
+
+App Settings, Build Settings, ..
+    - different devices require different settings
+        - eg. MacOS requires a Development Team setting
+    - app requires a provisioning profile. Select a provisioning profile in the Signing & Capabilities editor.
+        - Automatically manage signing - with 'XCode Managed Profile' (or setup App-Dev accounts with all required profiles)
+    - Signing for "restart-appUITests" requires a development team.
+        - Select a development team in the Signing & Capabilities editor.
+        - Select the right device to build to - some don't require dev-teams
+
+
+
+* // TODO: SwiftUI
+
+
+- Different devices render different UI elements differently
 
 
 in most meths:
+
+- assume all function, props & modifiers, animations, gestures & event-handlers, enums, etc ..
+    - are all applicable to all Types / Classes (common, special, containers/components/shapes/custom, etc)
+    - Know what each name/identifier applies to; then specifically with which other identifiers it can form a combo
 
 - Double (not Int) args
 - width arg precedes height
@@ -212,23 +257,23 @@ public func withAnimation<Result>(_ animation: Animation? = .default, _ body: ()
 Call - withAnimation { code for last arg _ body: } (with _ animation: omitted in this case)
 
 
-"""
 
 
+* // TODO: SwiftUI - Issues
 
 
+- animation easeIn, easeOut, easeInOut conflicts
+- 
 
-/*
-
-* // TODO: XCode
-
-Collapse scope - Opt + Cmd + Left
 
 
 
 * // TODO: SwiftUI
 
-* Special Data-Types - CGFloat, CGSize, 
+
+* Libraries - SwiftUI, Foundation, AVFoundation, 
+
+* Special Data-Types - CGFloat, CGSize, UINotificationFeedbackGenerator, 
 
 * Functions - withHooks (withAnimation, withTransaction, withCGContext, .. ), DispatchQueue.main.asyncAfter(deadline:execute: {..})
 
@@ -238,17 +283,17 @@ Collapse scope - Opt + Cmd + Left
 
 * Shapes - Color, Circle, Line, Capsule, 
 
-* Props / Modifiers - .prop / .modifier(..) / .customORextensionModifiers, .. , padding (always mid-prop by convention, then animation, .. ), 
-opacity, color.opacity, spacing, font, fontWeight, resizable, scaledToFit, frame, foregroundColor, ignoresSafeArea, stroke, offset, imageScale, buttonStyle, buttonBorderShape, controlSize, blur, 
+* Props / Modifiers - .prop / .modifier(..) / .customORextensionModifiers, - .id(String - give SwiftUI unique identifier for the elem's current state), .. , .padding (always mid-prop by convention, then animation, .. ), 
+frame, offset, opacity, color.opacity, spacing, font, fontWeight, resizable, scaledToFit, foregroundColor, ignoresSafeArea, stroke, imageScale, buttonStyle, buttonBorderShape, controlSize, blur, overlay, preferredColorScheme, 
 
-* Animations - animation: / .animation(_ animation:value:) / .customAnimations(..) / withAnimation(.animation(..)/../ ){..} - spring, transition (move, scale, rotate, slide, .. ), easeIn, easeOut, easeInOut, easeInOut, repeatForever, rotationEffect, degrees, linear, scaleEffect, 
+* Animations - animation: / .animation(_ animation:value:) / .customAnimations(..) / withAnimation(.animation(..)/../ ){..} - spring, transition (modifiers - move, scale, rotate, slide, .. | enums - opacity), easeIn, easeOut, easeInOut, easeInOut, delay, repeatForever, rotationEffect, degrees, linear, scaleEffect, 
 
 * Gestures - .gesture( .. Gesture() .. ) - DragGesture, 
 
 * Event Handlers - .modifierEventHandler {}, onAppear(perform:), onTapGesture, onDragGesture, 
 
 * Enumerations (raw) - Enum.enum / .enum / .enumMeth(Type - let var validation / _) / .enumCaseOnly / .enum.concatEnum().concatEnum.. : - 
-.default, .all, zero, color (primary/secondary/white/black/..), system(size:), success(Image), failure(Error), empty, title3, top/right/bottom/left, heavy/light, center, vertical/horizontal, scale, largeTitle, borderedProminent, capsule/.., large, 
+.default, .all, zero, color (primary/secondary/white/black/light/dark/..), system(size:), success(Image), failure(Error), empty, title3, top/right/bottom/left, bold/heavy/light/ultraLight, center, vertical/horizontal, scale, largeTitle, borderedProminent, capsule/.., large, 
 
 
 
@@ -258,23 +303,24 @@ opacity, color.opacity, spacing, font, fontWeight, resizable, scaledToFit, frame
 
 * Specific Component-Prop-Enum Combos - 
 
+
 Component(args: value / .enum / { code }, .. ) { content-closure - children } arg: { content-closure - again } .modifier().customModifier().modifier {..}.modifier(.enum).modifier(.enum(value)) .. .padding(value)
 
 
 
-VStack/HStack(spacing:[, 'all' content:]) { children } . spacing, .. , padding, animation(.easeIn(duration:), Bool), animation(.easeInOut(duration:).repeatForever, Bool), rotationEffect.degrees, 
+VStack/HStack(spacing:[, 'all' content:]) { children } . id, .. , padding (mostly last modifier), spacing, transition(.opacity), animation(.easeIn(duration:), Bool), animation(.easeInOut(duration:).delay.repeatForever, Bool), rotationEffect(_angle:_anchor:).degrees, preferredColorScheme(.dark), 
 
-ZStack(alignment:) {} . frame(height:alignment:), padding() [default padding value given] / padding(10), onAppear(perform: { code }) onTapGesture { code }, gesture(Gesture), blur(radius:), 
+ZStack(alignment:) {} . frame(height:alignment:), padding() [default padding value given] / padding(10), onAppear(perform: { code }) onTapGesture { code }, gesture(Gesture), blur(radius:), overlay(_overlay:alignment:), 
 
 Alignment(horizontal:vertical:)
 
 Spacer()
 
-Text("") . font(.title3/largeTitle/.. / .system(.title3/.. / size: 50)), fontWeight(.heavy/light/..), foregroundColor(.color), multilineTextAlignment(.center/..), offset(x:y: val/-val), padding(.horizontal, 10)
+Text("") . offset(x:y: val/-val), padding(.horizontal, 10), font(.title3/largeTitle/.. / .system(.title3/.. / size: 50)), fontWeight(.heavy/light/..), foregroundColor(.color), multilineTextAlignment(.center/..)
 
 Button(action: { event-handler }) . buttonStyle(.borderedProminent/..), buttonBorderShape(.capsule/..), controlSize(.large/..)
 
-Image(systemName: "ios.system.img/font.name.id") . resizable, scaledToFit, imageScale(.large), font(.system(size: 24, weight: .bold)), rotationEffect, gesture, animation, transition(.move(edge: .bottom/top/..))
+Image(systemName: "ios.system.img/font.name.id") . resizable, scaledToFit, imageScale(.large), font(.system(size:weight:)), rotationEffect, gesture, animation, transition(.opacity | .move(edge: .bottom/top/..))
 
 AsyncImage(url:scale:transaction:content:placeholder:) . padding
 
@@ -297,15 +343,31 @@ CGSize(width:height: [0:0 = .zero]) .
 
 
 
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+UINotificationFeedbackGenerator . notificationOccurred(.success/warning/failure)
+* for Haptic-Feedbacks - features can only be tested on a physical device (turn on 'System Haptics' in 'Settings -> Sounds & Haptics')
+
+
+
+
+
+
+
 * IDE Features
 
-Scaffolding - Screens/Views, Views/Components, Utilities/Utils, 'custom' Assets, 
+
+Scaffolding - Screens/Views, Views/Components, Utilities/Utils, 'custom' Assets (problem - gets auto-deleted) /Images/Sounds/.. (best to put all these 'asset' dirs/ inside X-Assets GUI-panel directory) , 
+
 StoryBoarding - CocoaTouch UI, 
+
 X-Assets - Default AccentColor (all default elem-colors), AppIcon (all sizings), Asset Uploads, Image & Color Sets, Data & Symbol Image Sets, 
+
 Custom 'Assets' folder gets auto-deleted, with AI changing its path in build settings to the closest 'Assets/' path to the app (even outside the app is included)
     - recreating custom 'Assets/' solves this; but best to not use 'Assets' or any other in-built directory/file names for custom directories/files
-    - Best Solution - go to X-Code in-built 'Assets' GUI-pane; create another 'Assets/' directory, then upload asset files to that directory
-    - Can also create other asset directories like 'Characters, Colors, Images, etc' inside the X-'Assets' GUI-pane
+    - Best Solution - go to X-Code in-built 'Assets' GUI-panel; create another 'Assets/' directory, then upload asset files to that directory
+    - Can also create other asset directories like 'Characters, Colors, Images, etc' inside the X-'Assets' GUI-panel directory
 
 
 
@@ -342,7 +404,7 @@ case .failure(_): // * nullified var (find out if cases with var-lidations 'have
 case .empty:
     Image(systemName: "photo.circle.fill")
         .iconModifier()
-@unknown default: // todo: find out what @unknown is for
+@unknown default: // todo: what @unknown is for
     ProgressView()
 }
 
