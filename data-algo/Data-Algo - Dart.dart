@@ -1,5 +1,7 @@
 /* // TODO: To-Use
 
+required, 
+const Constructors + [const] args & instantiation
 Generics
 functional.dart, dartz
 ..
@@ -13,7 +15,9 @@ functional.dart, dartz
 
 class Sorting {
 
-  Sorting();
+  var _i;
+
+  Sorting([this._i]);
 
 }
 
@@ -24,9 +28,9 @@ class Sorting {
 
 class Searching {
 
-  var _i;
+  final int i; // named params can't start with _
 
-  Searching([this._i]);
+  const Searching({required this.i}); // const constructors can't have non-final properties
 
   int? linearSearch(List<dynamic> a, int x) {
     for (var i = 0; i < a.length; i++)// length
@@ -93,3 +97,162 @@ class Searching {
 void main() {
   print("Hello, World!");
 }
+
+
+/*
+
+* // TODO: Dart
+
+- constant class / const constructor - (by making all of the fields of the class, including inherited fields, final)
+  - then add the const keyword when instantiating constructor
+
+
+
+
+
+
+*/
+
+
+
+
+
+/*
+
+* // TODO: A-Studio
+
+
+Beginning of File - stful, stless, stanim - New Stateful widget, Stateless widget, Stateful AnimationController
+
+
+
+* // TODO: A-Studio - Issues
+
+
+
+* // TODO: A-Studio - Notes
+
+Widget (page/view) + State 
+
+
+
+* // TODO: Flutter - Issues
+
+- The constructor being called isn't a const constructor | Try removing 'const' from the constructor invocation.
+  - Add 'const' modifier (or everywhere in file)
+
+
+* // TODO: Flutter - Main
+
+
+* Libraries - widget, cupertino, material, 
+
+* Classes - MaterialApp, State, StatefulWidget, StatelessWidget, BuildContext, Theme, 
+
+* Special Data-Types - 
+
+* Functions - 
+
+* Widget / Containers - Widget, Container, Scaffold, Column, 'Row', Center, SizedBox, EdgeInsets, 
+
+* Components - AppBar, Text, Button, FloatingActionButton, Icon, Image, 
+
+* Shapes - 
+
+* Props / Args - title, home, padding, child, children, height, width, body, style, fontWeight, fontSize, color, backgroundColor, appBar, onPressed, tooltip,  ...   , debugShowCheckedModeBanner, floatingActionButton, mainAxisAlignment, 
+
+* Props / Methods - symmetric, 
+
+* Styles - Color, TextStyle, 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations (raw) - FontWeight.(bold/'light'), Colors.(blueAccent), CrossAxisAlignment.(start/baseline/), 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+MaterialApp(title:home:debugShowCheckedModeBanner:)
+
+Widget
+
+Container(height:width:padding:child:children:<Widget>[])
+
+Scaffold(appBar:body:backgroundColor:floatingActionButton:)
+
+Column(mainAxisAlignment:crossAxisAlignment:children:<Widget>[])
+
+Center(child:)
+
+SizedBox(height:)
+
+AppBar(title:)
+
+Text("",style:TextStyle)
+
+Button()
+
+FloatingActionButton(onPressed:tooltip:child)
+
+Icon(IconData)
+
+TextStyle(fontWeight:fontSize:color:)
+
+Color('hex')
+
+Image . asset, 
+
+EdgeInsets . symmetric(horizontal:)
+
+
+
+
+
+* Special Classes & Methods / Props - Class(args)[// default scope-end comment] . meths(..) / props
+
+Widget . build(BuildContext)
+
+setState(cb), 
+
+Theme . of(BuildContext)
+
+Image . asset('path/')
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - lib, (default - android, ios, web, .. ), assets, 
+
+Naming Conventions - Class (filename.dart)
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases with let-var validations
+
+
+
+
+*/

@@ -181,8 +181,11 @@ func main(args: [String]? = nil) {
 main()
 
 
+"""
 
-""" // * mega-string - like with python (but not a comment here)
+// TODO: Swift
+
+// * mega-string - like with python (but not a comment here)
 
 
 
@@ -232,7 +235,7 @@ App Settings, Build Settings, ..
 
 
 
-* // TODO: SwiftUI
+* // TODO: SwiftUI - Notes
 
 
 - Different devices render different UI elements differently
@@ -263,15 +266,17 @@ Call - withAnimation { code for last arg _ body: } (with _ animation: omitted in
 
 
 - animation easeIn, easeOut, easeInOut conflicts
-- 
+    - 
 
 
 
 
-* // TODO: SwiftUI
+* // TODO: SwiftUI - Main
 
 
 * Libraries - SwiftUI, Foundation, AVFoundation, 
+
+* Classes - 
 
 * Special Data-Types - CGFloat, CGSize, UINotificationFeedbackGenerator, 
 
@@ -355,10 +360,12 @@ UINotificationFeedbackGenerator . notificationOccurred(.success/warning/failure)
 
 
 
-* IDE Features
+* IDE  Features
 
 
 Scaffolding - Screens/Views, Views/Components, Utilities/Utils, 'custom' Assets (problem - gets auto-deleted) /Images/Sounds/.. (best to put all these 'asset' dirs/ inside X-Assets GUI-panel directory) , 
+
+Naming Conventions - Class (Filename.swift)
 
 StoryBoarding - CocoaTouch UI, 
 
@@ -375,6 +382,7 @@ Custom 'Assets' folder gets auto-deleted, with AI changing its path in build set
 
 * Notes
 
+
 order of modifiers matters (especially in the case of combos of regular modifiers with special ones - animations, gestures, effects, etc)
 containers have flattened / absolute (all) children by default, taking up entire available space - each child's alignments, paddings, & frame-sizes re-positions it
 Text("""multi-line string literal content textwrapping to a new line distort alignment on render - re-align beginning syntax with 'Text(' to re-render, then revert to preferred tab-scoping to prevent mis-alignment""")
@@ -385,6 +393,7 @@ Button's children content - horizontally aligned by default
 
 
 * enum / switch cases with let-var validations
+
 
 public enum AsyncImagePhase {
     case empty
@@ -414,6 +423,7 @@ case .empty:
 
 @AppStorage("unique-storage-property-key")
 var someVar: Type = initial_value
+
 
 
 */

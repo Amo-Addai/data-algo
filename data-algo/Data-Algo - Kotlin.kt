@@ -117,3 +117,104 @@ class Searching {
 fun main(args: Array<String>) {
     println("Hello, World!")
 }
+
+
+/*
+
+* // TODO: Kotlin
+
+
+
+
+*/
+
+
+
+
+
+/*
+
+* // TODO: Android Studio
+
+
+
+* // TODO: A-Studio - Issues
+
+
+
+* // TODO: A-Studio - Notes
+
+
+
+* // TODO: Android - Kotlin - Issues
+
+
+
+* // TODO: A-Kotlin - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* Special Data-Types - 
+
+* Functions - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props / Modifiers - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations (raw) - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases with let-var validations
+
+
+
+
+*/

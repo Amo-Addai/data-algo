@@ -1103,8 +1103,102 @@ function mainT() {
     console.log("Hello, World!")
 }
 
+
 /*
 
- * number - ints & doubles ; tuples - [] (not ())
+* // TODO: TypeScript
+
+* number - ints & doubles ; tuples - [] (not ())
+
+*/
+
+
+
+
+
+/*
+
+* // TODO: Webstorm
+
+
+
+* // TODO: Webstorm - Issues
+
+
+
+* // TODO: Webstorm - Notes
+
+
+
+* // TODO: Web - Js - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* Special Data-Types - 
+
+* Functions - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props / Modifiers - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations (raw) - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases with let-var validations
+
+
+
 
 */
