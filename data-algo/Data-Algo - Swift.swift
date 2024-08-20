@@ -238,17 +238,17 @@ Collapse scope - Opt + Cmd + Left
 
 * Shapes - Color, Circle, Line, Capsule, 
 
-* Props / Modifiers - .customORextensionModifiers, padding (always mid-prop by convention, then animation, .. ), 
+* Props / Modifiers - .prop / .modifier(..) / .customORextensionModifiers, .. , padding (always mid-prop by convention, then animation, .. ), 
 opacity, color.opacity, spacing, font, fontWeight, resizable, scaledToFit, frame, foregroundColor, ignoresSafeArea, stroke, offset, imageScale, buttonStyle, buttonBorderShape, controlSize, blur, 
 
-* Animations - animation: / .animation(_ animation:value:) / .customAnimations(..) / withAnimation(.animation(..)){..} - spring, transition (move, scale, rotate, slide, .. ), easeIn, easeOut, easeInOut, easeInOut, repeatForever, linear, scaleEffect, 
+* Animations - animation: / .animation(_ animation:value:) / .customAnimations(..) / withAnimation(.animation(..)/../ ){..} - spring, transition (move, scale, rotate, slide, .. ), easeIn, easeOut, easeInOut, easeInOut, repeatForever, rotationEffect, degrees, linear, scaleEffect, 
 
-* Gestures - .gesture( .. Gesture() .. ) - DragGesture . onChanged {gesture:}, onEnded {_ action:}
+* Gestures - .gesture( .. Gesture() .. ) - DragGesture, 
 
 * Event Handlers - .modifierEventHandler {}, onAppear(perform:), onTapGesture, onDragGesture, 
 
 * Enumerations (raw) - Enum.enum / .enum / .enumMeth(Type - let var validation / _) / .enumCaseOnly / .enum.concatEnum().concatEnum.. : - 
-.default, .all, color (primary/secondary/white/black/..), system(size:), success(Image), failure(Error), empty, title3, top/right/bottom/left, heavy/light, center, vertical/horizontal, scale, largeTitle, borderedProminent, capsule/.., large, 
+.default, .all, zero, color (primary/secondary/white/black/..), system(size:), success(Image), failure(Error), empty, title3, top/right/bottom/left, heavy/light, center, vertical/horizontal, scale, largeTitle, borderedProminent, capsule/.., large, 
 
 
 
@@ -262,30 +262,35 @@ Component(args: value / .enum / { code }, .. ) { content-closure - children } ar
 
 
 
-VStack/HStack(spacing:[, 'all' content:]) { children } . spacing, .. , padding, animation(.easeIn(duration:), Bool), animation(.easeInOut(duration:).repeatForever, Bool), 
+VStack/HStack(spacing:[, 'all' content:]) { children } . spacing, .. , padding, animation(.easeIn(duration:), Bool), animation(.easeInOut(duration:).repeatForever, Bool), rotationEffect.degrees, 
 
 ZStack(alignment:) {} . frame(height:alignment:), padding() [default padding value given] / padding(10), onAppear(perform: { code }) onTapGesture { code }, gesture(Gesture), blur(radius:), 
 
 Alignment(horizontal:vertical:)
 
-Spacer
+Spacer()
 
 Text("") . font(.title3/largeTitle/.. / .system(.title3/.. / size: 50)), fontWeight(.heavy/light/..), foregroundColor(.color), multilineTextAlignment(.center/..), offset(x:y: val/-val), padding(.horizontal, 10)
 
 Button(action: { event-handler }) . buttonStyle(.borderedProminent/..), buttonBorderShape(.capsule/..), controlSize(.large/..)
 
-Image(systemName: "ios.system.img/font.name.id") . resizable, scaledToFit, imageScale(.large), transition(.move(edge: .bottom/top/..)), font(.system(size: 24, weight: .bold))
+Image(systemName: "ios.system.img/font.name.id") . resizable, scaledToFit, imageScale(.large), font(.system(size: 24, weight: .bold)), rotationEffect, gesture, animation, transition(.move(edge: .bottom/top/..))
 
 AsyncImage(url:scale:transaction:content:placeholder:) . padding
 
 Transaction(animation: .spring(..)/..)
 
-Circle . stroke(.white.opacity(0.5), lineWidth: 50), frame(width:height:alignment)
+Circle() . stroke(.white.opacity(0.5), lineWidth: 50), frame(width:height:alignment)
 
 Color("pre/custom-defined color") . ignoresSafeArea(.all/.., edges: all/..)
 
 Capsule() . fill(Color.white.opacity(0.2) / .white.opacity(0.2) / Color("color")), 
 
+Gesture() . translation, translation.width/height,  
+
+DragGesture() . onChanged {gesture:}, onEnded {_ action:}
+
+CGSize(width:height: [0:0 = .zero]) . 
 
 
 
@@ -308,6 +313,7 @@ Custom 'Assets' folder gets auto-deleted, with AI changing its path in build set
 
 * Notes
 
+order of modifiers matters (especially in the case of combos of regular modifiers with special ones - animations, gestures, effects, etc)
 containers have flattened / absolute (all) children by default, taking up entire available space - each child's alignments, paddings, & frame-sizes re-positions it
 Text("""multi-line string literal content textwrapping to a new line distort alignment on render - re-align beginning syntax with 'Text(' to re-render, then revert to preferred tab-scoping to prevent mis-alignment""")
 Button's children content - horizontally aligned by default
