@@ -138,6 +138,10 @@ fun main(args: Array<String>) {
 
 
 
+* // TODO: A-Studio - Config
+
+
+
 * // TODO: A-Studio - Issues
 
 
@@ -146,7 +150,11 @@ fun main(args: Array<String>) {
 
 
 
-* // TODO: Android - Kotlin - Issues
+* // TODO: Android - Kotlin - Config
+
+
+
+* // TODO: A-Kotlin - Issues
 
 
 
@@ -212,7 +220,7 @@ Scaffolding -
 
 
 
-* enum / switch cases with let-var validations
+* enum / switch cases for generics-validations
 
 
 

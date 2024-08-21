@@ -32,7 +32,6 @@ Lombok,
 
 */
 
-
 public class DataAlgoJava {
 
     public static void main(String[] args) {
@@ -42,13 +41,14 @@ public class DataAlgoJava {
     public static class Main {
 
         ////////////////////////////////////////
-        //  SORTING ALGO'S
+        // SORTING ALGO'S
         ////////////////////////////////////////
 
         // todo: error if main() is inside a static Main class
         public static class Sorting {
 
-            public Sorting() {}
+            public Sorting() {
+            }
 
             public int[] quickSort(int[] arr) {
                 // TODO
@@ -57,9 +57,8 @@ public class DataAlgoJava {
 
         }
 
-
         ////////////////////////////////////////
-        //  SEARCHING ALGO'S
+        // SEARCHING ALGO'S
         ////////////////////////////////////////
 
         public static class Searching {
@@ -71,40 +70,54 @@ public class DataAlgoJava {
             }
 
             public int linearSearch(int[] a, int x) {
-                for (int i = 0; i < a.length; i++) if (x == a[i]) return i; // index 
+                for (int i = 0; i < a.length; i++)
+                    if (x == a[i])
+                        return i; // index
                 return -1;
             }
 
-            // No in-built functional interface for more than 2 args (create custom interface)
+            // No in-built functional interface for more than 2 args (create custom
+            // interface)
             @FunctionalInterface
             interface RBinarySearch {
                 int rBinarySearch2p(int[] a, int x, int f, int l);
             }
 
             public int binarySearch(int[] arr, int num) {
-                // todo: NB: Base-cases should always come 1st (before any functional interface or lambda assignments)
-                // only regular inner functions (when they can be defined, in java) should be defined before all logic
+                // todo: NB: Base-cases should always come 1st (before any functional interface
+                // or lambda assignments)
+                // only regular inner functions (when they can be defined, in java) should be
+                // defined before all logic
 
-                if (arr.length == 0) return -1;
-                
+                if (arr.length == 0)
+                    return -1;
+
                 Arrays.sort(arr); // O(n log n) t
 
                 BiFunction<int[], Integer, Integer>[] rBinarySearch = new BiFunction[1];
                 rBinarySearch[0] = (a, x) -> {
-                    if (a.length == 0) return -1;
+                    if (a.length == 0)
+                        return -1;
                     int m = (int) Math.floor((double) (a.length / 2));
-                    if (x == a[m]) return a[m];
-                    else if (x < a[m]) return rBinarySearch[0].apply(Arrays.copyOfRange(a, 0, m), x);
-                    else return rBinarySearch[0].apply(Arrays.copyOfRange(a, m + 1, a.length), x);
+                    if (x == a[m])
+                        return a[m];
+                    else if (x < a[m])
+                        return rBinarySearch[0].apply(Arrays.copyOfRange(a, 0, m), x);
+                    else
+                        return rBinarySearch[0].apply(Arrays.copyOfRange(a, m + 1, a.length), x);
                 };
 
                 RBinarySearch[] rbSearch = new RBinarySearch[1];
                 rbSearch[0] = (a, x, f, l) -> {
-                    if (a.length == 0) return -1;
+                    if (a.length == 0)
+                        return -1;
                     int m = (int) Math.floor((double) (f + (l - f) / 2));
-                    if (x == a[m]) return m;
-                    else if (x < a[m]) return rbSearch[0].rBinarySearch2p(a, x, f, m - 1);
-                    else return rbSearch[0].rBinarySearch2p(a, x, m + 1, l);
+                    if (x == a[m])
+                        return m;
+                    else if (x < a[m])
+                        return rbSearch[0].rBinarySearch2p(a, x, f, m - 1);
+                    else
+                        return rbSearch[0].rBinarySearch2p(a, x, m + 1, l);
                 };
 
                 int f = 0, l = arr.length - 1;
@@ -116,16 +129,19 @@ public class DataAlgoJava {
 
                 while (f < l) {
                     m = (int) Math.floor((double) (f + (l - f) / 2));
-                    if (num == arr[m]) return m;
-                    else if (num < arr[m]) l = m - 1;
-                    else f = m + 1;
+                    if (num == arr[m])
+                        return m;
+                    else if (num < arr[m])
+                        l = m - 1;
+                    else
+                        f = m + 1;
                 }
 
                 return -1;
             }
 
             // More O(log n) t (binary) problems
-            
+
             public int firstPositionOfItem(int[] nums, int num) {
                 if (nums == null || nums.length == 0)
                     return -1;
@@ -133,42 +149,53 @@ public class DataAlgoJava {
                 while (left + 1 < right) {
                     mid = left + (right - left) / 2;
                     // major difference between first & last position search
-                    if (nums[mid] < num) left = mid; // nums[mid] < num
-                    else right = mid;
+                    if (nums[mid] < num)
+                        left = mid; // nums[mid] < num
+                    else
+                        right = mid;
                 }
-                if (nums[left] == num) return left;
-                if (nums[right] == num) return right;
+                if (nums[left] == num)
+                    return left;
+                if (nums[right] == num)
+                    return right;
                 return -1;
             }
 
             public int lastPositionOfItem(int[] nums, int num) {
                 if (nums == null || nums.length == 0)
                     return -1;
-                int left = 0, right = nums.length -1, mid = 0;
+                int left = 0, right = nums.length - 1, mid = 0;
                 while (left + 1 < right) {
                     mid = left + (right - left) / 2;
                     // major difference between last & first position search
-                    if (nums[mid] <= num) left = mid; // nums[mid] <= num
-                    else right = mid;
+                    if (nums[mid] <= num)
+                        left = mid; // nums[mid] <= num
+                    else
+                        right = mid;
                 }
-                if (nums[right] == num) return right;
-                if (nums[left] == num) return left;
+                if (nums[right] == num)
+                    return right;
+                if (nums[left] == num)
+                    return left;
                 return -1;
             }
 
             public int firstOrLastItem(int num) {
-                
+
                 Function<Integer, Boolean> isVersion = k -> {
-                    return true; // TODO: 
+                    return true; // TODO:
                 };
-                
+
                 int start = 1, end = num, mid;
                 while (start + 1 < end) {
                     mid = start + (end - start) / 2;
-                    if (isVersion.apply(mid)) end = mid;
-                    else start = mid;
+                    if (isVersion.apply(mid))
+                        end = mid;
+                    else
+                        start = mid;
                 }
-                if (isVersion.apply(start)) return start;
+                if (isVersion.apply(start))
+                    return start;
                 return end;
             }
 
@@ -178,26 +205,33 @@ public class DataAlgoJava {
             }
 
             public int[] kClosestNumbers(int[] arr, int num, int k) {
-                
+
                 if (arr == null || arr.length == 0)
-                return new int[0];
-            
+                    return new int[0];
+
                 BiFunction<int[], Integer, Integer> findLowerClosest = (a, x) -> {
                     int start = 0, end = a.length - 1, mid = -1;
                     while (start + 1 < end) {
                         mid = start + (end - start) / 2;
-                        if (a[mid] < x) start = mid;
-                        else if (a[mid] >= x) end = mid;
+                        if (a[mid] < x)
+                            start = mid;
+                        else if (a[mid] >= x)
+                            end = mid;
                     }
-                    if (a[end] < x) return mid;
-                    if (a[start] < x) return start;
+                    if (a[end] < x)
+                        return mid;
+                    if (a[start] < x)
+                        return start;
                     return -1;
                 };
 
                 IsLeftCloser isLeftCloser = (a, l, r, x) -> {
-                    if (l < 0) return false;
-                    if (r > a.length - 1) return true;
-                    if (x - a[l] <= a[r] - x) return true;
+                    if (l < 0)
+                        return false;
+                    if (r > a.length - 1)
+                        return true;
+                    if (x - a[l] <= a[r] - x)
+                        return true;
                     return false;
                 };
 
@@ -207,10 +241,12 @@ public class DataAlgoJava {
                 for (int i = 0; i < k; i++) {
                     if (isLeftCloser.check(arr, left, right, num)) {
                         res[index] = arr[left];
-                        index++; left--;
+                        index++;
+                        left--;
                     } else {
                         res[index] = arr[right];
-                        index++; right++;
+                        index++;
+                        right++;
                     }
                 }
                 return res;
@@ -220,31 +256,41 @@ public class DataAlgoJava {
                 // Using Exponential Backoff method
 
                 int k = 1;
-                while (arr[k - 1] < num) k = k + 2; // increase k exponentially
+                while (arr[k - 1] < num)
+                    k = k + 2; // increase k exponentially
 
                 int start = 0, end = k - 1, mid;
                 while (start + 1 < end) {
                     mid = start + (end - start) / 2;
-                    if (arr[mid] < num) start = mid;
-                    else end = mid;
+                    if (arr[mid] < num)
+                        start = mid;
+                    else
+                        end = mid;
                 }
-                if (arr[start] == num) return start;
-                if (arr[end] == num) return end;
+                if (arr[start] == num)
+                    return start;
+                if (arr[end] == num)
+                    return end;
                 return -1;
             }
 
             public int findMinimumRotatedSortedArray(int[] arr) {
-                if (arr == null || arr.length == 0) return -1;
+                if (arr == null || arr.length == 0)
+                    return -1;
                 // find 1st position < last
                 int num = arr[arr.length - 1];
                 int start = 0, end = arr.length - 1, mid;
                 while (start + 1 < end) {
                     mid = start + (end - start) / 2;
-                    if (num < arr[mid]) start = mid;
-                    else end = mid;
+                    if (num < arr[mid])
+                        start = mid;
+                    else
+                        end = mid;
                 }
-                if (arr[start] < num) return arr[start];
-                else return arr[end];
+                if (arr[start] < num)
+                    return arr[start];
+                else
+                    return arr[end];
             }
 
             public int findMaximumNumberMountainSequence(int[] arr) {
@@ -255,76 +301,98 @@ public class DataAlgoJava {
                 // while arr has at least 3 items
                 while (start + 1 < end) {
                     mid = start + (end - start) / 2;
-                    if (arr[mid] > arr[mid + 1]) end = mid;
-                    else start = mid;
+                    if (arr[mid] > arr[mid + 1])
+                        end = mid;
+                    else
+                        start = mid;
                 }
                 return Math.max(arr[start], arr[end]);
             }
 
             public int findMinimumAreaOfSmallestRectangleEnclosingBlackPixels(char[][] img, int x, int y) {
-                
-                if (img == null || img.length == 0) return 0;
-                if (img[0] == null || img[0].length == 0) return 0;
-                
+
+                if (img == null || img.length == 0)
+                    return 0;
+                if (img[0] == null || img[0].length == 0)
+                    return 0;
+
                 BiFunction<char[][], Integer, Boolean> rowHasBlackPixel = (im, row) -> {
                     for (int i = 0; i < im[row].length; i++) {
-                        if (im[row][i] == '1') return true;
+                        if (im[row][i] == '1')
+                            return true;
                     }
                     return false;
                 };
-                
+
                 BiFunction<char[][], Integer, Boolean> colHasBlackPixel = (im, col) -> {
                     for (int i = 0; i < im.length; i++) {
-                        if (im[i][col] == '1') return true;
+                        if (im[i][col] == '1')
+                            return true;
                     } // todo: confirm column black-pixel check
                     return false;
                 };
-                
+
                 int[] res = new int[4]; // top, bottom, left, right
 
                 // 1st, find top ..
                 int start = 0, end = x, mid;
                 while (start + 1 < end) {
                     mid = start + (end - start) / 2;
-                    if (rowHasBlackPixel.apply(img, mid)) end = mid;
-                    else start = mid;
+                    if (rowHasBlackPixel.apply(img, mid))
+                        end = mid;
+                    else
+                        start = mid;
                 }
-                if (rowHasBlackPixel.apply(img, end)) res[0] = end;
-                if (rowHasBlackPixel.apply(img, start)) res[0] = start;
+                if (rowHasBlackPixel.apply(img, end))
+                    res[0] = end;
+                if (rowHasBlackPixel.apply(img, start))
+                    res[0] = start;
 
                 // now, find bottom ..
                 start = x;
                 end = img.length - 1;
                 while (start + 1 < end) {
                     mid = start + (end - start) / 2;
-                    if (rowHasBlackPixel.apply(img, mid)) start = mid;
-                    else end = mid;
+                    if (rowHasBlackPixel.apply(img, mid))
+                        start = mid;
+                    else
+                        end = mid;
                 }
-                if (rowHasBlackPixel.apply(img, start)) res[1] = start;
-                if (rowHasBlackPixel.apply(img, end)) res[1] = end;
+                if (rowHasBlackPixel.apply(img, start))
+                    res[1] = start;
+                if (rowHasBlackPixel.apply(img, end))
+                    res[1] = end;
 
                 // find left
                 start = 0;
                 end = y;
                 while (start + 1 < end) {
                     mid = start + (end - start) / 2;
-                    if (colHasBlackPixel.apply(img, mid)) end = mid;
-                    else start = mid;
+                    if (colHasBlackPixel.apply(img, mid))
+                        end = mid;
+                    else
+                        start = mid;
                 }
-                if (colHasBlackPixel.apply(img, end)) res[2] = end;
-                if (colHasBlackPixel.apply(img, start)) res[2] = start;
+                if (colHasBlackPixel.apply(img, end))
+                    res[2] = end;
+                if (colHasBlackPixel.apply(img, start))
+                    res[2] = start;
 
                 // find right
                 start = y;
                 end = img[0].length - 1;
                 while (start + 1 < end) {
                     mid = start + (end - start) / 2;
-                    if (colHasBlackPixel.apply(img, mid)) start = mid;
-                    else end = mid;
+                    if (colHasBlackPixel.apply(img, mid))
+                        start = mid;
+                    else
+                        end = mid;
                 }
-                if (colHasBlackPixel.apply(img, start)) res[3] = start;
-                if (colHasBlackPixel.apply(img, end)) res[3] = end;
-                
+                if (colHasBlackPixel.apply(img, start))
+                    res[3] = start;
+                if (colHasBlackPixel.apply(img, end))
+                    res[3] = end;
+
                 // finally, return the rectangle's area
                 return (res[1] - res[0] + 1) * (res[3] - res[2] + 1);
 
@@ -351,66 +419,84 @@ public class DataAlgoJava {
                 while (start - 1 < end) {
                     mid = start + (end - start) / 2;
                     peak = isPeak.apply(arr, mid);
-                    if (peak == 0) return mid;
-                    if (peak == 1) start = mid;
-                    if (peak == -1) end = mid;
-                    else start = mid;
+                    if (peak == 0)
+                        return mid;
+                    if (peak == 1)
+                        start = mid;
+                    if (peak == -1)
+                        end = mid;
+                    else
+                        start = mid;
                 }
-                if (isPeak.apply(arr, start) == 0) return start;
-                if (isPeak.apply(arr, end) == 0) return end;
+                if (isPeak.apply(arr, start) == 0)
+                    return start;
+                if (isPeak.apply(arr, end) == 0)
+                    return end;
                 return Integer.MAX_VALUE;
             }
 
             public int searchRotatedSortedArray(int[] arr, int num) {
-                if (arr == null || arr.length == 0) return -1;
+                if (arr == null || arr.length == 0)
+                    return -1;
                 int left = 0, right = arr.length - 1, mid;
                 while (left + 1 < right) {
                     mid = (left + right) / 2;
-                    if (arr[mid] == num) return mid;
+                    if (arr[mid] == num)
+                        return mid;
                     else if (arr[left] < arr[mid]) {
                         if (arr[left] <= num && arr[mid] > num)
                             right = mid;
-                        else left = mid;
+                        else
+                            left = mid;
                     } else {
                         if (arr[mid] < num && arr[right] >= num)
                             left = mid;
-                        else right = mid;
+                        else
+                            right = mid;
                     }
                 }
-                if (arr[left] == num) return left;
-                else if (arr[right] == num) return right;
+                if (arr[left] == num)
+                    return left;
+                else if (arr[right] == num)
+                    return right;
                 return -1;
             }
 
             public int fastPower(int a, int b, int n) {
-                if (n == 1) return a % b;
-                if (n == 0) return 1 % b;
+                if (n == 1)
+                    return a % b;
+                if (n == 0)
+                    return 1 % b;
                 long product = this.fastPower(a, b, n / 2);
                 product = (product * product) % b; // or - (product ^ 2) % b
-                if (n % 2 == 1) product = (product * a) % b;
+                if (n % 2 == 1)
+                    product = (product * a) % b;
                 return (int) product;
             }
 
             public int fastPowerNonRecursive(int a, int b, int n) {
                 long ans = 1, tmp = a;
                 while (n != 0) {
-                    if (n % 2 == 1) ans = (ans * tmp) % b;
+                    if (n % 2 == 1)
+                        ans = (ans * tmp) % b;
                     tmp = (tmp ^ 2) % b;
                     n = n / 2;
                 }
                 return (int) ans % b;
             }
-            
+
             public double myPower(double x, int n) {
-                if (x == 0) return 0;
-            
+                if (x == 0)
+                    return 0;
+
                 BiFunction<Double, Integer, Double>[] getPower = new BiFunction[1];
                 getPower[0] = (x1, n1) -> {
-                    if (n1 == 0) return 1.0;
+                    if (n1 == 0)
+                        return 1.0;
                     double tmp = getPower[0].apply(x1, n1 / 2);
                     return n1 % 2 == 0 ? tmp * tmp : Math.pow(tmp, 2) * x1; // tmp ^ 2 - Bitwise XOR instead
                 };
-            
+
                 return n >= 0 ? getPower[0].apply(x, n) : 1 / getPower[0].apply(x, -n);
             }
 
@@ -429,45 +515,51 @@ public class DataAlgoJava {
                 double eps = 1e-6, mid;
                 while (left + eps < right) {
                     mid = left + (right - left) / 2.0;
-                    if (count.apply(locations, mid) > k) left = mid;
-                    else right = mid;
+                    if (count.apply(locations, mid) > k)
+                        left = mid;
+                    else
+                        right = mid;
                 }
-                if (count.apply(locations, left) == k) return left;
+                if (count.apply(locations, left) == k)
+                    return left;
                 return right;
             }
 
         }
 
-
         ////////////////////////////////////////
-        //  OTHER ALGO'S
+        // OTHER ALGO'S
         ////////////////////////////////////////
-
 
         public static class DataStructures {
 
-            public DataStructures() {}
-            
+            public DataStructures() {
+            }
+
             // Arrays & Strings
 
             String reorganizeString(String S) { // TODO: verify - O(n + n log n) t | O(n) s
-                
+
                 Map<Character, Integer> counts = new HashMap<>();
 
                 // O(n)
                 for (char c : S.toCharArray())
                     counts.put(c, counts.getOrDefault(c, 0) + 1);
-                
+
                 PriorityQueue<Character> maxHeap = new PriorityQueue<>(
-                    (a, b) -> counts.get(b) - counts.get(a)
-                );
+                        (a, b) -> counts.get(b) - counts.get(a));
                 maxHeap.addAll(counts.keySet());
 
-                // todo: NB: Concatenating a String takes in more buffer data or additional memory overhead (more space complexity) than manually building up a String with a mutable StringBuilder object, Character by Character
-                // Concatenating to an immutable String object creates a new String object (leading to additional memory overhead)
+                // todo: NB: Concatenating a String takes in more buffer data or additional
+                // memory overhead (more space complexity) than manually building up a String
+                // with a mutable StringBuilder object, Character by Character
+                // Concatenating to an immutable String object creates a new String object
+                // (leading to additional memory overhead)
 
                 StringBuilder result = new StringBuilder();
-                char current; char next; char last;
+                char current;
+                char next;
+                char last;
 
                 // O(n log n)
                 while (maxHeap.size() > 1) {
@@ -477,12 +569,15 @@ public class DataAlgoJava {
                     result.append(next);
                     counts.put(current, counts.get(current) - 1);
                     counts.put(next, counts.get(next) - 1);
-                    if (counts.get(current) > 0) maxHeap.add(current);
-                    if (counts.get(next) > 0) maxHeap.add(next);
+                    if (counts.get(current) > 0)
+                        maxHeap.add(current);
+                    if (counts.get(next) > 0)
+                        maxHeap.add(next);
                     // base-case check
                     if (!maxHeap.isEmpty()) {
                         last = maxHeap.poll();
-                        if (counts.get(last) > 1) return "";
+                        if (counts.get(last) > 1)
+                            return "";
                         result.append(last);
                     }
                 }
@@ -501,16 +596,17 @@ public class DataAlgoJava {
                 NumSwaps numSwaps = (num, a1, b1) -> {
                     int nSwaps = 0;
                     for (int i = 0; i < a1.length; i++) {
-                        if (a1[i] != num && b1[i] != num) return Integer.MAX_VALUE;
-                        else if (a1[i] != num) nSwaps++;
+                        if (a1[i] != num && b1[i] != num)
+                            return Integer.MAX_VALUE;
+                        else if (a1[i] != num)
+                            nSwaps++;
                     }
                     return nSwaps;
                 };
 
                 int minSwaps = Math.min(
-                    numSwaps.swap(a[0], a, b),
-                    numSwaps.swap(b[0], a, b)
-                );
+                        numSwaps.swap(a[0], a, b),
+                        numSwaps.swap(b[0], a, b));
                 minSwaps = Math.min(minSwaps, numSwaps.swap(a[0], b, a));
                 minSwaps = Math.min(minSwaps, numSwaps.swap(b[0], a, b));
                 return minSwaps == Integer.MAX_VALUE ? -1 : minSwaps;
@@ -519,16 +615,17 @@ public class DataAlgoJava {
             int maximumPointsFromCards(int[] points, int k) {
                 int sum = 0, max = 0;
                 int n = points.length - 1;
-                int[] left = new int[k+1];
-                int[] right = new int[k+1];
-                left[0] = 0; right[0] = 0;
+                int[] left = new int[k + 1];
+                int[] right = new int[k + 1];
+                left[0] = 0;
+                right[0] = 0;
 
                 for (int i = 1; i <= k; i++)
-                    left[i] = left[i-1] + points[i-1];
-                
+                    left[i] = left[i - 1] + points[i - 1];
+
                 for (int i = 1; i <= k; i++)
-                    right[i] = right[i-1] + points[n--];
-                
+                    right[i] = right[i - 1] + points[n--];
+
                 for (int j = 0; j < left.length; j++) {
                     sum = left[j] + right[right.length - j - 1];
                     max = Math.max(sum, max);
@@ -537,24 +634,20 @@ public class DataAlgoJava {
                 return max;
             }
 
-
             // (Array) Lists & Tuples
-
 
             // Sets & Sequences
 
-            
             // WeakMaps & WeakSets
 
-
             // HashMaps & HashTables
-
 
             // Matrices
 
             // TODO: Test
             int[][] rotateMatrix(int[][] matrix) { // O(n) t | O(1) s
-                // only for square NxN matrices, or else, find number of columns too (matrix[0].length)
+                // only for square NxN matrices, or else, find number of columns too
+                // (matrix[0].length)
                 int N = matrix.length;
                 int temp;
 
@@ -577,30 +670,40 @@ public class DataAlgoJava {
 
             // This diagonal iteration solution only works on square matrices
             void setZeroesDiagonally(int[][] matrix) {
-                int r = 0; int c = 0; Boolean isZ = false; int r2 = 0;
+                int r = 0;
+                int c = 0;
+                Boolean isZ = false;
+                int r2 = 0;
                 int rs = matrix.length;
                 int cs = matrix[0].length;
                 while (r < rs) {
                     while (c < cs) {
                         System.out.println(matrix[r][c]);
-                        if (isZ) matrix[r][c] = 0;
-                        else if (matrix[r][c] == 0) isZ = true; 
-                        else break;
+                        if (isZ)
+                            matrix[r][c] = 0;
+                        else if (matrix[r][c] == 0)
+                            isZ = true;
+                        else
+                            break;
                     }
                     if (isZ) {
                         r2 = r + 1;
-                        while (r2 < rs) matrix[r2][c] = 0;
-                    } 
-                    r++; c++;
+                        while (r2 < rs)
+                            matrix[r2][c] = 0;
+                    }
+                    r++;
+                    c++;
                 }
             }
 
-            // Q - Given 2 sparse matrices A & B, return AB (assume A's cols.length == B's rows.length)
+            // Q - Given 2 sparse matrices A & B, return AB (assume A's cols.length == B's
+            // rows.length)
 
             int[][] sparseMatrixMultiplication(int[][] A, int[][] B) {
                 int n = A.length,
-                    m = B[0].length,
-                    t = A[0].length; // A's column length should == B's row length, for matrix multiplication to be possible
+                        m = B[0].length,
+                        t = A[0].length; // A's column length should == B's row length, for matrix multiplication to be
+                                         // possible
                 int[][] res = new int[n][m];
 
                 List<List<Integer>> col = new ArrayList<>();
@@ -609,12 +712,13 @@ public class DataAlgoJava {
                 for (i = 0; i < t; i++) {
                     col.add(new ArrayList<>());
                     for (j = 0; j < m; j++)
-                        if (B[i][j] != 0) 
-                            col.get(i).add(j);                        
+                        if (B[i][j] != 0)
+                            col.get(i).add(j);
                 }
                 for (i = 0; i < n; i++)
                     for (k = 0; k < t; k++) {
-                        if (A[i][k] == 0) continue;
+                        if (A[i][k] == 0)
+                            continue;
                         for (int x : col.get(k)) // todo: foreach loops always require declared datatype on iterator var
                             res[i][x] += A[i][k] * B[k][x];
                     }
@@ -633,22 +737,24 @@ public class DataAlgoJava {
             int bestTimeToBuyOrSellStock(int[] prices) {
                 if (prices == null || prices.length == 0)
                     return 0;
-                
+
                 int min = Integer.MAX_VALUE,
-                    profit = 0;
-                
+                        profit = 0;
+
                 for (int i : prices) {
                     min = i < min ? i : min;
-                    profit = (i - min) > profit 
-                        ? i - min 
-                        : profit;
+                    profit = (i - min) > profit
+                            ? i - min
+                            : profit;
                 }
-                
+
                 return profit;
             }
 
-            // Q - Given an nxm 2d grid map of 1s (land) & 0s (water), return number of islands
-            // Island = land (1) surrounded by water (0s) & is formed by connecting adjacent lands horizontally / vertically
+            // Q - Given an nxm 2d grid map of 1s (land) & 0s (water), return number of
+            // islands
+            // Island = land (1) surrounded by water (0s) & is formed by connecting adjacent
+            // lands horizontally / vertically
             // Can assume all 4 edges of the grid are all surrounded by water
 
             @FunctionalInterface
@@ -663,28 +769,27 @@ public class DataAlgoJava {
 
             int numberOfIslands(char[][] grid) {
 
-                if (
-                    grid == null ||
-                    grid.length == 0 ||
-                    grid[0].length == 0
-                ) return 0;
+                if (grid == null ||
+                        grid.length == 0 ||
+                        grid[0].length == 0)
+                    return 0;
 
                 IsValid isValid = (x, y, g) -> {
                     int n = g.length, m = g[0].length;
                     return x >= 0
-                        && x < n
-                        && y >= 0
-                        && y < m
-                        && g[x][y] == '1';
+                            && x < n
+                            && y >= 0
+                            && y < m
+                            && g[x][y] == '1';
                 };
 
                 BFS bfs = (g, x, y) -> {
                     int[][] directions = {
-                        {0, 1}, {0, -1}, 
-                        {-1, 0}, {1, 0}
+                            { 0, 1 }, { 0, -1 },
+                            { -1, 0 }, { 1, 0 }
                     };
                     Queue<int[]> queue = new java.util.LinkedList<>();
-                    queue.offer(new int[] {x, y});
+                    queue.offer(new int[] { x, y });
                     g[x][y] = '2'; // '2' means marked as 'visited' (or create a visited set)
 
                     int[] node = null;
@@ -698,7 +803,7 @@ public class DataAlgoJava {
 
                             if (!isValid.check(nextX, nextY, grid))
                                 continue;
-                            
+
                             g[nextX][nextY] = '2';
                             queue.offer(new int[] { nextX, nextY });
                         }
@@ -707,25 +812,28 @@ public class DataAlgoJava {
                 };
 
                 int n = grid.length,
-                    m = grid[0].length,
-                    islands = 0;
-                
+                        m = grid[0].length,
+                        islands = 0;
+
                 for (int i = 0; i < n; i++)
                     for (int j = 0; j < m; j++)
                         if (grid[i][j] == '1') {
                             bfs.bfs(grid, i, j);
                             islands++;
                         }
-                
+
                 return islands;
             }
 
             /*
-             * In an infinite chess board with coordinates from -inf to +inf, there's a knight at square [0, 0]
-             * A knight has 8 possible moves it can make. Each move is 2 squares in a cardinal direction, 
+             * In an infinite chess board with coordinates from -inf to +inf, there's a
+             * knight at square [0, 0]
+             * A knight has 8 possible moves it can make. Each move is 2 squares in a
+             * cardinal direction,
              * then 1 square in an orthogonal direction.
              * 
-             * Return the minimum number of steps needed to move the knight to the square [x, y].
+             * Return the minimum number of steps needed to move the knight to the square
+             * [x, y].
              * It is guaranteed the answer exists
              * 
              * Constraint - |x| + |y| <= 300
@@ -738,21 +846,20 @@ public class DataAlgoJava {
 
             // minimumKnightMoves()
             int knightShortestPath(int x, int y) {
-                if (x == 0 && y == 0) return 0;
-                
+                if (x == 0 && y == 0)
+                    return 0;
+
                 IsValid2 isValid = (x1, y1, v) -> {
-                    if (
-                        Math.abs(x1 - 300) 
-                        + Math.abs(y1 - 300) 
-                        <= 300 
-                        && !v[x1][y1]
-                    ) return true;
+                    if (Math.abs(x1 - 300)
+                            + Math.abs(y1 - 300) <= 300
+                            && !v[x1][y1])
+                        return true;
                     return false;
                 };
 
-                int[][] Directions = new int[][]{
-                    {1,2}, {2,1}, {-1,2}, {1,-2}, 
-                    {-1,-2}, {-2,1}, {-2,-1}, {2,-1}
+                int[][] Directions = new int[][] {
+                        { 1, 2 }, { 2, 1 }, { -1, 2 }, { 1, -2 },
+                        { -1, -2 }, { -2, 1 }, { -2, -1 }, { 2, -1 }
                 };
                 Queue<int[]> queue = new java.util.LinkedList<>();
                 boolean[][] visited = new boolean[601][601];
@@ -760,7 +867,7 @@ public class DataAlgoJava {
                 int step = 0, size, nextX, nextY;
                 int[] node;
 
-                queue.offer(new int[]{ 300, 300 });
+                queue.offer(new int[] { 300, 300 });
                 visited[300][300] = true;
 
                 while (!queue.isEmpty()) {
@@ -770,10 +877,9 @@ public class DataAlgoJava {
                         for (int[] dir : Directions) {
                             nextX = node[0] + dir[0];
                             nextY = node[1] + dir[1];
-                            if (
-                                nextX == x + 300 &&
-                                nextY == y + 300
-                            ) return step + 1;
+                            if (nextX == x + 300 &&
+                                    nextY == y + 300)
+                                return step + 1;
                             if (isValid.check(nextX, nextY, visited)) {
                                 queue.offer(new int[] { nextX, nextY });
                                 visited[nextX][nextY] = true;
@@ -787,10 +893,12 @@ public class DataAlgoJava {
             }
 
             /*
-             * Given a matrix and a target, return number of non-empty submatrices that sum up to target
+             * Given a matrix and a target, return number of non-empty submatrices that sum
+             * up to target
              * A submatrix [(x1, y1), (x2, y2)] is a set of all cells matrix[x][y],
              * with x1 <= x <= x2 and y1 <= y <= y2
-             * 2 submatrices (x1, y1, x2, y2) and (x1', y1', x2', y2') are different if they have some coordinate that's different
+             * 2 submatrices (x1, y1, x2, y2) and (x1', y1', x2', y2') are different if they
+             * have some coordinate that's different
              */
 
             // Use prefix sum & convert it to. a 1-D Array
@@ -802,20 +910,19 @@ public class DataAlgoJava {
 
                 // calc prefix sum for each row
                 int i, j;
-                for (i = 0; i < n; i++) 
+                for (i = 0; i < n; i++)
                     for (j = 0; j < m; j++)
-                        prefixSum[i][j] = 
-                            j > 0
-                            ? mat[i][j]
-                            + prefixSum[i][j - 1]
-                            : mat[i][j];
-                
+                        prefixSum[i][j] = j > 0
+                                ? mat[i][j]
+                                        + prefixSum[i][j - 1]
+                                : mat[i][j];
+
                 int res = 0;
                 HashMap<Integer, Integer> map = new HashMap<>();
 
                 int startCol, endCol, sum, row;
 
-                for (startCol = 0; startCol < m; startCol++) 
+                for (startCol = 0; startCol < m; startCol++)
                     for (endCol = startCol; endCol < m; endCol++) {
                         map.clear();
                         map.put(0, 1);
@@ -825,13 +932,12 @@ public class DataAlgoJava {
                         for (row = 0; row < m; row++) {
                             if (startCol == 0)
                                 sum += prefixSum[row][endCol];
-                            else sum += endCol > startCol
-                                    ? (
-                                        prefixSum[row][endCol]
-                                        - prefixSum[row][startCol - 1]
-                                    )
-                                    : mat[row][startCol];
-                            
+                            else
+                                sum += endCol > startCol
+                                        ? (prefixSum[row][endCol]
+                                                - prefixSum[row][startCol - 1])
+                                        : mat[row][startCol];
+
                             res += map.getOrDefault(sum - target, 0);
                             map.put(sum, map.getOrDefault(sum, 0) + 1);
                         }
@@ -839,7 +945,6 @@ public class DataAlgoJava {
 
                 return res;
             }
-
 
             // Linked Lists
 
@@ -854,11 +959,21 @@ public class DataAlgoJava {
                         this.next = n;
                     }
 
-                    public Object getValue() { return this.value; }
-                    public void setValue(Object v) { this.value = v; }
+                    public Object getValue() {
+                        return this.value;
+                    }
 
-                    public ListNode getNext() { return this.next; }
-                    public void setNext(ListNode v) { this.next = v; }
+                    public void setValue(Object v) {
+                        this.value = v;
+                    }
+
+                    public ListNode getNext() {
+                        return this.next;
+                    }
+
+                    public void setNext(ListNode v) {
+                        this.next = v;
+                    }
                 }
 
                 public class SListNode extends ListNode {
@@ -875,8 +990,13 @@ public class DataAlgoJava {
                         this.prev = p;
                     }
 
-                    public ListNode getPrev() { return this.prev; }
-                    public void setPrev(ListNode v) { this.prev = v; }
+                    public ListNode getPrev() {
+                        return this.prev;
+                    }
+
+                    public void setPrev(ListNode v) {
+                        this.prev = v;
+                    }
                 }
 
                 private ListNode head;
@@ -887,27 +1007,45 @@ public class DataAlgoJava {
                     this.tail = t;
                 }
 
-                public ListNode getHead() { return this.head; }
-                public void setHead(ListNode v) { this.head = v; }
+                public ListNode getHead() {
+                    return this.head;
+                }
 
-                public ListNode getTail() { return this.tail; }
-                public void setTail(ListNode v) { this.tail = v; }
-                
-                // todo: test out these 'Functional Interface' callback attempts - how they affect referenced objects' state changes
+                public void setHead(ListNode v) {
+                    this.head = v;
+                }
 
-                // with SListNode (or ListNode in general) find previous nodes on each iteration, to be passed into the callbacks as an extra argument
+                public ListNode getTail() {
+                    return this.tail;
+                }
+
+                public void setTail(ListNode v) {
+                    this.tail = v;
+                }
+
+                // todo: test out these 'Functional Interface' callback attempts - how they
+                // affect referenced objects' state changes
+
+                // with SListNode (or ListNode in general) find previous nodes on each
+                // iteration, to be passed into the callbacks as an extra argument
                 public ListNode findAction(String by, Object key, Function<ListNode, ListNode> cb) { // O(n) t ; O(1) s
                     ListNode node = this.head;
-                    if (node == null) return null;
+                    if (node == null)
+                        return null;
                     switch (by) {
                         case "node":
                             ListNode toFind = (ListNode) key;
-                            if (toFind == null) return null;
+                            if (toFind == null)
+                                return null;
                             while (node.getNext() != null) {
-                                // (best option) reference equality - 2 references pointing to the exact same object in memory
-                                // or (System.identityHashCode(slow) == System.identityHashCode(fast)) - comparing objects' unique hash codes assigned by the jvm
-                                // not slow.equals(fast) - logical equality, based on object's state/contents/prop-values
-                                if (node == toFind) return cb.apply(node);
+                                // (best option) reference equality - 2 references pointing to the exact same
+                                // object in memory
+                                // or (System.identityHashCode(slow) == System.identityHashCode(fast)) -
+                                // comparing objects' unique hash codes assigned by the jvm
+                                // not slow.equals(fast) - logical equality, based on object's
+                                // state/contents/prop-values
+                                if (node == toFind)
+                                    return cb.apply(node);
                                 node = node.getNext();
                             }
                             break;
@@ -915,7 +1053,8 @@ public class DataAlgoJava {
                             Integer i = (Integer) key;
                             int c = 0;
                             while (node.getNext() != null) {
-                                if (c == i) return cb.apply(node);
+                                if (c == i)
+                                    return cb.apply(node);
                                 node = node.getNext();
                                 c++;
                             }
@@ -924,35 +1063,44 @@ public class DataAlgoJava {
                             Object value = key; // unnecessary assignment (go ahead with key)
                             while (node.getNext() != null) {
                                 // should cb on every object value match
-                                if (node.getValue() == value) cb.apply(node);
+                                if (node.getValue() == value)
+                                    cb.apply(node);
                                 node = node.getNext();
                             }
                             return null;
                         case "duplicates-inline":
                             while (node.getNext() != null) {
                                 // should cb on every object value match
-                                if (node.getValue() == node.getNext().getValue()) 
+                                if (node.getValue() == node.getNext().getValue())
                                     cb.apply(node);
-                                else node = node.getNext();
-                                // else statement this time, forces iteration to stay with current node until all in-line duplicates are removed (in cb) 
+                                else
+                                    node = node.getNext();
+                                // else statement this time, forces iteration to stay with current node until
+                                // all in-line duplicates are removed (in cb)
                             }
                             return null;
-                        default: return null;
+                        default:
+                            return null;
                     }
                     return null;
                 }
 
                 private Function<ListNode, ListNode> remove = (node) -> {
 
-                    // TODO: 'ClassCastException' Error-prone (for downcasts from ListNode to DListNode, if node was SListNode)
-                    
+                    // TODO: 'ClassCastException' Error-prone (for downcasts from ListNode to
+                    // DListNode, if node was SListNode)
+
                     ListNode prev = ((DListNode) node).getPrev();
                     DListNode next = (DListNode) node.getNext();
-                    prev.setNext(next); next.setPrev(prev);
-                    ((DListNode) node).setPrev(null); node.setNext(null);
+                    prev.setNext(next);
+                    next.setPrev(prev);
+                    ((DListNode) node).setPrev(null);
+                    node.setNext(null);
 
-                    // or - Alt 3rd Party logic - works perfectly for Singly-linked-lists (because no need to work with previous node)
-                    // using this logic below, change all DListNode calls to ListNode, so logic would work for both Singly (SListNode) & Doubly (DListNode) linked-lists
+                    // or - Alt 3rd Party logic - works perfectly for Singly-linked-lists (because
+                    // no need to work with previous node)
+                    // using this logic below, change all DListNode calls to ListNode, so logic
+                    // would work for both Singly (SListNode) & Doubly (DListNode) linked-lists
 
                     /*
                      * Error - variable next is already defined in instance initializer of class
@@ -1001,24 +1149,22 @@ public class DataAlgoJava {
                     });
                     return duplicateNode;
                 }
-            
 
                 // Extra Functions
 
                 ListNode middleNode(LinkedList ll) { // O(n/2 ~ n) t ; O(1) s
                     ListNode slow = ll.getHead();
-                    if (slow == null || slow.getNext() == null) return slow;
+                    if (slow == null || slow.getNext() == null)
+                        return slow;
                     // shorthand for next 2 lines
                     // if (slow == null) return null;
                     // if (slow.getNext() == null) return slow;
                     ListNode fast = slow; // start from head, not next-to-head, so slow is at middle after loop-end
-                    while (
-                        fast.getNext() != null &&
-                        fast.getNext().getNext() != null
-                    ) {
+                    while (fast.getNext() != null &&
+                            fast.getNext().getNext() != null) {
                         slow = slow.getNext();
                         fast = fast.getNext().getNext();
-                    } 
+                    }
                     // 3rd party logic - check fast.next, in case loop ended with fast.next.next
                     ListNode middle = fast.getNext() == null ? slow : slow.getNext();
                     return middle;
@@ -1032,43 +1178,55 @@ public class DataAlgoJava {
                         return false;
                     ListNode fast = slow.getNext();
                     while (fast.getNext() != null && fast.getNext().getNext() != null) {
-                        if (slow == fast) return true;
+                        if (slow == fast)
+                            return true;
                         slow = slow.getNext();
                         fast = fast.getNext().getNext();
                     }
                     return false;
                 }
 
-                // todo: test - generic logic (working for both Singly & Doubly-linked ListNodes)
+                // todo: test - generic logic (working for both Singly & Doubly-linked
+                // ListNodes)
                 LinkedList reverse(LinkedList ll) { // O(n) t ; O(1) s
                     ListNode node = ll.getHead(), next;
-                    if (node == null || node.getNext() == null) return ll;
-                    
-                    // ListNode next = node.getNext(); // * not required - only prev & node are required for the loop
-                    // ListNode tmp = null; // * not required - only prev & node are required for the loop
+                    if (node == null || node.getNext() == null)
+                        return ll;
+
+                    // ListNode next = node.getNext(); // * not required - only prev & node are
+                    // required for the loop
+                    // ListNode tmp = null; // * not required - only prev & node are required for
+                    // the loop
                     ListNode prev = null;
 
                     // first reset both head & tail of linked list
                     ll.setHead(ll.getTail());
                     ll.setTail(node);
-                    
-                    // now, reverse ll regardless of whether it each pair of adjacent ListNodes are singly or doubly - linked
+
+                    // now, reverse ll regardless of whether it each pair of adjacent ListNodes are
+                    // singly or doubly - linked
 
                     while (node != null) {
                         next = node.getNext(); // for the 'next' iteration
-                        // tmp = next.getNext(); // * not required - using next for 'next' iteration instead
-                        
-                        node.setNext(prev); // * only 2 changes required, for each iteration
-                        if (node instanceof DListNode) ((DListNode) node).setPrev(next); // * changes would be propagated in each node throughout loop
+                        // tmp = next.getNext(); // * not required - using next for 'next' iteration
+                        // instead
 
-                        // next.setNext(node); // * not required - node would .setNext(prev) on next iteration
-                        
+                        node.setNext(prev); // * only 2 changes required, for each iteration
+                        if (node instanceof DListNode)
+                            ((DListNode) node).setPrev(next); // * changes would be propagated in each node throughout
+                                                              // loop
+
+                        // next.setNext(node); // * not required - node would .setNext(prev) on next
+                        // iteration
+
                         // * not required - node execs .setPrev(next) now, in this iteration
-                        // prev != null && -> not required because it needs to be instantiated before taking any of ListNode's child classes
+                        // prev != null && -> not required because it needs to be instantiated before
+                        // taking any of ListNode's child classes
                         // either SListNode / DListNode
                         // if (prev instanceof DListNode) prev.setPrev(node);
 
-                        prev = node; node = next; // next = tmp; // * tmp not required; next is used for 'next' iteration
+                        prev = node;
+                        node = next; // next = tmp; // * tmp not required; next is used for 'next' iteration
                     }
                     return ll;
                 }
@@ -1077,19 +1235,22 @@ public class DataAlgoJava {
                 // * create a new ListNode class with all properties public
 
                 public boolean hasCycle(ListNode head) {
-                    if (head == null || head.next == null) return false;
+                    if (head == null || head.next == null)
+                        return false;
                     ListNode slow = head;
                     ListNode fast = head.next;
                     while (fast.next != null && fast.next.next != null) {
                         slow = slow.next;
                         fast = fast.next.next;
-                        if (slow == fast) return true;
+                        if (slow == fast)
+                            return true;
                     }
                     return false;
                 }
 
                 public ListNode middleNode(ListNode head) {
-                    if (head == null || head.next == null) return head;
+                    if (head == null || head.next == null)
+                        return head;
                     ListNode slow = head;
                     ListNode fast = head;
                     while (fast.next != null && fast.next.next != null) {
@@ -1097,35 +1258,42 @@ public class DataAlgoJava {
                         fast = fast.next.next;
                     }
                     ListNode middle = head;
-                    if (fast.next == null) middle = slow;
-                    else middle = slow.next;
+                    if (fast.next == null)
+                        middle = slow;
+                    else
+                        middle = slow.next;
                     return middle;
                 }
 
                 // works perfectly for singly-linked listnodes
-                // reset node's value to next's value, then set node's .next to next's .next     
+                // reset node's value to next's value, then set node's .next to next's .next
                 public void deleteNode(ListNode node) {
-                    if (node == null || node.next == null) return;
+                    if (node == null || node.next == null)
+                        return;
                     ListNode nextNext = node.next.next;
                     node.value = node.next.value;
                     node.next = nextNext;
                 }
 
                 public ListNode deleteDuplicates(ListNode head) {
-                    if (head == null || head.next == null) return head;
+                    if (head == null || head.next == null)
+                        return head;
                     ListNode node = head;
                     while (node.next != null) {
                         if (node.value == node.next.value)
                             node.next = node.next.next;
-                        else node = node.next;
-                        // else statement this time, forces iteration to stay with current node until all in-line duplicates are removed
+                        else
+                            node = node.next;
+                        // else statement this time, forces iteration to stay with current node until
+                        // all in-line duplicates are removed
                     }
                     return head;
                 }
 
                 // Alt 3rd-Party logic - Singly-linked list only, without a set tail ListNode
-                public ListNode reverse(ListNode head) { 
-                    if (head == null || head.next == null) return head;
+                public ListNode reverse(ListNode head) {
+                    if (head == null || head.next == null)
+                        return head;
                     ListNode prev = null, node = head, next = head.next;
 
                     while (node != null) {
@@ -1139,9 +1307,12 @@ public class DataAlgoJava {
                     return head;
                 }
 
-                public LinkedList flattenBinaryTreeToLinkedList(Tree.TreeNode root) { // O(n) t ; O(n) s (not done in-place; LinkedList with n nodes required)
+                public LinkedList flattenBinaryTreeToLinkedList(Tree.TreeNode root) { // O(n) t ; O(n) s (not done
+                                                                                      // in-place; LinkedList with n
+                                                                                      // nodes required)
 
-                    if (root == null) return null;
+                    if (root == null)
+                        return null;
                     ListNode lRoot = new ListNode(root.value(), null);
 
                     Tree.TreeNode node = null;
@@ -1150,26 +1321,29 @@ public class DataAlgoJava {
                     // bfs
 
                     // todo: Use Java's in-built Queue class, because Trees is the current study
-                    java.util.Queue<Tree.TreeNode> q = new java.util.LinkedList<Tree.TreeNode>(); // not Queue(); 
+                    java.util.Queue<Tree.TreeNode> q = new java.util.LinkedList<Tree.TreeNode>(); // not Queue();
                     // Java Queue cannot be instantiated directly
                     // can only be instantiated by classes that implement it as an interface
                     // eg. LinkedList, PriorityQueue, ArrayDeque, customs, etc
 
                     /*
                      * Enqueue: Adding elements to the queue is done using add() or offer().
-                     * Dequeue: Removing elements from the queue is done using poll(), remove(), peek(), or element().
+                     * Dequeue: Removing elements from the queue is done using poll(), remove(),
+                     * peek(), or element().
                      */
 
                     q.add(root); // not .enqueue() / .push();
-                    
+
                     while (!q.isEmpty()) {
 
                         node = (Tree.TreeNode) q.poll(); // not .dequeue() / .pop();
                         // no need to store node.value()s into ListNodes
                         // because root.value() has been stored, as lRoot (lNode in 1st iteration)
-                        // only store node.left() & .right() .value()s (left to right in this case; or reverse-order - right to left)
+                        // only store node.left() & .right() .value()s (left to right in this case; or
+                        // reverse-order - right to left)
 
-                        // or a dummy root can be used, so only current node's value would be linked, before enqueueing left & right children
+                        // or a dummy root can be used, so only current node's value would be linked,
+                        // before enqueueing left & right children
 
                         if (node.left() != null) {
                             lNode.setNext(new ListNode(node.left().value(), null));
@@ -1183,18 +1357,21 @@ public class DataAlgoJava {
                             lNode = lNode.getNext();
                         }
 
-                        // todo: or a dummy root could've been used; so only current node's value would be linked, before enqueueing left & right children
+                        // todo: or a dummy root could've been used; so only current node's value would
+                        // be linked, before enqueueing left & right children
 
-                        /* lNode = lDummy (before root)
-
-                        node = (Tree.TreeNode) q.poll();
-                        lNode.setNext(new ListNode(node.value(), null));
-                        lNode = lNode.getNext();
-                        if (node.left() != null) q.add(node.left());
-                        if (node.right() != null) q.add(node.right());
-
-                        after loop, return lDummy.getNext(); as new root (set as new 'llRoot'; set lDummy = null; return new 'llRoot')
-                        */
+                        /*
+                         * lNode = lDummy (before root)
+                         * 
+                         * node = (Tree.TreeNode) q.poll();
+                         * lNode.setNext(new ListNode(node.value(), null));
+                         * lNode = lNode.getNext();
+                         * if (node.left() != null) q.add(node.left());
+                         * if (node.right() != null) q.add(node.right());
+                         * 
+                         * after loop, return lDummy.getNext(); as new root (set as new 'llRoot'; set
+                         * lDummy = null; return new 'llRoot')
+                         */
 
                     }
 
@@ -1203,110 +1380,114 @@ public class DataAlgoJava {
                     Consumer<Tree.TreeNode>[] dfs = new Consumer[1];
 
                     dfs[0] = (n) -> {
-                        if (n == null) return;
-                    
+                        if (n == null)
+                            return;
+
                         // no need to store n.value()s into ListNodes
                         // because root.value() has been stored
                         // only store n.left() & .right() .value()s
-                    
+
                         // dfs - depth-traversing to left-side of B-Tree, adding .left of each node
-                        // before depth-traversing to right-side of B-Tree, then adding .right of each node
+                        // before depth-traversing to right-side of B-Tree, then adding .right of each
+                        // node
                         // this works as pre-order - left only
-                    
+
                         if (n.left() != null) {
                             lNode.setNext(new ListNode(n.left().value(), null));
                             lNode = lNode.getNext();
                             dfs[0].accept(n.left());
                         }
-                    
+
                         // * or, depth-traverse to right-side of B-Tree 1st
                         // this works as pre-order - right only
-                    
+
                         if (n.right() != null) {
                             lNode.setNext(new ListNode(n.right().value(), null));
                             lNode = lNode.getNext();
                             dfs[0].accept(n.right());
                         }
-                    
+
                         // dfs - .left & .right of each node
                         // before depth-traversing to left-side of B-Tree, then to right-side
-                    
+
                         if (n.left() != null) {
                             lNode.setNext(new ListNode(n.left().value(), null));
                             lNode = lNode.getNext();
                         }
-                    
+
                         if (n.left() != null) {
                             lNode.setNext(new ListNode(n.right().value(), null));
                             lNode = lNode.getNext();
                         }
-                    
+
                         if (n.left() != null)
                             dfs[0].accept(n.left());
-                        
+
                         if (n.right() != null)
                             dfs[0].accept(n.right());
-                        
+
                     };
-                    
+
                     dfs[0].accept(root);
-                    
+
                     // dfs - best
-                    
+
                     dfs[0] = (n) -> {
-                        if (n == null) return;
-                    
+                        if (n == null)
+                            return;
+
                         // need to store only n.value()s into ListNodes
                         // so root.value() will be re-stored
                         // only recurse through n.left() & .right() nodes
-                    
+
                         // dfs - depth-traversing pre/post/in - orders
                         // these can work as left->right / vice-versa
-                    
+
                         // pre-order
-                        
+
                         lNode.setValue(n.value());
                         lNode.setNext(new ListNode(null, null));
                         lNode = lNode.getNext();
-                    
+
                         dfs[0].accept(n.left());
                         dfs[0].accept(n.right());
-                    
+
                         // post-order
-                    
+
                         dfs[0].accept(n.left());
                         dfs[0].accept(n.right());
-                        
+
                         lNode.setValue(n.value());
                         lNode.setNext(new ListNode(null, null));
                         lNode = lNode.getNext();
-                    
+
                         // in-order
-                    
+
                         dfs[0].accept(n.left());
-                        
+
                         lNode.setValue(n.value());
                         lNode.setNext(new ListNode(null, null));
                         lNode = lNode.getNext();
-                    
+
                         dfs[0].accept(n.right());
-                    
+
                     };
-                    
+
                     dfs[0].accept(root);
-                    
+
                     // now return LinkedList / ListNode root
-                    
+
                     return new LinkedList(lRoot, lNode); // or lRoot
-                    
+
                 }
-                
-                public Tree.TreeNode flattenBinaryTreeToLinkedList2(Tree.TreeNode root) { // O(n) t ; O(1) s (done in-place; NO LinkedList with n nodes required)
-                    
+
+                public Tree.TreeNode flattenBinaryTreeToLinkedList2(Tree.TreeNode root) { // O(n) t ; O(1) s (done
+                                                                                          // in-place; NO LinkedList
+                                                                                          // with n nodes required)
+
                 }
 
             }
-
 
             // Stacks
 
@@ -1315,35 +1496,53 @@ public class DataAlgoJava {
             // Heaps (max & min)
 
             // Binary Heaps
-            
+
             // Priority Queues
 
             // Trees
 
-            public static class Tree { // todo: Static even though it doesn't contain any custom-defined @FunctionalInterface
-                // Should be static because its child-class is static; and the child-class instantiates super(..) in its constructor
-                // * Child-class is static because it contains 1+ custom-defined @FunctionalInterfaces
+            public static class Tree { // todo: Static even though it doesn't contain any custom-defined
+                                       // @FunctionalInterface
+                // Should be static because its child-class is static; and the child-class
+                // instantiates super(..) in its constructor
+                // * Child-class is static because it contains 1+ custom-defined
+                // @FunctionalInterfaces
 
                 public class TreeNode {
 
                     private Object value;
                     private TreeNode left;
                     private TreeNode right;
-                    
+
                     public TreeNode(Object v, TreeNode l, TreeNode r) {
                         this.value = v;
                         this.left = l;
                         this.right = r;
                     }
 
-                    public Object value() { return this.value; }
-                    public void value(Object node) { this.value = node; }
+                    public Object value() {
+                        return this.value;
+                    }
 
-                    public TreeNode left() { return this.left; }
-                    public void left(TreeNode node) { this.left = node; }
+                    public void value(Object node) {
+                        this.value = node;
+                    }
 
-                    public TreeNode right() { return this.right; }
-                    public void right(TreeNode node) { this.right = node; }
+                    public TreeNode left() {
+                        return this.left;
+                    }
+
+                    public void left(TreeNode node) {
+                        this.left = node;
+                    }
+
+                    public TreeNode right() {
+                        return this.right;
+                    }
+
+                    public void right(TreeNode node) {
+                        this.right = node;
+                    }
 
                 }
 
@@ -1357,7 +1556,8 @@ public class DataAlgoJava {
 
                 // 3rd-Party (Tutorial) DFS Traversal
                 public void flattenBinaryTreeToLinkedList(TreeNode root) {
-                    if (root == null) return;
+                    if (root == null)
+                        return;
 
                     if (lastNode != null) {
                         lastNode.left(null);
@@ -1374,7 +1574,8 @@ public class DataAlgoJava {
 
                 // DFS Divide & Conquer
                 public TreeNode DCFlattenBinaryTreeToLinkedList(TreeNode root) {
-                    if (root == null) return null;
+                    if (root == null)
+                        return null;
 
                     TreeNode left = this.DCFlattenBinaryTreeToLinkedList(root.left);
                     TreeNode right = this.DCFlattenBinaryTreeToLinkedList(root.right);
@@ -1385,11 +1586,13 @@ public class DataAlgoJava {
                         root.left = null;
                     }
 
-                    if (right != null) return right;
-                    if (left != null) return left;
+                    if (right != null)
+                        return right;
+                    if (left != null)
+                        return left;
                     return root;
                 }
-                
+
             }
 
             // Binary (Search) Trees
@@ -1399,33 +1602,34 @@ public class DataAlgoJava {
                 public BST(TreeNode root) {
                     super(root);
                 }
-                
+
                 public Object cfs(TreeNode root, Object key) {
 
                     BiFunction<TreeNode, Object, Object> iteration = (TreeNode node, Object k) -> {
                         while (node != null && (Integer) node.value != (Integer) k) {
                             if ((Integer) k < (Integer) node.value)
                                 node = node.left;
-                            else node = node.right;
+                            else
+                                node = node.right;
                         }
                         return node; // Will be null if not found
                     };
-                    
+
                     BiFunction<TreeNode, Object, Object>[] recursion = new BiFunction[1];
                     recursion[0] = (TreeNode node, Object k) -> {
                         if (node == null || (Integer) node.value == (Integer) k)
                             return node;
-                
+
                         if ((Integer) k < (Integer) node.value)
                             return recursion[0].apply(node.left, k);
-                        else return recursion[0].apply(node.right, k);
+                        else
+                            return recursion[0].apply(node.right, k);
                     };
-                    
+
                     System.out.println(iteration.apply(root, key));
                     System.out.println(recursion[0].apply(root, key));
-                    
-                }
 
+                }
 
                 // Q - With a Binary Tree, find a sub-tree with minimum sum
 
@@ -1433,7 +1637,7 @@ public class DataAlgoJava {
 
                     // Option 1: DFS Traversal + Divide & Conquer
                     // using variable props
-                    
+
                     private TreeNode subTree = null;
                     private int subTreeSum = Integer.MAX_VALUE;
 
@@ -1441,10 +1645,12 @@ public class DataAlgoJava {
 
                         Function<TreeNode, Integer>[] helper = new Function[1];
                         helper[0] = (node) -> {
-                            if (node == null) return 0;
+                            if (node == null)
+                                return 0;
 
                             // post-order DFS
-                            int sum = helper[0].apply(node.left()) + helper[0].apply(node.right()) + (Integer) node.value();
+                            int sum = helper[0].apply(node.left()) + helper[0].apply(node.right())
+                                    + (Integer) node.value();
                             if (sum <= subTreeSum) {
                                 subTreeSum = sum;
                                 subTree = node;
@@ -1476,15 +1682,14 @@ public class DataAlgoJava {
                         helper[0] = (node) -> {
                             if (node == null)
                                 return new ResultType(null, Integer.MAX_VALUE, 0);
-                            
+
                             // Divide & Conquer - exec left & right concurrently
                             ResultType lRes = helper[0].apply(node.left());
                             ResultType rRes = helper[0].apply(node.right());
                             ResultType res = new ResultType(
-                                node,
-                                lRes.sum + rRes.sum + (Integer) node.value(),
-                                lRes.sum + rRes.sum + (Integer) node.value()
-                            );
+                                    node,
+                                    lRes.sum + rRes.sum + (Integer) node.value(),
+                                    lRes.sum + rRes.sum + (Integer) node.value());
 
                             if (lRes.minSum <= res.minSum) {
                                 res.minSum = lRes.minSum;
@@ -1513,20 +1718,21 @@ public class DataAlgoJava {
                     // Option 1 - ..
                     public List<String> binaryTreePaths(TreeNode root) {
                         List<String> paths = new ArrayList<>();
-                        if (root == null) return paths;
+                        if (root == null)
+                            return paths;
                         List<String> leftPaths = binaryTreePaths(root.left());
                         List<String> rightPaths = binaryTreePaths(root.right());
 
                         // todo: test implicit castings from .value()'s Object -> String
 
-                        for (String path : leftPaths) 
+                        for (String path : leftPaths)
                             paths.add(root.value() + " -> " + path);
-                        for (String path : rightPaths) 
+                        for (String path : rightPaths)
                             paths.add(root.value() + " -> " + path);
-                        
+
                         if (paths.size() == 0) // root is a leaf node
                             paths.add("" + root.value());
-                        
+
                         return paths;
 
                     }
@@ -1536,38 +1742,38 @@ public class DataAlgoJava {
                         void help(TreeNode root, String path, List<String> result);
                     }
 
-                    // Option 2 - Traversal 
+                    // Option 2 - Traversal
                     public List<String> binaryTreePaths2(TreeNode root) {
                         List<String> result = new ArrayList<String>();
-                        if (root == null) return result;
+                        if (root == null)
+                            return result;
 
                         Helper[] helper = new Helper[1];
                         helper[0] = (r, p, res) -> {
-                            if (r == null) return;
+                            if (r == null)
+                                return;
                             if (r.left() == null && r.right() == null) {
-                                res.add(p); return;
+                                res.add(p);
+                                return;
                             }
                             if (r.left() != null)
                                 helper[0].help(
-                                    r.left(), 
-                                    p + " -> " + String.valueOf(r.left().value()), 
-                                    res
-                                );
-                            
+                                        r.left(),
+                                        p + " -> " + String.valueOf(r.left().value()),
+                                        res);
+
                             if (r.right() != null)
                                 helper[0].help(
-                                    r.right(),
-                                    p + " -> " + String.valueOf(r.right().value()),
-                                    res
-                                );
+                                        r.right(),
+                                        p + " -> " + String.valueOf(r.right().value()),
+                                        res);
 
                         };
 
                         helper[0].help(
-                            root, 
-                            String.valueOf(root.value()), 
-                            result
-                        );
+                                root,
+                                String.valueOf(root.value()),
+                                result);
 
                         return result;
 
@@ -1576,8 +1782,10 @@ public class DataAlgoJava {
                 }
 
                 /**
-                 * Q - Given the root and 2 nodes in a Binary Tree, find the Lowest Common Ancestor (LCA) of the 2 nodes
-                 * The LCA is the node with the largest depth which is the ancestor of both nodes (the LCA is the branch node)
+                 * Q - Given the root and 2 nodes in a Binary Tree, find the Lowest Common
+                 * Ancestor (LCA) of the 2 nodes
+                 * The LCA is the node with the largest depth which is the ancestor of both
+                 * nodes (the LCA is the branch node)
                  * Node 1 & Node 2 will exist in the tree
                  * A node is allowed to be a descendant of itself
                  */
@@ -1585,18 +1793,18 @@ public class DataAlgoJava {
                 public static class LowestCommonAncestor {
 
                     /*
-                    * Start from the tree root
-                    * if LCA is found, return it
-                    * else if n1 is found, return it
-                    * else if n2 is found, return it
-                    * else, return null
-                    */
+                     * Start from the tree root
+                     * if LCA is found, return it
+                     * else if n1 is found, return it
+                     * else if n2 is found, return it
+                     * else, return null
+                     */
 
-                    //  Divide & Conquer
+                    // Divide & Conquer
                     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode n1, TreeNode n2) {
                         if (root == null || root == n1 || root == n2)
                             return null;
-                        
+
                         // Divide
                         TreeNode left = lowestCommonAncestor(root.left(), n1, n2);
                         TreeNode right = lowestCommonAncestor(root.right(), n1, n2);
@@ -1606,8 +1814,10 @@ public class DataAlgoJava {
                             return null;
                         if (left != null && right != null)
                             return root; // lca - recursive returns eventually meet at lca node
-                        if (left != null) return left;
-                        if (right != null) return right;
+                        if (left != null)
+                            return left;
+                        if (right != null)
+                            return right;
                         // todo: since valid left & right nodes keep getting returned, after 'Divide'
                         // their returns will eventually meet at the lca node
 
@@ -1626,9 +1836,17 @@ public class DataAlgoJava {
                             node = n;
                         }
 
-                        public boolean n1Exists() { return n1Exists; }
-                        public boolean n2Exists() { return n2Exists; }
-                        public TreeNode node() { return node; }
+                        public boolean n1Exists() {
+                            return n1Exists;
+                        }
+
+                        public boolean n2Exists() {
+                            return n2Exists;
+                        }
+
+                        public TreeNode node() {
+                            return node;
+                        }
 
                     }
 
@@ -1643,7 +1861,7 @@ public class DataAlgoJava {
                         helper[0] = (r, a, b) -> {
                             if (r == null)
                                 return new ResultType(false, false, null);
-                            
+
                             ResultType left = helper[0].help(r.left(), a, b);
                             ResultType right = helper[0].help(r.right(), a, b);
 
@@ -1652,14 +1870,14 @@ public class DataAlgoJava {
 
                             if (r == a || r == b)
                                 return new ResultType(aExists, bExists, r);
-                            
+
                             if (left.node() != null && right.node() != null)
                                 return new ResultType(aExists, bExists, r);
                             if (left.node() != null)
                                 return new ResultType(aExists, bExists, left.node());
                             if (right.node() != null)
                                 return new ResultType(aExists, bExists, right.node());
-                            
+
                             return new ResultType(aExists, bExists, null);
 
                         };
@@ -1667,13 +1885,15 @@ public class DataAlgoJava {
                         ResultType res = helper[0].help(root, n1, n2);
                         if (res.n1Exists() && res.n2Exists())
                             return res.node();
-                        else return null;
+                        else
+                            return null;
 
                     }
 
                 }
 
-                // Q - Flatten a Binary Tree (In-Place) to a Linked List in DFS Pre-order Traversal
+                // Q - Flatten a Binary Tree (In-Place) to a Linked List in DFS Pre-order
+                // Traversal
                 // * Best Option
 
                 public class FlattenBinaryTreeToLinkedList {
@@ -1681,8 +1901,10 @@ public class DataAlgoJava {
                     private TreeNode lastNode = null;
 
                     // DFS Traversal
-                    public void flattenBinaryTreeToLinkedList(TreeNode root) { // O(n) t ; O(1) s (done in-place, no LinkedList data structure required)
-                        if (root == null) return;
+                    public void flattenBinaryTreeToLinkedList(TreeNode root) { // O(n) t ; O(1) s (done in-place, no
+                                                                               // LinkedList data structure required)
+                        if (root == null)
+                            return;
 
                         if (lastNode != null) {
                             lastNode.left(null);
@@ -1700,7 +1922,8 @@ public class DataAlgoJava {
 
                     // DFS Divide & Conquer - return last node in pre-order
                     public TreeNode DCFlattenBinaryTreeToLinkedList(TreeNode root) {
-                        if (root == null) return null;
+                        if (root == null)
+                            return null;
 
                         TreeNode left = DCFlattenBinaryTreeToLinkedList(root.left());
                         TreeNode right = DCFlattenBinaryTreeToLinkedList(root.right());
@@ -1712,8 +1935,10 @@ public class DataAlgoJava {
                             root.left(null);
                         }
 
-                        if (right != null) return right;
-                        if (left != null) return left;
+                        if (right != null)
+                            return right;
+                        if (left != null)
+                            return left;
 
                         return root;
 
@@ -1732,10 +1957,12 @@ public class DataAlgoJava {
 
                         BiConsumer<TreeNode, Integer>[] helper = new BiConsumer[1];
                         helper[0] = (r, k) -> {
-                            if (r == null) return;
+                            if (r == null)
+                                return;
                             helper[0].accept(r.left(), k);
                             index++;
-                            if (index == k) result = (Integer) r.value();
+                            if (index == k)
+                                result = (Integer) r.value();
                             helper[0].accept(r.right(), k);
                         };
 
@@ -1753,7 +1980,8 @@ public class DataAlgoJava {
 
                         BiFunction<TreeNode, Map<TreeNode, Integer>, Integer>[] countNodes = new BiFunction[1];
                         countNodes[0] = (r, c) -> {
-                            if (r == null) return 0;
+                            if (r == null)
+                                return 0;
                             int left = countNodes[0].apply(r.left(), c);
                             int right = countNodes[0].apply(r.right(), c);
                             int count = left + right + 1;
@@ -1763,10 +1991,13 @@ public class DataAlgoJava {
 
                         QuickSelect[] quickSelect = new QuickSelect[1];
                         quickSelect[0] = (r, k, c) -> {
-                            if (r == null) return -1;
+                            if (r == null)
+                                return -1;
                             int left = r.left() == null ? 0 : c.get(r.left());
-                            if (left >= k) return quickSelect[0].onTree(r.left(), k, c);
-                            if (left + 1 == k) return (Integer) r.value();
+                            if (left >= k)
+                                return quickSelect[0].onTree(r.left(), k, c);
+                            if (left + 1 == k)
+                                return (Integer) r.value();
 
                             return quickSelect[0].onTree(r.right(), k - left - 1, c);
                         };
@@ -1788,16 +2019,20 @@ public class DataAlgoJava {
                     // In-order Traversal
 
                     public class InOrder {
-                    
-                        // todo: NB: Alt 3rd-Party (Tutorials) Logic - (Stack-Loop) iteration method for Tree-Traversals
-                        
+
+                        // todo: NB: Alt 3rd-Party (Tutorials) Logic - (Stack-Loop) iteration method for
+                        // Tree-Traversals
+
                         public List<Integer> iterate(TreeNode root) { // O(n) t ; O(h ~ 1) s (h - max height)
-                            // Stack takes in nodes until max-height h, and pops them out alongside algo; doesn't maintain all nodes for algo's exec
-                            // List (despite n - total) is only used to record traversed values to be returned, not within algo's actual complexity
+                            // Stack takes in nodes until max-height h, and pops them out alongside algo;
+                            // doesn't maintain all nodes for algo's exec
+                            // List (despite n - total) is only used to record traversed values to be
+                            // returned, not within algo's actual complexity
                             // could do away with List by just printing out node.value()s
 
                             List<Integer> res = new ArrayList<>();
-                            if (root == null) return res;
+                            if (root == null)
+                                return res;
 
                             TreeNode node = root;
                             java.util.Stack<TreeNode> stack = new Stack<>();
@@ -1820,20 +2055,24 @@ public class DataAlgoJava {
 
                         public List<Integer> recurse(TreeNode root) {
                             List<Integer> res = new ArrayList<>();
-                            if (root == null) return res;
+                            if (root == null)
+                                return res;
 
                             BiConsumer<TreeNode, List<Integer>>[] helper = new BiConsumer[1];
                             helper[0] = (n, r) -> { // no need to pass List<Int> by reference
-                                if (n == null) return;
-                                if (n.left() != null) helper[0].accept(n.left(), r);
+                                if (n == null)
+                                    return;
+                                if (n.left() != null)
+                                    helper[0].accept(n.left(), r);
                                 r.add((Integer) n.value()); // can also work with res directly
-                                if (n.right() != null) helper[0].accept(n.right(), r);
+                                if (n.right() != null)
+                                    helper[0].accept(n.right(), r);
                             };
 
                             helper[0].accept(root, res);
                             return res;
                         }
-                    
+
                     }
 
                     // Pre-Order Traversal
@@ -1842,7 +2081,8 @@ public class DataAlgoJava {
 
                         public List<Integer> iterate(TreeNode root) {
                             List<Integer> res = new ArrayList<>();
-                            if (root == null) return res;
+                            if (root == null)
+                                return res;
 
                             TreeNode node = root;
                             Stack<TreeNode> stack = new Stack<>();
@@ -1863,14 +2103,18 @@ public class DataAlgoJava {
 
                         public List<Integer> recurse(TreeNode root) {
                             List<Integer> res = new ArrayList<>();
-                            if (root == null) return res;
+                            if (root == null)
+                                return res;
 
                             Consumer<TreeNode>[] helper = new Consumer[1];
                             helper[0] = (node) -> {
-                                if (node == null) return;
+                                if (node == null)
+                                    return;
                                 res.add((Integer) node.value()); // can work with res directly
-                                if (node.left() != null) helper[0].accept(node.left());
-                                if (node.right() != null) helper[0].accept(node.right());
+                                if (node.left() != null)
+                                    helper[0].accept(node.left());
+                                if (node.right() != null)
+                                    helper[0].accept(node.right());
                             };
 
                             helper[0].accept(root);
@@ -1885,7 +2129,8 @@ public class DataAlgoJava {
 
                         public List<Integer> iterate(TreeNode root) {
                             List<Integer> res = new ArrayList<>();
-                            if (root == null) return res;
+                            if (root == null)
+                                return res;
 
                             TreeNode node = root;
                             Stack<TreeNode> stack = new Stack<>();
@@ -1894,7 +2139,8 @@ public class DataAlgoJava {
 
                             while (node != null || !stack.isEmpty()) {
                                 if (node != null) {
-                                    res.add(0, (Integer) node.value()); // todo: NB: this time, .add(0, ..) (prepend) to beginning of list
+                                    res.add(0, (Integer) node.value()); // todo: NB: this time, .add(0, ..) (prepend) to
+                                                                        // beginning of list
                                     stack.push(node);
                                     node = node.right();
                                 } else {
@@ -1907,11 +2153,13 @@ public class DataAlgoJava {
 
                         public List<Integer> recurse(TreeNode root) {
                             List<Integer> res = new ArrayList<>();
-                            if (root == null) return res;
+                            if (root == null)
+                                return res;
 
                             BiConsumer<TreeNode, List<Integer>>[] helper = new BiConsumer[1];
                             helper[0] = (n, r) -> {
-                                if (n == null) return;
+                                if (n == null)
+                                    return;
                                 helper[0].accept(n.left(), r);
                                 helper[0].accept(n.right(), r);
                                 r.add((Integer) n.value());
@@ -1920,7 +2168,7 @@ public class DataAlgoJava {
                             helper[0].accept(root, res);
                             return res;
                         }
-                        
+
                     }
 
                     // * BFS Traversals
@@ -1931,17 +2179,20 @@ public class DataAlgoJava {
 
                         public List<Integer> iterate(TreeNode root) {
                             List<Integer> res = new ArrayList<>();
-                            if (root == null) return res;
+                            if (root == null)
+                                return res;
 
                             TreeNode node = null;
-                            TreeNode[] list = { root }; // have to define the array object before being passed into Arrays.asList()
+                            TreeNode[] list = { root }; // have to define the array object before being passed into
+                                                        // Arrays.asList()
                             java.util.Queue<TreeNode> queue = new ArrayDeque<>(java.util.Arrays.asList(list));
-                            /* // passing in { .. } primitive array value causes a syntax symbol error
-                                java.util.Arrays.asList(
-                                    { root } // todo: forced-indentation for your memory
-                                )
-                            );
-                            */
+                            /*
+                             * // passing in { .. } primitive array value causes a syntax symbol error
+                             * java.util.Arrays.asList(
+                             * { root } // todo: forced-indentation for your memory
+                             * )
+                             * );
+                             */
                             // or - queue.add(root) after init (not .enqueue() / .push())
                             // * NB: Used Java's in-built Queue class, because Trees is the current study
 
@@ -1958,7 +2209,7 @@ public class DataAlgoJava {
                     // * Other Traversals
 
                     // Iterator Traversal - In-order
-                    
+
                     /*
                      * Q - Design an iterator over a BST with following rules:
                      * Elements are visited in ascending order (in-order traversal)
@@ -1988,7 +2239,8 @@ public class DataAlgoJava {
                                     node = node.left();
                                 } else {
                                     node = stack.pop();
-                                    int res = (Integer) node.value(); // can declare this var in the loop because it's being returned in this iteration
+                                    int res = (Integer) node.value(); // can declare this var in the loop because it's
+                                                                      // being returned in this iteration
                                     node = node.right();
                                     return res;
                                 }
@@ -2012,7 +2264,8 @@ public class DataAlgoJava {
 
                     /*
                      * Q - Given a BST and a node in it, find the in-order successor of that node
-                     * The successor of a node n is the node with the smallest key greater than n.value()
+                     * The successor of a node n is the node with the smallest key greater than
+                     * n.value()
                      */
 
                     public class Successor {
@@ -2023,7 +2276,8 @@ public class DataAlgoJava {
 
                         // General Method
                         public TreeNode successor(TreeNode root, TreeNode n) {
-                            if (root == null || n == null) return null;
+                            if (root == null || n == null)
+                                return null;
 
                             stack = new Stack<>();
                             successor = null;
@@ -2049,7 +2303,7 @@ public class DataAlgoJava {
 
                         // Iteration Method
                         public TreeNode successor2(TreeNode root, TreeNode n) {
-                            
+
                             successor = null;
 
                             while (root != null && root.value() != n.value()) {
@@ -2057,16 +2311,19 @@ public class DataAlgoJava {
                                 if ((Integer) n.value() < (int) root.value()) {
                                     successor = root;
                                     root = root.left();
-                                } else root = root.right();
+                                } else
+                                    root = root.right();
                             }
 
-                            if (root == null) return null;
-                            if (root.right() == null) return successor;
+                            if (root == null)
+                                return null;
+                            if (root.right() == null)
+                                return successor;
 
                             root = root.right();
                             while (root.left() != null)
                                 root = root.left();
-                            
+
                             return root;
                         }
 
@@ -2074,7 +2331,7 @@ public class DataAlgoJava {
                         public TreeNode successor3(TreeNode root, TreeNode n) {
                             if (root == null || n == null)
                                 return null;
-                            
+
                             // todo: reminder for generic casting issues with Object value()
                             if ((int) n.value() >= (Integer) root.value())
                                 return successor3(root.right(), n);
@@ -2082,44 +2339,50 @@ public class DataAlgoJava {
                                 TreeNode left = successor3(root.left(), n);
                                 return (left != null) ? left : root;
                             }
-                            
+
                         }
 
                     }
 
                 }
 
-                // TODO: Q - Given a non-empty BST and a target value, find the value in the BST that is closest to the target
+                // TODO: Q - Given a non-empty BST and a target value, find the value in the BST
+                // that is closest to the target
 
                 public class ClosestBST {
-                    
+
                     public Double closestValue(TreeNode root, Double target) {
-                        if (root == null) return 0.0; // can't return -1 (valid closest return value)
+                        if (root == null)
+                            return 0.0; // can't return -1 (valid closest return value)
 
                         BiFunction<TreeNode, Double, TreeNode>[] lowerBound = new BiFunction[1];
                         lowerBound[0] = (r, t) -> {
-                            if (r == null) return null;
+                            if (r == null)
+                                return null;
 
                             if (t <= (Double) r.value())
                                 return lowerBound[0].apply(r.left(), t);
-                            
+
                             // target > root.value()
                             TreeNode lowerNode = lowerBound[0].apply(r.right(), t);
-                            if (lowerNode != null) return lowerNode;
+                            if (lowerNode != null)
+                                return lowerNode;
 
                             return r;
                         };
 
                         BiFunction<TreeNode, Double, TreeNode>[] upperBound = new BiFunction[1];
                         upperBound[0] = (r, t) -> {
-                            if (r == null) return null;
-                            
+                            if (r == null)
+                                return null;
+
                             if (t > (Double) r.value())
                                 return upperBound[0].apply(r.right(), t);
-                            
+
                             // target <= root.value()
                             TreeNode upperNode = upperBound[0].apply(r.left(), t);
-                            if (upperNode != null) return upperNode;
+                            if (upperNode != null)
+                                return upperNode;
 
                             return r;
                         };
@@ -2127,13 +2390,13 @@ public class DataAlgoJava {
                         TreeNode lowerNode = lowerBound[0].apply(root, target);
                         TreeNode upperNode = upperBound[0].apply(root, target);
 
-                        if (lowerNode == null) return (Double) upperNode.value();
-                        if (upperNode == null) return (Double) lowerNode.value();
-                        
-                        if (
-                            target - (Double) lowerNode.value() > 
-                            (Double) upperNode.value() - target
-                        ) return (Double) upperNode.value();
+                        if (lowerNode == null)
+                            return (Double) upperNode.value();
+                        if (upperNode == null)
+                            return (Double) lowerNode.value();
+
+                        if (target - (Double) lowerNode.value() > (Double) upperNode.value() - target)
+                            return (Double) upperNode.value();
 
                         return (Double) lowerNode.value();
 
@@ -2141,11 +2404,14 @@ public class DataAlgoJava {
 
                 }
 
-                // TODO: Q - Given a non-empty BST and a target value, find k values that are closest to the target
+                // TODO: Q - Given a non-empty BST and a target value, find k values that are
+                // closest to the target
 
                 /*
-                 * Given target value is a floating point, you can assume k is always valid (k <= total nodes)
-                 * Guaranteed to have only 1 unique set of k values in BST that are closest to target
+                 * Given target value is a floating point, you can assume k is always valid (k
+                 * <= total nodes)
+                 * Guaranteed to have only 1 unique set of k values in BST that are closest to
+                 * target
                  * Assume the BST is balanced
                  * 
                  * Attempt solving in < O(n) t
@@ -2161,7 +2427,8 @@ public class DataAlgoJava {
 
                     public List<Integer> closestKValues(TreeNode root, double target, int k) {
                         List<Integer> values = new ArrayList<>();
-                        if (k == 0 || root == null) return values;
+                        if (k == 0 || root == null)
+                            return values;
 
                         Stack<TreeNode> lowerStack = createStack(root, target);
                         Stack<TreeNode> upperStack = new Stack<>();
@@ -2170,15 +2437,15 @@ public class DataAlgoJava {
 
                         if (target < (double) lowerStack.peek().value())
                             moveLower(lowerStack);
-                        else moveUpper(upperStack);
+                        else
+                            moveUpper(upperStack);
 
                         for (int i = 0; i < k; i++) {
-                            if (
-                                lowerStack.isEmpty() ||
-                                !upperStack.isEmpty() &&
-                                // todo: check arithmetic order without parentheses in this case
-                                target - (double) lowerStack.peek().value() > (double) upperStack.peek().value() - target
-                            ) {
+                            if (lowerStack.isEmpty() ||
+                                    !upperStack.isEmpty() &&
+                                    // todo: check arithmetic order without parentheses in this case
+                                            target - (double) lowerStack.peek().value() > (double) upperStack.peek()
+                                                    .value() - target) {
                                 values.add((Integer) upperStack.peek().value());
                                 moveUpper(upperStack);
                             } else {
@@ -2199,9 +2466,10 @@ public class DataAlgoJava {
 
                             if (target < (double) root.value())
                                 root = root.left();
-                            else root = root.right();
+                            else
+                                root = root.right();
                         }
-                        
+
                         return stack;
                     }
 
@@ -2211,10 +2479,9 @@ public class DataAlgoJava {
 
                         if (node.right() == null) {
                             node = stack.pop();
-                            while (
-                                !stack.isEmpty() &&
-                                stack.peek().right() == node
-                            ) node = stack.pop();
+                            while (!stack.isEmpty() &&
+                                    stack.peek().right() == node)
+                                node = stack.pop();
                             return;
                         }
 
@@ -2231,10 +2498,9 @@ public class DataAlgoJava {
 
                         if (node.left() == null) {
                             node = stack.pop();
-                            while (
-                                !stack.isEmpty() &&
-                                stack.peek().left() == node
-                            ) node = stack.pop();
+                            while (!stack.isEmpty() &&
+                                    stack.peek().left() == node)
+                                node = stack.pop();
                             return;
                         }
 
@@ -2254,36 +2520,30 @@ public class DataAlgoJava {
                  * - Insert into / Delete from BST
                  * - Morris Algo
                  */
-                
+
             }
 
             // Tries
-                
+
             // Graphs
 
             // Bits
 
         }
 
-
-
         ////////////////////////////////////////
-        //  Cracking Coding Interview Qs
+        // Cracking Coding Interview Qs
         ////////////////////////////////////////
-
 
         // Arrays & Strings
 
         // ...
 
-
-
         ////////////////////////////////////////
         // LEETCODE
         ////////////////////////////////////////
 
-        // 
-
+        //
 
         ////////////////////////////////////////
         // CODESIGNAL
@@ -2292,39 +2552,43 @@ public class DataAlgoJava {
         // ARCADE TESTS (increasing difficulty)
 
         // SAMPLE INTERVIEW QUESTIONS
-        
 
-        // A top secret message containing uppercase letters from 'A' to 'Z' has been encoded as numbers using the following mapping:
-        // You are an FBI agent and you need to determine the total number of ways that the message can be decoded.
+        // A top secret message containing uppercase letters from 'A' to 'Z' has been
+        // encoded as numbers using the following mapping:
+        // You are an FBI agent and you need to determine the total number of ways that
+        // the message can be decoded.
         // Since the answer could be very large, take it modulo 109 + 7.
 
-        int mapDecoding(String message) {   
-            String M = message; 
+        int mapDecoding(String message) {
+            String M = message;
             int Z = 1000000007; // 10^9+7
             int L = M.length();
-            if(L <= 0) return 1;    // empty string -> 1 valid decoding
-            if(M.charAt(0) == '0') return 0;    // invalid
+            if (L <= 0)
+                return 1; // empty string -> 1 valid decoding
+            if (M.charAt(0) == '0')
+                return 0; // invalid
 
             int[] P = new int[L];
 
-            P[0] = (M.charAt(L-1) == '0') ? 0 : 1;  // base case
+            P[0] = (M.charAt(L - 1) == '0') ? 0 : 1; // base case
 
-            for(int i=1; i < L; i++) {
-                int iC = L-1-i;  // number index
-                int iP = iC+1;   // 'past' index
+            for (int i = 1; i < L; i++) {
+                int iC = L - 1 - i; // number index
+                int iP = iC + 1; // 'past' index
 
                 char cC = M.charAt(iC);
                 char cP = M.charAt(iP);
                 int cPN = Character.getNumericValue(cP);
 
                 // 00, 30, etc are not valid sequences -> cannot be decoded
-                if((cC != '1' && cC != '2') && cP == '0') return 0;
+                if ((cC != '1' && cC != '2') && cP == '0')
+                    return 0;
 
-                if(i == 1) {
+                if (i == 1) {
                     // second char decoding
-                    if((cC == '1' && cP != '0') || (cC == '2' && cPN > 0 && cPN < 7)) {
-                        P[i] = 2;   
-                    } else if(cC == '0') {
+                    if ((cC == '1' && cP != '0') || (cC == '2' && cPN > 0 && cPN < 7)) {
+                        P[i] = 2;
+                    } else if (cC == '0') {
                         P[i] = 0;
                     } else {
                         P[i] = 1;
@@ -2333,25 +2597,22 @@ public class DataAlgoJava {
                     continue;
                 }
 
-                if(cC == '0') {
+                if (cC == '0') {
                     P[i] = 0; // reset
-                } else if((cC == '1') || (cC == '2' && cPN > 0 && cPN < 7)) {
-                    P[i] = ((P[i-1] % Z) + (P[i-2] % Z)) % Z;   // mod trick
+                } else if ((cC == '1') || (cC == '2' && cPN > 0 && cPN < 7)) {
+                    P[i] = ((P[i - 1] % Z) + (P[i - 2] % Z)) % Z; // mod trick
                 } else {
-                    P[i] = P[i-1];
+                    P[i] = P[i - 1];
                 }
             }
 
             // System.out.println(Arrays.toString(P));
 
-            return P[L-1];
+            return P[L - 1];
         }
 
-
-
-
         ////////////////////////////////////////
-        //  TEST CASES
+        // TEST CASES
         ////////////////////////////////////////
 
         public static void main(String[] args) {
@@ -2364,101 +2625,105 @@ public class DataAlgoJava {
 
 
 /*
-
-* // TODO: Java
-
-
-
-
-*/
-
-
-
-
+ * 
+ * // TODO: Java
+ * 
+ * 
+ * 
+ * 
+ */
 
 /*
-
-* // TODO: Android Studio
+ * 
+ * // TODO: Android Studio
+ * 
+ * 
+ * 
+ * // TODO: A-Studio - Config
 
 
 
 * // TODO: A-Studio - Issues
+ * 
+ * 
+ * 
+ * // TODO: A-Studio - Notes
+ * 
+ * 
+ * 
+ * // TODO: Android - Java - Config
 
 
 
-* // TODO: A-Studio - Notes
-
-
-
-* // TODO: Android - Java - Issues
-
-
-
-* // TODO: A-Java - Main
-
-
-* Libraries - 
-
-* Classes - 
-
-* Special Data-Types - 
-
-* Functions - 
-
-* Containers - 
-
-* Components - 
-
-* Shapes - 
-
-* Props / Modifiers - 
-
-* Animations - 
-
-* Gestures - 
-
-* Event Handlers - 
-
-* Enumerations (raw) - 
-
-
-
-
-
-
-* Specific Component-Prop-Enum Combos - 
-
-
-
-
-
-
-* Special Classes & Methods / Props - Class . meths(..) / props
-
-
-
-
-
-
-* IDE Features
-
-
-Scaffolding - 
-
-
-
-
-
-
-* Notes
-
-
-
-
-
-* enum / switch cases with let-var validations
-
-
-
-
-*/
+* // TODO: A-Java - Issues
+ * 
+ * 
+ * 
+ * // TODO: A-Java - Main
+ * 
+ * 
+ * Libraries -
+ * 
+ * Classes -
+ * 
+ * Special Data-Types -
+ * 
+ * Functions -
+ * 
+ * Containers -
+ * 
+ * Components -
+ * 
+ * Shapes -
+ * 
+ * Props / Modifiers -
+ * 
+ * Animations -
+ * 
+ * Gestures -
+ * 
+ * Event Handlers -
+ * 
+ * Enumerations (raw) -
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * Specific Component-Prop-Enum Combos -
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * Special Classes & Methods / Props - Class . meths(..) / props
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * IDE Features
+ * 
+ * 
+ * Scaffolding -
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * Notes
+ * 
+ * 
+ * 
+ * 
+ * 
+ * enum / switch cases for generics-validations
+ * 
+ * 
+ * 
+ * 
+ */

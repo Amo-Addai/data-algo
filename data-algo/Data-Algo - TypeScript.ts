@@ -1122,6 +1122,10 @@ function mainT() {
 
 
 
+* // TODO: Webstorm - Config
+
+
+
 * // TODO: Webstorm - Issues
 
 
@@ -1130,7 +1134,11 @@ function mainT() {
 
 
 
-* // TODO: Web - Js - Issues
+* // TODO: Web - Js - Config
+
+
+
+* // TODO: Js-Ts - Issues
 
 
 
@@ -1196,7 +1204,7 @@ Scaffolding -
 
 
 
-* enum / switch cases with let-var validations
+* enum / switch cases for generics-validations
 
 
 

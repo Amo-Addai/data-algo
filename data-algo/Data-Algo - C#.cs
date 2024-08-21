@@ -189,11 +189,19 @@ String.Meths == string.Meths (& other data types)
 
 
 
-* // TODO: Visual Studio - Issues
+* // TODO: V-Studio - Config
 
 
 
-* // TODO: Visual Studio - Notes
+* // TODO: V-Studio - Issues
+
+
+
+* // TODO: V-Studio - Notes
+
+
+
+* // TODO: MAUI - Config
 
 
 
@@ -263,7 +271,7 @@ Scaffolding -
 
 
 
-* enum / switch cases with let-var validations
+* enum / switch cases for generics-validations
 
 
 

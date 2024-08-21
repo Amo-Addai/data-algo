@@ -178,7 +178,7 @@ int main(int argc, const char* argv[]) {
 
 /*
 
-* // TODO: Obj-c
+* // TODO: Obj-C
 
 
 
@@ -195,6 +195,10 @@ int main(int argc, const char* argv[]) {
 
 
 
+* // TODO: X-Code - Config
+
+
+
 * // TODO: X-Code - Issues
 
 
@@ -203,11 +207,15 @@ int main(int argc, const char* argv[]) {
 
 
 
-* // TODO: Android - Objective-c - Issues
+* // TODO: Objective-C - Config
 
 
 
-* // TODO: A-Obj-c - Main
+* // TODO: Obj-C - Issues
+
+
+
+* // TODO: Obj-C - Main
 
 
 * Libraries - 
@@ -269,7 +277,7 @@ Scaffolding -
 
 
 
-* enum / switch cases with let-var validations
+* enum / switch cases for generics-validations
 
 
 

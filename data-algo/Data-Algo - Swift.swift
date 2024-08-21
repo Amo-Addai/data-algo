@@ -221,6 +221,10 @@ Toggle Light/Dark mode - Shift + Cmd + A
 
 
 
+* // TODO: XCode - Config
+
+
+
 * // TODO: XCode - Issues
 
 
@@ -258,6 +262,11 @@ Method Definition -
 public func withAnimation<Result>(_ animation: Animation? = .default, _ body: () throws -> Result) rethrows -> Result
 
 Call - withAnimation { code for last arg _ body: } (with _ animation: omitted in this case)
+
+
+
+
+* // TODO: SwiftUI - Config
 
 
 
@@ -317,29 +326,29 @@ VStack/HStack(spacing:[, 'all' content:]) { children } . id, .. , padding (mostl
 
 ZStack(alignment:) {} . frame(height:alignment:), padding() [default padding value given] / padding(10), onAppear(perform: { code }) onTapGesture { code }, gesture(Gesture), blur(radius:), overlay(_overlay:alignment:), 
 
-Alignment(horizontal:vertical:)
+Alignment(horizontal:vertical:), 
 
-Spacer()
+Spacer(), 
 
-Text("") . offset(x:y: val/-val), padding(.horizontal, 10), font(.title3/largeTitle/.. / .system(.title3/.. / size: 50)), fontWeight(.heavy/light/..), foregroundColor(.color), multilineTextAlignment(.center/..)
+Text("") . offset(x:y: val/-val), padding(.horizontal, 10), font(.title3/largeTitle/.. / .system(.title3/.. / size: 50)), fontWeight(.heavy/light/..), foregroundColor(.color), multilineTextAlignment(.center/..), 
 
-Button(action: { event-handler }) . buttonStyle(.borderedProminent/..), buttonBorderShape(.capsule/..), controlSize(.large/..)
+Button(action: { event-handler }) . buttonStyle(.borderedProminent/..), buttonBorderShape(.capsule/..), controlSize(.large/..), 
 
-Image(systemName: "ios.system.img/font.name.id") . resizable, scaledToFit, imageScale(.large), font(.system(size:weight:)), rotationEffect, gesture, animation, transition(.opacity | .move(edge: .bottom/top/..))
+Image(systemName: "ios.system.img/font.name.id") . resizable, scaledToFit, imageScale(.large), font(.system(size:weight:)), rotationEffect, gesture, animation, transition(.opacity | .move(edge: .bottom/top/..)), 
 
-AsyncImage(url:scale:transaction:content:placeholder:) . padding
+AsyncImage(url:scale:transaction:content:placeholder:) . padding, 
 
-Transaction(animation: .spring(..)/..)
+Transaction(animation: .spring(..)/..), 
 
-Circle() . stroke(.white.opacity(0.5), lineWidth: 50), frame(width:height:alignment)
+Circle() . stroke(.white.opacity(0.5), lineWidth: 50), frame(width:height:alignment), 
 
-Color("pre/custom-defined color") . ignoresSafeArea(.all/.., edges: all/..)
+Color("pre/custom-defined color") . ignoresSafeArea(.all/.., edges: all/..), 
 
 Capsule() . fill(Color.white.opacity(0.2) / .white.opacity(0.2) / Color("color")), 
 
 Gesture() . translation, translation.width/height,  
 
-DragGesture() . onChanged {gesture:}, onEnded {_ action:}
+DragGesture() . onChanged {gesture:}, onEnded {_ action:}, 
 
 CGSize(width:height: [0:0 = .zero]) . 
 
@@ -387,6 +396,12 @@ order of modifiers matters (especially in the case of combos of regular modifier
 containers have flattened / absolute (all) children by default, taking up entire available space - each child's alignments, paddings, & frame-sizes re-positions it
 Text("""multi-line string literal content textwrapping to a new line distort alignment on render - re-align beginning syntax with 'Text(' to re-render, then revert to preferred tab-scoping to prevent mis-alignment""")
 Button's children content - horizontally aligned by default
+
+
+
+
+
+* enum / switch cases for generics validations
 
 
 
