@@ -248,8 +248,9 @@ App Settings, Build Settings, ..
 in most meths:
 
 - assume all function, props & modifiers, animations, gestures & event-handlers, enums, etc ..
-    - are all applicable to all Types / Classes (common, special, containers/components/shapes/custom, etc)
+    - are all ALMOST applicable to all Types / Classes (common, special, containers/components/shapes/custom, etc)
     - Know what each name/identifier applies to; then specifically with which other identifiers it can form a combo
+    - ensure that IDE highlights any errors in-between
 
 - Double (not Int) args
 - width arg precedes height
@@ -287,13 +288,15 @@ Call - withAnimation { code for last arg _ body: } (with _ animation: omitted in
 
 * Classes - 
 
+* 3rd-Party Classes - 
+
 * Special Data-Types - CGFloat, CGSize, UINotificationFeedbackGenerator, 
 
 * Functions - withHooks (withAnimation, withTransaction, withCGContext, .. ), DispatchQueue.main.asyncAfter(deadline:execute: {..})
 
 * Containers - ZStack (centered alignment), VStack (vertical), HStack (horizontal), Alignment, List, Group, 
 
-* Components - Spacer, Text, Button, Color, URL, Image, AsyncImage, Transaction, Capsule, 
+* Components - [div equivalent ?], Spacer, Text, Button, Color, URL, Image, AsyncImage, Transaction, Capsule, 
 
 * Shapes - Color, Circle, Line, Capsule, 
 

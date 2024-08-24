@@ -203,11 +203,11 @@ int main(int argc, const char* argv[]) {
 
 
 
-* // TODO: X-Code - Notes
+* // TODO: Objective-C - Notes
 
 
 
-* // TODO: Objective-C - Config
+* // TODO: Obj-C - Config
 
 
 
@@ -221,6 +221,8 @@ int main(int argc, const char* argv[]) {
 * Libraries - 
 
 * Classes - 
+
+* 3rd-Party Classes - 
 
 * Special Data-Types - 
 

@@ -2440,11 +2440,11 @@ strings - "" | chars - '' - forced in most others
 
 
 
-* // TODO: Webstorm - Notes
+* // TODO: Web - Js - Notes
 
 
 
-* // TODO: Web - Js - Config
+* // TODO: Js-Ts - Config
 
 
 
@@ -2458,6 +2458,8 @@ strings - "" | chars - '' - forced in most others
 * Libraries - 
 
 * Classes - 
+
+* 3rd-Party Classes - 
 
 * Special Data-Types - 
 

@@ -178,6 +178,10 @@ namespace DataAlgo
 
 String.Meths == string.Meths (& other data types)
 
+Elem.EventProp += Event_Handler;
+void Event_Handler(object sender, EventArgs e) {..}
+
+
 */
 
 
@@ -197,7 +201,7 @@ String.Meths == string.Meths (& other data types)
 
 
 
-* // TODO: V-Studio - Notes
+* // TODO: MAUI - Notes
 
 
 
@@ -212,9 +216,12 @@ String.Meths == string.Meths (& other data types)
 * // TODO: MAUI - Main
 
 
+
 * Libraries - 
 
 * Classes - 
+
+* 3rd-Party Classes - 
 
 * Special Data-Types - 
 
@@ -239,10 +246,222 @@ String.Meths == string.Meths (& other data types)
 
 
 
+* // TODO: Windows-Phone - WinRT
+
+
+    Application
+
+
+    Layouts:
+
+    Page, 
+    StackPanel, Grid, Canvas, 
+    FlipView, GridView, Hub, 
+
+    ..
+
+
+    Resources:
+    
+    ResourceDictionary, 
+
+    ..
+
+
+    Containers:
+
+    RowDefinitions, ColumnDefinition, 
+
+    ..
+
+
+    Components:
+
+    Pointer, Border, Button, CheckBox, ComboBox, DatePicker,
+    Image, ListView, MenuFlyout, Pivot, PivotItem, RadioButton,
+    TextBlock, TextBox, TimePicker, toast/tile-visual-binding-text/image/..,
+    
+    ..
+
+
+    Shapes:
+
+    Rectangle, 
+
+    ..
+
+
+    Styles:
+
+    ImageBrush, LinearGradientBrush, WebViewBrush, 
+
+    ..
+
+
+    Props:
+
+    Content - inner text/html
+    Children - inner html
+    Margin - l t r b
+    Height / Width - v
+    Vertical/HorizontalAlignment - 
+    Background - 
+    TextAlignment - 
+    GradientStops - 
+
+    ..
+
+
+
+
+* // TODO: Xamarin
+
+
+    Application
+
+
+    Layouts:
+
+    ContentPage, TabbedPage, 
+    ContentView, StackLayout, 
+    
+    Page, 
+    StackPanel, Grid, Canvas, 
+    FlipView, GridView, Hub, 
+
+
+    Resources:
+    
+    ResourceDictionary, 
+
+    ..
+
+
+    Containers:
+
+    Frame, maps:Map, 
+    
+    RowDefinitions, ColumnDefinition, 
+
+
+    Components:
+
+    Label, FormattedString, Entry, Button, ListView, DataTemplate, 
+    ViewCell, TextCell, 
+    
+    Pointer, Border, Button, CheckBox, ComboBox, DatePicker,
+    Image, ListView, MenuFlyout, Pivot, PivotItem, RadioButton,
+    TextBlock, TextBox, TimePicker, toast/tile-visual-binding-text/image/..,
+    ...
+
+
+    Shapes:
+
+    ..
+    
+    Rectangle, 
+
+
+    Styles:
+
+    Style, Color, Setter, 
+
+    ImageBrush, LinearGradientBrush, WebViewBrush, 
+
+
+    Props:
+
+    Content - 
+    Resources - 
+    FormattedText - 
+    ItemTemplate - 
+    View - 
+    Vertical/HorizontalOptions - 
+
+    Content - inner text/html
+    Children - inner html
+    Margin - l t r b
+    Height / Width - v
+    Vertical/HorizontalAlignment - 
+    Background - 
+    TextAlignment - 
+    GradientStops - 
+
+
+
+
+* // TODO: .NET MAUI
+
+
+    Application
+
+
+    Layouts:
+
+    ..
+    
+    Page, 
+    StackPanel, Grid, Canvas, 
+    FlipView, GridView, Hub, 
+
+
+    Resources:
+    
+    ..
+    
+    ResourceDictionary, 
+
+
+    Containers:
+
+    ..
+    
+    RowDefinitions, ColumnDefinition, 
+
+
+    Components:
+
+    ..
+    
+    Pointer, Border, Button, CheckBox, ComboBox, DatePicker,
+    Image, ListView, MenuFlyout, Pivot, PivotItem, RadioButton,
+    TextBlock, TextBox, TimePicker, toast/tile-visual-binding-text/image/..,
+    ...
+
+
+    Shapes:
+
+    ..
+    
+    Rectangle, 
+
+
+    Styles:
+
+    ..
+    
+    ImageBrush, LinearGradientBrush, WebViewBrush, 
+
+
+    Props:
+
+    ..
+    
+    Content - inner text/html
+    Children - inner html
+    Margin - l t r b
+    Height / Width - v
+    Vertical/HorizontalAlignment - 
+    Background - 
+    TextAlignment - 
+    GradientStops - 
+
+
+
+
 
 
 * Specific Component-Prop-Enum Combos - 
-
 
 
 

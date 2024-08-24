@@ -146,11 +146,11 @@ fun main(args: Array<String>) {
 
 
 
-* // TODO: A-Studio - Notes
+* // TODO: Android - Kotlin - Notes
 
 
 
-* // TODO: Android - Kotlin - Config
+* // TODO: A-Kotlin - Config
 
 
 
@@ -164,6 +164,8 @@ fun main(args: Array<String>) {
 * Libraries - 
 
 * Classes - 
+
+* 3rd-Party Classes - 
 
 * Special Data-Types - 
 
