@@ -1149,11 +1149,15 @@ function mainT() {
 
 * Classes - 
 
+* 'Language' Classes - 
+
 * 3rd-Party Classes - 
 
 * Special Data-Types - 
 
 * Functions - 
+
+* Methods - 
 
 * Containers - 
 
@@ -1161,7 +1165,9 @@ function mainT() {
 
 * Shapes - 
 
-* Props / Modifiers - 
+* Props - 
+
+* Styles - 
 
 * Animations - 
 
@@ -1169,7 +1175,7 @@ function mainT() {
 
 * Event Handlers - 
 
-* Enumerations (raw) - 
+* Enumerations - 
 
 
 

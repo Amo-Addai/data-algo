@@ -288,20 +288,26 @@ Call - withAnimation { code for last arg _ body: } (with _ animation: omitted in
 
 * Classes - 
 
+* 'Language' Classes - 
+
 * 3rd-Party Classes - 
 
 * Special Data-Types - CGFloat, CGSize, UINotificationFeedbackGenerator, 
 
 * Functions - withHooks (withAnimation, withTransaction, withCGContext, .. ), DispatchQueue.main.asyncAfter(deadline:execute: {..})
 
+* Methods - 
+
 * Containers - ZStack (centered alignment), VStack (vertical), HStack (horizontal), Alignment, List, Group, 
 
 * Components - [div equivalent ?], Spacer, Text, Button, Color, URL, Image, AsyncImage, Transaction, Capsule, 
 
-* Shapes - Color, Circle, Line, Capsule, 
+* Shapes - Circle, Line, Capsule, 
 
 * Props / Modifiers - .prop / .modifier(..) / .customORextensionModifiers, - .id(String - give SwiftUI unique identifier for the elem's current state), .. , .padding (always mid-prop by convention, then animation, .. ), 
 frame, offset, opacity, color.opacity, spacing, font, fontWeight, resizable, scaledToFit, foregroundColor, ignoresSafeArea, stroke, imageScale, buttonStyle, buttonBorderShape, controlSize, blur, overlay, preferredColorScheme, 
+
+* Styles - Color, 
 
 * Animations - animation: / .animation(_ animation:value:) / .customAnimations(..) / withAnimation(.animation(..)/../ ){..} - spring, transition (modifiers - move, scale, rotate, slide, .. | enums - opacity), easeIn, easeOut, easeInOut, easeInOut, delay, repeatForever, rotationEffect, degrees, linear, scaleEffect, 
 

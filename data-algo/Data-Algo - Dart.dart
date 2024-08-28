@@ -331,11 +331,15 @@ in most meths:
 
 * Classes - Navigator, MediaQuery, BuildContext, File, Size, CameraController, 
 
+* 'Language' Classes - 
+
 * 3rd-Party Classes - ImageSource, ImagePicker, PickedFile, 
 
 * Special Data-Types - 
 
 * Functions - 
+
+* Methods - 
 
 * Widget / Containers - Placeholder, Container (div equivalent), Widget, LayoutBuilder, SafeArea, Positioned, Padding, Scaffold, Column, Row, Stack, Align, Center, SizedBox (empty space), EdgeInsets, EdgeInsetsGeometry (for margin/padding), SingleChildScrollView, 
 
@@ -357,7 +361,7 @@ in most meths:
 
 * Event Handlers - GestureDetector, 
 
-* Enumerations (raw) - Colors.(white/black/black54/blueAccent/pinkAccent/orange/grey/), FontWeight.(bold/'light'/w500), TextAlign.(center), Alignment.(center), ResolutionPreset.(medium), BoxFit.(cover/fill), Icons.(add/camera_alt/photo_camera_front/browse_gallery), 
+* Enumerations - Colors.(white/black/black54/blueAccent/pinkAccent/orange/grey/), FontWeight.(bold/'light'/w500), TextAlign.(center), Alignment.(center), ResolutionPreset.(medium), BoxFit.(cover/fill), Icons.(add/camera_alt/photo_camera_front/browse_gallery), 
 MainAxisAlignment/CrossAxisAlignment.(center/start/end/baseline/stretch/values), 
 
 

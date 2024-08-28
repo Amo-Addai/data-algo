@@ -59,10 +59,8 @@ MemMan, ..
         }
     }
 
-    -(int) sortCompare(const void *a, const void* b) {
-        return (
-            *(int*) a - *(int*) b
-        );
+    -(int) sortCompare(const int* a, const int* b) {
+        return *a - *b;
     }
 
 
@@ -222,11 +220,15 @@ int main(int argc, const char* argv[]) {
 
 * Classes - 
 
+* 'Language' Classes - 
+
 * 3rd-Party Classes - 
 
 * Special Data-Types - 
 
 * Functions - 
+
+* Methods - 
 
 * Containers - 
 
@@ -234,7 +236,9 @@ int main(int argc, const char* argv[]) {
 
 * Shapes - 
 
-* Props / Modifiers - 
+* Props - 
+
+* Styles - 
 
 * Animations - 
 
@@ -242,7 +246,7 @@ int main(int argc, const char* argv[]) {
 
 * Event Handlers - 
 
-* Enumerations (raw) - 
+* Enumerations - 
 
 
 

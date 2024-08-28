@@ -2459,11 +2459,15 @@ strings - "" | chars - '' - forced in most others
 
 * Classes - 
 
+* 'Language' Classes - 
+
 * 3rd-Party Classes - 
 
 * Special Data-Types - 
 
 * Functions - 
+
+* Methods - 
 
 * Containers - 
 
@@ -2471,7 +2475,9 @@ strings - "" | chars - '' - forced in most others
 
 * Shapes - 
 
-* Props / Modifiers - 
+* Props - 
+
+* Styles - 
 
 * Animations - 
 
@@ -2479,7 +2485,7 @@ strings - "" | chars - '' - forced in most others
 
 * Event Handlers - 
 
-* Enumerations (raw) - 
+* Enumerations - 
 
 
 

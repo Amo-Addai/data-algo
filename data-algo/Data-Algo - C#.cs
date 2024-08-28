@@ -221,11 +221,15 @@ void Event_Handler(object sender, EventArgs e) {..}
 
 * Classes - 
 
+* 'Language' Classes - 
+
 * 3rd-Party Classes - 
 
 * Special Data-Types - 
 
 * Functions - 
+
+* Methods - 
 
 * Containers - 
 
@@ -233,7 +237,9 @@ void Event_Handler(object sender, EventArgs e) {..}
 
 * Shapes - 
 
-* Props / Modifiers - 
+* Props - 
+
+* Styles - 
 
 * Animations - 
 
@@ -241,7 +247,7 @@ void Event_Handler(object sender, EventArgs e) {..}
 
 * Event Handlers - 
 
-* Enumerations (raw) - 
+* Enumerations - 
 
 
 

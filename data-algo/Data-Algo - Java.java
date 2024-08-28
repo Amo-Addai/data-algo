@@ -2623,7 +2623,6 @@ public class DataAlgoJava {
 
 }
 
-
 /*
  * 
  * // TODO: Java
@@ -2640,10 +2639,10 @@ public class DataAlgoJava {
  * 
  * 
  * // TODO: A-Studio - Config
-
-
-
-* // TODO: A-Studio - Issues
+ * 
+ * 
+ * 
+ * // TODO: A-Studio - Issues
  * 
  * 
  * 
@@ -2652,10 +2651,10 @@ public class DataAlgoJava {
  * 
  * 
  * // TODO: A-Java - Config
-
-
-
-* // TODO: A-Java - Issues
+ * 
+ * 
+ * 
+ * // TODO: A-Java - Issues
  * 
  * 
  * 
@@ -2678,7 +2677,7 @@ public class DataAlgoJava {
  * 
  * Shapes -
  * 
- * Props / Modifiers -
+ * Props -
  * 
  * Animations -
  * 
@@ -2686,7 +2685,7 @@ public class DataAlgoJava {
  * 
  * Event Handlers -
  * 
- * Enumerations (raw) -
+ * Enumerations -
  * 
  * 
  * 
