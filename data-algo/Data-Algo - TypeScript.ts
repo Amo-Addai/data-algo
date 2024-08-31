@@ -1110,6 +1110,10 @@ function mainT() {
 
 * number - ints & doubles ; tuples - [] (not ())
 
+* let x?: string or x: string | undefined
+let x: string? - wrong
+
+
 */
 
 
