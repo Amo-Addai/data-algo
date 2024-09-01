@@ -252,6 +252,43 @@ void Event_Handler(object sender, EventArgs e) {..}
 
 
 
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+
 * // TODO: Windows-Phone - WinRT
 
 
@@ -461,43 +498,6 @@ void Event_Handler(object sender, EventArgs e) {..}
     Background - 
     TextAlignment - 
     GradientStops - 
-
-
-
-
-
-
-* Specific Component-Prop-Enum Combos - 
-
-
-
-
-
-* Special Classes & Methods / Props - Class . meths(..) / props
-
-
-
-
-
-
-* IDE Features
-
-
-Scaffolding - 
-
-
-
-
-
-
-* Notes
-
-
-
-
-
-* enum / switch cases for generics-validations
-
 
 
 
