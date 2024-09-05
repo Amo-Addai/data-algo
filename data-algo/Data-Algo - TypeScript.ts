@@ -1119,18 +1119,106 @@ let x: string? - wrong
 
 
 
+/*
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Express - Notes
+
+
+
+* // TODO: Express - Config
+
+
+
+* // TODO: Express - Issues
+
+
+
+* // TODO: Express - Main
+
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Directives / Annotations - 
+
+* Functions - 
+
+* Methods - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+
+
+*/
+
+
+
+
 
 /*
 
-* // TODO: Webstorm
+* // TODO: WebStorm
 
 
 
-* // TODO: Webstorm - Config
+* // TODO: WebStorm - Config
 
 
 
-* // TODO: Webstorm - Issues
+* // TODO: WebStorm - Issues
 
 
 

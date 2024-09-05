@@ -111,4 +111,105 @@ function main($args) {
     echo "Hello, World!";
 }
 
+
+
+/*
+
+* // TODO: Php
+
+
+
+*/
+
+
+
+
+/*
+
+* // TODO: PhpStorm
+
+
+
+* // TODO: PhpStorm - Config
+
+
+
+* // TODO: PhpStorm - Issues
+
+
+
+* // TODO: Laravel - Notes
+
+
+
+* // TODO: Laravel - Config
+
+
+
+* // TODO: Laravel - Issues
+
+
+
+* // TODO: Laravel - Main
+
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Directives / Annotations - 
+
+* Functions - 
+
+* Methods - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+
+* // TODO: Lumen, ..
+
+*/
+
+
+
 ?>

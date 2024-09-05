@@ -4585,8 +4585,101 @@ def gas_stations(strArr):
 if __name__ == "__main__":
     print("Hello, World!")
 
+
+
 '''
 
+# TODO: Python
+
+
 strings - "" | chars - '' - forced in most others
+
+'''
+
+
+
+'''
+
+* // TODO: PyCharm
+
+
+
+* // TODO: PyCharm - Config
+
+
+
+* // TODO: PyCharm - Issues
+
+
+
+* // TODO: Django - Notes
+
+
+
+* // TODO: Django - Config
+
+
+
+* // TODO: Django - Issues
+
+
+
+* // TODO: Django - Main
+
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Directives / Annotations - 
+
+* Functions - 
+
+* Methods - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+
+# TODO: Flask, FastAPI, 
 
 '''

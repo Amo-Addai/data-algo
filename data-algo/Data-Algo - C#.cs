@@ -5,7 +5,7 @@ using System.Linq;
 
 /* // TODO: To-Use
 
-Keywords - sealed, partial, virtual, 
+Keywords - sealed, partial, virtual, record, required, 
 In-built DataStructure classes
 'event' Handlers
 delegate methods - with Func<..> & lambda functions
@@ -181,8 +181,126 @@ String.Meths == string.Meths (& other data types)
 Elem.EventProp += Event_Handler;
 void Event_Handler(object sender, EventArgs e) {..}
 
+int? x - primitive-type vars can also be null
+
+abstract class - Entities with props & abstract methods only - encapsulate implementations ..
+
+'record' in place of 'class' - for 'data-record' OOP-objects eg. BankAccount, Dto's, ..
+
+private required Type x { get => value, internal set; init; } - init not normaly used with set
+
+* required & init; for both classes / records
+* // todo: check record's init / constructor methods
+
+is not null === != null - is (not) used with dtypes / null
+
+T? Meth<T>(..) where T : ClassName {..}
+
+static class A
+{ static Meth(this Type a, Type b) { .. } } - // todo: 'this' ?
+
+private readonly Type x; - ..
+
+
+Libs
+
+System.Text.Json.Serialization
+- [Directives/Annotations] - JsonPropertyName, JsonIgnore, 
+
+
 
 */
+
+
+
+
+/*
+
+* // TODO: Visual Studio
+
+
+
+* // TODO: V-Studio - Config
+
+
+
+* // TODO: V-Studio - Issues
+
+
+
+* // TODO: .NET - Notes
+
+
+
+* // TODO: .NET - Config
+
+
+
+* // TODO: .NET - Issues
+
+
+
+* // TODO: .NET - Main
+
+
+
+* Libraries - 
+
+* Classes - ControllerBase, ServiceResponse, 
+
+* 'Language' Classes - Guid, TimeSpan, 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - TEntity, IRepository, IActionResult, IFormFile, 
+
+* Directives / Annotations - [Directive] - ApiController, Route('route'), Http(Get/Post/..), Consumes/Produces('mediaType eg. application/json'), Authorize, AllowAnonymous, ProducesResponseType(StatusCode, Type=typeof(SampleDto)), 
+FromBody, 
+
+* Functions - 
+
+* Methods - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+
+
+*/
+
+
 
 
 
@@ -221,7 +339,7 @@ void Event_Handler(object sender, EventArgs e) {..}
 
 * Classes - 
 
-* 'Language' Classes - 
+* 'Language' Classes - Guid, TimeSpan, 
 
 * 3rd-Party Classes - 
 

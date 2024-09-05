@@ -115,3 +115,101 @@ func (x Searching) BinarySearch(a []int, n int) int {
 func main() {
 	fmt.Println("Hello, World!")
 }
+
+
+
+/*
+
+* // TODO: Golang
+
+
+
+*/
+
+
+
+
+/*
+
+* // TODO: GoLand
+
+
+
+* // TODO: GoLand - Config
+
+
+
+* // TODO: GoLand - Issues
+
+
+
+* // TODO: Fiber - Notes
+
+
+
+* // TODO: Fiber - Config
+
+
+
+* // TODO: Fiber - Issues
+
+
+
+* // TODO: Fiber - Main
+
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Directives / Annotations - 
+
+* Functions - 
+
+* Methods - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+
+
+*/

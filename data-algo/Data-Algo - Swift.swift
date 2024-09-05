@@ -207,6 +207,94 @@ func meth( arg: @escaping (..) -> ..) ) .. | meth { closure code for arg: (can b
 
 
 
+/*
+
+* // TODO: XCode
+
+
+
+* // TODO: XCode - Config
+
+
+
+* // TODO: XCode - Issues
+
+
+
+* // TODO: Vapor-Kitura - Notes
+
+
+
+* // TODO: Vapor-Kitura - Config
+
+
+
+* // TODO: Vapor-Kitura - Issues
+
+
+
+* // TODO: Vapor-Kitura - Main
+
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Directives / Annotations - 
+
+* Functions - 
+
+* Methods - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+
+
+*/
+
+
+
+
 
 /*
 

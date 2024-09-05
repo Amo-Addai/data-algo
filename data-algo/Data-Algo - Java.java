@@ -17,9 +17,9 @@ import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 
 /*
- * // TODO: Change Filename from 'Data-Algo - Java.java' to 'DataAlgoJava.java' (to avoid all errors)
- * Work with in-built DataStructure classes, from all java source libs 
- */
+* // TODO: Change Filename from 'Data-Algo - Java.java' to 'DataAlgoJava.java' (to avoid all errors)
+* Work with in-built DataStructure classes, from all java source libs 
+*/
 
 /* // TODO: To-Use
 
@@ -2623,108 +2623,204 @@ public class DataAlgoJava {
 
 }
 
-/*
- * 
- * // TODO: Java
- * 
- * 
- * 
- * 
- */
+
 
 /*
- * 
- * // TODO: Android Studio
- * 
- * 
- * 
- * // TODO: A-Studio - Config
- * 
- * 
- * 
- * // TODO: A-Studio - Issues
- * 
- * 
- * 
- * // TODO: Android - Java - Notes
- * 
- * 
- * 
- * // TODO: A-Java - Config
- * 
- * 
- * 
- * // TODO: A-Java - Issues
- * 
- * 
- * 
- * // TODO: A-Java - Main
- * 
- * 
- * Libraries -
- * 
- * Classes -
- * 
- * 3rd-Party Classes -
- * 
- * Special Data-Types -
- * 
- * Functions -
- * 
- * Containers -
- * 
- * Components -
- * 
- * Shapes -
- * 
- * Props -
- * 
- * Animations -
- * 
- * Gestures -
- * 
- * Event Handlers -
- * 
- * Enumerations -
- * 
- * 
- * 
- * 
- * 
- * 
- * Specific Component-Prop-Enum Combos -
- * 
- * 
- * 
- * 
- * 
- * 
- * Special Classes & Methods / Props - Class . meths(..) / props
- * 
- * 
- * 
- * 
- * 
- * 
- * IDE Features
- * 
- * 
- * Scaffolding -
- * 
- * 
- * 
- * 
- * 
- * 
- * Notes
- * 
- * 
- * 
- * 
- * 
- * enum / switch cases for generics-validations
- * 
- * 
- * 
- * 
- */
+
+* // TODO: Java
+
+
+
+
+*/
+
+
+
+
+/*
+
+* // TODO: IntelliJ-Idea
+
+
+
+* // TODO: IntelliJ - Config
+
+
+
+* // TODO: IntelliJ - Issues
+
+
+
+* // TODO: SpringBoot - Notes
+
+
+
+* // TODO: SpringBoot - Config
+
+
+
+* // TODO: SpringBoot - Issues
+
+
+
+* // TODO: SpringBoot - Main
+
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Directives / Annotations - 
+
+* Functions - 
+
+* Methods - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+/*
+
+* // TODO: Android Studio
+
+
+
+* // TODO: A-Studio - Config
+
+
+
+* // TODO: A-Studio - Issues
+
+
+
+* // TODO: Android - Java - Notes
+
+
+
+* // TODO: A-Java - Config
+
+
+
+* // TODO: A-Java - Issues
+
+
+
+* // TODO: A-Java - Main
+
+
+* Libraries -
+
+* Classes -
+
+* 3rd-Party Classes -
+
+* Special Data-Types -
+
+* Functions -
+
+* Containers -
+
+* Components -
+
+* Shapes -
+
+* Props -
+
+* Animations -
+
+* Gestures -
+
+* Event Handlers -
+
+* Enumerations -
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos -
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+* Scaffolding -
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/

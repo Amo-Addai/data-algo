@@ -89,3 +89,100 @@ end
 def main(args)
     puts "Hello, World!"
 end
+
+
+
+'''
+
+* // TODO: Ruby
+
+
+
+'''
+
+
+
+'''
+
+* // TODO: RubyMine
+
+
+
+* // TODO: RubyMine - Config
+
+
+
+* // TODO: RubyMine - Issues
+
+
+
+* // TODO: Ruby-on-Rails - Notes
+
+
+
+* // TODO: Ruby-on-Rails - Config
+
+
+
+* // TODO: Ruby-on-Rails - Issues
+
+
+
+* // TODO: Ruby-on-Rails - Main
+
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Directives / Annotations - 
+
+* Functions - 
+
+* Methods - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+
+
+'''
