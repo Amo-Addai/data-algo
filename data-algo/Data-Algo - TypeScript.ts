@@ -15,7 +15,10 @@ fp-ts, lodash/fp
 
 class TSorting {
 
-    constructor() { }
+    i: number
+    public i1: number
+
+    constructor(private i2: number) { }
 
 }
 
@@ -52,8 +55,10 @@ class TSearching {
             else return rBinarySearch(a.slice(m + 1, a.length), x)
         }
 
-        var fRBinarySearch: (number[], number): number | null = (a, x) => {
+        var fRBinarySearch: (a: number[], x: number) => number | null
+        fRBinarySearch = (a, x) => {
             // TODO: 
+            return -1
         }
 
         var rBinarySearch2p = (a: number[], x: number, f: number, l: number): number | null => {
@@ -64,13 +69,17 @@ class TSearching {
             else return rBinarySearch2p(a, x, m + 1, l)
         }
 
-        var fRBinarySearch2p: (number[], number, number, number): number | null = (a, x, f, l) => {
+        var fRBinarySearch2p: (a: number[], x: number, f: number, l: number) => number | null =
+            (a, x, f, l) => {
 
-        }
+                return -1;
+            }
 
-        var fBinarySearch2p: (number[], number, number, number): number | null = (a, x, f, l) => {
+        var fBinarySearch2p: (a: number[], x: number, f: number, l: number) => number | null =
+            (a, x, f, l) => {
 
-        }
+                return -1;
+            }
 
         let f: number = 0, l: number = a.length - 1
         rBinarySearch(a, 3); rBinarySearch2p(a, 3, f, l)
@@ -1108,10 +1117,19 @@ function mainT() {
 
 * // TODO: TypeScript
 
+* declare all implicit 'any' types explicitly, before changing to known types
+'never' type does not 'implicitly' contain any prop/meth the obj calls
+
 * number - ints & doubles ; tuples - [] (not ())
 
 * let x?: string or x: string | undefined
 let x: string? - wrong
+
+* let x: Type[] - not [type] - .swift
+: Type[] - array of Type
+: [Type] - array of exactly 1 Type'd item
+= [Type] - array value with 1 Type'd item
+
 
 
 */
@@ -1247,6 +1265,8 @@ Scaffolding -
 
 * Special Data-Types - 
 
+* Lifecycle Methods - 
+
 * Functions - 
 
 * Methods - 
@@ -1305,6 +1325,58 @@ Scaffolding -
 
 
 * enum / switch cases for generics-validations
+
+
+
+
+* // TODO: Ionic - Angular
+
+
+Libraries - @angular/(core/platform-browser/platform-browser-dynamic/..), ionic-angular, ionic-native/(splash-screen/status-bar/), 
+
+3rd-Party Libs - woocommerce-api, 
+
+Classes / Data-Types - Component, 
+
+'Language' Classes - 
+
+3rd-Party Classes - 
+
+Html Containers - ion-x - grid, row/col, ; 
+
+Html Elems - ion-x - menu, header, toolbar, title, content, list, item, buttons, nav, icon, card, card-content, card-title, slide, slides, thumbnail, infinite-scroll, infinite-scroll-content, chip, ; 
+
+Html Props - secondary, menuToggle, menuClose, icon, 
+ion-x - item, button, 
+button.(ion-button/..), 
+ion-elem x - slides.(pager/autoplay/loop/..), icon[name="menu/basket/arrow-forward/star/.."], row.(row-X), col.(col-X), 
+
+Html-Css Props - padding, no-padding, small/large, start/end, center, item-(left/right/..), text-wrap, clear, icon-(left/right), block, outline, color="value", 
+
+Css Selectors - page-home, 
+
+Js/Ts Directives - @Directive - Component, Input, ViewChild('selector' | :Type | Function), 
+
+Js/Ts Components - Component, NavController, Slides, StatusBar, ToastController, 
+
+Lifecycle Methods - ionViewDidLoad, 
+
+Functions - 
+
+Methods - slides.(length/getActiveIndex/slideTo/slideNext/..), navController.(setRoot/push/..), 
+
+Ionic-Angular Directives - #customName (html-prop name="value" - can be used as ViewChild-selector), [prop]="value" (in-built / custom prop of component)
+[root]=":Component", [content]="customName", [innerHTML]="x.prop", 
+[src]="x.prop" (== src="{{x.prop}}" - src is an in-built html-prop already), 
+*ngX - ngIf="bool", ngFor="let x of arr" .. {{x}}, 
+
+Event-Listeners - (event)="listener($event)" - click, ionInfinite, 
+
+
+* Notes
+
+Error: No component factory found for 'CustomComponent'. Did you add it to @NgModule.entryComponents
+    - declare import of 'CustomComponent' in parent module / app.module
 
 
 

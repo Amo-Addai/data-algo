@@ -317,6 +317,8 @@ ActionBarDrawerToggle(:Activity:DrawerLayout:Toolbar:Int:Int),
 * Global / Default Class Props - this, this@MainActivity, it (general-purpose - scope-based), ; lifecycle, supportFragmentManager, supportActionBar, resources.(getIdentifier/..), 
 (ListView/RecyclerView/'GridView/CardView'/..).Adapter.(adapterPosition/..), 
 
+* Lifecycle Methods - 
+
 * Functions - setContentView, startActivity(Intent), findViewById, findViewById<Type> (if var-to-asigned isn't typed), 
 
 * Methods - intent.(putExtra(name:value:), ), textview.(setText, ), Toast.(makeText.show, ), seekBar.(setProgress, ), handler.(postDelayed(:Runnable,delayMillis:), ), 

@@ -382,6 +382,8 @@ Call - withAnimation { code for last arg _ body: } (with _ animation: omitted in
 
 * Special Data-Types - CGFloat, CGSize, UINotificationFeedbackGenerator, 
 
+* Lifecycle Methods - 
+
 * Functions - withHooks (withAnimation, withTransaction, withCGContext, .. ), DispatchQueue.main.asyncAfter(deadline:execute: {..})
 
 * Methods - 

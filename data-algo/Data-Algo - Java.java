@@ -2744,6 +2744,8 @@ Scaffolding -
 
 * // TODO: Android - Java - Notes
 
+- Assets resources
+    - https://romannurik.github.io/AndroidAssetStudio/index.html
 
 
 * // TODO: A-Java - Config
@@ -2757,38 +2759,40 @@ Scaffolding -
 * // TODO: A-Java - Main
 
 
-* Libraries -
+* Libraries - 
 
-* Classes -
+* Classes - 
 
-* 3rd-Party Classes -
+* 3rd-Party Classes - 
 
-* Special Data-Types -
+* Special Data-Types - 
 
-* Functions -
+* Lifecycle Methods - 
 
-* Containers -
+* Functions - 
 
-* Components -
+* Containers - 
 
-* Shapes -
+* Components - 
 
-* Props -
+* Shapes - 
 
-* Animations -
+* Props - 
 
-* Gestures -
+* Animations - 
 
-* Event Handlers -
+* Gestures - 
 
-* Enumerations -
+* Event Handlers - 
 
-
-
-
+* Enumerations - 
 
 
-* Specific Component-Prop-Enum Combos -
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
 
 
 
@@ -2805,7 +2809,7 @@ Scaffolding -
 * IDE Features
 
 
-* Scaffolding -
+* Scaffolding - 
 
 
 

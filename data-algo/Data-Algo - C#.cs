@@ -178,7 +178,7 @@ namespace DataAlgo
 
 String.Meths == string.Meths (& other data types)
 
-Elem.EventProp += Event_Handler;
+Elem.EventProp += Event_Handler; - add event-listener (-= removes it)
 void Event_Handler(object sender, EventArgs e) {..}
 
 int? x - primitive-type vars can also be null
@@ -248,20 +248,20 @@ System.Text.Json.Serialization
 
 * Classes - ControllerBase, ServiceResponse, 
 
-* 'Language' Classes - Guid, TimeSpan, 
+* 'Language' Classes - Guid, DateTime, TimeSpan, HttpClient, HttpServer, 
 
 * 3rd-Party Classes - 
 
 * Special Data-Types - TEntity, IRepository, IActionResult, IFormFile, 
 
-* Directives / Annotations - [Directive] - ApiController, Route('route'), Http(Get/Post/..), Consumes/Produces('mediaType eg. application/json'), Authorize, AllowAnonymous, ProducesResponseType(StatusCode, Type=typeof(SampleDto)), 
+* Directives / Annotations - [Directive] - ApiController, Route('route'), Http(Get/Post/..), Consumes/Produces('mediaType eg. application/json'), Authorize, AllowAnonymous, ProducesResponseType(StatusCodes, Type=typeof(SampleDto)), 
 FromBody, 
 
 * Functions - 
 
-* Methods - 
+* Methods - StatusCode()
 
-* Enumerations - 
+* Enumerations - DateTime.(Now/..), StatusCodes.(Status201Created/Status404NotFound/Status409Conflict/..), 
 
 
 
@@ -344,6 +344,8 @@ Scaffolding -
 * 3rd-Party Classes - 
 
 * Special Data-Types - 
+
+* Lifecycle Methods - 
 
 * Functions - 
 
@@ -484,7 +486,7 @@ Scaffolding -
     Layouts:
 
     ContentPage, TabbedPage, 
-    ContentView, StackLayout, 
+    ContentView, StackLayout, AbsoluteLayout, FlexLayout, 
     
     Page, 
     StackPanel, Grid, Canvas, 
@@ -537,16 +539,28 @@ Scaffolding -
     FormattedText - 
     ItemTemplate - 
     View - 
-    Vertical/HorizontalOptions - 
+    Vertical/HorizontalOptions - Center/CenterAndExpand/End/EndAndExpand/Fill/FillAndExpand/Start/StartAndExpand
 
     Content - inner text/html
     Children - inner html
     Margin - l t r b
-    Height / Width - v
+    Height / Width - * (all available), Auto (children's size-related), 
+    HeightRequest - 
     Vertical/HorizontalAlignment - 
     Background - 
+    Text - 
+    FontAttributes - Bold/
     TextAlignment - 
     GradientStops - 
+
+    Grid.Row - v
+    Grid.Column - v
+
+    ItemsSource - 
+    SelectedItem - 
+
+    Aspect - AspectFill/AspectFit/Fill
+
 
 
 

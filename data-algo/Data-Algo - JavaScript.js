@@ -2420,6 +2420,12 @@ function main() {
 
 strings - "" | chars - '' - forced in most others
 
+let a = "" / [] .concat(['all', 'new', 'items', 'appended']) - whether string / array
+- not need to iterate through new arr to append each item (but not concat'd in-place)
+
+Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..))
+
+
 */
 
 
@@ -2555,6 +2561,8 @@ Scaffolding -
 * 3rd-Party Classes - 
 
 * Special Data-Types - 
+
+* Lifecycle Methods - 
 
 * Functions - 
 

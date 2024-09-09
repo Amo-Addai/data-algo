@@ -337,6 +337,8 @@ in most meths:
 
 * Special Data-Types - 
 
+* Lifecycle Methods - 
+
 * Functions - 
 
 * Methods - 
