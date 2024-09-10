@@ -1336,39 +1336,43 @@ Libraries - @angular/(core/platform-browser/platform-browser-dynamic/..), ionic-
 
 3rd-Party Libs - woocommerce-api, 
 
-Classes / Data-Types - Component, 
+Classes - ViewController, NavController, NavParams, ToastController, ModalController, 
 
 'Language' Classes - 
 
 3rd-Party Classes - 
 
+Ionic/Angular Directives - @Directive - NgModule({declarations,imports,bootstrap,entryComponents,providers}), Component({selector,templateUrl,styleUrls}), 
+
 Html Containers - ion-x - grid, row/col, ; 
 
-Html Elems - ion-x - menu, header, toolbar, title, content, list, item, buttons, nav, icon, card, card-content, card-title, slide, slides, thumbnail, infinite-scroll, infinite-scroll-content, chip, ; 
+Html Elems - ion-x - header, footer, toolbar, title, content, menu, list, item, buttons, fab, nav, icon, card, card-content, card-title, slide, slides, thumbnail, infinite-scroll, infinite-scroll-content, chip, ; 
 
-Html Props - secondary, menuToggle, menuClose, icon, 
-ion-x - item, button, 
-button.(ion-button/..), 
-ion-elem x - slides.(pager/autoplay/loop/..), icon[name="menu/basket/arrow-forward/star/.."], row.(row-X), col.(col-X), 
+Html Props - name, color, 
 
-Html-Css Props - padding, no-padding, small/large, start/end, center, item-(left/right/..), text-wrap, clear, icon-(left/right), block, outline, color="value", 
+Ionic Props - secondary, menuToggle, menuClose, icon, 
+ion-x - item, button, fab, 
+button.(ion-(button/fab)/..), 
+ion-elem x - slides.(pager/autoplay/loop/..), icon[name="menu/basket/arrow-forward/star/close-circle/.."], row.(row-X), col.(col-X), 
+
+Html-Css Props - padding, no-padding, small/large, start/end, top/bottom/left/right/center, edge, item-(left/right/..), text-wrap, clear, icon-(left/right), block, outline, color="value", 
 
 Css Selectors - page-home, 
 
-Js/Ts Directives - @Directive - Component, Input, ViewChild('selector' | :Type | Function), 
+Js/Ts Directives - @Directive - Input, ViewChild('selector' | :Type | Function), 
 
-Js/Ts Components - Component, NavController, Slides, StatusBar, ToastController, 
+Js/Ts Components - Component, Slides, StatusBar, 
 
 Lifecycle Methods - ionViewDidLoad, 
 
 Functions - 
 
-Methods - slides.(length/getActiveIndex/slideTo/slideNext/..), navController.(setRoot/push/..), 
+Methods - slides.(length/getActiveIndex/slideTo/slideNext/..), viewController.(dismiss/..), navController.(setRoot/push/..), storage.(ready/..), 
 
 Ionic-Angular Directives - #customName (html-prop name="value" - can be used as ViewChild-selector), [prop]="value" (in-built / custom prop of component)
-[root]=":Component", [content]="customName", [innerHTML]="x.prop", 
+[root]=":Component", [content]="customName", [innerHTML]="x.prop", [hidden]=":bool", 
 [src]="x.prop" (== src="{{x.prop}}" - src is an in-built html-prop already), 
-*ngX - ngIf="bool", ngFor="let x of arr" .. {{x}}, 
+*ngX - ngIf="bool", ngFor="let x of arr; let i = index" .. {{x .. i}}, 
 
 Event-Listeners - (event)="listener($event)" - click, ionInfinite, 
 
@@ -1377,6 +1381,7 @@ Event-Listeners - (event)="listener($event)" - click, ionInfinite,
 
 Error: No component factory found for 'CustomComponent'. Did you add it to @NgModule.entryComponents
     - declare import of 'CustomComponent' in parent module / app.module
+
 
 
 
