@@ -1332,30 +1332,36 @@ Scaffolding -
 * // TODO: Ionic - Angular
 
 
-Libraries - @angular/(core/platform-browser/platform-browser-dynamic/..), ionic-angular, ionic-native/(splash-screen/status-bar/), 
+Libraries - @ionic(storage/), ionic-angular, @ionic-native/(splash-screen/status-bar/), @angular/(core/platform-browser/platform-browser-dynamic/http/..), 
 
 3rd-Party Libs - woocommerce-api, 
 
-Classes - ViewController, NavController, NavParams, ToastController, ModalController, 
+Modules - IonicModule, BrowserModule, HttpModule, IonicStorageModule, 
+
+Classes - IonicApp, IonicErrorHandler, ViewController, NavController, NavParams, Http, ToastController, AlertController, ModalController, 
 
 'Language' Classes - 
 
 3rd-Party Classes - 
 
-Ionic/Angular Directives - @Directive - NgModule({declarations,imports,bootstrap,entryComponents,providers}), Component({selector,templateUrl,styleUrls}), 
+Ionic/Angular Directives - @Directive - NgModule({declarations,imports,bootstrap,entryComponents,providers}), IonicPage, Component({selector,templateUrl,styleUrls}), 
 
 Html Containers - ion-x - grid, row/col, ; 
 
-Html Elems - ion-x - header, footer, toolbar, title, content, menu, list, item, buttons, fab, nav, icon, card, card-content, card-title, slide, slides, thumbnail, infinite-scroll, infinite-scroll-content, chip, ; 
+Html Elems - ion-x - content (div), header, footer, toolbar, title, navbar, nav, menu, list, item, item-divider, label, input, textarea, select>option, checkbox, toggle (switch), radio-group>radio, 
+buttons, fab, icon, card, card-content, card-title, slide, slides, thumbnail, infinite-scroll, infinite-scroll-content, chip, ; 
+Regular Elems - button // todo: check 'no <ion-button>; only <button ion-button > / <ion-buttons>'
 
 Html Props - name, color, 
 
-Ionic Props - secondary, menuToggle, menuClose, icon, 
+Ionic Props - secondary, menuToggle, menuClose, icon, clearInput, 
 ion-x - item, button, fab, 
 button.(ion-(button/fab)/..), 
-ion-elem x - slides.(pager/autoplay/loop/..), icon[name="menu/basket/arrow-forward/star/close-circle/.."], row.(row-X), col.(col-X), 
+ion-elem x - slides.(pager/autoplay/loop/..), icon[name="menu/basket/arrow-forward/star/close-circle/md-clipboard/cart/log-out/.."], row.(row-X), col.(col-X), 
+input.(clearInput/..), option.(value/selected/..), input.(type/..), textarea.(type/maxlength/..), 
 
-Html-Css Props - padding, no-padding, small/large, start/end, top/bottom/left/right/center, edge, item-(left/right/..), text-wrap, clear, icon-(left/right), block, outline, color="value", 
+Html-Css Props - padding, no-padding, small/large, start/end, top/bottom/left/right/center, edge, item-(left/right/..), text-wrap, floating, clear, block, outline, icon-(left/right), 
+color="danger/..", 
 
 Css Selectors - page-home, 
 
@@ -1363,18 +1369,23 @@ Js/Ts Directives - @Directive - Input, ViewChild('selector' | :Type | Function),
 
 Js/Ts Components - Component, Slides, StatusBar, 
 
-Lifecycle Methods - ionViewDidLoad, 
+Lifecycle Methods - ionViewDidLoad, ionViewDidEnter, 
 
-Functions - 
+Functions - http.(get/post/..).(subscribe/..), 
 
-Methods - slides.(length/getActiveIndex/slideTo/slideNext/..), viewController.(dismiss/..), navController.(setRoot/push/..), storage.(ready/..), 
+Methods - slides.(length/getActiveIndex/slideTo/slideNext/..), viewController.(dismiss/..), navController.(setRoot(:Component)/push/pop/..), toastController.(create.present), alertController.(create.present), 
+modalController.(create.present), storage.(set/ready/..), 
 
-Ionic-Angular Directives - #customName (html-prop name="value" - can be used as ViewChild-selector), [prop]="value" (in-built / custom prop of component)
-[root]=":Component", [content]="customName", [innerHTML]="x.prop", [hidden]=":bool", 
+Event-Listeners - (event)="listener($event)" - click, blur (input - onFocusLeave), 
+ion-x (event)=".." - infinite-scroll.(ionInfinite/..), checkbox.(ionChange/..), 
+
+
+Ionic-Angular Directives - #customName (html-prop name="value" - can be selector in ViewChild(selector:)), 
+[prop]="value" (in-built / custom prop of component) - [root]=":Component", [content]="customName", [innerHTML]="x.prop", [hidden]=":bool", 
 [src]="x.prop" (== src="{{x.prop}}" - src is an in-built html-prop already), 
 *ngX - ngIf="bool", ngFor="let x of arr; let i = index" .. {{x .. i}}, 
-
-Event-Listeners - (event)="listener($event)" - click, ionInfinite, 
+[(ngX)] - ngModel="obj.prop?.prop" 
+(no optional-chain for 1st .prop data-binding (2-way) if obj = {} by default in .component.ts; but for 2nd ?.prop because obj must be = { prop: {} } ), 
 
 
 * Notes

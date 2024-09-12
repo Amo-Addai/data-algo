@@ -185,7 +185,11 @@ int? x - primitive-type vars can also be null
 
 abstract class - Entities with props & abstract methods only - encapsulate implementations ..
 
-'record' in place of 'class' - for 'data-record' OOP-objects eg. BankAccount, Dto's, ..
+'record' in place of 'class' - immutable classes, for data-integrity
+- for 'data-record' OOP-objects eg. BankAccount, Dto's, ..
+
+public record A(string X, int Y); // * or record A { .. }
+A x - new { X = 'v', Y = 1 }; A y - x with { Y = 2 }; // * 'with' keyword to make updated-copy of record
 
 private required Type x { get => value, internal set; init; } - init not normaly used with set
 
@@ -200,6 +204,9 @@ static class A
 { static Meth(this Type a, Type b) { .. } } - // todo: 'this' ?
 
 private readonly Type x; - ..
+
+
+
 
 
 Libs
