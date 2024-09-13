@@ -1334,7 +1334,7 @@ Scaffolding -
 
 Libraries - @ionic(storage/), ionic-angular, @ionic-native/(splash-screen/status-bar/), @angular/(core/platform-browser/platform-browser-dynamic/http/..), 
 
-3rd-Party Libs - woocommerce-api, 
+3rd-Party Libs - @ionic-native/(paypal/onesignal/), woocommerce-api, 
 
 Modules - IonicModule, BrowserModule, HttpModule, IonicStorageModule, 
 
@@ -1342,7 +1342,7 @@ Classes - IonicApp, IonicErrorHandler, ViewController, NavController, NavParams,
 
 'Language' Classes - 
 
-3rd-Party Classes - 
+3rd-Party Classes - PayPal/PayPalPayment/PayPalConfiguration, OneSignal, 
 
 Ionic/Angular Directives - @Directive - NgModule({declarations,imports,bootstrap,entryComponents,providers}), IonicPage, Component({selector,templateUrl,styleUrls}), 
 
@@ -1371,10 +1371,12 @@ Js/Ts Components - Component, Slides, StatusBar,
 
 Lifecycle Methods - ionViewDidLoad, ionViewDidEnter, 
 
-Functions - http.(get/post/..).(subscribe/..), 
+Functions - alert(:string) (.js alert-dialog equiv), http.(get/post/..).(subscribe/..), 
 
 Methods - slides.(length/getActiveIndex/slideTo/slideNext/..), viewController.(dismiss/..), navController.(setRoot(:Component)/push/pop/..), toastController.(create.present), alertController.(create.present), 
 modalController.(create.present), storage.(set/ready/..), 
+
+3rd-Party Methods - paypal.(init/prepareToRender/renderSinglePaymentUI/..), onesignal.(startInit/inFocusDisplaying/(handleNotificationReceived/handleNotificationOpened).subscribe/endInit/..), 
 
 Event-Listeners - (event)="listener($event)" - click, blur (input - onFocusLeave), 
 ion-x (event)=".." - infinite-scroll.(ionInfinite/..), checkbox.(ionChange/..), 
