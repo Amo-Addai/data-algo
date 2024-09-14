@@ -7,17 +7,28 @@ import heapq
 import numpy as np
 import pandas as pd
 
-# TODO: NB: Test all files' Algo's - Correctness, Speed / Execution Time, Uniqueness
 
-''' # TODO: To-Use
-
-Data-Structures:
-Done - arrays/strings (sorting/searching), lists/tuples, matrices, hash/weak-maps/tables/sets, linked-lists, stacks/queues, trees/b(s)ts, graphs,  …  
-# todo - sets/seqs/vectors, dicts/maps/objs, tree-maps/sets, tries, max/min heaps, bi-heaps/p-queues, bits, blobs,  …  
+'''
 
 Generics
 functools, toolz, pyrsistent
 ..
+
+'''
+
+
+'''
+# TODO:
+
+Test all files' Algo's - Correctness, Speed / Execution Time, Uniqueness
+Re-assess all algos' Big Omega (Best-Case / Lower-Bound) & Big Theta (Average-Case / Tight-Bound) - Time & Space Complexities
+Compare all cases with stated Big O (Worst-Case / Upper-Bound) - Time & Space Complexities alike
+
+# TODO: To-Use
+
+Data-Structures:
+Done - arrays/strings (sorting/searching), lists/tuples, matrices, hash/weak-maps/tables/sets, linked-lists, stacks/queues, trees/b(s)ts, graphs,  …  
+# todo - sets/seqs/vectors, dicts/maps/objs, tree-maps/sets, tries, max/min heaps, bi-heaps/p-queues, bits, blobs,  …  
 
 '''
 

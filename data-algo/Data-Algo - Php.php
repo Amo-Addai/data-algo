@@ -117,6 +117,9 @@ function main($args) {
 
 * // TODO: Php
 
+array('key' => 'val') - associative array // todo: check assoc_array(..) ?
+
+unset('val') // todo: ?
 
 
 */
