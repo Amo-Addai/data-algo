@@ -2420,10 +2420,14 @@ function main() {
 
 strings - "" | chars - '' - forced in most others
 
+Array(5).fill(0) - quick-dummy 0-padding array of length 5
+
 let a = "" / [] .concat(['all', 'new', 'items', 'appended']) - whether string / array
 - not need to iterate through new arr to append each item (but not concat'd in-place)
 
 Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..))
+
+''.substr(0, 50) - returns '', not null/undefined
 
 
 */

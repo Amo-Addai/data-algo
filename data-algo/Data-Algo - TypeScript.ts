@@ -1117,6 +1117,8 @@ function mainT() {
 
 * // TODO: TypeScript
 
+import type { x } from 'x' - 
+
 * declare all implicit 'any' types explicitly, before changing to known types
 'never' type does not 'implicitly' contain any prop/meth the obj calls
 
@@ -1329,71 +1331,313 @@ Scaffolding -
 
 
 
+*/
+
+
+
+
+
+/*
+
+
+
+
+
+* // TODO: Sample Framework
+
+
+Libraries - 
+
+3rd-Party Libs - 
+
+Modules - 
+
+Classes - 
+
+'Language' Classes - 
+
+3rd-Party Classes - 
+
+Sample Features - 
+
+Sample Directives - _Directive - 
+
+Html Containers - div, ..
+
+Html Elems - regulars - button, span, hX, p, ..
+
+Sample Containers - 
+
+Sample Elems - 
+
+Html Props - class="class-name", style="css", 
+
+Html-Css Props - style="css", 
+
+Sample Props - 
+
+Sample-Css Props - 
+
+Sample-Css In-Built - .class - 
+
+Css Selectors - .class-selector {} - .. 
+
+Js/Ts Directives - _Directive - 
+
+Js/Ts Components - 
+
+Js/Ts Default Props - 
+
+Js/Ts Props - 
+
+Lifecycle Methods - 
+
+Functions - 
+
+Methods - 
+
+3rd-Party Methods - 
+
+Event-Listeners - 
+
+
+Sample Directives - 
+
+
+* ---
+
+
+* Scaffolding
+
+Components - 
+
+
+* Notes
+
+Concepts:
+
+
+
+Errors:
+
+
+
+
+
+
+*/
+
+
+
+
+
+/*
+
+
+
+
+
 * // TODO: Ionic - Angular
 
 
 Libraries - @ionic(storage/), ionic-angular, @ionic-native/(splash-screen/status-bar/), @angular/(core/platform-browser/platform-browser-dynamic/http/..), 
 
-3rd-Party Libs - @ionic-native/(paypal/onesignal/), woocommerce-api, 
+3rd-Party Libs - @ionic-native/(paypal/onesignal/), woocommerce-api, rxjs/add/operator/map, 
 
-Modules - IonicModule, BrowserModule, HttpModule, IonicStorageModule, 
+Modules - NgModule, IonicModule, IonicPageModule, BrowserModule, HttpModule, IonicStorageModule, 
 
-Classes - IonicApp, IonicErrorHandler, ViewController, NavController, NavParams, Http, ToastController, AlertController, ModalController, 
+Classes - IonicApp, IonicErrorHandler, ViewController, Platform, Nav, NavController, NavParams, Http, ToastController, AlertController, ModalController, 
 
 'Language' Classes - 
 
 3rd-Party Classes - PayPal/PayPalPayment/PayPalConfiguration, OneSignal, 
 
-Ionic/Angular Directives - @Directive - NgModule({declarations,imports,bootstrap,entryComponents,providers}), IonicPage, Component({selector,templateUrl,styleUrls}), 
+Ionic/Angular Features - Modules, Providers, Components, Services, .. 
 
-Html Containers - ion-x - grid, row/col, ; 
+Ionic/Angular Directives - @Directive - NgModule({declarations,imports,exports,bootstrap,entryComponents,providers}), IonicPage({}), Component({selector,templateUrl,styleUrls}), 
 
-Html Elems - ion-x - content (div), header, footer, toolbar, title, navbar, nav, menu, list, item, item-divider, label, input, textarea, select>option, checkbox, toggle (switch), radio-group>radio, 
+Html Containers - div, ..
+
+Html Elems - regulars - button, span, hX, p, ..
+button // todo: check 'no <ion-button>; only <button ion-button > / <ion-buttons>'
+
+Ionic Containers - ion-x - grid, row/col (don't require ion-grid parent), 
+
+Ionic Elems - ion-x - content (div), header, footer, toolbar, searchbar, title, navbar, nav, menu, list, item, item-divider, label, input, textarea, select>option, checkbox, toggle (switch), radio-group>radio, 
 buttons, fab, icon, card, card-content, card-title, slide, slides, thumbnail, infinite-scroll, infinite-scroll-content, chip, ; 
-Regular Elems - button // todo: check 'no <ion-button>; only <button ion-button > / <ion-buttons>'
 
-Html Props - name, color, 
+Html Props - class="className", style="css", name, color, 
 
-Ionic Props - secondary, menuToggle, menuClose, icon, clearInput, 
+Html-Css Props - style="css", 
+
+Ionic Props - secondary, menuToggle, menuClose, icon, icon-only, clearInput, 
 ion-x - item, button, fab, 
 button.(ion-(button/fab)/..), 
-ion-elem x - slides.(pager/autoplay/loop/..), icon[name="menu/basket/arrow-forward/star/close-circle/md-clipboard/cart/log-out/.."], row.(row-X), col.(col-X), 
+ion-elem x - slides.(pager/autoplay/loop/..), icon[name="menu/basket/arrow-forward/star/close-circle/md-clipboard/cart/log-out/add-circle/remove-circle/.."], row.(row-X), col.(col-X), 
 input.(clearInput/..), option.(value/selected/..), input.(type/..), textarea.(type/maxlength/..), 
 
-Html-Css Props - padding, no-padding, small/large, start/end, top/bottom/left/right/center, edge, item-(left/right/..), text-wrap, floating, clear, block, outline, icon-(left/right), 
-color="danger/..", 
+Ionic-Css Props - padding, no-padding, small/large, start/end, top/bottom/left/right/center, edge, item-(left/right/..), text-wrap, floating, clear, block, outline, icon-(left/right/only), 
+color="primary/secondary/danger/light/..", 
 
-Css Selectors - page-home, 
+Ionic-Css In-Built - .className - item-inner, input-wrapper, 
+
+Css Selectors - component-selector {}, .className-selector {} - .. 
 
 Js/Ts Directives - @Directive - Input, ViewChild('selector' | :Type | Function), 
 
-Js/Ts Components - Component, Slides, StatusBar, 
+Js/Ts Components - Platform, Component, SplashScreen, StatusBar, Slides, 
+
+Js/Ts Default Props - rootPage (main AppComponent), 
+
+Js/Ts Props - 
 
 Lifecycle Methods - ionViewDidLoad, ionViewDidEnter, 
 
-Functions - alert(:string) (.js alert-dialog equiv), http.(get/post/..).(subscribe/..), 
+Functions - alert(:string) (.js alert-dialog equiv), http.(get/post/..).(subscribe/..), event.(enable(:boolean)/complete/..), 
 
-Methods - slides.(length/getActiveIndex/slideTo/slideNext/..), viewController.(dismiss/..), navController.(setRoot(:Component)/push/pop/..), toastController.(create.present), alertController.(create.present), 
-modalController.(create.present), storage.(set/ready/..), 
+Methods - slides.(length/getActiveIndex/slideTo/slideNext/..), viewController.(dismiss/..), navController.(setRoot(:Component / 'LazyLoadedComponent')/push(:Component / 'LazyLoadedComponent')/pop/..), 
+toastController.(create.present), alertController.(create.present), modalController.(create.present), storage.(set/ready/..), 
 
 3rd-Party Methods - paypal.(init/prepareToRender/renderSinglePaymentUI/..), onesignal.(startInit/inFocusDisplaying/(handleNotificationReceived/handleNotificationOpened).subscribe/endInit/..), 
 
-Event-Listeners - (event)="listener($event)" - click, blur (input - onFocusLeave), 
-ion-x (event)=".." - infinite-scroll.(ionInfinite/..), checkbox.(ionChange/..), 
+Event-Listeners - (event)="listener($event)" - listener(event) in .ts | *ngFor(let x of arr) (event)="listener(x - no $-event required)"
+ - click, blur (input - onFocusLeave), 
+ion-x (event)=".." - infinite-scroll.(ionInfinite/..), checkbox.(ionChange/..), searchbar.(search - 'onPressEnter'/..), 
 
 
 Ionic-Angular Directives - #customName (html-prop name="value" - can be selector in ViewChild(selector:)), 
-[prop]="value" (in-built / custom prop of component) - [root]=":Component", [content]="customName", [innerHTML]="x.prop", [hidden]=":bool", 
+[prop]="value" (in-built / custom prop of component) - [root]=":Component", [content]="customName", [innerHTML]="x.prop", [name]="x.prop", [hidden]=":bool", 
 [src]="x.prop" (== src="{{x.prop}}" - src is an in-built html-prop already), 
-*ngX - ngIf="bool", ngFor="let x of arr; let i = index" .. {{x .. i}}, 
+*ngX - ngIf="bool", ngFor="let x of arr" / ngFor="let x of arr; let i = index" .. {{x .. i}}, 
 [(ngX)] - ngModel="obj.prop?.prop" 
 (no optional-chain for 1st .prop data-binding (2-way) if obj = {} by default in .component.ts; but for 2nd ?.prop because obj must be = { prop: {} } ), 
 
 
+* ---
+
+
+* Scaffolding
+
+Components - src, assets, environments, theme, pages, providers, services, 
+.module.ts (only used when component should be a module), .component.ts / .ts, .css, .html
+
+
 * Notes
 
-Error: No component factory found for 'CustomComponent'. Did you add it to @NgModule.entryComponents
+Concepts:
+
+- Lazy Loading
+    - working with pages as modules to be loaded only when required
+    - rootPage = 'CustomComponent' - not rootPage = CustomComponent (imported)
+    - this.navController.(setRoot/push)('Component')
+
+
+Errors:
+
+- No component factory found for 'CustomComponent'. Did you add it to @NgModule.entryComponents
     - declare import of 'CustomComponent' in parent module / app.module
+
+
+
+
+
+*/
+
+
+
+
+
+/*
+
+
+
+
+
+* // TODO: React-Native
+
+
+Libraries - react, react-native, react-native-paper, 
+
+3rd-Party Libs - 'expo', expo-constants, expo-status-bar, 
+
+Modules - React, 
+
+Classes - StyleSheet, AsyncStorage, AccessibilityInfo, Dimensions, 
+
+'Language' Classes - 
+
+3rd-Party Classes - Constants, 
+
+RNative Features - Components, State, Props, Hooks, ; Controllers, Views, .. 
+
+RNative Directives - _Directive - 
+
+Html Containers - div, ..
+
+Html Elems - regulars - button, span, hX, p, ..
+
+RNative Containers - 
+
+RNative Components / Elems - 
+rnative - Component (web, Android, iOS-SwiftUI) - View (div, ViewGroup, UIView-View), Text (p, TextView, UITextView-Text), Image (img, ImageView, UIImageView-Image), ScrollView (div, ScrollView, UIScrollView-Scroll?), TextInput (input[type="text"], EditText, UITextField-Text), 
+StatusBar (), ListView (ul/ol, ListView, ?), Card, 
+galileo - 
+..
+
+RNative Hooks - use / useHook - State, Effect, 
+
+Html Props - className="className", style= styles.StyleSheetProp / { cssprop: value, .. } } / "auto/..", 
+
+Html-Css Props - { cssprop: value - margin/padding, margin/padding(Top/Bottom/Left/Right), color, backgroundColor, flex, .. } ; 
+"auto/..", 
+
+RNative Props - 
+
+RNative-Css Props - 
+
+RNative-Css In-Built - .className - 
+
+Css Selectors - .className-selector {} / StyleSheetProp: {css-json} - .. 
+
+Js/Ts Directives - _Directive - 
+
+Js/Ts Components - 
+
+Js/Ts Default Props - 
+
+Js/Ts Props - styles.(container/..), 
+
+Lifecycle Methods - 
+
+Functions - StyleSheet.(create/..), AsyncStorage.(getItem/setItem/..), Dimensions.(get.(width/height)/..), 
+
+Methods - 
+
+3rd-Party Methods - 
+
+Event-Listeners - event={listener / (e) => listener(e)} - listener(e) in .ts 
+onX - Click, Blur, 
+
+
+RNative Directives - 
+
+
+* ---
+
+
+* Scaffolding
+
+Components - assets, src > screens, views, components, hooks, controllers, state, features, utils, ..
+
+
+* Notes
+
+Concepts:
+
+
+
+Errors:
+
 
 
 
