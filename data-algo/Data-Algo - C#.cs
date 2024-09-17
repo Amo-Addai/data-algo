@@ -178,6 +178,8 @@ namespace DataAlgo
 
 String.Meths == string.Meths (& other data types)
 
+Lambda - x => {} / (x[, y]) => {}
+
 Elem.EventProp += Event_Handler; - add event-listener (-= removes it)
 void Event_Handler(object sender, EventArgs e) {..}
 

@@ -35,7 +35,7 @@ const Functional = (_ => { // Using functions as first-class citizens
 })()
 
 // AMD (Asynchronous Module Definition)
-define(['Declarative', _ => { // Describing what to do, not how to do it
+define(['Declarative'], _ => { // Describing what to do, not how to do it
 
     const numbers = [1, 2, 3, 4]
     const doubled = numbers.map(num => num * 2)
@@ -45,7 +45,17 @@ define(['Declarative', _ => { // Describing what to do, not how to do it
             console.log(doubled) // Output: [2, 4, 6, 8]
         }
     }
-}])
+})
+
+define( // AMD with declarative-scope callback
+    ['Declarative'], 
+    (
+        numbers = [1, 2, 3, 4], // TODO: check numbers with default value used in doubled's default value calculation
+        doubled = numbers.map(num => num * 2)
+    ) => {
+        test: () => console.log(doubled) // Output: [2, 4, 6, 8]
+    }
+)
 
 // todo: More 'ModuleTypes' at bottom of file
 

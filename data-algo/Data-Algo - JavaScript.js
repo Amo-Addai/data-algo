@@ -13,6 +13,26 @@ lodash/fp, ramda, immutable.js
 */
 
 
+/*
+* // TODO:
+
+Test all files' Algo's - Correctness, Speed / Execution Time, Uniqueness
+Re-assess all algos' Big Omega (Best-Case / Lower-Bound) & Big Theta (Average-Case / Tight-Bound) - Time & Space Complexities
+Compare all cases with stated Big O (Worst-Case / Upper-Bound) - Time & Space Complexities alike
+
+* // TODO: Real-World Applications
+
+- most/all in-app data should come from expected sources (in-house / 3rd apis / device-data)
+    - extra data comes from unnecessarily (wastage) created vars, args, 'enums' (for generics), etc
+    - if extra data is actually required, coz it's generated from already existing (& required) data, allowed
+    - if algo's are leveraged for generating extra (but reqiured) data from already existing & required data, optimize O(t) & O(s)
+    - in both Big-O (worst-case - upper bound) & Big-Theta (best-case - lower bound), or Big-Omega (average-case - tight bound)
+    - BUT: NO unnecessarily (wastage) created vars, args, 'enums' (for generics), etc 
+
+
+*/
+
+
 ////////////////////////////////////////
 //  SORTING ALGO'S
 ////////////////////////////////////////
@@ -2422,12 +2442,55 @@ strings - "" | chars - '' - forced in most others
 
 Array(5).fill(0) - quick-dummy 0-padding array of length 5
 
+arr = [].map(returns each lambda-returned value as item in new array)
+[].forEach(doesn't return new array)
+
+false - !!null?.length, !![]?.length, 
+true - 
+
+for (let x of [0, 1, 2]) if (x > 0) console.log(x) - .js no issue
+for x in [0, 1, 2]: if x > 0: print(x) - .py issue - new-line tab-delimited only
+
+async function() { return Promise(async () => ( await )) }
+async function() { no Promise return; just await }
+function() { return Promise( no async-await ) }
+async function() { no Promise; }
+
+
 let a = "" / [] .concat(['all', 'new', 'items', 'appended']) - whether string / array
 - not need to iterate through new arr to append each item (but not concat'd in-place)
 
 Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..))
 
 ''.substr(0, 50) - returns '', not null/undefined
+
+
+---
+
+* declarative-tuple scope ( 1-line, 1-line )
+
+- not required in react functional components
+    - baseline useState's require created-destructured vars 'const [state, setState] = useState(default)'
+    - but already defined vars can be destructured with the array [] syntax
+        - let x = y = 0; [x, y] = useState(0) - so x & y default-null-valued vars can be defined on function definition
+        - f = (
+            { prop = val, prop = val, ...props }: { prop: type, prop: type }, // * for props - can omit the : Type ({}/[]) for .js
+            [ anyVar = null, state = null, setState = null, state = null, setState = null ]: [ state: any, setState: any, state: any, setState: any] | [] = [] // * must be given empty arr default value
+            * else TypeError: Cannot destructure property 'Symbol(Symbol.iterator)' of 'undefined' as it is undefined.
+            * for .ts, must be given 2 optional types: [vars with types] | [] = [] with default value | optional type [..]? = null with 'null' default value affects vars with types
+            * empty [] default value doesn't affect anyVar's (& others') default value (null/0/false/[]/{} / all null/falsy values )
+            
+            * can also use props object {} instead for custom var definitions, and do away with using another [] argument which always requires a default value passed in
+            { propFromParent, propFromParent, anyVar = defaultVal, prop = val, ...props }: { anyVar: type } // * doesn't require any default {} value coz React functional components always receive the props argument value
+            * remember to add the remaining ...props destructured arg, for all other props passed in by the parent component
+            * custom 'anyVar = defaultVal - null since it'll be re-initialized' destructured args only required because of 'forced' declarative-tuple syntax (1-line,1-line,..) 
+            * - preventing new var/let/const declarations within () scope
+          )
+
+
+
+
+
 
 
 */

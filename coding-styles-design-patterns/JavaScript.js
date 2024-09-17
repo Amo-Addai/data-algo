@@ -49,6 +49,19 @@ define(['Declarative'], _ => { // AMD (Asynchronous Module Definition)
 
 })
 
+define(['Declarative'], ( // AMD with declarative-scope callback
+    numbers = null,
+    doubled = null
+) => (
+    numbers = [1, 2, 3, 4, 5],
+    doubled = numbers.map(n => n * 2),
+    {
+        test: () => console.log(doubled) // [2, 4, 6, 8, 10]
+    }
+))
+
+// todo: More 'ModuleTypes' at bottom of file
+
 
 // TODO: Procedural (study basic, pascal, c..)
 

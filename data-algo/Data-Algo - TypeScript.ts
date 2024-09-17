@@ -1400,6 +1400,8 @@ Methods -
 
 Event-Listeners - 
 
+Enumerations - 
+
 
 Sample Directives - 
 
@@ -1504,6 +1506,8 @@ Event-Listeners - (event)="listener($event)" - listener(event) in .ts | *ngFor(l
  - click, blur (input - onFocusLeave), 
 ion-x (event)=".." - infinite-scroll.(ionInfinite/..), checkbox.(ionChange/..), searchbar.(search - 'onPressEnter'/..), 
 
+Enumerations - 
+
 
 Ionic-Angular Directives - #customName (html-prop name="value" - can be selector in ViewChild(selector:)), 
 [prop]="value" (in-built / custom prop of component) - [root]=":Component", [content]="customName", [innerHTML]="x.prop", [name]="x.prop", [hidden]=":bool", 
@@ -1558,11 +1562,11 @@ Errors:
 
 Libraries - react, react-native, react-native-paper, 
 
-3rd-Party Libs - 'expo', expo-constants, expo-status-bar, 
+3rd-Party Libs - 'expo', expo-constants, expo-status-bar, expo-keep-awake, 
 
 Modules - React, 
 
-Classes - StyleSheet, AsyncStorage, AccessibilityInfo, Dimensions, 
+Classes - Platform, StyleSheet, AsyncStorage, AccessibilityInfo, Dimensions, Vibration, 
 
 'Language' Classes - 
 
@@ -1576,22 +1580,28 @@ Html Containers - div, ..
 
 Html Elems - regulars - button, span, hX, p, ..
 
-RNative Containers - 
+RNative Containers - <></> / <div></div> - 
 
-RNative Components / Elems - 
-rnative - Component (web, Android, iOS-SwiftUI) - View (div, ViewGroup, UIView-View), Text (p, TextView, UITextView-Text), Image (img, ImageView, UIImageView-Image), ScrollView (div, ScrollView, UIScrollView-Scroll?), TextInput (input[type="text"], EditText, UITextField-Text), 
-StatusBar (), ListView (ul/ol, ListView, ?), Card, 
+RNative Components / Elems - <Component .. /> - 
+rnative - Component (web, Android, iOS-SwiftUI) - View (div, ViewGroup, UIView-View), Text (p, TextView, UITextView-Text), TextInput (input[type="text"], EditText, UITextField-Text), Button (button, Button, Button), Image (img, ImageView, UIImageView-Image), ScrollView (div, ScrollView, UIScrollView-Scroll?), 
+Switch, 
+StatusBar, ListView (ul/ol, ListView, ?), Card, FlatList, 
+ActivityIndicator, SafeAreaView, TouchableOpacity, 
+rnative-paper - Colors, TextInput, ProgressBar, 
+..
 galileo - 
 ..
 
 RNative Hooks - use / useHook - State, Effect, 
+3rd-Parties - SWR, KeepAwake, 
 
 Html Props - className="className", style= styles.StyleSheetProp / { cssprop: value, .. } } / "auto/..", 
 
-Html-Css Props - { cssprop: value - margin/padding, margin/padding(Top/Bottom/Left/Right), color, backgroundColor, flex, .. } ; 
-"auto/..", 
+Html-Css Props - { ...css-json, prop: value } - height/width:(1+), margin/padding:(1+), margin/padding(Top/Bottom/Left/Right):(1+), 
+color/(background/border)Color:('#hex'), fontSize:(1+), fontWeight:('bold'), border(Width/Radius):(1+), 
+flex:(1+), flexDirection:('row/column'), (alignItems/justifyContent/self):('top/bottom/center/start/end/..'), textAlign:('center/left/right'), 
 
-RNative Props - 
+RNative Props - <Component prop=""/{""/{json}} /> - className, style, TextInput.(label/value/onChangeText/..), TouchableOpacity.(onPress/..), ProgressBar.(color/..), 
 
 RNative-Css Props - 
 
@@ -1605,18 +1615,22 @@ Js/Ts Components -
 
 Js/Ts Default Props - 
 
-Js/Ts Props - styles.(container/..), 
+Js/Ts Props - Platform.(OS/..), styles.(container/..), StatusBar.(currentHeight/..), 
+
+Props - 
 
 Lifecycle Methods - 
 
-Functions - StyleSheet.(create/..), AsyncStorage.(getItem/setItem/..), Dimensions.(get.(width/height)/..), 
+Functions - StyleSheet.(create/..), AsyncStorage.(getItem/setItem/..), Dimensions.(get.(width/height)/..), Vibrate.(vibrate/..), 
 
 Methods - 
 
 3rd-Party Methods - 
 
-Event-Listeners - event={listener / (e) => listener(e)} - listener(e) in .ts 
-onX - Click, Blur, 
+Event-Listeners - event={listener / (e) => listener(e)} - listener(e) in .ts | event={setStateVar / (v) => setStateVar(v)} - [stateVar, setStateVar] = useState(null)' in .ts,
+onX - Click, Change, ChangeText, Blur, Press, 
+
+Enumerations - Platform.OS(=android/ios), Colors.(red800/..), 
 
 
 RNative Directives - 
@@ -1633,6 +1647,11 @@ Components - assets, src > screens, views, components, hooks, controllers, state
 * Notes
 
 Concepts:
+
+import [React == * as React] from 'react'
+
+- Inconsistencies in designs of components/styles in OS (android/ios)
+
 
 
 
