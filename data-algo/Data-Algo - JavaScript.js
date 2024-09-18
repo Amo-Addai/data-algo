@@ -187,8 +187,8 @@ var Searching = function() {
         )
         
         const res = []
-        s.split('')
-            .map(c => {
+        s.split('') // .map() returns new array with updated items
+            .forEach(c => { // forEach doesn't return new array; just exec's cb on each item, but not in-place
                 res.push(
                     check(c)
                 )
@@ -2181,7 +2181,7 @@ class Quant
 
 function sortStringArray(a) {
     // O(n * s log s) + O(n log n) t | O(1) s
-    a.map((s, i) => s.sort())
+    a = a.map((s, i) => s.sort())
     a.sort() // or
     a.sort((a, b) => a - b) // -ve (a<b) for ascending, ASCII character order
 }
@@ -2445,11 +2445,11 @@ strings - "" | chars - '' - forced in most others
 
 Array(5).fill(0) - quick-dummy 0-padding array of length 5
 
-arr = [].map(returns each lambda-returned value as item in new array)
-[].forEach(doesn't return new array)
-
 false - !!null?.length, !![]?.length (checks if arr length is truthy - not falsy; cannot be empty; []?.length = 0)
 true - !null?.length, ![]?.length, []?.length >= 0 (checks if arr is non-null with 0+ items - can be empty)
+
+arr = arr.map(cb) - returns new array with updated items
+arr.forEach(cb) - doesn't return new array; just exec's cb on each item, but not in-place
 
 for (let x of [0, 1, 2]) if (x > 0) console.log(x) - .js no issue
 for x in [0, 1, 2]: if x > 0: print(x) - .py issue - new-line tab-delimited only
@@ -2475,7 +2475,7 @@ Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..))
 - not required in react functional components
     - baseline useState's require created-destructured vars 'const [state, setState] = useState(default)'
     - but already defined vars can be destructured with the array [] syntax
-        - let x = y = 0; [x, y] = useState(0) - so x & y default-null-valued vars can be defined on function definition
+        - let x = y = 0; [x, y] = useState(0) / {x, y} = obj - so x & y default-null-valued vars can be defined on function definition
         - f = (
             { prop = val, prop = val, ...props }: { prop: type, prop: type }, // * for props - can omit the : Type ({}/[]) for .js
             [ anyVar = null, state = null, setState = null, state = null, setState = null ]: [ state: any, setState: any, state: any, setState: any] | [] = [] // * must be given empty arr default value
