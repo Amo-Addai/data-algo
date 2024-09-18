@@ -2438,6 +2438,9 @@ function main() {
 
 * // TODO: EcmaScript (Latest - ?)
 
+var & function arguments - function-scoped, before gc'd
+let & const vars - block-scoped, before gc'd
+
 strings - "" | chars - '' - forced in most others
 
 Array(5).fill(0) - quick-dummy 0-padding array of length 5
@@ -2445,8 +2448,8 @@ Array(5).fill(0) - quick-dummy 0-padding array of length 5
 arr = [].map(returns each lambda-returned value as item in new array)
 [].forEach(doesn't return new array)
 
-false - !!null?.length, !![]?.length, 
-true - 
+false - !!null?.length, !![]?.length (checks if arr length is truthy - not falsy; cannot be empty; []?.length = 0)
+true - !null?.length, ![]?.length, []?.length >= 0 (checks if arr is non-null with 0+ items - can be empty)
 
 for (let x of [0, 1, 2]) if (x > 0) console.log(x) - .js no issue
 for x in [0, 1, 2]: if x > 0: print(x) - .py issue - new-line tab-delimited only

@@ -180,6 +180,10 @@ String.Meths == string.Meths (& other data types)
 
 Lambda - x => {} / (x[, y]) => {}
 
+arr.Where(x => x.Prop == val) - shorter-syntax than - from x in arr where x.Prop == val select x
+arr.OrderBy(x => x.Prop).Select(x => x.Prop1) - from x in arr orderby x.Prop select x.Prop1
+(linq).(Distinct.ToList.Count)
+
 Elem.EventProp += Event_Handler; - add event-listener (-= removes it)
 void Event_Handler(object sender, EventArgs e) {..}
 
@@ -569,6 +573,11 @@ Scaffolding -
     SelectedItem - 
 
     Aspect - AspectFill/AspectFit/Fill
+
+
+    .cs
+
+    (linq).(Distinct.ToList.Count), 
 
 
 
