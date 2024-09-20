@@ -2445,6 +2445,9 @@ strings - "" | chars - '' - forced in most others
 
 Array(5).fill(0) - quick-dummy 0-padding array of length 5
 
+let x = [1, 2,] - no error with last item's ',' - no strict syntax for value since assigned to var
+[1, 2,].forEach(..) - error with last item's ',' - strict syntax when 'error-value' used to call method (array-meth in this case) // todo: find out other class-data-type values' with class-methods
+
 false - !!null?.length, !![]?.length (checks if arr length is truthy - not falsy; cannot be empty; []?.length = 0)
 true - !null?.length, ![]?.length, []?.length >= 0 (checks if arr is non-null with 0+ items - can be empty)
 
@@ -2470,7 +2473,7 @@ Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..))
 
 ---
 
-* declarative-tuple scope ( 1-line, 1-line )
+* declarative (comma-separated tuple) scope ( 1-line, 1-line )
 
 - not required in react functional components
     - baseline useState's require created-destructured vars 'const [state, setState] = useState(default)'
