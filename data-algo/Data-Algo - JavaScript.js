@@ -2445,14 +2445,15 @@ strings - "" | chars - '' - forced in most others
 
 Array(5).fill(0) - quick-dummy 0-padding array of length 5
 
-let x = [1, 2,] - no error with last item's ',' - no strict syntax for value since assigned to var
-[1, 2,].forEach(..) - error with last item's ',' - strict syntax when 'error-value' used to call method (array-meth in this case) // todo: find out other class-data-type values' with class-methods
-
 false - !!null?.length, !![]?.length (checks if arr length is truthy - not falsy; cannot be empty; []?.length = 0)
 true - !null?.length, ![]?.length, []?.length >= 0 (checks if arr is non-null with 0+ items - can be empty)
 
 arr = arr.map(cb) - returns new array with updated items
 arr.forEach(cb) - doesn't return new array; just exec's cb on each item, but not in-place
+x = arr.reduce(cb to work with accumulated result & items to return 1 accumulated-result value)
+
+let x = [1, 2,] - no error with last item's ',' - no strict syntax for value since assigned to var
+[1, 2,].forEach(..) - error with last item's ',' - strict syntax when 'error-value' used to call method (array-meth in this case) // todo: find out other class-data-type values' with class-methods
 
 for (let x of [0, 1, 2]) if (x > 0) console.log(x) - .js no issue
 for x in [0, 1, 2]: if x > 0: print(x) - .py issue - new-line tab-delimited only
