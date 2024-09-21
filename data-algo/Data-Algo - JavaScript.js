@@ -2473,6 +2473,7 @@ Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..))
 
 ---
 
+
 * declarative (comma-separated tuple) scope ( 1-line, 1-line )
 
 - not required in react functional components
