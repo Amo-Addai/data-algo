@@ -2467,9 +2467,13 @@ async function() { no Promise; }
 let a = "" / [] .concat(['all', 'new', 'items', 'appended']) - whether string / array
 - not need to iterate through new arr to append each item (but not concat'd in-place)
 
-Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..))
-
 ''.substr(0, 50) - returns '', not null/undefined
+
+
+Boolean(0 or falsy-value) - false | Boolean(1 or truthy-value) - true
+if (0 / '' or falsy-value) - undefined | if (1 / 'a' or truthy value) 'true'
+
+Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..) coz .length > 0 is already truthy)
 
 
 ---
