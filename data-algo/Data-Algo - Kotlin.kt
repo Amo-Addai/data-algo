@@ -3,8 +3,8 @@ import kotlin.math.ceil
 
 /* // TODO: To-Use
 
-data, sealed, lateinit, inner, open, abstract, final, 
-companion, 
+by, data, sealed, lateinit, inner, open, abstract, final, 
+companion, when, 
 Generics
 Arrow, Kategory
 ..
@@ -51,6 +51,13 @@ class OOP(
     val meth3: ((Int, Double) -> Double) = {
         a, b ->
         a + b
+    }
+
+    class Sample private constructor(
+        var prop: String,
+        val p1: Int
+    ) {
+
     }
 
 }
@@ -191,16 +198,26 @@ class C : A() {
 * // TODO: Kotlin
 
 
-data-class, sealed-class, inner-class, lateinit-var, open-fun, abstract (for vars), final, 
-companion-object, 
+data/sealed/inner-class/interface/.. ?
+data-class, sealed-class, inner-class, 
+lateinit-var, open/suspend-fun, abstract/override-var/val/fun, companion-object, 
+
 
 ArrayList, Random, TimeUnit, Handler, Runnable, Uri, 
 
-* - Any type
+Type by meth/Type
+
+var x = x ?: defaultValue
+
+* symbol Types
+* - Any type, ... - Any-Array type, 
+
 val arr: ArrayAdapter<*>
 
-
 val x = arrayOf("")
+
+return .. | eg. if (bool) value else value - statement over value for regular-if
+| when(x) { switch-cases.. }
 
 when (x) { // * switch-case
     0 -> { .. }
