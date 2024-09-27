@@ -5,7 +5,7 @@ using System.Linq;
 
 /* // TODO: To-Use
 
-Keywords - sealed, partial, virtual, record, required, 
+Keywords - sealed, partial, virtual, record, required, readonly, 
 In-built DataStructure classes
 'event' Handlers
 delegate methods - with Func<..> & lambda functions
@@ -45,7 +45,7 @@ namespace DataAlgo
             public void Searching() {
                 this.i = -1;
             }
-                
+            
             public Int LinearSearch(Int[] a, Int x) 
             {
                 var FLinearSearch = () => a.Where(i => i == x).Select(i); // Functional Linq Usage
@@ -60,7 +60,7 @@ namespace DataAlgo
                 Array.Sort(a);
                 // a.BinarySearch(x); // * C# in-built Array Method
 
-                var RBinarySearch = (Int[] a, Int x) => {
+                Int RBinarySearch(Int[] a, Int x) => { // named-function lambda
                     if (a.Length == 0) return null;
                     var m = Math.Floor(a.Length / 2);
                     if (x == a[m]) return a[m];
@@ -68,7 +68,7 @@ namespace DataAlgo
                     else return RBinarySearch(a[m+1..], x);
                 };
 
-                var RBinarySearch2p = (Int[] a, Int x, Int f, Int l) => {
+                var RBinarySearch2p = (Int[] a, Int x, Int f, Int l) => { // unnamed-function lambda
                     if (a.Length == 0) return null;
                     var m = Math.Floor(f + (l - f) / 2);
                     if (x == a[m]) return m;
@@ -176,9 +176,23 @@ namespace DataAlgo
 
 * // TODO: C#
 
+Keywords - readonly, 
+
+New Types - Guid, 
+
+* // todo: check - is [not] null/Type (confirm non-null value), 
+
 String.Meths == string.Meths (& other data types)
 
+public string Prop { get; set; } = null!; - prop with both get-set & (default) value assignment
+
+new Object(propval, .. ) / new Object { Prop=val, .. }; - object instantiation
+
 Lambda - x => {} / (x[, y]) => {}
+void method([x..]) => {..} - named-function lambda
+var method = ([x..]) => {..}; - unnamed-function lambda
+
+[public/private] async Task<ReturnType> MethName() { ..await .. } - async method
 
 arr.Where(x => x.Prop == val) - shorter-syntax than - from x in arr where x.Prop == val select x
 arr.OrderBy(x => x.Prop).Select(x => x.Prop1) - from x in arr orderby x.Prop select x.Prop1
@@ -257,18 +271,24 @@ System.Text.Json.Serialization
 
 
 
-* Libraries - 
+* Libraries - System[.(Text.Json.Serialization)], 
 
 * Classes - ControllerBase, ServiceResponse, 
 
-* 'Language' Classes - Guid, DateTime, TimeSpan, HttpClient, HttpServer, 
+* Interfaces - IComparable, IFormattable, ICloneable, IEnumerable, IDisposable, IAsyncDisposable, IServiceProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, 
+
+* 'Language' Classes - Exception, HttpClient, HttpServer, 
 
 * 3rd-Party Classes - 
+
+* 'Language' Data-Types - Guid, DateTime, TimeSpan, 
 
 * Special Data-Types - TEntity, IRepository, IActionResult, IFormFile, 
 
 * Directives / Annotations - [Directive] - ApiController, Route('route'), Http(Get/Post/..), Consumes/Produces('mediaType eg. application/json'), Authorize, AllowAnonymous, ProducesResponseType(StatusCodes, Type=typeof(SampleDto)), 
 FromBody, 
+
+* 'Language' Directives - JsonPropertyName("key"), 
 
 * Functions - 
 
@@ -300,6 +320,7 @@ Scaffolding -
 
 * Notes
 
+- Interfaces - 'I'-prefixed (IComparable, IEnumerable, ..), 
 
 
 

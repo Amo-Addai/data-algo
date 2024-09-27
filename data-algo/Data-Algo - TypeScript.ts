@@ -1132,6 +1132,9 @@ let x: string? - wrong
 : [Type] - array of exactly 1 Type'd item
 = [Type] - array value with 1 Type'd item
 
+const f = (a?:number,b?:number) => console.log(a,b)
+f(1) - b = undefined | f(1, null) - b = null
+
 
 
 */

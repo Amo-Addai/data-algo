@@ -2475,6 +2475,9 @@ if (0 / '' or falsy-value) - undefined | if (1 / 'a' or truthy value) 'true'
 
 Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..) coz .length > 0 is already truthy)
 
+- Only in .TS, generics (methods/classes/types/..) can also be assigned / returned as values; not only defined
+let x = <T>(..) => (..) | function <T>(..) {..} | function a<T>(..) {..} - Error only in .JS
+
 
 ---
 
