@@ -2557,7 +2557,7 @@ let x = <T>(..) => (..) | function <T>(..) {..} | function a<T>(..) {..} - Error
 
 * Functions - 
 
-* Methods - 
+* Methods - console.(log/warn/error/table/dir/group/groupEnd/time/timeEnd/..), 
 
 * Enumerations - 
 
