@@ -238,6 +238,10 @@ private readonly Type x; - ..
 true ? Console.WriteLine("aa") : Console.WriteLine("aa");
 - Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement, with ternary's
 
+* destructuring
+var (x, y) = FunctionReturningTuple(..) - // todo: check for list/object return values
+
+
 
 
 
