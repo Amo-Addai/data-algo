@@ -182,11 +182,20 @@ New Types - Guid,
 
 * // todo: check - is [not] null/Type (confirm non-null value), 
 
+var x; - wrong - Implicitly-typed variables must be initialized
+var x = null; - wrong - Cannot assign <null> to an implicitly-typed variable
+var x = non_null_value; - correct - var-var given non-null value
+Type x; - correct - typed-var not requiring any (null / non-null) value yet
+
 String.Meths == string.Meths (& other data types)
 
 public string Prop { get; set; } = null!; - prop with both get-set & (default) value assignment
 
-new Object(propval, .. ) / new Object { Prop=val, .. }; - object instantiation
+class Object { ... Prop; User(... prop) { this.Prop = prop } }
+new Object(propval, .. ) - object instantiation
+
+class Object { ... Prop; }
+new Object() { Prop = val, .. }; - object instantiation with obj {} literal
 
 Lambda - x => {} / (x[, y]) => {}
 void method([x..]) => {..} - named-function lambda
@@ -224,6 +233,10 @@ static class A
 { static Meth(this Type a, Type b) { .. } } - // todo: 'this' ?
 
 private readonly Type x; - ..
+
+* ternary with statements (instead of values to assign) - wrong
+true ? Console.WriteLine("aa") : Console.WriteLine("aa");
+- Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement, with ternary's
 
 
 
@@ -271,7 +284,7 @@ System.Text.Json.Serialization
 
 
 
-* Libraries - System[.(Text.Json.Serialization)], 
+* Libraries - System[.(Collections.Generic)/(Text.Json.Serialization)/(Threading.Tasks)/..], 
 
 * Classes - ControllerBase, ServiceResponse, 
 
@@ -590,15 +603,17 @@ Scaffolding -
     Grid.Row - v
     Grid.Column - v
 
-    ItemsSource - 
+    ItemsSource (NOT ItemSource - ItemsS) - 
     SelectedItem - 
 
     Aspect - AspectFill/AspectFit/Fill
 
 
+
     .cs
 
     (linq).(Distinct.ToList.Count), 
+    DisplayAlert(title,msg,action)
 
 
 
