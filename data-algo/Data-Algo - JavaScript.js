@@ -2478,6 +2478,9 @@ Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..) coz .length > 
 - Only in .TS, generics (methods/classes/types/..) can also be assigned / returned as values; not only defined
 let x = <T>(..) => (..) | function <T>(..) {..} | function a<T>(..) {..} - Error only in .JS
 
+console.(log/warn/error/table/dir/group/groupEnd/time/timeEnd/..)
+arr.(foreach/map/reduce/filter/sort/includes/some/of/from/every/..)
+
 
 ---
 
@@ -2557,7 +2560,7 @@ let x = <T>(..) => (..) | function <T>(..) {..} | function a<T>(..) {..} - Error
 
 * Functions - 
 
-* Methods - console.(log/warn/error/table/dir/group/groupEnd/time/timeEnd/..), 
+* Methods - 
 
 * Enumerations - 
 
@@ -2653,6 +2656,116 @@ Scaffolding -
 * Containers - 
 
 * Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/*
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Next - Js-Ts - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - next/(head/..), 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - Head, 
 
 * Shapes - 
 
