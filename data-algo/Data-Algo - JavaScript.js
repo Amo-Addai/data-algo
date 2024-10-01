@@ -2463,12 +2463,10 @@ async function() { no Promise return; just await }
 function() { return Promise( no async-await ) }
 async function() { no Promise; }
 
-
 let a = "" / [] .concat(['all', 'new', 'items', 'appended']) - whether string / array
 - not need to iterate through new arr to append each item (but not concat'd in-place)
 
 ''.substr(0, 50) - returns '', not null/undefined
-
 
 Boolean(0 or falsy-value) - false | Boolean(1 or truthy-value) - true
 if (0 / '' or falsy-value) - undefined | if (1 / 'a' or truthy value) 'true'
@@ -2478,11 +2476,17 @@ Boolean(arr.length) - true if > 0 (no need to add '> 0' in if(..) coz .length > 
 - Only in .TS, generics (methods/classes/types/..) can also be assigned / returned as values; not only defined
 let x = <T>(..) => (..) | function <T>(..) {..} | function a<T>(..) {..} - Error only in .JS
 
+- () => {}/() lambda's as unnamed-function prototype methods cannot access 'this'.props
+- function() {} only unnamed-'function's can access 'this'.props
+User.prototype.meth = function() { .. this.prop .. } // * no lambda's in this case
+
 console.(log/warn/error/table/dir/group/groupEnd/time/timeEnd/..)
 arr.(foreach/map/reduce/filter/sort/includes/some/of/from/every/..)
 
 
+
 ---
+
 
 
 * declarative (comma-separated tuple) scope ( 1-line, 1-line )

@@ -177,12 +177,14 @@ const Prototype = (_ => {
     User.prototype.getDetails = function() {
         return `${this.name}, Age: ${this.age}`
     }
-
-    User.prototype.clone = _ => // * { ...(this) } -> ...this / ...(this) - syntax not interpreted yet
-        { this.id, this.name, this.age }
+ 
+    User.prototype.clone = function() { // * () => {}/() lambda's as prototype methods cannot access 'this'.props
+        return { id: this.id, name: this.name, age: this.age }
+    }
+    // * { ...(this) } -> ...this / ...(this) - syntax not interpreted yet
     
     const user = new User(1, 'Alice', 25)
-      
+    
     return {
         test() {
             console.log(user.getDetails())
