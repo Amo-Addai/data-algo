@@ -124,8 +124,8 @@ class TSearching {
 // Linked Lists
 
 // * type-aliases TListNode1 & TListNode2 both defined outside TLinkedList class, so can be used inside (& outside) TLinkedList
-type TListNode1 = typeof TLinkedList.TListNode.prototype;
-type TListNode2 = InstanceType<typeof TLinkedList.TListNode>;
+type TListNode1 = typeof TLinkedList.TListNode.prototype // static-class.prototype
+type TListNode2 = InstanceType<typeof TLinkedList.TListNode> // generic InstanceType
 
 class TLinkedList {
 
