@@ -2520,7 +2520,7 @@ arr.(foreach/map/reduce/filter/sort/includes/some/of/from/every/..)
 
 
 
-/*
+/* // TODO: Node - Express
 
 * // TODO: WebStorm
 
@@ -2601,9 +2601,7 @@ Scaffolding -
 
 
 
-
-
-* // TODO: Hapi, NestJS, AdonisJS, FeathersJS, ..
+* // TODO: ..
 
 */
 
@@ -2612,7 +2610,7 @@ Scaffolding -
 
 
 
-/*
+/* // TODO: Hapi
 
 * // TODO: WebStorm
 
@@ -2626,7 +2624,7 @@ Scaffolding -
 
 
 
-* // TODO: Web - Js - Notes
+* // TODO: Hapi - Js - Notes
 
 
 
@@ -2722,7 +2720,7 @@ Scaffolding -
 
 
 
-/*
+/* // TODO: NestJS
 
 * // TODO: WebStorm
 
@@ -2736,7 +2734,454 @@ Scaffolding -
 
 
 
-* // TODO: Next - Js-Ts - Notes
+* // TODO: Nest - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: AdonisJS
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Adonis - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: FeathersJS
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Feathers - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+// TODO: ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+/* // TODO: React.js
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: React - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: Next.js
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Next - Js - Notes
 
 
 
@@ -2770,6 +3215,336 @@ Scaffolding -
 * Containers - 
 
 * Components - Head, 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: Angular.js
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Angular - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - next/(head/..), 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - Head, 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: Vue.js
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Vue - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: Nuxt.js
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Nuxt - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
 
 * Shapes - 
 

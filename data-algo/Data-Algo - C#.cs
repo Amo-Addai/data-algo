@@ -5,7 +5,7 @@ using System.Linq;
 
 /* // TODO: To-Use
 
-Keywords - sealed, partial, virtual, record, required, readonly, 
+Keywords - sealed, partial, virtual, event, record, required, readonly, nameof(..), 
 In-built DataStructure classes
 'event' Handlers
 delegate methods - with Func<..> & lambda functions
@@ -176,7 +176,7 @@ namespace DataAlgo
 
 * // TODO: C#
 
-Keywords - readonly, 
+Keywords - readonly, nameof(..), 
 
 New Types - Guid, 
 
@@ -186,6 +186,8 @@ var x; - wrong - Implicitly-typed variables must be initialized
 var x = null; - wrong - Cannot assign <null> to an implicitly-typed variable
 var x = non_null_value; - correct - var-var given non-null value
 Type x; - correct - typed-var not requiring any (null / non-null) value yet
+
+nameof(var) - returns "var" identifier as a string 
 
 String.Meths == string.Meths (& other data types)
 
@@ -220,7 +222,7 @@ abstract class - Entities with props & abstract methods only - encapsulate imple
 public record A(string X, int Y); // * or record A { .. }
 A x - new { X = 'v', Y = 1 }; A y - x with { Y = 2 }; // * 'with' keyword to make updated-copy of record
 
-private required Type x { get => value, internal set; init; } - init not normaly used with set
+private required Type x { get => value, internal set; init; } - init not normally used with set
 
 * required & init; for both classes / records
 * // todo: check record's init / constructor methods

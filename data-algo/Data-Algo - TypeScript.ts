@@ -123,90 +123,102 @@ class TSearching {
 
 // Linked Lists
 
+// * type-aliases TListNode1 & TListNode2 both defined outside TLinkedList class, so can be used inside (& outside) TLinkedList
+type TListNode1 = typeof TLinkedList.TListNode.prototype;
+type TListNode2 = InstanceType<typeof TLinkedList.TListNode>;
+
 class TLinkedList {
 
-    private _head: TLinkedList.TListNode? = null
-    private _tail: TLinkedList.TListNode? = null
-    
-    constructor() {
-        this._head = null
-        this._tail = null
-    }
+    // * cannot define inner class X {} in .ts; must be a static-class var with (un)named class value
 
-    get head(): TLinkedList.TListNode | null {
-        return this._head
-    }
-
-    set head(n: TLinkedList.TListNode | null) {
-        this._head = n
-    }
-
-    get tail(): TLinkedList.TListNode | null {
-        return this._tail
-    }
-
-    set tail(n: TLinkedList.TListNode | null) {
-        this._tail = n
-    }
-
-    
-    static TListNode = class {
+    static TListNode = class ListNode { // cannot be an unnamed class {} value; ListNode type required
 
         private _value: any
-        private _next: TLinkedList.TListNode? = null
+        private _next?: ListNode
     
         constructor(v, n) {
             this._value = v
             this._next = n
         }
-
+    
         get value(): any {
             return this._value
         }
-
+    
         set value(n: any) {
             this._value = n
         }
-
-        get next(): TLinkedList.TListNode | null {
+    
+        get next(): ListNode | undefined {
             return this._next
         }
-
-        set next(n: TLinkedList.TListNode | null) {
+    
+        set next(n: ListNode) { // set accessor cannot have an optional parameter
             this._next = n
         }
+    
+    };
 
+    /*
+    * cannot create a type alias inside the class, so the static property ListNode can be used as a type
+    * must define type aliases outside the class, & defined types can be used both INSIDE & outside the class
+    type TListNode = typeof TLinkedList.ListNode.prototype or InstanceType<typeof TLinkedList.TListNode> // * if static class-var was 'ListNode'
+    private x: TListNode // * using type alias TListNode
+    private x: TLinkedList['ListNode'] // * using static ListNode as a type
+    * TListNode1 & TListNode2 both defined outside TLinkedList class, so can be used
+    */
+
+    // best way is to use the static-class.prototype / generic InstanceType of static-class directly
+    private _head?: typeof TLinkedList.TListNode.prototype // static-class.prototype
+    private _tail?: InstanceType<typeof TLinkedList.TListNode> // generic InstanceType
+
+    get head(): TListNode1 | undefined {
+        return this._head
+    }
+
+    set head(n: TListNode2) {
+        this._head = n
+    }
+
+    get tail(): TListNode1 | undefined {
+        return this._tail
+    }
+
+    set tail(n: TListNode2) {
+        this._tail = n
     }
 
     static TSLinkNode = class extends TLinkedList.TListNode {
+        // can be an unnamed class {} value; TSLinkNode type not required
+        // but should extend TListNode type-alias
 
         constructor(v, n) {
             super(v, n)
         }
 
-    }
+    };
 
     static TDLinkNode = class extends TLinkedList.TListNode {
 
-        private _prev: TLinkedList.TListNode? = null
+        private _prev?: InstanceType<typeof TLinkedList.TListNode> // generic InstanceType
+        // or - typeof TLinkedList.TListNode.prototype - static-class.prototype
 
         constructor(v, n, p) {
             super(v, n)
             this._prev = p
         }
 
-        get prev(): TLinkedList.TListNode | null {
+        get prev(): TListNode1 | undefined {
             return this._prev
         }
     
-        set prev(n: TLinkedList.TListNode | null) {
+        set prev(n: TListNode2) {
             this._prev = n
         }
         
-    }
+    };
 
 }
-
 
 // Stacks
 
@@ -1142,7 +1154,7 @@ f(1) - b = undefined | f(1, null) - b = null
 
 
 
-/*
+/* // TODO: Node - Express
 
 * // TODO: WebStorm
 
@@ -1223,7 +1235,7 @@ Scaffolding -
 
 
 
-
+* // TODO: ..
 
 */
 
@@ -1231,7 +1243,8 @@ Scaffolding -
 
 
 
-/*
+
+/* // TODO: Hapi
 
 * // TODO: WebStorm
 
@@ -1245,7 +1258,894 @@ Scaffolding -
 
 
 
-* // TODO: Web - Js - Notes
+* // TODO: Hapi - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: NestJS
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Nest - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: AdonisJS
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Adonis - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: FeathersJS
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Feathers - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+// TODO: ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+/* // TODO: React.js
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: React - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: Next.js
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Next - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - next/(head/..), 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - Head, 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: Angular.js
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Angular - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - next/(head/..), 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - Head, 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: Vue.js
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Vue - Js - Notes
+
+
+
+* // TODO: Js-Ts - Config
+
+
+
+* // TODO: Js-Ts - Issues
+
+
+
+* // TODO: Js-Ts - Main
+
+
+* Libraries - 
+
+* Classes - 
+
+* 'Language' Classes - 
+
+* 3rd-Party Classes - 
+
+* Special Data-Types - 
+
+* Lifecycle Methods - 
+
+* Functions - 
+
+* Methods - 
+
+* Containers - 
+
+* Components - 
+
+* Shapes - 
+
+* Props - 
+
+* Styles - 
+
+* Animations - 
+
+* Gestures - 
+
+* Event Handlers - 
+
+* Enumerations - 
+
+
+
+
+
+
+* Specific Component-Prop-Enum Combos - 
+
+
+
+
+
+
+* Special Classes & Methods / Props - Class . meths(..) / props
+
+
+
+
+
+
+* IDE Features
+
+
+Scaffolding - 
+
+
+
+
+
+
+* Notes
+
+
+
+
+
+* enum / switch cases for generics-validations
+
+
+
+
+*/
+
+
+
+
+
+
+/* // TODO: Nuxt.js
+
+* // TODO: WebStorm
+
+
+
+* // TODO: WebStorm - Config
+
+
+
+* // TODO: WebStorm - Issues
+
+
+
+* // TODO: Nuxt - Js - Notes
 
 
 
@@ -1344,9 +2244,7 @@ Scaffolding -
 
 
 
-
-
-* // TODO: Sample Framework
+* // TODO: Mobile Framework
 
 
 Libraries - 
@@ -1428,8 +2326,6 @@ Errors:
 
 
 
-
-
 */
 
 
@@ -1437,8 +2333,6 @@ Errors:
 
 
 /*
-
-
 
 
 
@@ -1547,7 +2441,6 @@ Errors:
 
 
 
-
 */
 
 
@@ -1555,8 +2448,6 @@ Errors:
 
 
 /*
-
-
 
 
 
@@ -1659,8 +2550,6 @@ import [React == * as React] from 'react'
 
 
 Errors:
-
-
 
 
 
