@@ -2448,6 +2448,8 @@ Array(5).fill(0) - quick-dummy 0-padding array of length 5
 false - !!null?.length, !![]?.length (checks if arr length is truthy - not falsy; cannot be empty; []?.length = 0)
 true - !null?.length, ![]?.length, []?.length >= 0 (checks if arr is non-null with 0+ items - can be empty)
 
+let obj = { x, func() {}, await func1() {} } - func(1) also implied keys, like x
+
 arr = arr.map(cb) - returns new array with updated items
 arr.forEach(cb) - doesn't return new array; just exec's cb on each item, but not in-place
 x = arr.reduce(cb to work with accumulated result & items to return 1 accumulated-result value)
@@ -3196,7 +3198,7 @@ Scaffolding -
 * // TODO: Js-Ts - Main
 
 
-* Libraries - next/(head/..), 
+* Libraries - next/(auth/headers/script/..)/(head/image/..), 
 
 * Classes - 
 
@@ -3214,7 +3216,7 @@ Scaffolding -
 
 * Containers - 
 
-* Components - Head, 
+* Components - Head, Image, 
 
 * Shapes - 
 
