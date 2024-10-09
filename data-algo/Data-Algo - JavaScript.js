@@ -2483,7 +2483,7 @@ let x = <T>(..) => (..) | function <T>(..) {..} | function a<T>(..) {..} - Error
 User.prototype.meth = function() { .. this.prop .. } // * no lambda's in this case
 
 console.(log/warn/error/table/dir/group/groupEnd/time/timeEnd/..)
-arr.(foreach/map/reduce/filter/sort/includes/some/of/from/every/..)
+arr.(foreach/map/reduce/find/filter/sort/includes/some/of/from/every/..)
 
 
 

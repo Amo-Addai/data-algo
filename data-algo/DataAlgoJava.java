@@ -2658,6 +2658,28 @@ public class DataAlgoJava {
 
 * // TODO: Java
 
+Strings - "" | Chars - ''
+
+Boolean.valueOf(x == null) .jv - new Boolean(x == null) .jv deprecated - Boolean(!u) .js
+
+class { public static var x;  static { perform 'runtime-like' ops in static env ? eg. x = 1; }  }
+
+- convert (array)list to .stream 1st, then .map each item, then .collect the results list back
+(List/ArrayList<T>) r = (List/ArrayList<T>) x.stream().map(x -> x * 2).collect(Collectors.toList());
+
+.forEach also in (Array)List classes - doesn't require .stream
+.stream().(count/forEach/map/reduce/findAny/findFirst/filter/sorted(cb?).toList/flatMap/collect/../combos)
+.map(String::toUpperCase/List::stream/..) - also passed in as cbs (or pass in custom lambdas)
+
+Collectors.(toList/..) - used within .collect(..), Collections.(singletonList/..) - generic for list-data-structures
+
+x.stream().findAny(x -> x.prop == value) - returns <T> obj
+
+new MultiValueMap<T, U>() { cb overrides } - .jv 'closure' with cb overrides ('lambda interface-implementation'), if interface (MultiValueMap)
+
+class A extends B [extends C - wrong] implements D, E { } - cannot extend multiple parents, but can extend 1 & implement multiple interfaces / abstract classes
+
+
 
 
 
@@ -2703,7 +2725,7 @@ public class DataAlgoJava {
 
 * Libraries - springframework, springboot, 
 
-* Classes - 
+* Classes - ResponseEntity, 
 
 * 'Language' Classes - 
 
@@ -2711,13 +2733,16 @@ public class DataAlgoJava {
 
 * Special Data-Types - 
 
-* Directives / Annotations - 
+* Annotations / Directives - @Annot - SpringBootApplication, RestController, RequestMapping(path="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
+(Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam, PathVariable, RequestBody, ResponseStatus(HttpStatus), 
+..
 
 * Functions - 
 
-* Methods - 
+* Methods - Thread.(sleep/..), thread.(run/start/isAlive/setDaemon/interrupt/..), 
 
-* Enumerations - 
+* Enumerations - RequestMethod.(GET/POST/PUT/PATCH/DELETE/..), HttpStatus.(OK/CREATED/ACCEPTED/NO_CONTENT/NOT_FOUND/REQUEST_TIMEOUT/BAD_GATEWAY/UNAUTHORIZED/..), 
+MediaType.(APPLICATION_JSON_VALUE/APPLICATION_FORM_URLENCODED_VALUE/APPLICATION_XHTML_XML_VALUE/..),
 
 
 
