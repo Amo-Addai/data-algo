@@ -2689,6 +2689,7 @@ public class DataAlgoJava {
 
 * // TODO: SpringBoot - Config
 
+- with both Maven & Gradle
 
 
 * // TODO: SpringBoot - Issues
