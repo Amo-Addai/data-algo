@@ -26,7 +26,7 @@ import java.util.function.BiConsumer;
 Generics
 Vavr, FunctionalJava
 Functional Interfaces (all in-built & custom)
-eg. Function, Consumer, Predicate, BiFunction, BiConsumer, BiPredicate, Supplier, UnaryOperator, BinaryOperator,  ... 
+eg. Function (apply), Consumer (accept), Predicate, BiFunction, BiConsumer, BiPredicate, Supplier, UnaryOperator, BinaryOperator,  ... 
 Lombok, 
 ..
 
@@ -37,6 +37,31 @@ public class DataAlgoJava {
     public static void main(String[] args) {
         Main.main(args);
     }
+
+    public void tests() {
+
+        /*
+        * Cannot infer type: lambda expressions require an explicit target type
+        var f = (String x) -> { // Best to use Functional Interfaces
+            System.out.println(x);
+        }; f();
+        */
+
+        Consumer<String> f1 = (String x) -> { // Consumer FunctionalInterface - 'accepts' 1 arg, returns void
+            System.out.println(x);
+        }; f1.accept("123");
+
+        Function<String, String> f2 = (String x) -> { // Function FunctionalInterface - 'applies' 1 arg, returns 1 type
+            System.out.println(x);
+            return x;
+        }; String r = f2.apply("123");
+
+        // * BiFunction, BiConsumer,  ...
+
+    }
+
+    // Static declarations in inner classes are not supported at language level '11'
+    // unless inner classes are also declared static; or upgrade JDK to 16+
 
     public static class Main {
 
@@ -94,7 +119,11 @@ public class DataAlgoJava {
 
                 Arrays.sort(arr); // O(n log n) t
 
+                // using FunctionalInterfaces with lambda's as values
                 BiFunction<int[], Integer, Integer>[] rBinarySearch = new BiFunction[1];
+                // must be an array (of length 1), if function-item is required for recursive-calls
+                // so function-item can be retrieved by 'accessing' it by index [0] 1st, before recursive-calling
+                // if not, java wouldn't have noted FunctionalInterface var's existence yet
                 rBinarySearch[0] = (a, x) -> {
                     if (a.length == 0)
                         return -1;
@@ -2653,6 +2682,9 @@ public class DataAlgoJava {
 
 * // TODO: SpringBoot - Notes
 
+- scaffolding generator service
+    - spring initializr - start.spring.io & IntelliJ plugin
+
 
 
 * // TODO: SpringBoot - Config
@@ -2667,13 +2699,13 @@ public class DataAlgoJava {
 
 
 
-* Libraries - 
+* Libraries - springframework, springboot, 
 
 * Classes - 
 
 * 'Language' Classes - 
 
-* 3rd-Party Classes - 
+* 3rd-Party Classes - lombok, 
 
 * Special Data-Types - 
 

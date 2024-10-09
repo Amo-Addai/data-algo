@@ -3198,13 +3198,13 @@ Scaffolding -
 * // TODO: Js-Ts - Main
 
 
-* Libraries - next/(auth/headers/script/..)/(head/image/..), 
+* Libraries - react, next/(auth/headers/router->navigation/script/..)/(head/image/..), next-auth(/react/providers(/google/..)/..)/(..), 
 
 * Classes - 
 
 * 'Language' Classes - 
 
-* 3rd-Party Classes - 
+* 3rd-Party Classes - (@)lib - heroicons/(react/..)(/solid/outline/..), 
 
 * Special Data-Types - 
 
