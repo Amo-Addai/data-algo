@@ -23,6 +23,7 @@ import java.util.function.BiConsumer;
 
 /* // TODO: To-Use
 
+Keywords - synchronized, record, 
 Generics
 Vavr, FunctionalJava
 Functional Interfaces (all in-built & custom)
@@ -2658,11 +2659,35 @@ public class DataAlgoJava {
 
 * // TODO: Java
 
+Keywords - record, 
+
+New Types - 
+
+
 Strings - "" | Chars - ''
 
 Boolean.valueOf(x == null) .jv - new Boolean(x == null) .jv deprecated - Boolean(!u) .js
 
 class { public static var x;  static { perform 'runtime-like' ops in static env ? eg. x = 1; }  }
+
+'record' in place of 'class' - immutable classes, for data-integrity
+- for 'data-record' OOP-objects eg. BankAccount, Dto's, ..
+
+public record A(String x, int y) {
+
+[or static-only props | (non-)static meths ..]
+
+    private static String z;
+
+    public String z() { return z; } // * no this.z - static prop
+    public void z(String zz) { z = zz; } // * custom setter
+* .z prop not set on instantiation
+
+* canonical-constructor auto-gen'd with A's own definition above
+* auto-gen'd accessors - x(), y(), ..
+* auto-gen'd method - equals, hashCode, toString
+
+}
 
 - convert (array)list to .stream 1st, then .map each item, then .collect the results list back
 (List/ArrayList<T>) r = (List/ArrayList<T>) x.stream().map(x -> x * 2).collect(Collectors.toList());
@@ -2679,7 +2704,12 @@ new MultiValueMap<T, U>() { cb overrides } - .jv 'closure' with cb overrides ('l
 
 class A extends B [extends C - wrong] implements D, E { } - cannot extend multiple parents, but can extend 1 & implement multiple interfaces / abstract classes
 
-
+- in multi-threading, synchronize based on thread-locking on var
+synchronized (var) {
+    only 1 thread can exec this scope at a time;
+    since all instances of this thread depend on this.a (preventing race conditions - (not deadlocks))
+}
+synchronized void func() { sync'd function }
 
 
 
@@ -2725,24 +2755,27 @@ class A extends B [extends C - wrong] implements D, E { } - cannot extend multip
 
 * Libraries - springframework, springboot, 
 
-* Classes - ResponseEntity, 
+* 3rd-Party Libraries - lombok, 
+
+* Classes - HttpHeaders, ResponseEntity, 
 
 * 'Language' Classes - 
 
-* 3rd-Party Classes - lombok, 
+* 3rd-Party Classes - MultipartFile, 
 
 * Special Data-Types - 
 
-* Annotations / Directives - @Annot - SpringBootApplication, RestController, RequestMapping(path="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
-(Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam, PathVariable, RequestBody, ResponseStatus(HttpStatus), 
+* Annotations / Directives - @Annot - SpringBootApplication, RestController, Autowired, RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
+(Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam("param"), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
+Service, 
 ..
 
 * Functions - 
 
-* Methods - Thread.(sleep/..), thread.(run/start/isAlive/setDaemon/interrupt/..), 
+* Methods - Thread.(sleep/..), thread.(run/start/isAlive/setDaemon/interrupt/..), ; ResponseEntity.(ok/..), MediaType.(parseMediaType), 
 
-* Enumerations - RequestMethod.(GET/POST/PUT/PATCH/DELETE/..), HttpStatus.(OK/CREATED/ACCEPTED/NO_CONTENT/NOT_FOUND/REQUEST_TIMEOUT/BAD_GATEWAY/UNAUTHORIZED/..), 
-MediaType.(APPLICATION_JSON_VALUE/APPLICATION_FORM_URLENCODED_VALUE/APPLICATION_XHTML_XML_VALUE/..),
+* Enumerations - (HttpMethod/RequestMethod).(GET/POST/PUT/PATCH/DELETE/..), HttpStatus.(OK/CREATED/ACCEPTED/NO_CONTENT/NOT_FOUND/REQUEST_TIMEOUT/BAD_GATEWAY/UNAUTHORIZED/..), 
+MediaType.(APPLICATION_JSON_VALUE/APPLICATION_FORM_URLENCODED_VALUE/MULTIPART_FORM_DATA_VALUE/APPLICATION_XHTML_XML_VALUE/..), 
 
 
 
@@ -2777,7 +2810,19 @@ Scaffolding -
 
 
 
+* ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+* Errors
+
+java spring error - external SimpleController from @SpringBootApplication DemoApplication
+
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'simpleController' method
+    - multiple duplicate request-routes in SimpleController @RestController
+        - even if duplicate routes may include differences in query-params (but not path-params, http-methods, etc - if routes are explicitly different)
+
+
+        
 
 */
 

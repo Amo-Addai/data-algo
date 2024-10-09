@@ -180,6 +180,7 @@ Keywords - readonly, nameof(..),
 
 New Types - Guid, 
 
+
 * // todo: check - is [not] null/Type (confirm non-null value), 
 
 var x; - wrong - Implicitly-typed variables must be initialized
