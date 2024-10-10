@@ -2778,6 +2778,7 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 (Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam("param"), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
 CrossOrigin, 
 Service, ControllerAdvice, ExceptionHandler, 
+SpringBootTest, ActiveProfiles, RunWith, Profile, 
 ..
 
 * Functions - 
