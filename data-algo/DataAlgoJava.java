@@ -2711,6 +2711,13 @@ synchronized (var) {
 }
 synchronized void func() { sync'd function }
 
+- Variable used in lambda expression should be final or effectively final
+final Type x; (final var may require value on definition)[x = value; in lambda (Error - final var cannot be re-assigned a new value)]; 
+Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda - new Atomic[..] instantiation not required when setting new value]; x.get(); value when required 
+* Atomic[Reference/Integer/Boolean/Long/../NO string/other regular types]
+
+
+
 
 
 */
@@ -2765,9 +2772,9 @@ synchronized void func() { sync'd function }
 
 * Special Data-Types - 
 
-* Annotations / Directives - @Annot - SpringBootApplication, RestController, Autowired, RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
+* Annotations / Directives - @Annot - SpringBootApplication, RestController (api routes), Controller (web - static routes), Autowired, RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
 (Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam("param"), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
-Service, 
+Service, ControllerAdvice, 
 ..
 
 * Functions - 
@@ -2822,7 +2829,7 @@ Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'simpl
         - even if duplicate routes may include differences in query-params (but not path-params, http-methods, etc - if routes are explicitly different)
 
 
-        
+
 
 */
 
