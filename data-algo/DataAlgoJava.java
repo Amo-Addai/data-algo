@@ -2694,6 +2694,8 @@ New Types -
 
 Strings - "" | Chars - ''
 
+int x = 15 / 10; - 1 (int floors 1.5 decimal quotient by-default - Math.floor not required)
+
 Boolean.valueOf(x == null) .jv - new Boolean(x == null) .jv deprecated - Boolean(!u) .js
 
 class { public static var x;  static { perform 'runtime-like' ops in static env ? eg. x = 1; }  }
