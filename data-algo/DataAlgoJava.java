@@ -570,7 +570,7 @@ public class DataAlgoJava {
 
             // TODO: Fix
 
-            public int reverse(int n) { // O(n) t ; O(1) s
+            public int reverse(int n) { // O(1 - regular number - of digits > n - very large number - of digits) t ; O(1) s
                 
                 // int r = Integer.parseInt(("" + n).reverse())
                 // return r;
@@ -2807,6 +2807,7 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 * Annotations / Directives - @Annot - SpringBootApplication, RestController (api routes), Controller (web - static routes), Autowired, RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
 (Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam("param"), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
 CrossOrigin, 
+Qualifier, 
 Service, ControllerAdvice, ExceptionHandler, 
 SpringBootTest, ActiveProfiles, RunWith, Profile, 
 ..
