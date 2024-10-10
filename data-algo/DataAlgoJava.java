@@ -568,6 +568,34 @@ public class DataAlgoJava {
 
             // Arrays & Strings
 
+            // TODO: Fix
+
+            public int reverse(int n) { // O(n) t ; O(1) s
+                
+                // int r = Integer.parseInt(("" + n).reverse())
+                // return r;
+                
+                // todo: handle all pre-checks in-loop - O(n) t
+
+                String str = ""; Boolean negative = n < 0;
+
+                // remove any preceding 0 (1st list item)
+                if (n % 10 == 0) n = n / 10;
+
+                while (n > 0) {
+                    str = str + (n % 10); // cut out last digit of n & appends to str
+                    n = n / 10; // remove last digit - already returns floored-integer - Math.floor not required
+                }
+
+                System.out.println(str);
+                return Integer.parseInt(str)
+                    * (
+                        negative
+                        ? -1 : 1
+                    );
+            }
+            
+
             String reorganizeString(String S) { // TODO: verify - O(n + n log n) t | O(n) s
 
                 Map<Character, Integer> counts = new HashMap<>();
