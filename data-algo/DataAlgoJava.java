@@ -594,6 +594,30 @@ public class DataAlgoJava {
                         ? -1 : 1
                     );
             }
+
+            // 3rd-Party
+            public int reverse1(int x) { // O(n ~ 1) t; O(1) s
+                int reversed = 0;
+                while (x != 0) {
+                    int pop = x % 10; // modulo out last digit
+                    x /= 10; // integer-divide out last digit - Math.floor not required
+                    
+                    // Check for overflow/underflow before adding the popped digit
+                    // return 0 on very large-number digits
+                    if (
+                        reversed > Integer.MAX_VALUE/10 
+                        || (reversed == Integer.MAX_VALUE / 10 && pop > 7)
+                    ) return 0;
+                    if (
+                        reversed < Integer.MIN_VALUE/10 
+                        || (reversed == Integer.MIN_VALUE / 10 && pop < -8)
+                    ) return 0;
+                    
+                    reversed = reversed * 10 + pop; // pad another '0' digit, then add x-modulo'd out digit
+                }
+                return reversed;
+            }
+        
             
 
             String reorganizeString(String S) { // TODO: verify - O(n + n log n) t | O(n) s
