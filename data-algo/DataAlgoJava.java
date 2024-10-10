@@ -2770,11 +2770,14 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 
 * 3rd-Party Classes - MultipartFile, 
 
+* Interfaces - HandlerInterceptor, 
+
 * Special Data-Types - 
 
 * Annotations / Directives - @Annot - SpringBootApplication, RestController (api routes), Controller (web - static routes), Autowired, RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
 (Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam("param"), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
-Service, ControllerAdvice, 
+CrossOrigin, 
+Service, ControllerAdvice, ExceptionHandler, 
 ..
 
 * Functions - 
