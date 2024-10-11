@@ -2830,7 +2830,7 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 (Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam("param"), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
 CrossOrigin, 
 Bean, Qualifier, Autowired, Lazy, 
-Service, ControllerAdvice, ExceptionHandler, 
+Service, ControllerAdvice, ExceptionHandler, MessagingGateway, 
 SpringBootTest, ActiveProfiles, RunWith, Profile, 
 ..
 
@@ -2838,7 +2838,7 @@ SpringBootTest, ActiveProfiles, RunWith, Profile,
 
 * Methods - Thread.(sleep/..), thread.(run/start/isAlive/setDaemon/interrupt/..), ; ResponseEntity.(ok/..), MediaType.(parseMediaType), 
 
-* Enumerations - (HttpMethod/RequestMethod).(GET/POST/PUT/PATCH/DELETE/..), HttpStatus.(OK/CREATED/ACCEPTED/NO_CONTENT/NOT_FOUND/REQUEST_TIMEOUT/BAD_GATEWAY/UNAUTHORIZED/..), 
+* Enumerations - (HttpMethod/RequestMethod).(GET/POST/PUT/PATCH/DELETE/HEAD/OPTIONS/TRACE/..), HttpStatus.(OK/CREATED/ACCEPTED/NO_CONTENT/NOT_FOUND/REQUEST_TIMEOUT/BAD_GATEWAY/UNAUTHORIZED/..), 
 MediaType.(APPLICATION_JSON_VALUE/APPLICATION_FORM_URLENCODED_VALUE/MULTIPART_FORM_DATA_VALUE/APPLICATION_XHTML_XML_VALUE/..), 
 
 
