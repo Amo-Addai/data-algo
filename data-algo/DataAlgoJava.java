@@ -2829,7 +2829,7 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 * Annotations / Directives - @Annot - SpringBootApplication, RestController (api routes), Controller (web - static routes), RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
 (Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam("param"), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
 CrossOrigin, 
-Qualifier, Autowired, Lazy, 
+Bean, Qualifier, Autowired, Lazy, 
 Service, ControllerAdvice, ExceptionHandler, 
 SpringBootTest, ActiveProfiles, RunWith, Profile, 
 ..
@@ -2884,6 +2884,18 @@ java spring error - external SimpleController from @SpringBootApplication DemoAp
 Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'simpleController' method
     - multiple duplicate request-routes in SimpleController @RestController
         - even if duplicate routes may include differences in query-params (but not path-params, http-methods, etc - if routes are explicitly different)
+
+- Circular Dependencies:
+    - with Beans - 
+        - The most common solution for circular dependencies in Spring is to use the @Lazy annotation.
+        - This tells Spring to lazily initialize one or both beans, breaking the circular reference.
+
+- Configuration Properties:
+    - Configuration property name 'spring.dbProductService' is not valid
+    - Invalid characters: 'P', 'S' | Bean: dbProductService
+    - Reason: 'Canonical names' should be kebab-case ('-' separated), lowercase alpha-numeric characters and must start with a letter
+        - Action: Modify 'spring.dbProductService' so that it conforms to the canonical names requirements.
+
 
 
 
