@@ -597,15 +597,15 @@ public class DataAlgoJava {
 
             // 3rd-Party
             public int reverse1(int x) { // O(n ~ 1) t; O(1) s
-                int reversed = 0;
+                int reversed = 0, pop = 0;
                 while (x != 0) {
-                    int pop = x % 10; // modulo out last digit
+                    pop = x % 10; // modulo out last digit (also -ve if x -ve)
                     x /= 10; // integer-divide out last digit - Math.floor not required
                     
                     // Check for overflow/underflow before adding the popped digit
                     // return 0 on very large-number digits
                     if (
-                        reversed > Integer.MAX_VALUE/10 
+                        reversed > Integer.MAX_VALUE/10 // max-possible number of digits (hence Integer.MAX_VALUE/10 last digit int-divided out)
                         || (reversed == Integer.MAX_VALUE / 10 && pop > 7)
                     ) return 0;
                     if (
@@ -613,12 +613,10 @@ public class DataAlgoJava {
                         || (reversed == Integer.MIN_VALUE / 10 && pop < -8)
                     ) return 0;
                     
-                    reversed = reversed * 10 + pop; // pad another '0' digit, then add x-modulo'd out digit
+                    reversed = reversed * 10 + pop; // pad another '0' digit, then add x-modulo'd out digit (if x -ve new '-ve additions' don't matter; -reversed already in -ve zone)
                 }
-                return reversed;
+                return reversed; // if x -ve, reversed already -ve
             }
-        
-            
 
             String reorganizeString(String S) { // TODO: verify - O(n + n log n) t | O(n) s
 
@@ -2828,10 +2826,10 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 
 * Special Data-Types - 
 
-* Annotations / Directives - @Annot - SpringBootApplication, RestController (api routes), Controller (web - static routes), Autowired, RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
+* Annotations / Directives - @Annot - SpringBootApplication, RestController (api routes), Controller (web - static routes), RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
 (Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam("param"), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
 CrossOrigin, 
-Qualifier, 
+Qualifier, Autowired, Lazy, 
 Service, ControllerAdvice, ExceptionHandler, 
 SpringBootTest, ActiveProfiles, RunWith, Profile, 
 ..
