@@ -2872,7 +2872,8 @@ Scaffolding -
 * Notes
 
 - in a @Component class, difference between @Autowired class props & @Lazy constructor/instantiation prop-values
-    - & when to not use @PostConstruct with class' post-startup method
+    - & when to not use @PostConstruct with class' methods
+        - only use PostConstruct with 'post-class-bootload' methods when they're called in static {scope}
 - 
 
 
