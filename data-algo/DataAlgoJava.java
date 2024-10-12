@@ -27,7 +27,8 @@ Keywords - synchronized, record,
 Generics
 Vavr, FunctionalJava
 Functional Interfaces (all in-built & custom)
-eg. Function (apply), Consumer (accept), Predicate, BiFunction, BiConsumer, BiPredicate, Supplier, UnaryOperator, BinaryOperator,  ... 
+eg. Function (apply), Consumer (accept), Predicate, BiFunction, BiConsumer, BiPredicate;
+Supplier (get), Callable (cal), UnaryOperator, BinaryOperator,  ... 
 Lombok, 
 ..
 
@@ -2720,6 +2721,9 @@ int x = 15 / 10; - 1 (int floors 1.5 decimal quotient by-default - Math.floor no
 
 Boolean.valueOf(x == null) .jv - new Boolean(x == null) .jv deprecated - Boolean(!u) .js
 
+- Self-executing lambda - Supplier .get() Functional Interface
+int x = ((Supplier<Integer>) () -> { .. return int; }).get();
+
 class { public static var x;  static { perform 'runtime-like' ops in static env ? eg. x = 1; }  }
 
 'record' in place of 'class' - immutable classes, for data-integrity
@@ -2777,7 +2781,7 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 
 
 
-/*
+/* // TODO: SpringBoot - @Annotations, Lifecycles
 
 * // TODO: IntelliJ-Idea
 
@@ -2829,8 +2833,10 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 * Annotations / Directives - @Annot - SpringBootApplication, RestController (api routes), Controller (web - static routes), RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
 (Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam("param"), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
 CrossOrigin, 
-Bean, Qualifier, Autowired, Lazy, 
-Service, ControllerAdvice, ExceptionHandler, MessagingGateway, 
+Entity, Table, Repository, PersistenceContext, 
+Service, Component, Bean, Qualifier, Autowired, Lazy, 
+PostConstruct, 
+ControllerAdvice, ExceptionHandler, MessagingGateway, 
 SpringBootTest, ActiveProfiles, RunWith, Profile, 
 ..
 
@@ -2865,6 +2871,9 @@ Scaffolding -
 
 * Notes
 
+- in a @Component class, difference between @Autowired class props & @Lazy constructor/instantiation prop-values
+    - & when to not use @PostConstruct with class' post-startup method
+- 
 
 
 
@@ -2895,6 +2904,10 @@ Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'simpl
     - Invalid characters: 'P', 'S' | Bean: dbProductService
     - Reason: 'Canonical names' should be kebab-case ('-' separated), lowercase alpha-numeric characters and must start with a letter
         - Action: Modify 'spring.dbProductService' so that it conforms to the canonical names requirements.
+    - 
+    - eg. userRepoImpl
+    - 
+    - also applies to all Beans' IDs: qualifiers (@Qualifier), 
 
 
 
