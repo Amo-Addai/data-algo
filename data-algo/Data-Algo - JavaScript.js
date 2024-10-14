@@ -152,7 +152,7 @@ var Searching = function() {
     _this.baseCheck = fn => R.ifElse(
         R.isEmpty, // fn should have an array arg
         R.always(null), // null if array is empty
-        fn // return as a functor to then exec with array
+        fn // returned as a functor to then exec with array
     )
 
     _this.check = R.curry((c, a, b) => {
@@ -188,7 +188,7 @@ var Searching = function() {
         
         const res = []
         s.split('') // .map() returns new array with updated items
-            .forEach(c => { // forEach doesn't return new array; just exec's cb on each item, but not in-place
+            .forEach(c => { // forEach doesn't return new array; exec's cb on each item, but not updating them in-place
                 res.push(
                     check(c)
                 )

@@ -359,18 +359,42 @@ function almostIncreasingSequence(sequence: number[]): boolean {
 
 
 function matrixElementsSum(matrix: number[][]): number {
-    return matrix.map((line, j) => line.map((el, i) => (matrix.slice(0, j).every(l => l[i] !== 0)) ? el : 0)).reduce((a, b) => a + b.reduce((c, d) => c + d), 0);
 
+    return matrix // todo: map-reduce functional-pattern
+                .map(
+                    (row, j) =>
+                        row.map(
+                            (el, i) =>
+                                matrix.slice(0, j)
+                                      .every(l => l[i] !== 0)
+                                ? el
+                                : 0
+                        )
+                )
+                .reduce(
+                    (a, b) =>
+                        a + b.reduce(
+                            (c, d) => c + d
+                        ),
+                    0
+                )
+    
     /*
-    return matrix.map((line, j) => {
-        line.map((el, i) => {
+
+    return matrix.map((row, j) => {
+        return row.map((el, i) => {
             (matrix.slice(0, j).every(l => l[i] !== 0)) ? el : 0
         })
     }).reduce((a, b) => {
-        a + b.reduce((c, d) => {
-            c + d
-        }), 0);
+        return a + b.reduce((c, d) => {
+                return c + d
+            })
+    }, 0)
+    
+    return matrix.map((row, j) => row.map((el, i) => (matrix.slice(0, j).every(l => l[i] !== 0)) ? el : 0)).reduce((a, b) => a + b.reduce((c, d) => c + d), 0);
+    
     */
+
 }
 
 // Given an array of strings, return another array containing all its longest strings
@@ -816,7 +840,9 @@ function isCryptSolution(crypt: string[], solution: string[][]): boolean {
 
         return Number.parseInt(num)
     })
+
     return !hasLeadingZeros && decrypted[0] + decrypted[1] === decrypted[2]
+
 }
 
 

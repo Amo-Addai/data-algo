@@ -2717,12 +2717,19 @@ New Types -
 
 Strings - "" | Chars - ''
 
+Type.class - class-name as String
+
+Type x = new Type[] { a, b, 1, 2 } - object-type array 'scope/closure'
+
 int x = 15 / 10; - 1 (int floors 1.5 decimal quotient by-default - Math.floor not required)
 
 Boolean.valueOf(x == null) .jv - new Boolean(x == null) .jv deprecated - Boolean(!u) .js
 
 - Self-executing lambda - Supplier .get() Functional Interface
 int x = ((Supplier<Integer>) () -> { .. return int; }).get();
+
+- a method 'throw'ing new Exception' without handling (without try-catch / or in a un-'try'd catch block)
+should have 'throws Exception' in its signature
 
 class { public static var x;  static { perform 'runtime-like' ops in static env ? eg. x = 1; }  }
 
@@ -2756,7 +2763,7 @@ Collectors.(toList/..) - used within .collect(..), Collections.(singletonList/..
 
 x.stream().findAny(x -> x.prop == value) - returns <T> obj
 
-new MultiValueMap<T, U>() { cb overrides } - .jv 'closure' with cb overrides ('lambda interface-implementation'), if interface (MultiValueMap)
+new MultiValueMap<T, U>() { cb overrides } - .jv 'closure' instantiation / implementation of cb overrides ('lambda interface-implementation'), if interface (MultiValueMap)
 
 class A extends B [extends C - wrong] implements D, E { } - cannot extend multiple parents, but can extend 1 & implement multiple interfaces / abstract classes
 
@@ -2816,11 +2823,13 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 
 
 
-* Libraries - springframework, springboot, 
+* Libraries - springframework, springboot, 'jdbc', 
 
 * 3rd-Party Libraries - lombok, 
 
-* Classes - HttpHeaders, ResponseEntity, 
+* Classes - HttpHeaders, ResponseEntity, Principal, 
+Deprecated? - HttpSecurity, GrantedAuthority, 
+
 
 * 'Language' Classes - 
 
@@ -2831,14 +2840,21 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 * Special Data-Types - 
 
 * Annotations / Directives - @Annot - SpringBootApplication, RestController (api routes), Controller (web - static routes), RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
-(Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam("param"), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
+(Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam([value=]"param"/required/defaultValue/), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
+Value(""/"${message.property}"), 
 CrossOrigin, 
 Entity, Table, Repository, PersistenceContext, 
 Service, Component, Bean, Qualifier, Autowired, Lazy, 
+Configuration, 
 PostConstruct, 
 ControllerAdvice, ExceptionHandler, MessagingGateway, 
 SpringBootTest, ActiveProfiles, RunWith, Profile, 
+EnableConfigServer, EnableAutoConfiguration, EnableConfigurationProperties, 
+EnableScheduling, Scheduled(cron/fixedRate/fixedDelay/initialDelay/..), 
+EnableEurekaServer, EnableEurekaClient, (both from spring.cloud.netflix lib), EnableZuulProxy, 
 ..
+Deprecated? - EnableWebSecurity, EnableAuthorizationServer, EnableResourceServer, 
+
 
 * Functions - 
 
@@ -2846,6 +2862,10 @@ SpringBootTest, ActiveProfiles, RunWith, Profile,
 
 * Enumerations - (HttpMethod/RequestMethod).(GET/POST/PUT/PATCH/DELETE/HEAD/OPTIONS/TRACE/..), HttpStatus.(OK/CREATED/ACCEPTED/NO_CONTENT/NOT_FOUND/REQUEST_TIMEOUT/BAD_GATEWAY/UNAUTHORIZED/..), 
 MediaType.(APPLICATION_JSON_VALUE/APPLICATION_FORM_URLENCODED_VALUE/MULTIPART_FORM_DATA_VALUE/APPLICATION_XHTML_XML_VALUE/..), 
+
+* Thymeleaf-Html Directives - th:xx="value[= #{message.property} | ${anyVar.prop}]" - 
+text="#{message.property}", if="${anyVar.prop}", action="@{/path}" (form), href (a), inline, 
+Inline-Markup - [[${#springVar.prop}]], 
 
 
 
@@ -2874,6 +2894,7 @@ Scaffolding -
 - in a @Component class, difference between @Autowired class props & @Lazy constructor/instantiation prop-values
     - & when to not use @PostConstruct with class' methods
         - only use PostConstruct with 'post-class-bootload' methods when they're called in static {scope}
+- @Autowired members must be defined in valid Spring bean (@Component|@Service|...)
 - 
 
 
@@ -2900,15 +2921,16 @@ Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'simpl
         - The most common solution for circular dependencies in Spring is to use the @Lazy annotation.
         - This tells Spring to lazily initialize one or both beans, breaking the circular reference.
 
-- Configuration Properties:
+- Configuration Properties - @ConfigurationProperties(prefix="spring.dbproductservice") : "Prefix must be in canonical form"
+    - @Qualifiers / @Bean names can take any form, but ConfigurationProperties' prefixes must be their canonical form versions
+        - TODO: confirm both Qualifiers / Bean names & ConfigurationProperties' prefixes must be exact matches (even though they can have different case-forms)
     - Configuration property name 'spring.dbProductService' is not valid
     - Invalid characters: 'P', 'S' | Bean: dbProductService
     - Reason: 'Canonical names' should be kebab-case ('-' separated), lowercase alpha-numeric characters and must start with a letter
         - Action: Modify 'spring.dbProductService' so that it conforms to the canonical names requirements.
     - 
-    - eg. userRepoImpl
+    - eg. @Qualifier("userRepoImpl") & @ConfigurationProperties(prefix="spring.dbproductservice")
     - 
-    - also applies to all Beans' IDs: qualifiers (@Qualifier), 
 
 
 
