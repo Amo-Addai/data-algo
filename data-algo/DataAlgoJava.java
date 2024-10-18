@@ -2823,15 +2823,20 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 
 
 
-* Libraries - springframework, springboot, 'jdbc', 
+* Libraries - springframework, springboot, javax (java-8), jakarta (java-? - 17/22/latest - similar components as 'javax'), 'jdbc', 
 
 * 3rd-Party Libraries - lombok, 
 
 * Classes - HttpHeaders, ResponseEntity, Principal, 
-Deprecated? - HttpSecurity, GrantedAuthority, 
+Properties, Session, Message, MimeBodyPart, Multipart, Transport, 
+..
+Deprecated - ?
+HttpSecurity, GrantedAuthority, 
+Greeting, HelloMessage, 
+..
 
 
-* 'Language' Classes - 
+* 'Language' Classes - Properties, Session, Message, 
 
 * 3rd-Party Classes - MultipartFile, 
 
@@ -2852,8 +2857,13 @@ SpringBootTest, ActiveProfiles, RunWith, Profile,
 EnableConfigServer, EnableAutoConfiguration, EnableConfigurationProperties, 
 EnableScheduling, Scheduled(cron/fixedRate/fixedDelay/initialDelay/..), 
 EnableEurekaServer, EnableEurekaClient, (both from spring.cloud.netflix lib), EnableZuulProxy, 
+HystrixCommand, HystrixProperty, 
 ..
-Deprecated? - EnableWebSecurity, EnableAuthorizationServer, EnableResourceServer, 
+Deprecated - ?
+EnableWebSecurity, EnableAuthorizationServer, EnableResourceServer, 
+EnableWebSocketMessageBroker, 
+MessageMapping, SendTo, 
+..
 
 
 * Functions - 
@@ -2862,6 +2872,7 @@ Deprecated? - EnableWebSecurity, EnableAuthorizationServer, EnableResourceServer
 
 * Enumerations - (HttpMethod/RequestMethod).(GET/POST/PUT/PATCH/DELETE/HEAD/OPTIONS/TRACE/..), HttpStatus.(OK/CREATED/ACCEPTED/NO_CONTENT/NOT_FOUND/REQUEST_TIMEOUT/BAD_GATEWAY/UNAUTHORIZED/..), 
 MediaType.(APPLICATION_JSON_VALUE/APPLICATION_FORM_URLENCODED_VALUE/MULTIPART_FORM_DATA_VALUE/APPLICATION_XHTML_XML_VALUE/..), 
+Message.RecipientType.(TO/..), 
 
 * Thymeleaf-Html Directives - th:xx="value[= #{message.property} | ${anyVar.prop}]" - 
 text="#{message.property}", if="${anyVar.prop}", action="@{/path}" (form), href (a), inline, 
