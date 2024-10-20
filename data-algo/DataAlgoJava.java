@@ -11,6 +11,7 @@ import java.util.Stack;
 import java.util.Queue;
 import java.util.PriorityQueue;
 import java.util.ArrayDeque;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -1193,7 +1194,9 @@ public class DataAlgoJava {
                     // Suggest the JVM to perform garbage collection
                     System.gc();
 
-                    // Redeclare the variable with a different type in a new scope
+
+                    /*
+                    * // todo: Redeclaring same 'next' variable in a new scope - syntax error
                     { // todo: test next line (some editors still call syntax error)
                         ListNode next = node.getNext();
                         ListNode nextNext = next.getNext();
@@ -1202,6 +1205,16 @@ public class DataAlgoJava {
                         // no need to call .setPrev(), if DListNode isn't forced
                         ((DListNode) nextNext).setPrev(node);
                     }
+                    */
+
+
+                    // * Redeclaring a new 'next1' variable instead
+                    ListNode next1 = node.getNext();
+                    ListNode nextNext = next1.getNext();
+                    node.setValue(next1.getValue());
+                    node.setNext(nextNext);
+                    // no need to call .setPrev(), if DListNode isn't forced
+                    ((DListNode) nextNext).setPrev(node);
 
                     return node;
                 };
@@ -1456,6 +1469,11 @@ public class DataAlgoJava {
 
                     }
 
+                    // lNode Variable used in lambda expression should be final or effectively final
+                    // using it as an AtomicVariable instead (can also use a final 1-elem array, or an anonymous var :Object)
+
+                    AtomicReference<ListNode> lNodeRef = new AtomicReference<>(lNode);
+
                     // dfs - average
 
                     Consumer<Tree.TreeNode>[] dfs = new Consumer[1];
@@ -1474,8 +1492,15 @@ public class DataAlgoJava {
                         // this works as pre-order - left only
 
                         if (n.left() != null) {
+                            /* // * lNode in lambda now an AtomicReference
                             lNode.setNext(new ListNode(n.left().value(), null));
                             lNode = lNode.getNext();
+                            dfs[0].accept(n.left());
+                            */
+
+                            // todo: confirm atomicRef.get() still returns ReferenceObject for .methodCall()
+                            lNodeRef.get().setNext(new ListNode(n.left().value(), null));
+                            lNodeRef.set(lNodeRef.get().getNext());
                             dfs[0].accept(n.left());
                         }
 
@@ -1483,8 +1508,8 @@ public class DataAlgoJava {
                         // this works as pre-order - right only
 
                         if (n.right() != null) {
-                            lNode.setNext(new ListNode(n.right().value(), null));
-                            lNode = lNode.getNext();
+                            lNodeRef.get().setNext(new ListNode(n.right().value(), null));
+                            lNodeRef.set(lNodeRef.get().getNext());
                             dfs[0].accept(n.right());
                         }
 
@@ -1492,13 +1517,13 @@ public class DataAlgoJava {
                         // before depth-traversing to left-side of B-Tree, then to right-side
 
                         if (n.left() != null) {
-                            lNode.setNext(new ListNode(n.left().value(), null));
-                            lNode = lNode.getNext();
+                            lNodeRef.get().setNext(new ListNode(n.left().value(), null));
+                            lNodeRef.set(lNodeRef.get().getNext());
                         }
 
                         if (n.left() != null) {
-                            lNode.setNext(new ListNode(n.right().value(), null));
-                            lNode = lNode.getNext();
+                            lNodeRef.get().setNext(new ListNode(n.right().value(), null));
+                            lNodeRef.set(lNodeRef.get().getNext());
                         }
 
                         if (n.left() != null)
@@ -1526,9 +1551,9 @@ public class DataAlgoJava {
 
                         // pre-order
 
-                        lNode.setValue(n.value());
-                        lNode.setNext(new ListNode(null, null));
-                        lNode = lNode.getNext();
+                        lNodeRef.get().setValue(n.value());
+                        lNodeRef.get().setNext(new ListNode(null, null));
+                        lNodeRef.set(lNodeRef.get().getNext());
 
                         dfs[0].accept(n.left());
                         dfs[0].accept(n.right());
@@ -1538,17 +1563,17 @@ public class DataAlgoJava {
                         dfs[0].accept(n.left());
                         dfs[0].accept(n.right());
 
-                        lNode.setValue(n.value());
-                        lNode.setNext(new ListNode(null, null));
-                        lNode = lNode.getNext();
+                        lNodeRef.get().setValue(n.value());
+                        lNodeRef.get().setNext(new ListNode(null, null));
+                        lNodeRef.set(lNodeRef.get().getNext());
 
                         // in-order
 
                         dfs[0].accept(n.left());
 
-                        lNode.setValue(n.value());
-                        lNode.setNext(new ListNode(null, null));
-                        lNode = lNode.getNext();
+                        lNodeRef.get().setValue(n.value());
+                        lNodeRef.get().setNext(new ListNode(null, null));
+                        lNodeRef.set(lNodeRef.get().getNext());
 
                         dfs[0].accept(n.right());
 
@@ -1558,14 +1583,13 @@ public class DataAlgoJava {
 
                     // now return LinkedList / ListNode root
 
-                    return new LinkedList(lRoot, lNode); // or lRoot
+                    return new LinkedList(lRoot, lNode); // or LinkedList(lRoot, lNodeRef.get())
 
                 }
 
-                public Tree.TreeNode flattenBinaryTreeToLinkedList2(Tree.TreeNode root) { // O(n) t ; O(1) s (done
-                                                                                          // in-place; NO LinkedList
-                                                                                          // with n nodes required)
-
+                public Tree.TreeNode flattenBinaryTreeToLinkedList2(Tree.TreeNode root) { // O(n) t ; O(1) s
+                    // in-place; No LinkedList with n nodes required
+                    return null;
                 }
 
             }
@@ -1686,15 +1710,16 @@ public class DataAlgoJava {
 
                 public Object cfs(TreeNode root, Object key) {
 
-                    BiFunction<TreeNode, Object, Object> iteration = (TreeNode node, Object k) -> {
-                        while (node != null && (Integer) node.value != (Integer) k) {
-                            if ((Integer) k < (Integer) node.value)
-                                node = node.left;
-                            else
-                                node = node.right;
-                        }
-                        return node; // Will be null if not found
-                    };
+                    BiFunction<TreeNode, Object, Object> iteration =
+                        (TreeNode node, Object k) -> {
+                            while (node != null && (Integer) node.value != (Integer) k) {
+                                if ((Integer) k < (Integer) node.value)
+                                    node = node.left;
+                                else
+                                    node = node.right;
+                            }
+                            return node; // Will be null if not found
+                        };
 
                     BiFunction<TreeNode, Object, Object>[] recursion = new BiFunction[1];
                     recursion[0] = (TreeNode node, Object k) -> {
@@ -1707,9 +1732,13 @@ public class DataAlgoJava {
                             return recursion[0].apply(node.right, k);
                     };
 
-                    System.out.println(iteration.apply(root, key));
-                    System.out.println(recursion[0].apply(root, key));
+                    Object it = iteration.apply(root, key);
+                    Object re = recursion[0].apply(root, key);
 
+                    System.out.println(it.toString());
+                    System.out.println(re.toString());
+
+                    return it; // re
                 }
 
                 // Q - With a Binary Tree, find a sub-tree with minimum sum
@@ -2710,16 +2739,20 @@ public class DataAlgoJava {
 
 * // TODO: Java
 
-Keywords - record, 
+Keywords - record, volatile, 
 
 New Types - 
 
+
+var x = value / new Object(); - .jv, c#, js-ts, sw, go, dart, kt, scala, ..
 
 Strings - "" | Chars - ''
 
 Type.class - class-name as String
 
 Type x = new Type[] { a, b, 1, 2 } - object-type array 'scope/closure'
+
+* new Interface_or_Class_Type[<T>]() { cb overrides with optional { internal unnamed-scope } } - can use in-built Type-methods in either scope
 
 int x = 15 / 10; - 1 (int floors 1.5 decimal quotient by-default - Math.floor not required)
 
@@ -2753,9 +2786,9 @@ public record A(String x, int y) {
 }
 
 - convert (array)list to .stream 1st, then .map each item, then .collect the results list back
-(List/ArrayList<T>) r = (List/ArrayList<T>) x.stream().map(x -> x * 2).collect(Collectors.toList());
+(List/ArrayList<T>) r = (List/ArrayList<T>) x.stream().map(x -> x * 2).collect(Collectors.toList()); - map() returns Stream; must be collected back into List
 
-.forEach also in (Array)List classes - doesn't require .stream
+.forEach also in (Array)List classes - doesn't require .stream - returns void (exec lambda in foreach loop)
 .stream().(count/forEach/map/reduce/findAny/findFirst/filter/sorted(cb?).toList/flatMap/collect/../combos)
 .map(String::toUpperCase/List::stream/..) - also passed in as cbs (or pass in custom lambdas)
 
@@ -2774,11 +2807,25 @@ synchronized (var) {
 }
 synchronized void func() { sync'd function }
 
-- Variable used in lambda expression should be final or effectively final
-final Type x; (final var may require value on definition)[x = value; in lambda (Error - final var cannot be re-assigned a new value)]; 
-Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda - new Atomic[..] instantiation not required when setting new value]; x.get(); value when required 
-* Atomic[Reference/Integer/Boolean/Long/../NO string/other regular types]
+* var.meth().<Type, Type, ..> meth(..) - generic builder-method call
 
+* - Variable used in lambda expression should be final or effectively final
+
+Sub-optimal solution 1 - Transform variable into final 1-element array - even though final var can be re-used inside lambda, its 1 element is not final, so can be updated
+
+2 (better) - Move var into anonymous Object - 
+var ref = new Object() { Type variable = value; }; .. ref.variable.prop/meth();
+
+3 (worse) - using final only - final var may require value on definition -> final var cannot be re-assigned a new value
+final Type x; (final var may require value on definition)
+[x = value; in lambda (Error - final var cannot be re-assigned a new value)]; 
+
+* 4 (best) - Atomic[Reference<Type>/Integer/Boolean/Long/../NO string/other regular types] - 
+Atomic[Type] x = new Atomic[Type](initialValue=value);
+AtomicReference<Type> x = new AtomicReference<>(value); // no initialValue named-arg
+
+in lambda - x.set(value); - 'new Atomic[..]' instantiation not required when setting new value
+x.get(); - value when required 
 
 
 
@@ -2789,6 +2836,8 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 
 
 /* // TODO: SpringBoot - @Annotations, Lifecycles
+
+TODO: @Annotations - Bean, Autowire, 
 
 * // TODO: IntelliJ-Idea
 
@@ -2829,10 +2878,12 @@ Atomic[Type] x = new Atomic[Type](initialValue=valu); [x.set(value); in lambda -
 
 * Classes - HttpHeaders, ResponseEntity, Principal, 
 Properties, Session, Message, MimeBodyPart, Multipart, Transport, 
+DefaultKafkaProducerFactoryCustomizer, DefaultKafkaConsumerFactoryCustomizer, 
 ..
 Deprecated - ?
 HttpSecurity, GrantedAuthority, 
 Greeting, HelloMessage, 
+ProducerFactory, 
 ..
 
 
