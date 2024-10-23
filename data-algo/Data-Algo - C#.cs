@@ -244,7 +244,8 @@ true ? Console.WriteLine("aa") : Console.WriteLine("aa");
 * destructuring
 var (x, y) = FunctionReturningTuple(..) - // todo: check for list/object return values
 
-
+private Type Prop = value
+private Type Prop => returnedValue // * named lambda as a (prop) variable - 'Prop' when called (without function '()' args)
 
 
 

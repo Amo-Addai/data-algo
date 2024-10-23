@@ -2443,6 +2443,8 @@ let & const vars - block-scoped, before gc'd
 
 strings - "" | chars - '' - forced in most others
 
+let x = graphql` gql code ` - as a gql-string
+
 Array(5).fill(0) - quick-dummy 0-padding array of length 5
 
 false - !!null?.length, !![]?.length (checks if arr length is truthy - not falsy; cannot be empty; []?.length = 0)
