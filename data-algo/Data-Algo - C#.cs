@@ -181,6 +181,8 @@ Keywords - readonly, nameof(..),
 New Types - Guid, 
 
 
+$"{String} : {Interpolation}"
+
 * // todo: check - is [not] null/Type (confirm non-null value), 
 
 var x; - wrong - Implicitly-typed variables must be initialized
@@ -220,13 +222,15 @@ abstract class - Entities with props & abstract methods only - encapsulate imple
 'record' in place of 'class' - immutable classes, for data-integrity
 - for 'data-record' OOP-objects eg. BankAccount, Dto's, ..
 
-public record A(string X, int Y); // * or record A { .. }
+public record A(string X, [.Net-Directve] int Y); // * or record A { .. }
 A x - new { X = 'v', Y = 1 }; A y - x with { Y = 2 }; // * 'with' keyword to make updated-copy of record
 
 private required Type x { get => value, internal set; init; } - init not normally used with set
 
 * required & init; for both classes / records
 * // todo: check record's init / constructor methods
+“init-only properties” (also known as readonly properties).
+These properties allow you to initialize them directly in the constructor and then set them only during object initialization.
 
 is not null === != null - is (not) used with dtypes / null
 
@@ -247,13 +251,16 @@ var (x, y) = FunctionReturningTuple(..) - // todo: check for list/object return 
 private Type Prop = value
 private Type Prop => returnedValue // * named lambda as a (prop) variable - 'Prop' when called (without function '()' args)
 
+interfaces with async methods don't require 'async' keyword; just Task<Type> meth(..); definitions
+sub-class implementations of methods require 'async' keyword with Task<Type> return-type definitions
+
 
 
 
 Libs
 
 System.Text.Json.Serialization
-- [Directives/Annotations] - JsonPropertyName, JsonIgnore, 
+- [Attributes/Directives] - JsonPropertyName, JsonIgnore, 
 
 
 
@@ -306,8 +313,10 @@ System.Text.Json.Serialization
 
 * Special Data-Types - TEntity, IRepository, IActionResult, IFormFile, 
 
-* Directives / Annotations - [Directive] - ApiController, Route('route'), Http(Get/Post/..), Consumes/Produces('mediaType eg. application/json'), Authorize, AllowAnonymous, ProducesResponseType(StatusCodes, Type=typeof(SampleDto)), 
-FromBody, 
+* Attributes / Directives - [Attribute] - ApiController, Route("[controller]/route/.."), Http(Get/Post/..)[("route/{param}")], FromQuery, FromBody, 
+Consumes/Produces("mediaType eg. application/json"), Authorize(AuthenticationSchemes/Policy/..), AllowAnonymous, ProducesResponseType(StatusCodes, Type=typeof(SampleDto)), 
+Key, DatabaseGenerated(DatabaseGeneratedOption.Identity) - Auto-increment, 
+ServiceFilter(typeof(SampleFilter)), 
 
 * 'Language' Directives - JsonPropertyName("key"), 
 

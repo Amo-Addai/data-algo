@@ -2895,7 +2895,7 @@ ProducerFactory,
 
 * Special Data-Types - 
 
-* Annotations / Directives - @Annot - SpringBootApplication, RestController (api routes), Controller (web - static routes), RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
+* Annotations / Directives - @Annotation - SpringBootApplication, RestController (api routes), Controller (web - static routes), RequestMapping((path/value)="/route", method=RequestMethod, (consumes,produces)="content-type"/MediaType,..), 
 (Get/Post/Put/Patch/Delete)Mapping("/"), RequestParam([value=]"param"/required/defaultValue/), PathVariable("var"), RequestBody, ResponseStatus(HttpStatus), 
 Value(""/"${message.property}"), 
 CrossOrigin, 

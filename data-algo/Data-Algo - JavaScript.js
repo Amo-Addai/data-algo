@@ -2434,6 +2434,74 @@ function main() {
 }
 
 
+{ // * 
+    
+    // deep-clone object
+    const deepClone = obj => ({ ...obj }) // JSON.parse(JSON.stringify(obj))
+
+    // random number generator
+    const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+
+    // check empty array
+    const isEmptyArray = arr => Array.isArray(arr) && !arr.length // arr.length === 0
+
+    // unique array elems
+    const uniqueArray = arr => [ ... new Set(arr) ]
+    
+    // convert CamelCase to snake_case
+    const camelToSnake = str => str.replace(/([A-Z])/g, '_$1').toLowerCase()
+
+    // get url params
+    const getUrlParams = () => Object.fromEntries(new URLSearchParams(window.location.search))
+
+    // capitalize first-letter of each word
+    const capitalizeWords = str => str.replace(/\b\w/g, char => char.toUpperCase())
+
+    // check empty object
+    const isEmptyObj = obj => !Object.keys(obj).length // Object.keys(obj).length === 0
+
+    // reverse string
+    const reverseString = str => str.split('').reverse().join('')
+
+    // check palindrome
+    const isPalindrome = (str, cleanedStr = null) => (
+        cleanedStr = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase(),
+        cleanedStr === reverseString(cleanedStr) // cleanedStr.split('').reverse().join('') - reversed string
+    )
+
+    // fetch data from api
+    const fetchData = async url => (await fetch(url))?.json() ?? {}
+
+    // random color generator
+    const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`
+
+    // convert string to Title Case
+    const toTitleCase = str => str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase())
+
+    // current date & time
+    const now = new Date().toLocaleString()
+
+    // check even/odd number
+    const isEven = num => num % 2 === 0
+
+    // find array max-value
+    const arrayMax = arr => Math.max(...arr) // Math.max.apply(null, arr) / arr.reduce((a, b) => Math.max(a, b))
+
+    // sort array of numbers
+    const sortedArray = arr => arr.sort((a, b) => a - b)
+
+    // flatten nested arrays
+    const flattenArray = arr => arr.flat(Infinity)
+
+    // shuffle array
+    const shuffleArray = arr => arr.sort(() => Math.random() - 0.5)
+
+    // merge 2 arrays
+    const mergeArrays = (a1, a2) => [...a1, ...a2]
+
+}
+
+
 /*
 
 * // TODO: EcmaScript (Latest - ?)

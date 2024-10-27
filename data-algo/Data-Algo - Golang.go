@@ -122,6 +122,9 @@ func main() {
 
 * // TODO: Golang
 
+switch v := x.(type) { case int: .. case string: .. default: .. } - type-switch
+
+
 
 
 */
