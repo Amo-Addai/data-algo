@@ -176,7 +176,7 @@ namespace DataAlgo
 
 * // TODO: C#
 
-Keywords - readonly, nameof(..), 
+Keywords - readonly, nameof(..), required, init, 
 
 New Types - Guid, 
 
@@ -222,7 +222,9 @@ abstract class - Entities with props & abstract methods only - encapsulate imple
 'record' in place of 'class' - immutable classes, for data-integrity
 - for 'data-record' OOP-objects eg. BankAccount, Dto's, ..
 
-public record A(string X, [.Net-Directve] int Y); // * or record A { .. }
+public record A([NO accessor eg. public with 'init-constructor()'] string X, [.Net-Attribute] int Y);
+* or record A { .. }
+
 A x - new { X = 'v', Y = 1 }; A y - x with { Y = 2 }; // * 'with' keyword to make updated-copy of record
 
 private required Type x { get => value, internal set; init; } - init not normally used with set
