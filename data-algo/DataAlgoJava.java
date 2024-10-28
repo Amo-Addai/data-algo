@@ -2827,6 +2827,11 @@ AtomicReference<Type> x = new AtomicReference<>(value); // no initialValue named
 in lambda - x.set(value); - 'new Atomic[..]' instantiation not required when setting new value
 x.get(); - value when required 
 
+* method reference calls - with class-method - void meth(Type x) { .. } - any functional-interface type for 'meth' as callback can be used (meth must match functional interface definition for method-reference / call-back)
+void someMeth( Consumer<Type> f ) - should be a Consumer for 'meth's definition
+someMeth(obj::meth) / someMeth( (Type x) -> obj.meth(x) ) // * pass in method-reference call / callback lambda
+
+
 
 
 
