@@ -176,7 +176,7 @@ namespace DataAlgo
 
 * // TODO: C#
 
-Keywords - readonly, nameof(..), required, init, 
+Keywords - readonly, nameof(..), required, init, delegate, 
 
 New Types - Guid, 
 
@@ -256,7 +256,23 @@ private Type Prop => returnedValue // * named lambda as a (prop) variable - 'Pro
 interfaces with async methods don't require 'async' keyword; just Task<Type> meth(..); definitions
 sub-class implementations of methods require 'async' keyword with Task<Type> return-type definitions
 
+* Delegate-Types (.java Functional Interfaces)
 
+Func<ArgType, [ArgType, .. , <16 args,] ReturnType> x = (a, b, [.. ,]) => returnTypeValue; // * .java Function<..>
+Func<ReturnType> x = ([no argument]) => returnTypeValue;
+
+Action<ArgType, [ArgType, .. , <16 args - no ReturnType]> x (a, b, [.. ,]) => execWithNoReturnValue; // * .java Consumer<..>
+
+Predicate<ArgType, [ArgType, .. , <16 args - Default bool ReturnType]> x (a, b, [.. ,]) => bool; // * .java 
+
+* custom delegates
+delegate void CustomDelegate(int x, string y); CustomDelegate handler = (a, b) => exec; // * .java custom Functional Interfaces
+
+
+
+
+
+--
 
 
 Libs
