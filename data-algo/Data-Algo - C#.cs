@@ -185,6 +185,8 @@ $"{String} : {Interpolation}"
 
 * // todo: check - is [not] null/Type (confirm non-null value), 
 
+required Type prop - non-nullable (Type cannot be Optional?)
+
 var x; - wrong - Implicitly-typed variables must be initialized
 var x = null; - wrong - Cannot assign <null> to an implicitly-typed variable
 var x = non_null_value; - correct - var-var given non-null value
@@ -260,19 +262,48 @@ sub-class implementations of methods require 'async' keyword with Task<Type> ret
 
 Func<ArgType, [ArgType, .. , <16 args,] ReturnType> x = (a, b, [.. ,]) => returnTypeValue; // * .java Function<..>
 Func<ReturnType> x = ([no argument]) => returnTypeValue;
+x.Invoke(..);
 
 Action<ArgType, [ArgType, .. , <16 args - no ReturnType]> x (a, b, [.. ,]) => execWithNoReturnValue; // * .java Consumer<..>
+x.Invoke(..);
 
 Predicate<ArgType, [ArgType, .. , <16 args - Default bool ReturnType]> x (a, b, [.. ,]) => bool; // * .java 
+x.Invoke(..);
 
 * custom delegates
 delegate void CustomDelegate(int x, string y); CustomDelegate handler = (a, b) => exec; // * .java custom Functional Interfaces
 
+await using (var x = value) - 
+
+using (var x = value)
+using (var y = value)
+{
+    * use both x & y in 'combined scope'
+}
+
+using (var x = value);
+using (var y = value);
+* use both x & y in 'current scope'
+
+using (var x = value)
+{
+    using (var y = value)
+    {
+        * use both x & y in 'current scope'
+    }
+}
+
+_ = meth(); - discarded return value ('var' not required); - also in .? (not in .js - defined as a non-discarded var)
+
+public void Method(this Class selfObj, Type 1stArg) - selfObj acts as 'this' instance in Method (like .py self)
 
 
 
 
 --
+
+
+Null Propagation - .sw Optional Chaining
 
 
 Libs
@@ -319,7 +350,7 @@ System.Text.Json.Serialization
 
 * Libraries - System[.(Collections.Generic)/(Text.Json.Serialization)/(Threading.Tasks)/..], 
 
-* Classes - ControllerBase, ServiceResponse, 
+* Classes - ControllerBase, ServiceResponse, IActionResult, 
 
 * Interfaces - IComparable, IFormattable, ICloneable, IEnumerable, IDisposable, IAsyncDisposable, IServiceProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, IAsyncMethodBuilder, IAsyncQueryProvider, IAsyncEnumerable, IAsyncEnumerator, IProgress, IFormatProvider, ICustomFormatter, IAsyncStateMachine, 
 
@@ -331,7 +362,8 @@ System.Text.Json.Serialization
 
 * Special Data-Types - TEntity, IRepository, IActionResult, IFormFile, 
 
-* Attributes / Directives - [Attribute] - ApiController, Route("[controller]/route/.."), Http(Get/Post/..)[("route/{param}")], FromQuery, FromBody, 
+* Attributes / Directives - [Attribute] - ApiController, Route("[controller]/route/.."), Http(Get/Post/..)[("route/{param}")], 
+FromQuery, FromBody, FromForm, 
 Consumes/Produces("mediaType eg. application/json"), Authorize(AuthenticationSchemes/Policy/..), AllowAnonymous, ProducesResponseType(StatusCodes, Type=typeof(SampleDto)), 
 Key, DatabaseGenerated(DatabaseGeneratedOption.Identity) - Auto-increment, 
 ServiceFilter(typeof(SampleFilter)), 
@@ -343,6 +375,8 @@ ServiceFilter(typeof(SampleFilter)),
 * Methods - StatusCode()
 
 * Enumerations - DateTime.(Now/..), StatusCodes.(Status201Created/Status404NotFound/Status409Conflict/..), 
+
+* Exceptions - NotImplementedException, 
 
 
 
