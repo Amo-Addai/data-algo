@@ -183,6 +183,9 @@ New Types - Guid,
 
 $"{String} : {Interpolation}"
 
+new { Prop = Value } - untyped object
+new[] { value, value, .. } - untyped array
+
 * // todo: check - is [not] null/Type (confirm non-null value), 
 
 required Type prop - non-nullable (Type cannot be Optional?)
@@ -196,13 +199,16 @@ nameof(var) - returns "var" identifier as a string
 
 String.Meths == string.Meths (& other data types)
 
+const var x = value; - wrong - Implicitly-typed variables cannot be constant
+const Type x = value; - correct
+
 public string Prop { get; set; } = null!; - prop with both get-set & (default) value assignment
 
-class Object { ... Prop; User(... prop) { this.Prop = prop } }
-new Object(propval, .. ) - object instantiation
+class Object { ... Prop; Object(... prop) { this.Prop = prop } }
+new Object(propval, .. ) - object instantiation when class has constructor - required
 
 class Object { ... Prop; }
-new Object() { Prop = val, .. }; - object instantiation with obj {} literal
+new Object { Prop = val, .. }; - object instantiation with obj {} literal when class (or record) has no constructor
 
 Lambda - x => {} / (x[, y]) => {}
 void method([x..]) => {..} - named-function lambda
@@ -297,6 +303,8 @@ _ = meth(); - discarded return value ('var' not required); - also in .? (not in 
 
 public void Method(this Class selfObj, Type 1stArg) - selfObj acts as 'this' instance in Method (like .py self)
 
+Type r = Meth(param, out var referencedVar);
+* now can use 'referencedVar'
 
 
 
@@ -367,6 +375,7 @@ FromQuery, FromBody, FromForm,
 Consumes/Produces("mediaType eg. application/json"), Authorize(AuthenticationSchemes/Policy/..), AllowAnonymous, ProducesResponseType(StatusCodes, Type=typeof(SampleDto)), 
 Key, DatabaseGenerated(DatabaseGeneratedOption.Identity) - Auto-increment, 
 ServiceFilter(typeof(SampleFilter)), 
+Fact, 
 
 * 'Language' Directives - JsonPropertyName("key"), 
 
