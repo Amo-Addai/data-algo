@@ -388,10 +388,3 @@ int main(int argc, char** argv) {
 
     return 0;
 }
-
-
-/** NOTES:
-
-- 1 break statement in a nested loop, breaks out of both loops
-
-*/
