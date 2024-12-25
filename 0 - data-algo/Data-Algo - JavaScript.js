@@ -4,6 +4,9 @@
 import * as R from 'ramda'
 import * as RA from 'ramda-adjunct'
 
+const fs = require('fs')
+const path = require('path')
+
 /* // TODO: To-Use
 
 Generics
@@ -578,7 +581,7 @@ class Weak_DStructs {
 // HashMaps & HashTables
 
 class HashTable {
-
+    
     constructor(size) {
         this.data = new Array(size)
     }
@@ -2423,6 +2426,67 @@ function rabinKarp(t, p) {
     return -1
 }
 
+
+
+////////////////////////////////////////
+//  EXTRA Qs
+////////////////////////////////////////
+
+const directoryToTree = (
+  rootDir, depth,
+  [processDirectory] = []
+) => (
+  depth < 0
+  ? {} // ( throw new Error('Depth must be >= 0') )
+  : (
+    processDirectory = (
+      currentDir, currentDepth,
+      [
+        stats, dirNode, children,
+        childPath, childStats
+      ] = []
+    ) => (
+      stats = fs.statSync(currentDir),
+      !stats.isDirectory()
+      ? {} // ( throw new Error('not a directory') )
+      : (
+        dirNode = {
+          name: path.basename(currentDir),
+          path: path.relative(process.cwd(), currentDir),
+          type: 'dir',
+          size: stats.size,
+          children: []
+        },
+        currentDepth === 0
+        ? dirNode
+        : (
+          children = fs.readdirSync(currentDir),
+          children.forEach(
+            child => (
+              childPath = path.join(currentDir, child),
+              childStats = fs.statSync(childPath),
+              childStats.isDirectory()
+              ? dirNode.children.push(
+                processDirectory(childPath, currentDepth - 1)
+              )
+              : childStats.isFile()
+              && (
+                dirNode.children.push({
+                  name: child,
+                  path: path.relative(process.cwd(), childPath),
+                  type: 'file',
+                  size: childStats.size
+                })
+              )
+            )
+          ),
+          dirNode
+        )
+      )
+    ),
+    processDirectory(rootDir, depth)
+  )
+)
 
 
 ////////////////////////////////////////
