@@ -19,6 +19,11 @@ interface Algorithm {
     execute(data: number[]): number;
 }
 
+/*
+There is a shadowing or conflicting interface declaration for Algorithm in your codebase or imported libraries
+that requires defining property - name: string
+*/
+
 class SumStrategy implements Algorithm {
     name: string // TODO: FIX - remove all 'interface-properties: name: string' from implementing classes
     execute = data => data.reduce((sum, num) => sum + num, 0)
