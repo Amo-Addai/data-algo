@@ -20,11 +20,17 @@ class ReadWriteLock {
     private writeCount = 0
 
     acquireReadLock = () => (
-        (loop, fn) => (
-            loop && fn()
+        (
+            shouldLoop: (any) => boolean,
+            fn: (any) => void,
+            init = {},
+            [iter] = []
+        ) => (
+            iter = x => shouldLoop(x) ? iter(fn(x)) : x,
+            iter(init)
         ) |> %(
-            this.writeCount > 0,
-            () => setTimeout(() => {}, 100)
+            shouldLoop: ({ loop: !!this.writeCount }) => !!loop,
+            fn: () => setTimeout(() => this.writeCount--, 100)
         ),
         this.readCount++
     )
@@ -32,13 +38,21 @@ class ReadWriteLock {
     releaseReadLock = () => this.readCount--
 
     acquireWriteLock = () => (
-        (loop, fn) => loop && fn()
+        (
+            shouldLoop: (any) => boolean,
+            fn: (any) => void,
+            init = {},
+            [iter] = []
+        ) => (
+            iter = x => shouldLoop(x) ? iter(fn(x)) : x,
+            iter(init)
+        )
         |> %(
-            (
-                this.readCount > 0
+            shouldLoop: ({
+                loop = this.readCount > 0
                 || this.writeCount > 0
-            ),
-            () => setTimeout(() => {}, 100)
+            }) => !!loop,
+            fn: () => setTimeout(() => (this.readCount--, this.writeCount--), 100)
         ),
         this.writeCount++
     )

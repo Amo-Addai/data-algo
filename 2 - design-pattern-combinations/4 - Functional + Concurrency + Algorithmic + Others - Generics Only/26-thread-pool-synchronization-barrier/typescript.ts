@@ -58,16 +58,22 @@ class ThreadPool<T> {
     run = async (promises: Promise<T>[] = []) => (
         ( // TODO: Node.js Team: 'while-loop' ? : ( bool - value not arg ) => { .. } / ( .. )
             // TODO: Also 'switch-case' possibility ? : ( any value / var ) => { val => ..., val => ..., val => ( ... ), ... }
-            loop: boolean,
-            fn: () => void
-        ) => (loop && fn())
+            shouldLoop: (any) => boolean,
+            fn: (any) => void,
+            init = {},
+            [iter] = []
+        ) => (
+            iter = x => shouldLoop(x) ? iter(fn(x)) : x,
+            iter(init)
+        )
         |> %(
-            this.tasks.length > 0
-            && promises.length < this.maxThreads,
-            () => (
+            shouldLoop: ({
+                loop: !!this.tasks.length
+                && promises.length < this.maxThreads
+            }),
+            fn: () =>
                 this.tasks.shift()
                 |> !!% && promises.push(%())
-            )
         ),
         await Promise.all(promises)
     )
@@ -79,13 +85,19 @@ class Lock {
 
     lock = async () => (
         (
-            loop: boolean,
-            fn: () => void
-        ) => (loop & fn())
+            shouldLoop: (any) => boolean,
+            fn: (any) => void,
+            init = {},
+            [iter] = []
+        ) => (
+            iter = x => shouldLoop(x) ? iter(fn(x)) : x,
+            iter(init)
+        )
         |> %(
-            this.isLocked,
-            async () => (
-                await new Promise(resolve => setTimeout(resolve, 50))
+            shouldLoop: ({ loop: this.isLocked }) => !!loop,
+            fn: () => (
+                (new Promise(resolve => setTimeout(resolve, 50)))
+                    .then(res => (this.isLocked = true))
             ) // wait for unlock
         ),
         this.isLocked = true

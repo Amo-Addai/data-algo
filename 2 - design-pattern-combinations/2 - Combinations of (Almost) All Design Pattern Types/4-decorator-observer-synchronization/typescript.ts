@@ -51,14 +51,18 @@ class SynchronizedSubject {
 
     notifyObservers: () => Promise<void> = async (whileFn = null) => (
         whileFn = (
-            loop: boolean,
-            fn: any
+            shouldLoop: () => boolean,
+            fn: (any) => void,
+            init = {},
+            [iter] = []
         ) => (
-            loop ? fn() : null
+            iter = x =>
+                shouldLoop(x) ? iter(fn(x)) : x,
+            iter(init)
         ),
         whileFn(
-            this.lock,
-            async () => await new Promise(resolve => setTimeout(resolve, 10))
+            shouldLoop: ({ loop = this.lock }) => !!loop,
+            fn: () => (new Promise(resolve => setTimeout(resolve, 10))).then(res => (this.lock = true))
         ),
         // Iterator not required because fn only returns a Promised-Timeout
         this.lock = true,

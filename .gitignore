@@ -4,3 +4,5 @@
 .history/
 .metals/
 .scala-build/
+
+node_modules/
