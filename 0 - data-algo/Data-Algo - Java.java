@@ -565,157 +565,868 @@ public class DataAlgoJava {
 
         public static class DataStructures {
 
-            public DataStructures() {
-            }
+            public DataStructures() {}
 
             // Arrays & Strings
 
-            // TODO: Fix
+            public class Arrays {
 
-            public int reverse(int n) { // O(1 - regular number - of digits > n - very large number - of digits) t ; O(1) s
-                
-                // int r = Integer.parseInt(("" + n).reverse())
-                // return r;
-                
-                // todo: handle all pre-checks in-loop - O(n) t
-
-                String str = ""; Boolean negative = n < 0;
-
-                // remove any preceding 0 (1st list item)
-                if (n % 10 == 0) n = n / 10;
-
-                while (n > 0) {
-                    str = str + (n % 10); // cut out last digit of n & appends to str
-                    n = n / 10; // remove last digit - already returns floored-integer - Math.floor not required
+                @FunctionalInterface
+                interface NumSwaps {
+                    int swap(int num, int[] a, int[] b);
                 }
 
-                System.out.println(str);
-                return Integer.parseInt(str)
-                    * (
-                        negative
-                        ? -1 : 1
-                    );
-            }
+                // TODO: Test
+                int minimumDominoRotations(int[] a, int[] b) {
 
-            // 3rd-Party
-            public int reverse1(int x) { // O(n ~ 1) t; O(1) s
-                int reversed = 0, pop = 0;
-                while (x != 0) {
-                    pop = x % 10; // modulo out last digit (also -ve if x -ve)
-                    x /= 10; // integer-divide out last digit - Math.floor not required
-                    
-                    // Check for overflow/underflow before adding the popped digit
-                    // return 0 on very large-number digits
-                    if (
-                        reversed > Integer.MAX_VALUE/10 // max-possible number of digits (hence Integer.MAX_VALUE/10 last digit int-divided out)
-                        || (reversed == Integer.MAX_VALUE / 10 && pop > 7)
-                    ) return 0;
-                    if (
-                        reversed < Integer.MIN_VALUE/10 
-                        || (reversed == Integer.MIN_VALUE / 10 && pop < -8)
-                    ) return 0;
-                    
-                    reversed = reversed * 10 + pop; // pad another '0' digit, then add x-modulo'd out digit (if x -ve new '-ve additions' don't matter; -reversed already in -ve zone)
+                    NumSwaps numSwaps = (num, a1, b1) -> {
+                        int nSwaps = 0;
+                        for (int i = 0; i < a1.length; i++) {
+                            if (a1[i] != num && b1[i] != num)
+                                return Integer.MAX_VALUE;
+                            else if (a1[i] != num)
+                                nSwaps++;
+                        }
+                        return nSwaps;
+                    };
+
+                    int minSwaps = Math.min(
+                            numSwaps.swap(a[0], a, b),
+                            numSwaps.swap(b[0], a, b));
+                    minSwaps = Math.min(minSwaps, numSwaps.swap(a[0], b, a));
+                    minSwaps = Math.min(minSwaps, numSwaps.swap(b[0], a, b));
+                    return minSwaps == Integer.MAX_VALUE ? -1 : minSwaps;
                 }
-                return reversed; // if x -ve, reversed already -ve
+
+                int maximumPointsFromCards(int[] points, int k) {
+                    int sum = 0, max = 0;
+                    int n = points.length - 1;
+                    int[] left = new int[k + 1];
+                    int[] right = new int[k + 1];
+                    left[0] = 0;
+                    right[0] = 0;
+
+                    for (int i = 1; i <= k; i++)
+                        left[i] = left[i - 1] + points[i - 1];
+
+                    for (int i = 1; i <= k; i++)
+                        right[i] = right[i - 1] + points[n--];
+
+                    for (int j = 0; j < left.length; j++) {
+                        sum = left[j] + right[right.length - j - 1];
+                        max = Math.max(sum, max);
+                    }
+
+                    return max;
+                }
+                
+                // ! wrong implementation
+                public int reverse(int n) { // O(1 - regular number - of digits > n - very large number - of digits) t ; O(1) s
+                    
+                    // int r = Integer.parseInt(("" + n).reverse())
+                    // return r;
+                    
+                    // todo: handle all pre-checks in-loop - O(n) t
+
+                    String str = ""; Boolean negative = n < 0;
+
+                    // remove any preceding 0 (1st list item)
+                    if (n % 10 == 0) n = n / 10;
+
+                    while (n > 0) {
+                        str = str + (n % 10); // cut out last digit of n & appends to str
+                        n = n / 10; // remove last digit - already returns floored-integer - Math.floor not required
+                    }
+
+                    System.out.println(str);
+                    return Integer.parseInt(str)
+                        * (
+                            negative
+                            ? -1 : 1
+                        );
+                }
+
+                // 3rd-Party
+                public int reverse1(int x) { // O(n ~ 1) t; O(1) s
+                    int reversed = 0, pop = 0;
+                    while (x != 0) {
+                        pop = x % 10; // modulo out last digit (also -ve if x -ve)
+                        x /= 10; // integer-divide out last digit - Math.floor not required
+                        
+                        // Check for overflow/underflow before adding the popped digit
+                        // return 0 on very large-number digits
+                        if (
+                            reversed > Integer.MAX_VALUE/10 // max-possible number of digits (hence Integer.MAX_VALUE/10 last digit int-divided out)
+                            || (reversed == Integer.MAX_VALUE / 10 && pop > 7)
+                        ) return 0;
+                        if (
+                            reversed < Integer.MIN_VALUE/10 
+                            || (reversed == Integer.MIN_VALUE / 10 && pop < -8)
+                        ) return 0;
+                        
+                        reversed = reversed * 10 + pop; // pad another '0' digit, then add x-modulo'd out digit (if x -ve new '-ve additions' don't matter; -reversed already in -ve zone)
+                    }
+                    return reversed; // if x -ve, reversed already -ve
+                }
+
+                /* 
+                    ! TWO-POINTER ALGO'S
+                    - same direction 2-pointers
+                    - different direction 2-pointers
+                        - reverse / 2-sum / partition Q types
+                    - almost all 2-sum related Qs
+                    - partition Qs
+                        - quick select
+                        - divided into 2 / 3 parts
+                    - linked-list cycle Qs
+                    - other sorting algo's
+                        - quick & merge sort algo's
+                */
+
+                public class SortInteger {
+
+                    /**
+                     * @param A: an integer array
+                     * @return: void
+                     */
+                    public void sortIntegers(int[] A) {
+                        if (A == null || A.length == 0)
+                            return;
+                        
+                        quickSort(A, 0, A.length - 1);
+                        mergeSort(A, 0, A.length - 1);
+                    }
+
+                    private void quickSort(int[] A, int start, int end) { // O(n log n) / O(n ^ 2) t | O(log n) s
+                        if (start >= end) return;
+
+                        int left = start, right = end;
+                        int pivot = A[left + (right - left) / 2];
+                        int temp;
+
+                        while (left <= right) {
+                            while (left <= right && A[left] < pivot)
+                                left++;
+                            while (left <= right && A[right] > pivot)
+                                right--;
+                            if (left <= right) {
+                                temp = A[left];
+                                A[left] = A[right];
+                                A[right] = temp;
+                                left++; right--;
+                            }
+                        }
+
+                        // recurse
+                        quickSort(A, start, right);
+                        quickSort(A, left, end);
+                    }
+
+                    private void mergeSort(int[] A, int start, int end) { // O(n log n) t | O(n + log n) ~ O(n) s
+                        if (start >= end) return;
+
+                        int[] tmp = new int[A.length]; // * extra space-usage
+                        
+                        // divide
+                        int mid = start + (end - start) / 2;
+                        mergeSort(A, start, mid);
+                        mergeSort(A, mid + 1, end);
+
+                        // merge (conquer)
+                        int index = start;
+                        int leftStart = start;
+                        int rightStart = mid + 1;
+
+                        while (leftStart <= mid && rightStart <= end) {
+                            // increment values after access; all 3 start from exact beginnings
+                            if (A[leftStart] <= A[rightStart])
+                                tmp[index++] = A[leftStart++];
+                            else tmp[index++] = A[rightStart++]; // * remember this 'very good' coding
+                        }
+
+                        while (leftStart <= mid)
+                            tmp[index++] = A[leftStart++];
+                        
+                        while (rightStart <= end)
+                            tmp[index++] = A[rightStart++];
+                        
+                        for (int i = start; i <= end; i++) {
+                            A[i] = tmp[i];
+                            // TODO: ?
+                        }
+                        // TODO: ?
+
+                        // * return A; - not required here; A sorted in-place
+                    }
+
+                }
+
+                 public class MoveZeroes {
+
+                    /** // * Move Zeroes
+                     * 
+                     * Given an array nums, write a function to move all 0's to the end of it 
+                     * while maintaining the relative order of the non-zero elements.
+                     * 1. without making a copy of the array
+                     * 2. minimize the total number of operations
+                     * 
+                     */
+
+                    /**
+                     * @param A: an integer array
+                     * @return: void
+                     */
+                    public void moveZeroes(int[] A) {
+                        int left = 0, right = 0;
+
+                        while (right < A.length) {
+                            if (A[right] != 0) {
+                                if (left != right)
+                                    A[left] = A[right];
+                                left++;
+                            }
+                            right++;
+                        }
+
+                        while (left < A.length) {
+                            if (A[left] != 0)
+                                A[left] = 0;
+                            left++;
+                        }
+                    }
+                 }
+
+                 public class TwoSum {
+
+                     /**
+                      * Design and implement a 2-Sum class.
+                      * It should support the following operations: add & find.
+                      * add - Add the number to an internal data structure.
+                      * find - Find if there exists any pair of numbers which sum is equal to the value.
+                      */
+
+                     public class DataStructure {
+                        private Map<Integer, Integer> counter;
+
+                        public DataStructure() {
+                            counter = new HashMap<Integer, Integer>();
+                        }
+
+                        // Add the number to an internal data structure
+                        public void add(int number) {
+                            counter.put(number, counter.getOrDefault(number, 0) + 1);
+                        }
+
+                        // FInd if there exists any pair of numbers which sum is equal to the value
+                        public boolean find(int value) {
+                            int num2, desiredCount;
+                            for (Integer num1 : counter.keySet()) {
+                                num2 = value - num1;
+                                desiredCount = num1 == num2 ? 2 : 1;
+                                if (counter.getOrDefault(num2, 0) >= desiredCount)
+                                    return true;
+                            }
+                            return false;
+                        }
+
+                    }
+
+                     public void test() {
+                         DataStructure obj = new DataStructure();
+                         obj.add(7); obj.add(5); obj.add(7); obj.add(5);
+                         obj.find(7);
+                     }
+
+                     public class TwoSum_InputArraySorted {
+
+                         /** // * 2-Sum with input array sorted
+                          *
+                          * Given an array of integers that is already sorted in ascending order,
+                          * find 2 numbers such that they add up to a specific target number.
+                          * the function 2-sum should return indices of the 2 numbers such that they add up to the target,
+                          * where index i1 must be less than i2.
+                          *
+                          * Constraint: returned answers (both i1 & i2) cannot be zero-based
+                          *
+                          */
+
+                         /**
+                          * @param nums: array of integers
+                          * @param target: target = nums[i1] + nums[i2]
+                          * @return: [i1 + 1, i2 + 1] (with i1 < i2)
+                          */
+                         public int[] twoSum(int[] nums, int target) {
+                             if (nums == null || nums.length < 2)
+                                 return new int[0];
+
+                             int left = 0, right = nums.length - 1;
+
+                             while (left < right) {
+                                 if (nums[left] + nums[right] < target)
+                                     left++;
+                                 if (nums[left] + nums[right] > target)
+                                     right--;
+                                 if (nums[left] + nums[right] == target)
+                                     return new int[] {
+                                             left + 1,
+                                             right + 1
+                                     };
+                             }
+
+                             return new int[0];
+                         }
+
+                     }
+
+                     public class TwoSumLessThanK {
+
+                         /**
+                          * Given an array A of integers and integer K,
+                          * find maximum sum S such that there exists i < j
+                          * with A[i] + A[j] = S & S <= K
+                          * if no i, j exist satisfying this equation, return -1
+                          */
+
+                         public int twoSum(int[] A, int K) {
+                             int max = -1; Arrays.sort(A);
+                             int left = 0, right = A.length - 1;
+
+                             while (left < right) {
+                                 if (A[left] + A[right] < K) {
+                                     max = Math.max(max, A[left] + A[right]);
+                                     left++;
+                                 } else right--;
+                             }
+
+                             return max;
+                         }
+
+                     }
+
+                 }
+
+                public class ThreeSum {
+
+                    /**
+                     * Given an array A of n integers, are there elements a, b, c in A such that:
+                     * a + b + c = 0 ? Find all unique triplets in the array which give the sum of zero.
+                     * Elements in a triplet (a, b, c) must be in non-descending order.
+                     * (i.e. a <= b <= c) The solution set must not contain duplicate triplets.
+                     */
+
+                    /**
+                     * @param nums: array of n integers
+                     * @return: List-matrix of integers - all unique triplets in @param 'nums' which give the sum of zero
+                     */
+                    public List<List<Integer>> threeSum(int[] nums) {
+                        Arrays.sort(nums);
+                        List<List<Integer>> res = new ArrayList<>();
+
+                        for (int i = 0; i < nums.length; i++) {
+                            if (i != 0 && nums[i] == nums[i - 1])
+                                continue;
+                            findTwoSum(nums, i, res); // 'res' passed in by reference
+                        }
+
+                        return res;
+                    }
+
+                    private void findTwoSum(int[] nums, int index, List<List<Integer>> res) {
+                        int left = index + 1, right = nums.length - 1;
+                        int target = -nums[index];
+                        int twoSum;
+                        List<Integer> triplet;
+
+                        while (left < right) {
+                            twoSum = nums[left] + nums[right];
+                            if (twoSum < target) left++;
+                            else if (twoSum > target) right--;
+                            else {
+                                triplets = new ArrayList<>();
+                                triplet.add(nums[index]);
+                                triplet.add(nums[left]);
+                                triplet.add(nums[right]);
+                                res.add(triplet);
+                                left++; right--;
+                                while (
+                                    left < right
+                                    && nums[left] == nums[left - 1]
+                                ) left++;
+                            }
+                        }
+                    }
+
+                    // TODO: 3-Sum - smaller & 3-sum - closest
+
+                }
+
+
+                // TODO: 4-Sum
+
+
+                public class ValidTriangleNumber {
+
+                    /**
+                     * Given an array that consists of non-negative integers,
+                     * count the number of triplets chosen from the array
+                     * that can make triangles if we take them as side lengths of a triangle.
+                     */
+
+                    /**
+                     * @param nums: array of integers
+                     * @return: number of triplets chosen from the array, that can make triangles
+                     */
+                    public int triangleNumber(int[] nums) {
+                        Arrays.sort(nums);
+                        int count = 0, n = nums.length, i, l, r;
+
+                        for (i = n - 1; i >= 2; i--) {
+                            l = 0; r = i - 1;
+                            while (l < r) {
+                                if (nums[l] + nums[r] > nums[i]) {
+                                    count += r - l;
+                                    r--;
+                                } else l++;
+                            }
+                        }
+
+                        return count;
+                    }
+
+                }
+
+                public class Partition {
+
+                    public class PartitionArray_DisjointIntervals {
+
+                        /**
+                         * Given an array A, partition it into 2 (contiguous) sub-arrays left & right
+                         * so that:
+                         *      left & right sub-arrays are non-empty
+                         *      every element in the left sub-array is less than or equal to every element in the right
+                         *      left has the smallest possible size
+                         *
+                         * return the length of left after such a partitioning
+                         * NB: it is guaranteed that such a partitioning exists
+                         */
+
+                        public int partition(int[] A) {
+                            int N = A.length;
+                            int[] maxLeft = new int[N];
+                            int[] minRight = new int[N];
+                            int m = A[0];
+
+                            for (int i = 0; i < N; ++i) {
+                                m = Math.max(m, A[i]);
+                                maxLeft[i] = m;
+                            }
+
+                            m = A[N - 1];
+
+                            for (int i = N - 1; i >= 0; --i) {
+                                m = Math.min(m, A[i]);
+                                minRight[i] = m;
+                            }
+
+                            for (int i = 1; i < N; ++i) {
+                                if (maxLeft[i - 1] <= minRight[i])
+                                    return i;
+                            }
+
+                            return -1;
+                        }
+
+                    }
+
+                }
+
+                public class KthLargestElement {
+
+                    /**
+                     * Find K-th largest element in an array
+                     *
+                     * - Base on heap: O(n log n + k)
+                     * - Sort the Array: O(n log n)
+                     * - Quick Select: O(n) t | O(1) s on average-case
+                     */
+
+                    /**
+                     * @param n: integer
+                     * @param nums: array of integers
+                     * @return: kth largest element
+                     */
+                    public int kthLargestElement(int k, int[] nums) {
+                        if (nums == null || nums.length == 0)
+                            return -1;
+                        if (k <= 0 || k > nums.length)
+                            return -1;
+                        return quickSelect(nums, 0, nums.length - 1, k);
+                    }
+
+                    private int quickSelect(int[] nums, int start, int end, int k) {
+                        if (start == end) return nums[start];
+
+                        int left = start, right = end,
+                            mid = left + (right - left) / 2,
+                            pivot = nums[mid], tmp;
+
+                        // from large to small
+                        while (left <= right) {
+                            while (left <= right && nums[left] > pivot)
+                                left++;
+                            while (left <= right && nums[right] < pivot)
+                                right--;
+                            if (left <= right) {
+                                tmp = nums[left];
+                                nums[left] = nums[right];
+                                nums[right] = tmp;
+                                left++; right--;
+                            }
+                        }
+
+                        if (k <= right - start + 1)
+                            return quickSelect(nums, start, right, k);
+                        if (k > left - start)
+                            return quickSelect(nums, left, end, k - left + start);
+
+                        return nums[right + 1];
+                    }
+
+                }
+
+                public class SortArrayByParity {
+
+                    /**
+                     * Given an array A of non-negative integers, return an array consisting of all th even elements of A,
+                     * followed by all the odd elements of A.
+                     *
+                     * NB: Can return any result array that satisfies the condition.
+                     */
+
+                    public int[] sortArray(int[] A) {
+                        int left = 0, right = A.length - 1,
+                            tmp;
+
+                        while (left <= right) {
+                            if (A[left] % 2 > A[right] % 2) {
+                                tmp = A[left];
+                                A[left] = A[right];
+                                A[right] = tmp;
+                            }
+                            if (A[left] % 2 == 0)
+                                left++;
+                            if (A[right] % 2 == 1)
+                                right--;
+                        }
+
+                        return A;
+                    }
+
+                }
+
+                public class SortColors {
+
+                    /**
+                     * Given an array nums with n objects colored red, white, or blue.
+                     * sort them in-place so that objects of the same color are adjacent,
+                     * with the colors in the order red, white, & blue.
+                     *
+                     * NB: can use the integers 0, 1, & 2 to represent the color red, white, & blue, respectively.
+                     *
+                     * Constraints:
+                     *      - without using the the Array.sort method
+                     *      - 1-pass algo in O(1) (constant) space only
+                     *
+                     * - sort array - O(n log n) t
+                     * - count the numbers 0, 1, 2, two-pass
+                     * - 2-pointers; O(n) t | O(1) s
+                     */
+
+                    /**
+                     * @param nums: list of integers (0, 1, or 2)
+                     * @return: void
+                     */
+
+                    /*
+                        left: 0/1 border, right: 1/2 border
+                        [0, left) all 0s,
+                        [left, right] all 1s,
+                        (right, end] all 2s
+                     */
+
+                    public void sortColors(int[] nums) {
+                        int left = 0, right = nums.length - 1,
+                            mid = 0;
+
+                        while (mid <= right) {
+                            if (nums[mid] == 0) {
+                                swap(nums, mid, left);
+                                mid++; left++;
+                            } else if (nums[mid] == 2) {
+                                swap(nums, mid, right);
+                                right--;
+                            } else mid++;
+                        }
+                    }
+
+                    private void swap(int[] a, int i, int j) {
+                        int tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+                    }
+
+                    /**
+                     * what if there are k different colors?
+                     *
+                     * Given an array of n objects with k different colors (numbered from 1 to k),
+                     * sort them so that objects of the same color are adjacent,
+                     * with the colors in the order 1, 2, ... , k.
+                     *
+                     * NB: can use Quick Sort - O(n log k) t - k = number of different colors
+                     * can also either use Rainbow or Counting Sort algo's
+                     */
+
+                    /**
+                     * @param colors: list of integers
+                     * @param k: integer
+                     * @return: void
+                     */
+
+                    public void sortColors2(int[] colors, int k) {
+                        if (colors == null || colors.length == 0)
+                            return;
+                        rainbowSort(colors, 0, colors.length - 1, 1, k);
+                    }
+
+                    private void rainbowSort(int[] arr, int left, int right, int from, int to) {
+                        if (from == to) return;
+                        if (left >= right) return;
+
+                        int mid = (from + to) / 2;
+                        int l = left, r = right, tmp;
+
+                        while (l <= r) {
+                            while (l <= r && arr[l] <= mid) l++;
+                            while (l <= r && arr[r] > mid) r--;
+                            if (l <= r) {
+                                tmp = arr[l];
+                                arr[l] = arr[r];
+                                arr[r] = tmp;
+                                l++; r--;
+                            }
+                        }
+
+                        rainbowSort(arr, left, r, from, mid);
+                        rainbowSort(arr, l, right, mid + 1, to);
+                    }
+
+                    // TODO: Other Sorting Algo's that can be used here
+                    // Quick, Counting Sorting Algo's ; & Pancake, Sleep, Spaghetti, Bogo Sorting Algo's
+
+                }
+
             }
 
-            String reorganizeString(String S) { // TODO: verify - O(n + n log n) t | O(n) s
+            public class Strings {
 
-                Map<Character, Integer> counts = new HashMap<>();
+                String reorganizeString(String S) { // TODO: verify - O(n + n log n) t | O(n) s
 
-                // O(n)
-                for (char c : S.toCharArray())
-                    counts.put(c, counts.getOrDefault(c, 0) + 1);
+                    Map<Character, Integer> counts = new HashMap<>();
 
-                PriorityQueue<Character> maxHeap = new PriorityQueue<>(
-                        (a, b) -> counts.get(b) - counts.get(a));
-                maxHeap.addAll(counts.keySet());
+                    // O(n)
+                    for (char c : S.toCharArray())
+                        counts.put(c, counts.getOrDefault(c, 0) + 1);
 
-                // todo: NB: Concatenating a String takes in more buffer data or additional
-                // memory overhead (more space complexity) than manually building up a String
-                // with a mutable StringBuilder object, Character by Character
-                // Concatenating to an immutable String object creates a new String object
-                // (leading to additional memory overhead)
+                    PriorityQueue<Character> maxHeap = new PriorityQueue<>(
+                            (a, b) -> counts.get(b) - counts.get(a));
+                    maxHeap.addAll(counts.keySet());
 
-                StringBuilder result = new StringBuilder();
-                char current;
-                char next;
-                char last;
+                    // todo: NB: Concatenating a String takes in more buffer data or additional
+                    // memory overhead (more space complexity) than manually building up a String
+                    // with a mutable StringBuilder object, Character by Character
+                    // Concatenating to an immutable String object creates a new String object
+                    // (leading to additional memory overhead)
 
-                // O(n log n)
-                while (maxHeap.size() > 1) {
-                    current = maxHeap.poll();
-                    next = maxHeap.poll();
-                    result.append(current);
-                    result.append(next);
-                    counts.put(current, counts.get(current) - 1);
-                    counts.put(next, counts.get(next) - 1);
-                    if (counts.get(current) > 0)
-                        maxHeap.add(current);
-                    if (counts.get(next) > 0)
-                        maxHeap.add(next);
-                    // base-case check
-                    if (!maxHeap.isEmpty()) {
-                        last = maxHeap.poll();
-                        if (counts.get(last) > 1)
+                    StringBuilder result = new StringBuilder();
+                    char current;
+                    char next;
+                    char last;
+
+                    // O(n log n)
+                    while (maxHeap.size() > 1) {
+                        current = maxHeap.poll();
+                        next = maxHeap.poll();
+                        result.append(current);
+                        result.append(next);
+                        counts.put(current, counts.get(current) - 1);
+                        counts.put(next, counts.get(next) - 1);
+                        if (counts.get(current) > 0)
+                            maxHeap.add(current);
+                        if (counts.get(next) > 0)
+                            maxHeap.add(next);
+                        // base-case check
+                        if (!maxHeap.isEmpty()) {
+                            last = maxHeap.poll();
+                            if (counts.get(last) > 1)
+                                return "";
+                            result.append(last);
+                        }
+                    }
+
+                    return result.toString();
+                }
+
+                public class MinimumWindowSubstring {
+
+                    /**
+                     * Given to strings s1 & s2, return the minimum window in s1 which will contain all the characters in s2
+                     * if there is no such window in s1 that covers all characters in s2, return an empty string ""
+                     * NB: if there is such a window, it's guaranteed that there'll always be only 1 unique minimum window in s1
+                     * 
+                     * Constraints:
+                     * 
+                     * 1 <= s1.length, s2.length < 10^5
+                     * s1 & s2 consist of English letters
+                     */
+
+                     /**
+                      * @param source: string
+                      * @param target: string
+                      * @return: string to denote the minimum window, or ""
+                      */
+
+                    public String minWindow(String s1, String s2) {
+                        if (s1 == null || s1.length() == 0)
+                            return s1;
+                        if (s2 == null || s2.length() == 0)
+                            return s2;
+
+                        HashMap<Character, Integer> targetCounts = new HashMap<>();
+
+                        for (char c : s2.toCharArray())
+                            targetCounts.put(c, targetCounts.getOrDefault(c, 0) + 1);
+
+                        String res = "";
+                        int minLen = Integer.MAX_VALUE;
+                        int currLen = 0;
+                        int i = 0, j = 0;
+                        char c, sourceCh;
+
+                        for (; i < s1.length(); i++) {
+                            while (j < s1.length() && currLen < s2.length()) {
+                                c = s1.charAt(j);
+                                if (targetCounts.containsKey(c)) {
+                                    if (targetCounts.get(c) > 0)
+                                        currLen++;
+                                    targetCounts.put(c, targetCounts.get(c) - 1);
+                                }
+                                j++;
+                            }
+                            if (currLen >= s2.length())
+                                if (j - i < minLen) {
+                                    minLen = j - i;
+                                    res = s1.substring(i, j);
+                                }
+                            sourceCh = s1.charAt(i);
+                            if (targetCounts.containsKey(sourceCh)) {
+                                targetCounts.put(sourceCh, targetCounts.get(sourceCh) + 1);
+                                if (targetCounts.get(sourceCh) > 0) currLen--;
+                            }
+                        }
+
+                        return res;
+                    }
+                    
+                    // GitHub Copilot - Alt Option
+                    public String minWindow1(String source, String target) {
+                        if (source == null || target == null || source.length() == 0 || target.length() == 0)
                             return "";
-                        result.append(last);
+                        
+                        Map<Character, Integer> targetCounts = new HashMap<>();
+                        Map<Character, Integer> sourceCounts = new HashMap<>();
+                        int left = 0, right = 0;
+                        int minLen = Integer.MAX_VALUE;
+                        int count = 0;
+                        int start = 0;
+                        int end = 0;
+                        char c;
+                        String result = "";
+
+                        // O(n)
+                        for (char t : target.toCharArray())
+                            targetCounts.put(t, targetCounts.getOrDefault(t, 0) + 1);
+
+                        // O(n)
+                        while (right < source.length()) {
+                            c = source.charAt(right);
+                            if (targetCounts.containsKey(c)) {
+                                sourceCounts.put(c, sourceCounts.getOrDefault(c, 0) + 1);
+                                if (sourceCounts.get(c).equals(targetCounts.get(c)))
+                                    count++;
+                            }
+                            right++;
+
+                            // O(n)
+                            while (count == targetCounts.size()) {
+                                if (right - left < minLen) {
+                                    minLen = right - left;
+                                    start = left;
+                                    end = right;
+                                }
+                                c = source.charAt(left);
+                                if (targetCounts.containsKey(c)) {
+                                    sourceCounts.put(c, sourceCounts.get(c) - 1);
+                                    if (sourceCounts.get(c) < targetCounts.get(c))
+                                        count--;
+                                }
+                                left++;
+                            }
+                        }
+
+                        if (minLen != Integer.MAX_VALUE)
+                            result = source.substring(start, end);
+
+                        return result;
                     }
+
                 }
 
-                return result.toString();
-            }
+                public class ValidPalindrome {
 
-            @FunctionalInterface
-            interface NumSwaps {
-                int swap(int num, int[] a, int[] b);
-            }
+                    /**
+                     * Given a non-empty string s, find out whether it can be made into a valid palindrome
+                     *
+                     * Constraint: can delete at-most 1 character
+                     */
 
-            // TODO: Test
-            int minimumDominoRotations(int[] a, int[] b) {
+                    public boolean validPalindrome(String s) {
+                        int left = 0, right = s.length() - 1;
 
-                NumSwaps numSwaps = (num, a1, b1) -> {
-                    int nSwaps = 0;
-                    for (int i = 0; i < a1.length; i++) {
-                        if (a1[i] != num && b1[i] != num)
-                            return Integer.MAX_VALUE;
-                        else if (a1[i] != num)
-                            nSwaps++;
+                        while (left < right) {
+                            if (s.charAt(left) != s.charAt(right))
+                                break;
+                            left++; right --;
+                        }
+
+                        if (left >= right) return true;
+
+                        return
+                                isSubPalindrome(s, left + 1, right)
+                                || isSubPalindrome(s, left, right - 1);
                     }
-                    return nSwaps;
-                };
 
-                int minSwaps = Math.min(
-                        numSwaps.swap(a[0], a, b),
-                        numSwaps.swap(b[0], a, b));
-                minSwaps = Math.min(minSwaps, numSwaps.swap(a[0], b, a));
-                minSwaps = Math.min(minSwaps, numSwaps.swap(b[0], a, b));
-                return minSwaps == Integer.MAX_VALUE ? -1 : minSwaps;
-            }
+                    private boolean isSubPalindrome(String s, int left, int right) {
+                        while (left < right) {
+                            if (s.charAt(left) != s.charAt(right))
+                                return false;
+                            left++; right--;
+                        }
+                        return true;
+                    }
 
-            int maximumPointsFromCards(int[] points, int k) {
-                int sum = 0, max = 0;
-                int n = points.length - 1;
-                int[] left = new int[k + 1];
-                int[] right = new int[k + 1];
-                left[0] = 0;
-                right[0] = 0;
-
-                for (int i = 1; i <= k; i++)
-                    left[i] = left[i - 1] + points[i - 1];
-
-                for (int i = 1; i <= k; i++)
-                    right[i] = right[i - 1] + points[n--];
-
-                for (int j = 0; j < left.length; j++) {
-                    sum = left[j] + right[right.length - j - 1];
-                    max = Math.max(sum, max);
                 }
 
-                return max;
             }
 
+            
             // (Array) Lists & Tuples
 
             // Sets & Sequences

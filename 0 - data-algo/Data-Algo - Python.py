@@ -26,9 +26,55 @@ Compare all cases with stated Big O (Worst-Case / Upper-Bound) - Time & Space Co
 
 # TODO: To-Use
 
+
+Hidden (Forgetful) Keys:
+
+BCR - for all problems with all possible solutions
+Brute-force methods - for all more-optimal solutions
+HashMap & "Same / Extra" Array methods - for all more-optimal solutions
+"Extra" / "Other" Data-Structure methods - for all more-optimal solutions
+
+
 Data-Structures:
+
 Done - arrays/strings (sorting/searching), lists/tuples, matrices, hash/weak-maps/tables/sets, linked-lists, stacks/queues, trees/b(s)ts, graphs,  …  
 # todo - sets/seqs/vectors, dicts/maps/objs, tree-maps/sets, tries, max/min heaps, bi-heaps/p-queues, bits, blobs,  …  
+
+
+Algorithm Mechanics & Facts:
+
+
+Mechanic - DataStructure(s), Language-Syntax, Variations, Constraints, Question Constraints, Helpers, Laws & Facts, Combos
+
+
+- same data-structure (eg. array - when only values required; not indices too) - language-syntax (eg. x 'in' arr over dict), 
+
+- hashmap/hashtable - when indices (as map-values) also required, 
+
+- variables - storing specific data (instead of extra data-structures), eg. min/max values, any trailing/leading data, 1/2/3 - pointers, 
+
+Iterations: 1 / 2 / .. / n - pointers
+
+- 1-pointer - arrays/strings/linkedlists/matrices?/.. , hashmap/table?, .. 
+
+- 2-pointer - arrays/strings/linkedlists/matrices?/.. , binary/? search, inward/outward iteration, same-time/1-after-other/slow-faster/1-or-n-step(s)-ahead iteration, 
+pointer-calculations (eg. middle-index), integer-math laws, int < target, (non-)repeating ints, sorting 'almost always' required (ints/strings/..), 
+
+Searches: 
+
+- Linear Search - arrays/strings/linkedlists/.. , 
+
+- Binary Search - arrays/trees/.. , 2/? pointers, 
+
+Others: 
+
+- Sliding-window - arrays/strings/matrices?/.. , ranges/sub-arrays/.. , ..
+
+
+
+
+- 
+
 
 '''
 
@@ -243,7 +289,9 @@ class Searching:
 
         def r_binary_search(a, x, f, l):
             if len(a) is 0 or f > l: return None
-            m = math.floor(f + (l - f) / 2) # better than - (f + l) / 2 # * (NB: pemdas / bodmas)
+            m = math.floor(f + (l - f) / 2) # better than (index-wise for edge-cases) - (f + l) / 2 - eg. (5 + 10) / 2 -> 15 / 2 -> 7.5
+            # ! difference (l - f) halved (/ 2) is the mid-length + start-index 'f' - eg. 5 + (10 - 5) / 2 -> 5 + 5/2 -> 5 + 2.5 -> 7.5
+            # * (NB: pemdas / bodmas - division always before addition)
             if x == a[m]: return m
             elif x < a[m]: return r_binary_search(a, x, f, m - 1)
             # else - x > a[m]
@@ -253,7 +301,7 @@ class Searching:
         r_binary_search(a, 7); r_binary_search(a, 7, f, l)
 
         while f < l:
-            m = math.floor(f + (l - f) / 2) # better than - (f + l) / 2 # * (NB: pemdas / bodmas)
+            m = math.floor(f + (l - f) / 2)
             if x == a[m]: return m
             elif x < a[m]: l = m - 1
             # else - x > a[m]
@@ -273,19 +321,989 @@ class DataStructures:
 
     def __init__(self): pass
     
+
     # Arrays & Strings
 
-    def reverse(self, a: list): pass
+    class Arrays:
 
-    def longest_common_substring(self, s): pass
+        def __init__(self): pass
 
-    def min_jumps(self, a): pass
+        reverse = lambda a: a[::-1] # O(1) t ; O(1) s # todo: confirm reverse-slicing as O(1) t
+
+        def reverse(self, a: list): # O(n/2) t ; O(1) s
+            i, j = 0, len(a) - 1
+            while i < j:
+                a[i], a[j] = a[j], a[i]
+                i += 1; j -= 1
+            return a
+        
+        # ! with math problems, always try solving them with math-algo's 1st, before considering array / string conversions
+        def reverse_number(self, num): # O(1 ~ d) t [d = num's number of digits] ; O(1) s
+            rnum = 0
+            while num > 0:
+                d = num % 10 # get last digit
+                # remove last digit (as a 10th-divided decimal)
+                num = num // 10 # * or: math.floor(num / 10)
+                rnum = rnum * 10 + d # append last digit to reversed number (as a 10th-multiplied padded 0)
+        
+        def find_duplicates(self, a): # O(n) t ; O(1) s
+            # can use a hashmap or extra array - O(n) s
+            # can also remove each item and re-check if it still exists in same array
+            for i, v in enumerate(a):
+                del a[i] # todo: confirm O(1) t - deleting array-item by index
+                if v in a: return True
+            return False
+        
+        # 3rd-Party (Tutorial) - using absolute values (in-case deleting array-items not an option)
+        '''
+            find duplicates in 1D array in O(n) t where its integer values are smaller than length of array
+            constraints: 
+                - maximum number smaller than size of array
+                (i.e. array's indices are also part of its values)
+                - +ve & -ve values also considered repetitions
+        '''
+        def find_duplicates(self, a): # O(n) t ; O(1) s
+            for n in a:
+                an = abs(n) # get absolute index of n
+                '''
+                    if any integer > len(a), 
+                    a[abs(n)] in that case would throw:
+                    IndexError: list index out of range
+                    so all integer-values in array 'a' must less than its size, as an input
+                '''
+                if a[an] >= 0: # if n's absolute, as an index with a[index] - +ve 
+                    a[an] = -a[an] # turn a[index] -ve, if +ve
+                else: # a[index] - -ve
+                    print('Repitition found: %s' % str(an))
+                    return an
+                '''
+                    a[an] - item at 'an' index is turned negative when positive
+                    so on any next iteration where abs(n) gives same 'an' value
+                    & same a[an] accessor is now -ve this time, then that 'n' 'absolute'd was a repetition
+                '''
+            return -1
+
+        def min_jumps(self, a): pass
+
+        def move_zeroes_to_end(self, a): # O(n^2 ~ n) t ; O(1) s
+            for i, v in enumerate(a):
+                if v is 0:
+                    a.pop(i) # or: del a[i]
+                    a.append(v) # ! also O(n) t on worst-case
+                    # ! cannot set on length-index (out of range exception) - in .py
+                    # a[len(a)] = v # O(1) t on setting at index
+
+        # 3rd-Party (Tutorial) - LC #283 - iterative swaps
+        def move_zeroes_to_end(self, a: List[int]) -> None: # O(2^n ~ n) t ; O(1) s
+            i = 0
+            for n in a:
+                if not n is 0:
+                    a[i] = n
+                    i += 1
+            for j in range(i, len(a)):
+                a[j] = 0
+
+        '''
+        Given an array of ints, return true if:
+            - length >= 3
+            - index i, such that:
+                a[0] < a[1] < ... < a[i] &
+                a[i] > a[i + 1] > ... > a[a.size - 1]
+            - so a[i] is the 'apex' of the array
+        
+        Soln: Find if there's an increasing subarray followed by a decreasing subarray
+        '''
+        # * Using 2-pointer
+        def valid_mountain(self, a): # O(n/2) ~ 1) t - 'fake' apex's can be found earlier ; O(1) s
+            if len(a) < 3: return None
+
+            i, j = 0, len(a) - 1
+            apex = None
+
+            while i < j:
+                # ! could be '>=' on the constraint: a[?] <= a[i]
+                if a[i + 1] > a[i]: i += 1
+                else:
+                    if apex is not None \
+                        and apex is not i: return False
+                    else: apex = i
+                if a[j - 1] > a[j]: j -= 1
+                else:
+                    if apex is not None \
+                        and apex is not j: return False
+                    else: apex = j
+
+            # * not required; apex will always be found
+            # if apex is None: apex = i if a[i] > a[j] else j if a[j] > a[i] else (i, j)
+
+            return True, apex, a[apex]
+
+        def valid_mountain(self, a): # O(n) t ; O(1) s
+            i = 1
+            while i < len(a) and a[i] > a[i - 1]:
+                i += 1
+            if i is 1 or i is len(a):
+                return False
+            while i < len(a) and a[i] < a[i - 1]:
+                i += 1
+            return i is len(a)
+
+        # 3rd-Party (Tutorial) - LC #941
+        def valid_mountain(self, a: List[int]) -> (bool, int): # O(n) t ; O(1) s
+            if len(a) < 3: return False
+            i = 1
+
+            while i < len(a) and a[i] > a[i - 1]:
+                i += 1
+            if i == 1 or i == len(a):
+                return False
+            while i < len(a) and a[i] < a[i - 1]:
+                i += 1
+            return i == len(a), a[i]
+
+        '''
+        Given a number n that reps amount of version
+        & a function that accepts a number & returns whether it's a bad version or not
+        find the 1st bad version of the array
+        
+        NB: if a version is bad, all succeeding versions are bad
+        '''
+        # 2-pointer
+        def first_bad_version(self, a):
+            pass # TODO
+
+        #
+        def first_bad_version(self, a):
+            pass # TODO
+
+        # 3rd-Party (Tutorial) - LC #2778 - 2-pointer
+        def first_bad_version(self, num): # O(log n ~ n (why ~ n ?) t ; O(1) s
+
+            is_bad_version = lambda n: random.rand([true, false])
+
+            left, right = 1, num
+
+            while left < right:
+                mid = left + (right - left) // 2
+                if not is_bad_version(mid):
+                    left = mid + 1
+                else: right = mid
+
+            return left
+
+        '''
+        Find the maximum area between any 2 heights in a given container
+        '''
+        # 2-pointer
+        def container_with_most_water(self, a): # O(n) t ; O(1) s # ! NO 'n/2' t because both pointers do not iterate simultaneously
+            # (they iterate 1 after the other, so each item is dealt with singly (iteration-wise) - even though both extremes are dealt with together)
+
+
+            i, j, max_area = 0, len(a) - 1, 0
+
+            while i < j:
+                shorter_height = min(a[i], a[j])
+                area = shorter_height * (j - i)
+                max_area = max(max_area, area)
+
+                if a[i] < a[j]:
+                    i += 1
+                else: j -= 1
+
+            return max_area
+
+        # 3rd-Party (Tutorial) - LC #11
+        def container_with_most_water(self, a): # O(n) t ; O(1) s
+            i, j, max_area = 0, len(a) - 1, 0
+
+            while i < j:
+                max_area = max(
+                    max_area,
+                    min(a[i], a[j])
+                    * (j - i)
+                )
+            if a[i] < a[j]:
+                i += 1
+            else: j -= 1
+
+            return max_area
+
+        '''
+        Boats to Save People - trying to add people in safety boats
+        Given an array 'people' of people's weight & an integer limit, 
+        ith person has a weight people[i], & each boat can carry at most 'limit'
+        
+        Each boat carries at most 2 people at the same time, 
+        given that their weight sum is at most limit
+        
+        return the minimum number of boats to carry every given person
+        
+        NB: it is guaranteed each person can be carried by a boat
+        
+        Constraints:
+            - max no. of people a boat can carry is 2
+            - each person has a weight <= limit
+            - worst-case scenario is that 
+            it'd take as many boats as there are people
+        '''
+        def boats_to_save_people(self, people, limit=2): # O( n(n/2) ~ n ) t ; O( n ~ n/? ~ 1 ) s
+            boats, boat, backlog = 0, 0, []
+
+            def save(p):
+                if p <= limit - boat: # enough space
+                    boat += p
+                else: # not enough space
+                    backlog.append(p) # O(n/?) s
+                    return
+
+                if boat is limit:
+                    boats += 1
+                    boat = 0
+
+            for p in people:
+                while backlog: # O(n/2) t
+                    save(backlog.pop(0))
+                save(p)
+
+            return boats
+
+        # sort array, add from lightest to heaviest person
+        def boats_to_save_people(self, people, limit=7): # O(n log n + n ~ ?? ) t ; O( n ~ n/? ~ 1 ) s
+
+            people = sorted(people) # O(n log n) t
+            # return self.boats_to_save_people(people, limit)
+            boats, boat, backlog = 0, 0, [] # * backlog still required in case
+
+            def save(p):
+                if limit - boat < p: # not enough space
+                    backlog.append(p)
+                    return
+                else: # enough space
+                    boat += p
+
+                if boat is limit:
+                    boats += 1
+                    boat = 0
+
+            for p in people: # O(n) t
+                while backlog:
+                    save(backlog.pop(0))
+                save(p)
+
+            return boats
+
+        # 2-pointer - sort array, add the lightest & heaviest people
+        def boats_to_save_people(self, people, limit=7): # O(n log n + n/2 ~ ?? ) t ; O( n ~ n/? ~ 1 ) s
+
+            people = sorted(people) # O(n log n) t
+            # return self.boats_to_save_people(people, limit)
+
+            boat, boats, backlog, i, j = 0, 0, [], 0, len(people) - 1
+
+            def save(p):
+                available_space = limit - boat
+                if p <= available_space:
+                    boat += p
+                else:
+                    backlog.append(p); return
+
+                boat = 0; boats += 1
+
+            while i < j:
+
+                while backlog: # * can also ensure backlog is always sorted (more time-expensive)
+                    save(backlog.pop(0))
+
+                # add lightest 1st, then heaviest
+                # * can also add both of them together - will complicate limit with available-space
+                save(people[i]); i += 1
+                save(people[j]); j -= 1
+
+            return boats
+
+        # 2-pointer - sort array, add the lightest & heaviest people ; with no backlog
+        '''
+            sort list of people 1st
+
+            use 2-pointers at start & end of people
+            iterate with 2 pointers while left < right
+            when left & right are equal, incremented boats returned out of loop
+
+            if both weights of people at both left & right pointers are lower than or equal to limit:
+                move left pointer right & right pointer left, & increment no. of boats required
+            
+            if both weights are bigger than the limit, 
+                add the heavier person alone (move right pointer to the left)
+                & increment the no. of boats required
+            
+            NB: the heavier person can be backlogged to be added with priority later
+            but if that person will be added with priority later, best to add alone right now
+            
+            as right pointer moves to left, towards lighter people, 
+                the current lightest person on the far left pointer can be added along
+                then the left pointer can also be moved to the right
+            
+            NB: left-pointer (lightest person) has to wait 
+                until right-pointer reaches a 'heavy' person, light enough, 
+                for the lightest person to be added, while total weight < limit
+            NB: beats the point of 'saving' people because more boats will be allocated to singly-people (or prioritizing the 'heavy/fat/wealthy')
+                before the lightest people 'get on board'
+            NB: so another algo can cater to this flaw; more people get saved earlier if lighter people are prioritized
+            
+            always increment no. of boats required as & whenever limit is reached
+            
+            Worst-case scenario:
+                every person would need their own individual boat
+        '''
+        def boats_to_save_people(self, people, limit=7): # O(n log n + n/2 ~ ?? ) t ; O( n ~ n/? ~ 1 ) s
+
+            people = sorted(people)
+            boats, boat, i, j = 0, 0, 0, len(people) - 1
+
+            def save(l, r):
+                res = (False, False)
+
+                if l + r <= limit:
+                    boat += l + r
+                    res = (True, True)
+                else: # r (heavier person) alone cannot exceed limit
+                    # ! constraint: each person has a weight <= limit
+                    boat += r
+                    res = (False, True)
+                    '''
+                        # ! in this situation, you can instead keep adding left only, until limit is reached
+                        * so (True, False) returned instead, for only left-pointer to be moved to right
+                    '''
+                    ''' 
+                        # ! Now, here's why this alternative is still a 'stupid' solution
+                        
+                        if left-pointer (lightest) is more prioritized than right-pointer (heaviest):
+                            right-pointer will stay static for the remainder of the loop, for left-pointer to reach it
+                            left-pointer moves towards heavier people, so they can never be added with heaviest person 
+                                together to still be below the weight limit
+                            - O(t) eventually falls back to O(n) & not O(n/(2 or ?) ~ n) t
+                            - 1 person keeps being added at a time, with only 1 (left) pointer being iterated
+                                
+                                # ! - if a 3rd (or even more) pointer is used to pre-iterate before left-pointer, then multiple (~ > 2) lightest people can then be added at a goal
+                                # ! then this will be the most optimized solution - except the 3rd-pointer flaws must be taken into consideration
+                            
+                        if right-pointer (heaviest) is more prioritized than left-pointer (lightest):
+                            left-pointer will never stay static for the remainder of the loop, for right-pointer to reach it
+                            right-pointer moves towards lighter people, so will always reach a light-enough person to be added 
+                                together with the lightest person to now be below the weight limit
+                            - O(t) should still be O(n/(2 or ?) ~ n) t
+                            - 1 person only keeps being added at a time, until 2 people can be added together again
+                            - as 2 people keep being added together (even with more 'heavy-people breaks' in-between)
+                                more people get added to the boat at a much faster rate
+                        
+                        # ! but in reality, (when saving people and not regarding usage of 'pointers' to access them):
+                            - fastest option is always to add the lightest people first, for saving maximum possible
+                    '''
+
+                if boat is limit:
+                    boats += 1
+                    boat = 0
+
+                return res
+
+            while i < j:
+                res = save(people[i], people[j])
+                if res[0]: i += 1
+                if res[1]: j += 1
+
+            return boats
+
+        # 3rd-Party (Tutorial) - LC #881 - 2-pointer
+        def boats_to_save_people(self, people: List[int], limit: int = 2) -> int: # O(n log n + n/2) t ; O(1) s
+            people.sort()
+            i, j, boats = 0, len(people) - 1, 0
+
+            while i <= j:
+                if i == j:
+                    boats += 1
+                    break
+                if people[i] + people[j] <= limit:
+                    i += 1
+
+                j -= 1
+                boats += 1
+
+            return boats
+
+        def first_and_last_position(self, a, n): # O(n/2) t ; O(1) s
+            i, j = 0, len(a) - 1
+            first = last = None
+
+            while i < j:
+                if a[i] is n:
+                    first = i
+                else: i += 1
+                if a[j] is n:
+                    last = j
+                else: j -= 1
+
+                # if first and last: # * not optimal
+                # bool(0) (or any other 'falsy' value) is still False
+                if first is not None \
+                    and last is not None:
+                    break
+
+            return (first, last)
+
+        # in a sorted array
+        def first_and_last_position(self, a, n): # O(n/2) t ; O(1) s
+            # a.sort() # * sort if not already sorted - O(n log n) t
+
+            i, j = 0, len(a) - 1
+            first = last = None
+
+            while i < j:
+                if a[i] is n:
+                    first = i
+                else: i += 1
+                if a[j] is n:
+                    last = j
+                else: j -= 1
+
+                # if first and last: # * not optimal
+                # bool(0) (or any other 'falsy' value) is still False
+                if first is not None \
+                    and last is not None:
+                    break
+
+            return first, last
+
+        # binary search on a sorted array
+        '''
+            ensure array is sorted 1st
+            set 2 pointers at start & end of array
+            
+            getting 'middle' occurrence index:
+            
+            loop while left-pointer <= right-pointer
+                - binary-search for target number between both pointers
+                - get middle index, assign left/right to mid +/- 1 based on comparison b/n target & middle item
+                - expand both indices out, until edge indices of target number's repetitions
+                
+        '''
+        def first_and_last_position(self, a, n): # O(n/2) t (array already sorted) ; O(1) s
+            # a.sort() # or: a = sorted(a) - ensure array sorted - O(n log n)
+            f, l = 0, len(a) - 1
+            first = last = None
+
+            while f < l:
+                m = f + (l - 1) // 2
+                if n is a[m]: # n - target
+                    '''
+                    now, iterate both f & l back to their opposite directions,
+                    until both edges of n's repetitions
+                    for first & last indices
+                    '''
+                    f = l = m
+                    while a[f] is n: f -= 1
+                    while a[l] is n: l += 1
+                    # ! re-add 1-step back again, to actually be at edge - indices
+                    first, last = f + 1, l - 1
+                    break
+                elif n > a[m]: f = m + 1
+                else: l = m - 1
+
+            return first, last
+
+        # binary search for both 1st & last occurrence
+        '''
+            ensure array is sorted 1st
+            set 2 pointers at start & end of array
+            
+            getting 1st occurrence index:
+            
+            loop while left-pointer <= right-pointer:
+                - binary-search for target number between both pointers
+                - get middle-index, assign left/right to mid +/- 1 based on comparison b/n target & middle item
+                - if target is found at middle-index, return middle-index if:
+                    - (mid - 1 >= 0) && (nums[mid - 1] != target) || (mid == 0)
+                    - else - assign right = mid - 1
+            
+            reset 2 pointers to start & end of array
+            
+            getting last occurrence index:
+            
+            loop while left <= right:
+                - binary-search for target number between both pointers
+                - get middle-index, assign left/right to mid +/- 1 based on comparison b/n target & middle item
+                - if target is found at middle-index, return middle-index if:
+                    - (mid + 1 < nums.size()) && (nums[mid + 1] != target) || (mid == nums.size() - 1)
+                    - else - assign left = mid + 1
+            
+        '''
+        def first_and_last_position(self, a, n): # O(2log n ~ log n) t (binary-search) ; O(1) s
+
+            f, l = 0, len(a) - 1
+            first = last = None
+
+            while f <= l:
+                m = f + (l - f) // 2
+                if a[m] is n: # binary-search with only target equality-check
+                    if m - 1 >= 0 and \
+                        not a[m - 1] is n or \
+                            m is 0:
+                        first = m; break
+                    else: l = m - 1 # unnecessary else with break in pre-condition
+                elif a[m] < n: f = m + 1
+                else: l = m - 1
+
+            f, l = 0, len(a) - 1
+
+            while f <= l:
+                m = f + (l - f) // 2
+                if a[m] is n: # not the typical binary-search (only target equality-check required)
+                    if m + 1 < len(a) and \
+                        not a[m + 1] is n or \
+                            m is len(a) - 1:
+                        last = m; break
+                    else: f = m + 1
+                elif a[m] < n: f = m + 1
+                else: l = m - 1
+
+            return first, last
+
+        # 3rd-Party (Tutorial) - LC #34
+        def first_and_last_position(self, nums, target): # O(log n) t (binary-search) ; O(1) s
+
+            def get_left_position(nums, target):
+                left, right = 0, len(a) - 1
+
+                while left <= right:
+                    mid = left + (right - left) // 2
+                    if (nums[mid] == target):
+                        if mid - 1 >= 0 and \
+                            nums[mid - 1] != target or \
+                                mid == 0:
+                            return mid
+                        right = mid - 1
+                    elif nums[mid] > target:
+                        right = mid - 1
+                    else: left = mid + 1
+
+                return -1
+
+            def get_right_position(nums, target):
+                left, right = 0, len(a) - 1
+
+                while left <= right:
+                    mid = left + (right - left) // 2
+                    if (nums[mid] == target):
+                        if mid + 1 < len(nums) and \
+                            nums[mid + 1] != target or \
+                                mid == len(nums) - 1:
+                            return mid
+                        left = mid + 1
+                    elif nums[mid] > target:
+                        right = mid - 1
+                    else: left = mid + 1
+
+                return -1
+
+            left = get_left_position(nums, target)
+            right = get_right_position(nums, target)
+
+            return [left, right]
+
+
+        def method(self, a):
+            pass
+
+        #
+        def method(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, a):
+            pass
+
+        def method(self, a):
+            pass
+
+        #
+        def method(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, a):
+            pass
+
+        def method(self, a):
+            pass
+
+        #
+        def method(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, a):
+            pass
+
+        def method(self, a):
+            pass
+
+        #
+        def method(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, a):
+            pass
+
+        def method(self, a):
+            pass
+
+        #
+        def method(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, a):
+            pass
+
+        def method(self, a):
+            pass
+
+        #
+        def method(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, a):
+            pass
+
+        def method(self, a):
+            pass
+
+        #
+        def method(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, a):
+            pass
+
+        def method(self, a):
+            pass
+
+        #
+        def method(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, a):
+            pass
+
+        def method(self, a):
+            pass
+
+        #
+        def method(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, a):
+            pass
+
+        def method(self, a):
+            pass
+
+        #
+        def method(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, a):
+            pass
+
+    
+    class Strings:
+
+        def __init__(self): pass
+
+        reverse = lambda s: s[::-1]
+
+        def reverse(self, s: str): # O(n/2) t ; O(1) s
+            s = list(s) # convert str to list of characters
+            i, j = 0, len(s) - 1
+            while i < j:
+                # str doesn't support item assignment (string must be converted into a character-list 1st)
+                s[i], s[j] = s[j], s[i]
+                i += 1; j -= 1
+            return ''.join(s)
+
+        is_palindrome = lambda s: s == s[::-1] # self.reverse(s)
+
+        def is_palindrome(self, s): # O(1) t ; O(1) s
+            return s == s[::-1] # todo: confirm reverse-slicing as O(1) t
+
+        def is_palindrome(self, s): # O(n/2) t ; O(1) s
+            i, j = 0, len(s) - 1
+            while i < j:
+                if not s[i] == s[j]:
+                    return False
+            return True
+        
+        def is_anagram(self, s1, s2): # O(n) t ; O(1) s
+            if len(s1) != len(s2): return False
+            for c in s1:
+                if not c in s2: return False
+                del s2[s2.index(c)]  # * O(1) t ? - for .index() & del array-item
+            return True
+
+        # 3rd Party (Tutorial)
+        def is_anagram(self, s1, s2): # O(2n log n) + O(n) t ~ O(n log n) t ; O(1) s
+            s1, s2 = sorted(s1), sorted(s2) # O(n log n) * 2
+            # return s1 == s2 # * can just end here, since both are sorted
+            for i in range(len(s1)):
+                if s1[i] != s2[i]:
+                    return False
+            return True
+
+        """
+        Finds the longest common substring between two strings s1 and s2.
+        For example, the longest common substring of "ABCDEF" and "ZBCDFG" is "BCDF".
+
+        :param s: string to search through
+        :return: longest common substring
+        """
+        def longest_common_substring(self, s):
+            pass # TODO
+
+        #
+        def longest_common_substring(self, s):
+            pass # TODO
+
+        # 3rd-Party (Tutorial) - LC # ?
+        def longest_common_substring(self, s):
+            pass # TODO
+        def longest_palindrome(self, s):
+            pass # TODO
+
+        #
+        def longest_palindrome(self, s):
+            pass # TODO
+
+        # 3rd-Party (Tutorial) - LC # ! ?
+        def longest_palindrome(self, s):
+            left, right, n = 0, 0, len(s)
+            if n < 2: return s
+
+            palindrome = [ [0] * n for _ in range(n) ]
+
+            for i in range(1, n):
+                for j in range(0, i):
+                    isPalindrome = palindrome \
+                        [j + 1][i - 1] or i - j <= 2
+
+                    if isPalindrome and s[i] == s[j]:
+                        palindrome[j][i] = True
+                        if i - j > right - left:
+                            left = j; right = i
+
+            return s[left : right + 1]
+
+
+        # with a list or hashmap
+        def longest_substring_without_repeating_characters(self, s): # O(n) t ; O(n) s
+            m = [] # or {}
+            max_length = 0
+
+            def check(n):
+                if n in m:
+                    max_length = max(max_length, len(m))
+                    m = []
+                else: m.append(n) # or: m[n] = 1/true/ index - (injected from map method)
+
+            map(check, s) # map check-function through list
+
+            return max_length
+
+        # sliding-window - 2-pointer (same direction) method
+        '''
+            using an empty map & 2 pointers, left & right, at start & end respectively
+            map has key-value pair (character, position)
+            loop with both pointers as long as both left & right are smaller than string length
+                - if right-pointer item exists in map:
+                    set left-pointer to maximum between the current left-pointer
+                    and the value (index) of the item existing in the map (m[s[j]]), + 1
+                
+                NB: m[s[j]] has the last position (index) of current element s[j]
+                by adding 1, & assigning the value to the left-pointer,
+                it's moved to the next possible starting position (index)
+                
+                - after the if-check set m[s[j]] to right-pointer
+                - check if current window has a larger length than previous one
+                - move right-pointer to righ
+        '''
+        def longest_substring_without_repeating_characters(self, s): # O(n) t ; O(n) s
+            m, i, j, n, max_length = {}, 0, 0, len(s), 0
+
+            while i < n and j < n:
+                if s[j] in m:
+                    i = max(i, m[s[j]] + 1) # keep i at next starting index
+                    # whether already-ahead of j, of 1 index after j
+
+                # ! wrong implementations
+                #     m[s[j]] = j - not necessary; stmt also required in else-case for setting new items' value (index) in map to current (lead) index
+                # else: m[s[j]] = j - stmt also required in if-case for re-setting item's value (index) in map to current lead-index
+
+                m[s[j]] = j
+
+                max_length = max(max_length, j - i + 1)
+                j += 1
+
+            return max_length
+
+        # * this time, moving with i as the lead-index, and j as the trailing-index
+        def longest_substring_without_repeating_characters(self, s): # O(n) t ; O(n) s
+            m, i, j, n, max_length = {}, 0, 0, len(s), 0
+
+            while i < n and j < n:
+                if s[i] in m:
+                    j = max(j, m[s[i]] + 1)
+                m[s[i]] = i
+                max_length = max(max_length, i - j + 1)
+                i += 1
+
+            return max_length
+
+        # 3rd-Party (Tutorial) - LC #3
+        def longest_substring_without_repeating_characters(self, s): # O(n) t ; O(n) s
+            m, i, j, n, max_length = {}, 0, 0, len(s), 0
+
+            while i < n and j < n:
+                if s[i] in m:
+                    j = max(j, m[s[i]] + 1)
+                m[s[i]] = i
+                max_length = max(max_length, i - j + 1)
+                i += 1
+
+            return max_length
+
+        def method(self, s):
+            pass
+
+        #
+        def method(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, s):
+            pass
+
+        def method(self, s):
+            pass
+
+        #
+        def method(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, s):
+            pass
+
+        def method(self, s):
+            pass
+
+        #
+        def method(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, s):
+            pass
+
+        def method(self, s):
+            pass
+
+        #
+        def method(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, s):
+            pass
+
+        def method(self, s):
+            pass
+
+        #
+        def method(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, s):
+            pass
+
+        def method(self, s):
+            pass
+
+        #
+        def method(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, s):
+            pass
+
+        def method(self, s):
+            pass
+
+        #
+        def method(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, s):
+            pass
+
+        def method(self, s):
+            pass
+
+        #
+        def method(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, s):
+            pass
+
+        def method(self, s):
+            pass
+
+        #
+        def method(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, s):
+            pass
+
+        def method(self, s):
+            pass
+
+        #
+        def method(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def method(self, s):
+            pass
+
 
     # (Array) Lists & Tuples
 
+
     # Sets & Sequences
 
+
     # WeakMaps & WeakSets
+
 
     # HashMaps & HashTables
 
@@ -337,7 +1355,7 @@ class DataStructures:
         now with O(n log n + n), by BCR, we can ignore log n 's insignificant effect making ~ O(2n), and then by ignoring constants' effect
         we can end up with the same O(n) t (but only in best-case scenarios)
 
-        - now with the 2-Pointer having ~ O(n) t & definite O(1) s, is arguably a better solution, then using HashMaps/Tables
+        - now with the 2-Pointer having ~ O(n) t & definite O(1) s, is arguably a better solution, than using HashMaps/Tables
 
         Check this out - https://docs.google.com/document/d/1KWwbliK1PYVXpt_njYhlCq8t373SC78eb_XJdECacTQ/edit?usp=sharing
 
@@ -345,7 +1363,7 @@ class DataStructures:
 
 
         # Q - Given an array of integers, return all pairs that add up to a target
-        # sometimes array may have only distinct (no repeating) integers, or target may be 0 (so there'll be -ve integers)
+        # sometimes array may have only distinct (non-repeating) integers, or target may be 0 (so there'll be -ve integers)
 
         def pairs_with_sum(self, arr, target): # O(n) t ; O(n) s (dict)
             # todo: use Two-Pointer algo (sort arr 1st) to avoid dicts (O(1) s)
@@ -353,10 +1371,10 @@ class DataStructures:
             m, p = {}, [] # p = pairs with sum
             for n in arr:
                 d = target - n
-                if n in m: # or - if d in m
+                if d in m: # or - if d in m
                     p.append((d, n)) # todo: or return (d, n) if two_sum() (finding only 1st pair)
-                if d not in m: # only needed if arr doesn't have distinct elements
-                    m[d] = 1 # or - if n not in m: m[n] = 1
+                if n not in m: # only needed if arr doesn't have distinct elements
+                    m[n] = 1 # or - if n not in m: m[n] = 1
             return p
             # todo: this time, we check for current i in m, and add current d to m
             # we could also check for current d in m, and add current i to m
@@ -368,10 +1386,10 @@ class DataStructures:
             m = {}
             for i, n in enumerate(arr):
                 d = target - n
-                if n in m: return (m[d], i) 
                 # return index of d (1st number of pair) and index i of current (2nd) number v
-                if d not in m: # only needed if arr doesn't have distinct elements
-                    m[d] = i
+                if d in m: return (m[d], i) 
+                if n not in m: # only needed if arr doesn't have distinct elements
+                    m[n] = i
             return None
             # todo: this time, we check for current n in m, and add current d to m
 
@@ -386,6 +1404,17 @@ class DataStructures:
                     m[n] = i
             return None
             # todo: this time, we check for current d in m, and add current n to m
+
+        # 2-sum, with an array of only distinct elements (non-repeating integers)
+        # same as above, but returning indices of elements, not elements themselves
+
+        def two_sum(nums, target): 
+            if len(nums) < 2: return
+            d = {}
+            for i, n in enumerate(nums):
+                if (target - n) in d: return [i, d[target - n]]
+                d[n] = i # no 'if n in d:' check required, if 'a' has only distinct elements
+            return None
 
         def contains_duplicates(self, arr): # O(n) t ; O(n) s
             if len(arr) < 2: return
@@ -782,6 +1811,7 @@ class DataStructures:
                 mat = [[0 for i in range(n)] for i in range(n)]
                 print(obj.bottom_up_matrix_chain_multiplication(arr, n, mat))
             else: pass
+
 
     # Linked Lists
 
@@ -2056,9 +3086,12 @@ class DataStructures:
 
     # Heaps (max & min)
     
+
     # Binary Heaps
 
+
     # Priority Queues
+
 
     # Trees
 
@@ -4111,7 +5144,7 @@ def pairs_with_sum(a, s):
 
     p, d = [], {}
     for i in a:
-        if i not in d: d[i] = i
+        if i not in d: d[i] = 1
     for i in a:
         if (s-i) in d: p.append((i, s-i))
 
@@ -4135,18 +5168,19 @@ def pairs_with_sum(a, s):
  
         # If sum of elements at current
         # pointers is less than target sum s,
-        # we move towards higher values
+        # we move towards higher values (left-pointer (i)'s next item to the right)
         # by incrementing i += 1
         elif(a[i] + a[j] < s): i += 1
  
         # If sum of elements at current
         # pointers is more than target sum s,
-        # we move towards lower values
+        # we move towards lower values (right-pointer (j)'s next item to the left)
         # by decrementing j -= 1
         else: j -= 1
     
     return p
 
+# 2-sum, with an array of only distinct elements (non-repeating integers)
 # same as above, but returning indices of elements, not elements themselves
 
 def two_sum(nums, target): 
@@ -4154,7 +5188,8 @@ def two_sum(nums, target):
     d = {}
     for i, n in enumerate(nums):
         if (target - n) in d: return [i, d[target - n]]
-        d[n] = i
+        d[n] = i # no 'if n in d:' check required, if 'a' has only distinct elements
+    return None
 
 # TODO
 def lru_cache(): pass
@@ -4349,14 +5384,16 @@ def common_elems(arr1, arr2): # Most optimized algo [time - O(n)] [space - shoul
     return len(nums)
 
 
-#
+# 2-sum, with an array of only distinct elements (non-repeating integers)
+# same as above, but returning indices of elements, not elements themselves
 
-def two_sum(nums, target): # returning indices of elements, not elements themselves
+def two_sum(nums, target):
     if len(nums) < 2: return
     d = {}
     for i, n in enumerate(nums):
         if (target - n) in d: return [i, d[target - n]]
-        d[n] = i
+        d[n] = i # no 'if n in d:' check required, if 'a' has only distinct elements
+    return None
 
 
 
