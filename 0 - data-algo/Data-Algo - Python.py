@@ -29,10 +29,12 @@ Compare all cases with stated Big O (Worst-Case / Upper-Bound) - Time & Space Co
 
 Hidden (Forgetful) Keys:
 
-BCR - for all problems with all possible solutions
+BCR & Visualizations - for all problems with all possible solutions
+Base-Cases & Error-Cases - for everything, & wrong inputs
 Brute-force methods - for all more-optimal solutions
 HashMap & "Same / Extra" Array methods - for all more-optimal solutions
 "Extra" / "Other" Data-Structure methods - for all more-optimal solutions
+While / For / Foreach / .ForEach / .Map loops - for all requiring solutions
 
 
 Data-Structures:
@@ -345,6 +347,43 @@ class DataStructures:
                 # remove last digit (as a 10th-divided decimal)
                 num = num // 10 # * or: math.floor(num / 10)
                 rnum = rnum * 10 + d # append last digit to reversed number (as a 10th-multiplied padded 0)
+
+        def remove_elements(self, a): # TODO
+            pass
+
+        #
+        def remove_elements(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def remove_elements(self, a):
+            pass
+
+        def majority_element(self, a): # TODO
+            pass
+
+        #
+        def majority_element(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #169
+        def majority_element(self, a: List[int]) -> int: # O(n + m ~ 2n ~ n) t ; O(n) s
+            m = {}
+
+            # 1st pass: keep count of items in hash-map
+            for n in a:
+                if n in m: m[n] += + 1
+                else: m[n] = 1
+
+            # 2nd pass: for each item in map, return key of count which is > n/2
+            majority = math.floor(len(a) / 2.0)
+            majorityElement = nums[0]
+
+            for k, v in map.items():
+                if v > majority:
+                    majorityElement = k
+
+            return majorityElement
         
         def find_duplicates(self, a): # O(n) t ; O(1) s
             # can use a hashmap or extra array - O(n) s
@@ -385,16 +424,36 @@ class DataStructures:
 
         def min_jumps(self, a): pass
 
+        # ! WRONG - padding zeroes to end - infinite loop
         def move_zeroes_to_end(self, a): # O(n^2 ~ n) t ; O(1) s
             for i, v in enumerate(a):
                 if v is 0:
-                    a.pop(i) # or: del a[i]
-                    a.append(v) # ! also O(n) t on worst-case
+                    # ! wrong - popping out from index will disrupt iterations
+                    # * (next iteration will skip this index's replacement item)
+                    a.pop(i) # O(n ~ 1) or: del a[i] - O(1)
+                    # ! wrong - appending 0s also turns to an infinite loop
+                    a.append(v) # ! also O(n ~ 1) t on worst-case
                     # ! cannot set on length-index (out of range exception) - in .py
                     # a[len(a)] = v # O(1) t on setting at index
+            return a
+            # ! use a while-loop (manual iteration-control) if the same input array must be edited
+        
+        # using a manual while loop (only iterate when necessary)
+        def move_zeroes_to_end(self, a): # O(n/2 ~ n) t ; O(1) s
+            i = c = 0
+            while i < len(a):
+                n = a[i]
+                if n == 0:
+                    if len(a) - i <= c: # ! should be '==' but added <= in case of length-subtraction errors - Test & confirm
+                        break
+                    c += 1
+                    a.pop(i) # O(n~1)
+                    a.append(0) # O(n~1)
+                else: i += 1
+            return a
 
         # 3rd-Party (Tutorial) - LC #283 - iterative swaps
-        def move_zeroes_to_end(self, a: List[int]) -> None: # O(2^n ~ n) t ; O(1) s
+        def move_zeroes_to_end(self, a: List[int]) -> None: # O(2n ~ n) t ; O(1) s
             i = 0
             for n in a:
                 if not n is 0:
@@ -402,6 +461,30 @@ class DataStructures:
                     i += 1
             for j in range(i, len(a)):
                 a[j] = 0
+
+        def move_zeroes(self, a): # TODO
+            pass
+
+        #
+        def move_zeroes(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #283 - using Iterative Swaps
+        def move_zeroes(self, a: List[int]) -> None: # O(n) t ; O(1) s
+
+            def swap(a: List[int], i: int, j: int):
+                tmp = a[i]
+                a[i] = a[j]
+                a[j] = tmp
+
+            nonZeroLastIndex = 0; runner = 0
+
+            while runner < len(a):
+                if a[runner] != 0:
+                    swap(a, nonZeroLastIndex, runner)
+                    nonZeroLastIndex += 1
+
+                runner += 1
 
         '''
         Given an array of ints, return true if:
@@ -910,115 +993,193 @@ class DataStructures:
             return [left, right]
 
 
-        def method(self, a):
+        # using a hashmap / extra array
+        def contains_duplicates(self, a): # O(n) t ; O(n) s - whether hashmap / extra array
+            m, a1 = {}, []
+            for n in a:
+                if n in m or n in a1:
+                    return True
+                m[n] = 1; a1.append(n)
+            return False
+
+        # updating input array
+        def contains_duplicates(self, a): # O(n) t ; O(1) s
+            for i, n in enumerate(a):
+                del a[i]
+                if n in a:
+                    return True
+            return False
+
+        # sorting, then checking adjacent values
+        def contains_duplicates(self, a):
+            a.sort()
+            for i, n in enumerate(a):
+                # if n is a[i + 1]: # raises out-of-bounds error at i = len(a)
+                if i is 0: continue # so instead, skip 1st iteration # ! but find out .py iteration through a list, still with more control over index
+                if n is a[i - 1]:
+                    return True
+            return False
+
+        # 3rd-Party (Tutorial) - LC #217
+        def contains_duplicates(self, a): # O() t ; O() s
             pass
 
+        # 3rd-Party (Tutorial) - LC #217
+        def contains_duplicates(self, a: List[int]) -> bool: # O(n) t ; O(n) s
+            if len(a) <= 1: return False
+            m = {}
+            for n in a:
+                if n in m:
+                    return True
+                m[n] = True
+            return False
+
+        # using a hashmap / extra array
+        def two_sum(self, a, t): # O(n) t ; O(1) s
+            m, a1 = {}, [] # can choose between which data-structure to use (don't use both like in this case
+            pairs = []
+            for n in a:
+                d = t - n
+                if d in m or d in a1:
+                    pairs.append((n, d))
+                d[n] = 1; a1.append(n)
+            return pairs
+
+        # sort, then 2-pointer
+        def two_sum(self, a, t): # O( n log n + (n/2 ~ n) ~ ?? n + n => 2n => n ) t ; O(1) s
+            a.sort() # O(nlogn)
+            i, j = 0, len(a) - 1
+            pairs = []
+            while i < j:
+                s = a[i] + a[j]
+                if s == t:
+                    pairs.append(a[i], a[j])
+                elif s < t: # move towards higher values
+                    i += 1
+                else: j -= 1 # move towards lower values
+
+        # 3rd-Party (Tutorial) - LC #
+        def two_sum(self, a: List[int], t: int) -> List[int]: # O() t ; O() s
+            m, ips, nps = {}, [], []
+            for i in range(0, len(a)): # ranging through indices (0 -> length-1)
+                d = t - a[i]
+                if d in m: # return / append index-pairs
+                    ips.append((m[d], i)) # append index-pair
+                    nps.append((d, a[i])) # append num-pair
+                else: m[a[i]] = i
+            return ips, nps
+
+        # using a base-pointer, then 2 pointers
+        def three_sum(self, a): # O( n (n/2 ~ n) ~ n^2) t ; O(1) s
+            i, j = 1, len(a) - 1
+            pairs = []
+            for n in a:
+                while i < j:
+                    s = n + a[i] + a[j]
+                    if s == t: pairs.append((n, a[i], a[j]))
+                    elif s < t: i += 1
+                    else: j -= 1
+            return pairs
+
         #
-        def method(self, a):
+        def three_sum(self, a): # O() t ; O() s
             pass
 
         # 3rd-Party (Tutorial) - LC #
-        def method(self, a):
+        def three_sum(self, a): # O() t ; O() s
             pass
 
-        def method(self, a):
-            pass
-
-        #
-        def method(self, a):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, a):
-            pass
-
-        def method(self, a):
+        def four_sum(self, a): # TODO
             pass
 
         #
-        def method(self, a):
+        def four_sum(self, a):
             pass
 
         # 3rd-Party (Tutorial) - LC #
-        def method(self, a):
+        def four_sum(self, a):
             pass
 
-        def method(self, a):
-            pass
+        # finding out multiple intersections (repeating intersections added)
+        def intersection_of_2_arrays(self, a1, a2): # O(n) t ; O(1) s
+            intersections = []
+            for i, n in enumerate(a1):
+                if n in a2:
+                    i2 = a2.index(n)
+                    del a1[i], a2[i2] # ! not-optimal, but required for newer (& repeating) intersections
+                    # if n not in intersections: # * if pruning repeating intersections was required
+                    intersections.append((n, i, i2))
+            return intersections
 
-        #
-        def method(self, a):
-            pass
+        # if different array-lengths, iterate through the smaller array, check its items in the other
+        def intersection_of_2_arrays(self, a1, a2): # O(n) t ; O(1) s
+            intersections = []
+            for n in a1 if len(a1) < len(a2) else a2: # loop through shorter array
+                if n in a1 and n in a2 and (not n in intersections): # check both arrays (for compromise in previous line)
+                    intersections.append(n) # * only append unique intersections this time
+            return intersections
 
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, a):
-            pass
+        def intersection_of_2_arrays(self, a1, a2): # O() t ; O() s
+            pass # TODO
 
-        def method(self, a):
-            pass
+        # if same array-lengths, iterate through 1 array, check its items in the other
+        def intersection_of_2_arrays(self, a1, a2): # O(n) t ; O(1) s
+            ints = []
+            for n in a1:
+                if n in a2 and n not in ints:
+                    ints.append(n)
+            return ints
 
-        #
-        def method(self, a):
-            pass
+        def intersection_of_2_arrays(self, a1, a2): # O() t ; O() s
+            pass # TODO
 
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, a):
-            pass
+        # if same array-lengths, iterate through 1 array, using its indices to access the other, in constant time
+        def intersection_of_2_arrays(self, a1, a2): # O() t ; O() s
+            pass # TODO
 
-        def method(self, a):
-            pass
+        def intersection_of_2_arrays(self, a1, a2): # O() t ; O() s
+            pass # TODO
 
-        #
-        def method(self, a):
-            pass
+        # using a hashmap
+        def intersection_of_2_arrays(self, a1, a2): # O(n) t ; O(n) s
+            m, ints = {}, []
+            for n in a1:
+                if n not in m:
+                    m[n] = 1
+            for n in a2:
+                if n in m:
+                    if not n in ints:
+                        ints.append(n)
+            return ints
 
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, a):
-            pass
+        def intersection_of_2_arrays(self, a1, a2): # O() t ; O() s
+            pass # TODO
 
-        def method(self, a):
-            pass
+        # 3rd-Party (Tutorial) - LC #349
+        def intersection_of_2_arrays(self, a1: List[int], a2: List[int]) -> List[int]: # O(2n + n/? ~ n) t ; O(n) s
+            # error-case if any of arrays is empty
+            if not (len(a1) and len(a2)): return []
 
-        #
-        def method(self, a):
-            pass
+            # 1st pass: add items in a1 to hashmap
+            m = {}
+            for n in a1:
+                if n not in m:
+                    m[n] = 1
 
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, a):
-            pass
+            # 2nd pass: for each item in a2, mark the ones that exist in the hashmap as 0
+            num_ints = 0
+            for n in a2:
+                if n in m and m[n] == 1:
+                    m[n] = 0
+                    num_ints += 1
 
-        def method(self, a):
-            pass
+            # 3rd pass: iterate through hashmap, & if m[k, v]'s v = 0, then add it to intersections array
+            ints = []
+            for k, v in m.items(): # * confirm again: .iteritems()
+                if v == 0:
+                    ints.append(k)
 
-        #
-        def method(self, a):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, a):
-            pass
-
-        def method(self, a):
-            pass
-
-        #
-        def method(self, a):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, a):
-            pass
-
-        def method(self, a):
-            pass
-
-        #
-        def method(self, a):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, a):
-            pass
+            return ints
 
     
     class Strings:
@@ -1027,14 +1188,129 @@ class DataStructures:
 
         reverse = lambda s: s[::-1]
 
-        def reverse(self, s: str): # O(n/2) t ; O(1) s
-            s = list(s) # convert str to list of characters
+        def reverse(self, s):
+            ''.join(list(s)[::-1])
+
+        def reverse(self, s: str): # O(n + n/2 + n ~ n) t ; O(1) s
+            s = list(s) # O(n ~ 1) t - convert str to list of characters
             i, j = 0, len(s) - 1
-            while i < j:
+            while i < j: # O(n/2 ~ n) t
                 # str doesn't support item assignment (string must be converted into a character-list 1st)
                 s[i], s[j] = s[j], s[i]
                 i += 1; j -= 1
-            return ''.join(s)
+            return ''.join(s) # O(n ~ 1) t
+
+        def reverse(self, s): # TODO
+            pass
+
+        #
+        def reverse(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #344
+        def reverse(self, s): # O(n/2 ~ n) t ; O(1) s
+
+            def swap(s: List[str], front: int, end: int): # O(1) t & s
+                tmp = s[front]; s[front] = s[end]; s[end] = tmp
+
+            front = 0; end = len(s) - 1
+            while front < end:
+                swap(s, front, end)
+                front += 1; end -= 1
+
+        def reverse_words(self, s): # O(3n ~ n) t ; O(1) s
+            # ! s.split(' ').reverse().join(' ') # ! .js -> .py common mistake
+            '''
+            s.split('') - empty separator error
+            s.split(' ') - splits on whitespaces ' ' - splits words
+            # * list(s) - splits each character into a list
+            [].reverse() - removes value completely (does not reverse)
+            [][::-1] - reverses array
+            [].join() - error! list objects don't have .join()
+            # * ''.join([..]) - how to join lists into a string, with '' no whitespace
+            ' '.join([..]) - how to join with ' ' whitescace
+            ' - '.join([..]) - join with ' - '
+            '''
+            ' '.join(s.split(' ')[::-1])
+
+        #
+        def reverse_words(self, s): # O(3n ~ n) t ; O(1) s
+            strs = s.split(' ') # O(n) t
+
+            i, j = 0, strs.length - 1
+            while i < j:
+                strs[i], strs[j] = strs[j], strs[i]
+                i += 1; j -= 1
+
+            return ' '.join(strs) # O(n) t
+
+        #
+        def reverse_words(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #557
+        def reverse_words(self, s: str) -> str: # ! O(nm ~ n) t ; O(1) s
+
+            def reverse(s: List[str], front: int, end: int):
+                while front < end:
+                    tmp = s[front]
+                    s[front] = s[end]
+                    s[end] = tmp
+                    front += 1
+                    end -= 1
+
+            if len(s) <= 1: return s
+
+            front, end, chars = 0, 0, list(s)
+
+            # 2-pointer iteration outer & inner
+            while end < len(s):
+                # reverse when whitespace
+                if chars[end].isspace():
+                    reverse(chars, front, end - 1)
+                    front = end + 1
+                # handle last word, with no space after it
+                elif end == len(s) - 1:
+                    reverse(chars, front, end)
+                end += 1
+
+            return ''.join(chars)
+
+        # 3rd-Party (Tutorial) - LC #557
+        def reverse_words(self, s: str) -> str:
+            pass # TODO
+
+        # first unique character
+        def first_non_repeating_char(self, s): # TODO
+            pass
+
+        #
+        def first_non_repeating_char(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #387
+        def first_non_repeating_char(self, s):
+            pass
+
+        # first non-repeating character
+        def first_unique_char(self, s): # TODO
+            pass
+
+        #
+        def first_unique_char(self, s):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #387
+        def first_unique_char(self, s):
+            m = {}
+            for c in s:
+                if c not in m:
+                    m[c] = 1
+                else: m[c] += 1
+            for c in s:
+                if m[c] == 1:
+                    return c
+            return None
 
         is_palindrome = lambda s: s == s[::-1] # self.reverse(s)
 
@@ -1064,31 +1340,72 @@ class DataStructures:
                     return False
             return True
 
-        """
-        Finds the longest common substring between two strings s1 and s2.
-        For example, the longest common substring of "ABCDEF" and "ZBCDFG" is "BCDF".
+        # 3rd Party (Tutorial) - LC #242
+        def is_anagram(self, s: str, t: str) -> bool: # O(2n + m ~ 3n ~ n) t ; O(n) s
+            if not s and not t: return True
+            if not s or not t: return False
+            if len(s) != len(t): return False
 
-        :param s: string to search through
-        :return: longest common substring
-        """
-        def longest_common_substring(self, s):
-            pass # TODO
+            m = {}
+
+            # 1st pass: add chars in s to map, & keep count
+            for c in s:
+                if c in m: m[c] += 1
+                else: m[c] = 1
+
+            # 2nd pass: reduce counts of chars in t found in map
+            for c in t:
+                if c not in m: return False
+                m[c] -= 1
+
+            # 3rd pass: check for all counts in hashmap not 0, then true
+            for k, v in m.items():
+                if v != 0: return False
+
+            return True
+
+        # remove from 1 string and compare
+        def check_anagrams(self, s1, s2): # O(n) t ; O(1) s
+            for s in s1:
+                if s in s2:
+                    del s2[s2.index(s)]
+                else: return False
+            return True
+
+        # sort both and compare
+        def check_anagrams(self, s1, s2): # O(2n log n) t ; O(1) s
+            # s1.sort(); s2.sort() # ! string has not .sort method
+            s1 = ''.join(sorted(s1))
+            s2 = ''.join(sorted(s2))
+            return s1 == s2 # 'is' compares var's reference id, not value itself
+
+        def check_anagrams(self, s1, s2):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def check_anagrams(self, s1, s2):
+            pass
+
+        # ! wrong algo
+        def longest_palindrome(self, s): # * only finds reflective pali-feature of substrings - will have breakages in-between
+            i, j = 0, len(s) - 1
+            l, maxL = 0, 0
+
+            while i < j:
+                if s[i] is s[j]:
+                    l += 1
+                else:
+                    maxL = max(maxL, l) # * 2(l) - 'fake-length of 'non'-pali'
+                    l = 0
+
+            return maxL
 
         #
-        def longest_common_substring(self, s):
-            pass # TODO
-
-        # 3rd-Party (Tutorial) - LC # ?
-        def longest_common_substring(self, s):
-            pass # TODO
         def longest_palindrome(self, s):
             pass # TODO
 
-        #
-        def longest_palindrome(self, s):
-            pass # TODO
-
-        # 3rd-Party (Tutorial) - LC # ! ?
+        # ! IMPORTANT
+        # TODO: 3rd-Party (Tutorial) - LC # ! ?
         def longest_palindrome(self, s):
             left, right, n = 0, 0, len(s)
             if n < 2: return s
@@ -1107,6 +1424,34 @@ class DataStructures:
 
             return s[left : right + 1]
 
+        """
+        Finds the longest common substring between two strings s1 and s2.
+        For example, the longest common substring of "ABCDEF" and "ZBCDFG" is "BCDF".
+
+        :param s: string to search through
+        :return: longest common substring
+        """
+        def longest_common_substring(self, s1, s2):
+            pass # TODO
+
+        # s1 & s2 have the same length
+        def longest_common_substring(self, s1, s2): # O(n) t ; O(1) s
+            l = maxL = 0
+            for i, c in enumerate(s1):
+                if c is s2[i]:
+                    l += 1
+                else:
+                    maxL = max(maxL, l)
+                    l = 0
+            return maxL
+
+        #
+        def longest_common_substring(self, s1, s2):
+            pass # TODO
+
+        # 3rd-Party (Tutorial) - LC # ?
+        def longest_common_substring(self, s1, s2):
+            pass # TODO
 
         # with a list or hashmap
         def longest_substring_without_repeating_characters(self, s): # O(n) t ; O(n) s
@@ -1184,116 +1529,6 @@ class DataStructures:
                 i += 1
 
             return max_length
-
-        def method(self, s):
-            pass
-
-        #
-        def method(self, s):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, s):
-            pass
-
-        def method(self, s):
-            pass
-
-        #
-        def method(self, s):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, s):
-            pass
-
-        def method(self, s):
-            pass
-
-        #
-        def method(self, s):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, s):
-            pass
-
-        def method(self, s):
-            pass
-
-        #
-        def method(self, s):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, s):
-            pass
-
-        def method(self, s):
-            pass
-
-        #
-        def method(self, s):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, s):
-            pass
-
-        def method(self, s):
-            pass
-
-        #
-        def method(self, s):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, s):
-            pass
-
-        def method(self, s):
-            pass
-
-        #
-        def method(self, s):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, s):
-            pass
-
-        def method(self, s):
-            pass
-
-        #
-        def method(self, s):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, s):
-            pass
-
-        def method(self, s):
-            pass
-
-        #
-        def method(self, s):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, s):
-            pass
-
-        def method(self, s):
-            pass
-
-        #
-        def method(self, s):
-            pass
-
-        # 3rd-Party (Tutorial) - LC #
-        def method(self, s):
-            pass
 
 
     # (Array) Lists & Tuples
@@ -1428,8 +1663,8 @@ class DataStructures:
             - add all elems to a set; if set & array sizes are equal, return true
             '''
         
-        # 3rd-Party
-        def contains_duplicates(self, arr): 
+        # 3rd-Party (Tutorial) - LC #217
+        def contains_duplicates(self, arr): # O(n) t ; O(n) s
             # defaultdict simplifies code and avoids the need for explicit initialization of counts for each character
             m = defaultdict(int)
             for n in arr:
@@ -1438,7 +1673,7 @@ class DataStructures:
                     return True
                 m[n] = 1 # m[n] is initialized by 0 by default
             return False
-        
+
         def majority_element(self, arr): # O(n + d ~ 2n ~ n) t ; O(n) s
             m = defaultdict(int)
             for n in arr: # O(n) t
