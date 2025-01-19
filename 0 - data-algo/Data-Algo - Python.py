@@ -348,6 +348,17 @@ class DataStructures:
                 num = num // 10 # * or: math.floor(num / 10)
                 rnum = rnum * 10 + d # append last digit to reversed number (as a 10th-multiplied padded 0)
 
+        def remove_element(self, a): # TODO
+            pass
+
+        #
+        def remove_element(self, a):
+            pass
+
+        # 3rd-Party (Tutorial) - LC #
+        def remove_element(self, a):
+            pass
+
         def remove_elements(self, a): # TODO
             pass
 
@@ -372,18 +383,18 @@ class DataStructures:
 
             # 1st pass: keep count of items in hash-map
             for n in a:
-                if n in m: m[n] += + 1
+                if n in m: m[n] += 1
                 else: m[n] = 1
 
             # 2nd pass: for each item in map, return key of count which is > n/2
             majority = math.floor(len(a) / 2.0)
-            majorityElement = nums[0]
+            majority_element = nums[0]
 
             for k, v in map.items():
                 if v > majority:
-                    majorityElement = k
+                    majority_element = k
 
-            return majorityElement
+            return majority_element
         
         def find_duplicates(self, a): # O(n) t ; O(1) s
             # can use a hashmap or extra array - O(n) s
@@ -471,20 +482,20 @@ class DataStructures:
 
         # 3rd-Party (Tutorial) - LC #283 - using Iterative Swaps
         def move_zeroes(self, a: List[int]) -> None: # O(n) t ; O(1) s
+            if len(a) <= 1: return a
 
             def swap(a: List[int], i: int, j: int):
-                tmp = a[i]
-                a[i] = a[j]
-                a[j] = tmp
+                tmp = a[i]; a[i] = a[j]; a[j] = tmp
 
-            nonZeroLastIndex = 0; runner = 0
+            non_zero_last_index = 0; runner = 0
 
             while runner < len(a):
                 if a[runner] != 0:
-                    swap(a, nonZeroLastIndex, runner)
-                    nonZeroLastIndex += 1
-
+                    swap(a, non_zero_last_index, runner)
+                    non_zero_last_index += 1
                 runner += 1
+
+            return a
 
         '''
         Given an array of ints, return true if:
@@ -1058,8 +1069,8 @@ class DataStructures:
                     i += 1
                 else: j -= 1 # move towards lower values
 
-        # 3rd-Party (Tutorial) - LC #
-        def two_sum(self, a: List[int], t: int) -> List[int]: # O() t ; O() s
+        # 3rd-Party (Tutorial) - LC #1
+        def two_sum(self, a: List[int], t: int) -> List[int]: # O(n) t ; O(3n ~ n - only 1 map actually needed; extra 2 arrays only hold results) s
             m, ips, nps = {}, [], []
             for i in range(0, len(a)): # ranging through indices (0 -> length-1)
                 d = t - a[i]
@@ -1100,12 +1111,15 @@ class DataStructures:
         def four_sum(self, a):
             pass
 
-        # finding out multiple intersections (repeating intersections added)
+        # finding out multiple intersections (repeating intersections included)
         def intersection_of_2_arrays(self, a1, a2): # O(n) t ; O(1) s
             intersections = []
+            # ! always iterate through the shorter array
+            # todo: so check for which is shorter 1st
             for i, n in enumerate(a1):
                 if n in a2:
                     i2 = a2.index(n)
+                    # ! in reality, always confirm cost-benefit of deleting any piece of data
                     del a1[i], a2[i2] # ! not-optimal, but required for newer (& repeating) intersections
                     # if n not in intersections: # * if pruning repeating intersections was required
                     intersections.append((n, i, i2))
@@ -1156,7 +1170,12 @@ class DataStructures:
             pass # TODO
 
         # 3rd-Party (Tutorial) - LC #349
-        def intersection_of_2_arrays(self, a1: List[int], a2: List[int]) -> List[int]: # O(2n + n/? ~ n) t ; O(n) s
+        def intersection_of_2_arrays(self, a1: List[int], a2: List[int]) -> List[int]: # O(2n + n/? (based on number of distinct elems added to map) ~ n) t ; O(n) s
+            # ! another explanation
+            # O( n1 + n2 + m ~ 2n1 + n2 or 2n2 + n1 (since length of m should be length of shorter array; which should've been iterated through 1st)
+            # ~ 3n ~ n (if n = length of shorter array, with all distinct elements - so hashmap length == shorter array length) = n ) t ;
+            # O( m + i ~ m (i - intersections only hold results) ~ n (length of shorter array == length of m) = n ) s
+
             # error-case if any of arrays is empty
             if not (len(a1) and len(a2)): return []
 
@@ -1215,8 +1234,11 @@ class DataStructures:
 
             front = 0; end = len(s) - 1
             while front < end:
-                swap(s, front, end)
+                swap(s, front, end) # todo: ensure swap worked with s by reference
+                # * else return s = swap(..)
                 front += 1; end -= 1
+
+            return s
 
         def reverse_words(self, s): # O(3n ~ n) t ; O(1) s
             # ! s.split(' ').reverse().join(' ') # ! .js -> .py common mistake
@@ -1249,7 +1271,7 @@ class DataStructures:
             pass
 
         # 3rd-Party (Tutorial) - LC #557
-        def reverse_words(self, s: str) -> str: # ! O(nm ~ n) t ; O(1) s
+        def reverse_words(self, s: str) -> str: # ! O(n(n/2) ~ n) t ; O(n / n~1 ? - argue between extra char-array being required for algo's usage or not) s
 
             def reverse(s: List[str], front: int, end: int):
                 while front < end:
@@ -1302,6 +1324,8 @@ class DataStructures:
 
         # 3rd-Party (Tutorial) - LC #387
         def first_unique_char(self, s):
+            if len(s) == 0: return -1
+            if len(s) == 1: return s[0] # return 1st item
             m = {}
             for c in s:
                 if c not in m:
@@ -4901,6 +4925,11 @@ class DynamicProgramming:
 
 
 class DivideAndConquer:
+
+    '''
+        # TODO:
+        
+    '''
 
     def __init__(self): pass
 
