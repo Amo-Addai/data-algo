@@ -18,11 +18,13 @@ functools, toolz, pyrsistent
 
 
 '''
+
 # TODO:
 
 Test all files' Algo's - Correctness, Speed / Execution Time, Uniqueness
 Re-assess all algos' Big Omega (Best-Case / Lower-Bound) & Big Theta (Average-Case / Tight-Bound) - Time & Space Complexities
 Compare all cases with stated Big O (Worst-Case / Upper-Bound) - Time & Space Complexities alike
+
 
 # TODO: To-Use
 
@@ -31,10 +33,67 @@ Hidden (Forgetful) Keys:
 
 BCR & Visualizations - for all problems with all possible solutions
 Base-Cases & Error-Cases - for everything, & wrong inputs
-Brute-force methods - for all more-optimal solutions
+
+Brute-force methods - for all non / more - optimal solutions
+
+Mathematical Approaches - for all most-optimal solutions for numbers (or numbered data-structures)
+"Math Formulae" methods - for all math-problems
+
 HashMap & "Same / Extra" Array methods - for all more-optimal solutions
 "Extra" / "Other" Data-Structure methods - for all more-optimal solutions
+
+Sort - 1st methods - for all more-optimal solutions
+
+Mid-Solution Input Argument - for all more-optimal solutions
+(eg. given max number of input array, also as an argument,
+preventing the need to sort the array 1st, in some cases)
+
+"Hacky Algo" methods - for all most-optimal solutions (eg. 'delete' hack)
+
 While / For / Foreach / .ForEach / .Map loops - for all requiring solutions
+(eg. using all types of indices, iteration methods, 2+-pointer methods, etc)
+
+Language / Syntax - Specific Features - methods - for all solutions
+(eg. .py special methods operating in O(n ~ 1) t, by optimization
+eg. special loop methods - n in a / range(of indices - inclusive/exclusive), enumerated iterations, etd)
+
+Trade-off method options - for all solutions
+(eg. 'delete' hack vs extra array / data-structure with 'checked' items;
+'in' array (or .includes() method - also O(1~n) t) vs O(1~n) re-looping through same input array to current iteration)
+
+Funny-tricks (cool) options - for all solutions
+(eg. rearranging problems / input data in different ways, to achieve multiple solution scenarios)
+
+Funny-stuff (stupid) options - for all solutions
+finding extra and unnecessary hacks for solutions
+(eg. converting an integer to a string, for concatenation
+better option - using Math tactics
+- concatenating by (* 10 + n) & trimming by (% 10) )
+
+
+Cyclomatic Complexity also (per-function-based) - for all solutions
+(
+
+software metric used to measure a program's complexity, by counting number of independent paths through the source code.
+helps assess code's maintainability, testability, quality assurance, risk management - potential risk areas
+
+M = E - N + 2P - complex code with flow-graphs; 
+E - Number of edges (connections between nodes in the flow-graph), 
+N - Number of nodes (decision points and code blocks in the flow-graph), 
+P - Number of paths / connected components (typically 1 for a single function) 
+
+M = Number of decision points + 1 - simple (1) function without a flow-graph
+
+Decision points include:
+
+    *   Raw statements / Function Calls - 0 / NO d-point - 1 cc
+
+	•	if (1 d-point - 2 cc), else if (another 1 d-point), if else if (combined 2 d-points - 3 cc), switch-case (1 d-point for each case)
+	•	for, while, do-while
+	•	Logical operators (&&, ||)
+	•	Exception handling (try-catch-finally)
+
+)
 
 
 Data-Structures:
@@ -46,10 +105,10 @@ Done - arrays/strings (sorting/searching), lists/tuples, matrices, hash/weak-map
 Algorithm Mechanics & Facts:
 
 
-Mechanic - DataStructure(s), Language-Syntax, Variations, Constraints, Question Constraints, Helpers, Laws & Facts, Combos
+Mechanic - DataStructure(s), Language-Syntax, Variations, Constraints, Question Constraints, Helpers, Laws & Facts, Combos, Cyclo's
 
 
-- same data-structure (eg. array - when only values required; not indices too) - language-syntax (eg. x 'in' arr over dict), 
+- same data-structure (eg. array - when only values required; not indices too) - language-syntax (eg. x 'in' arr over dict - O(1) t), 
 
 - hashmap/hashtable - when indices (as map-values) also required, 
 
@@ -62,6 +121,8 @@ Iterations: 1 / 2 / .. / n - pointers
 - 2-pointer - arrays/strings/linkedlists/matrices?/.. , binary/? search, inward/outward iteration, same-time/1-after-other/slow-faster/1-or-n-step(s)-ahead iteration, 
 pointer-calculations (eg. middle-index), integer-math laws, int < target, (non-)repeating ints, sorting 'almost always' required (ints/strings/..), 
 
+NB: 1-pointer-step-ahead (better to work with previous item, than with next item - array out-of-bounds exception on last iteration)
+
 Searches: 
 
 - Linear Search - arrays/strings/linkedlists/.. , 
@@ -72,7 +133,14 @@ Others:
 
 - Sliding-window - arrays/strings/matrices?/.. , ranges/sub-arrays/.. , ..
 
+Optimizing Cyclomatic Complexities:
 
+- Use DRY Code (no repetition; only modular code for re-use)
+- Refactor (Break) Long Functions into smaller reusable functions
+- Use Polymorphism & Strategy Patterns - replace complex switch or if-else chains with polymorphic design
+- Remove Redundant Conditions - optimize nested loops & unnecessary branches
+- Use Guard Clauses - Reduce deep nesting / unnecessary code execution, by returning early (on input-data validation)
+- Utilize Ternary Operators & Lookup Tables - Simplify conditions when possible
 
 
 - 
@@ -321,14 +389,17 @@ class Searching:
 
 class DataStructures:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
     
 
     # Arrays & Strings
 
     class Arrays:
 
-        def __init__(self): pass
+        def __init__(self): # O() t ; O() s
+            # TODO
+            pass
 
         reverse = lambda a: a[::-1] # O(1) t ; O(1) s # todo: confirm reverse-slicing as O(1) t
 
@@ -433,7 +504,9 @@ class DataStructures:
                 '''
             return -1
 
-        def min_jumps(self, a): pass
+        def min_jumps(self, a): # O() t ; O() s
+            # TODO
+            pass
 
         # ! WRONG - padding zeroes to end - infinite loop
         def move_zeroes_to_end(self, a): # O(n^2 ~ n) t ; O(1) s
@@ -1123,6 +1196,7 @@ class DataStructures:
                     del a1[i], a2[i2] # ! not-optimal, but required for newer (& repeating) intersections
                     # if n not in intersections: # * if pruning repeating intersections was required
                     intersections.append((n, i, i2))
+
             return intersections
 
         # if different array-lengths, iterate through the smaller array, check its items in the other
@@ -1140,8 +1214,27 @@ class DataStructures:
         def intersection_of_2_arrays(self, a1, a2): # O(n) t ; O(1) s
             ints = []
             for n in a1:
-                if n in a2 and n not in ints:
+                if n in a2 and n not in ints: # ! ALSO DON'T GET TRICKED BY LANGUAGE SYNTAX
+                    
+                    # * 'in' keyword checks if data-structure contains a value
+                    # TODO: so confirm O(t) of 'in' keyword in .py
+                    # * - is it O(1) t by "time-perfected" syntax - constant-time by "keyword syntax"
+                    # * or is it still O(n) t - "Linear Search" / O(log n) t - "Binary Search"
+                    # * - by checking if the data-structure contains a certain value with an algo behind-the-scenes
+
+                    # ! answers (G4G - Geeks for Geeks): 
+                    # * O(n) t (Linear Search) in arrays - Binary Search not used, unless explicitly used
+                    # * O(1) t in sets - Sets in Python are implemented using hash tables.
+                    # The in operator for sets leverages the hash function to determine if an element exists, providing average case constant time complexity.
+                    # * O(1) t in dictionaries / hashmaps / hashtables - Similar to sets, dictionaries in Python are also implemented using hash tables.
+                    # The in operator checks if a key exists in the dictionary, providing average case constant time complexity.
+                    # * O(m * n) t in strings - The time complexity is O(m * n), where n is the length of the string and m is the length of the substring being searched for.
+                    # Strings in Python are arrays of characters. 
+                    # When using the in operator to check if a substring exists within a string, Python performs a substring search, which can be quite complex.
+
+                    
                     ints.append(n)
+
             return ints
 
         def intersection_of_2_arrays(self, a1, a2): # O() t ; O() s
@@ -1203,7 +1296,9 @@ class DataStructures:
     
     class Strings:
 
-        def __init__(self): pass
+        def __init__(self): # O() t ; O() s
+            # TODO
+            pass
 
         reverse = lambda s: s[::-1]
 
@@ -2016,7 +2111,9 @@ class DataStructures:
 
     class Matrix:
 
-        def __init__(self): pass
+        def __init__(self): # O() t ; O() s
+            # TODO
+            pass
 
         def matrix_chain_multiplication(self, arr, i, j):
             if i == j: return 0
@@ -2828,9 +2925,11 @@ class DataStructures:
         # TODO
         
 
-    def add(self, l1, l2): pass
+    def add(self, l1, l2): # O() t ; O() s
+        pass # TODO
         
-    def add_nums(self, l1, l2): pass
+    def add_nums(self, l1, l2): # O() t ; O() s
+        pass # TODO
         
     def add_2_nums(self, l1, l2): # O(n) t (n - length of longer list); O(n) s (creating a newly summed linked-list)
 
@@ -3390,7 +3489,7 @@ class DataStructures:
                 for child in self.children:
                     self.print_tree(child, level = level + 1)
         
-        def __init__(self, n):
+        def __init__(self, n: TreeNode):
             self.root = n
             self.height = 1 # length of the longest path from the root to a leaf node
             # todo: depth - height (less the 1st root node) from root node to any given node
@@ -3710,16 +3809,26 @@ class DataStructures:
                 print(it.has_next())
 
 
-        def diameter(self): pass
+        def diameter(self): # O() t ; O() s
+            # TODO
+            pass
 
-        def max_depth_or_height(self): pass
+        def max_depth_or_height(self): # O() t ; O() s
+            # TODO
+            pass
 
         @staticmethod
-        def is_BST(self): pass
+        def is_BST(self): # O() t ; O() s
+            # TODO
+            pass
 
-        def lowest_common_ancestor(self): pass
+        def lowest_common_ancestor(self): # O() t ; O() s
+            # TODO
+            pass
 
-        def unique_paths(self): pass
+        def unique_paths(self): # O() t ; O() s
+            # TODO
+            pass
 
         # TODO: Test
 
@@ -4227,7 +4336,9 @@ class DataStructures:
 
     class Graph:
 
-        def __init__(self): pass
+        def __init__(self): # O() t ; O() s
+            # TODO
+            pass
 
 
         # Cyclic or Non-Acyclic Graph - has at least 1 cycle
@@ -4697,7 +4808,9 @@ class DataStructures:
         
         class ShortestPathAlgorithms:
 
-            def __init__(self): pass
+            def __init__(self): # O() t ; O() s
+                # TODO
+                pass
 
 
             class Dijkstra:
@@ -4822,267 +4935,1938 @@ class DataStructures:
     Suffixes - Array, Map, Table, Set, List, LinkedList, Stack, Queue, Deque, Heap, Tree, Graph, (Tree) Forest, (Bloom) Filter,  ...
     '''
 
-    def func(self): pass
+    def func(self): # O() t ; O() s
+        pass # TODO
 
 
-class DynamicProgramming:
-
-    def __init__(self): pass
-
-    # advanced
-
-    def bitmasking(self): pass
-
-    def digit_dp(self): pass
-
-    def sum_over_subsets(self): pass
-
-    # easy
-
-    def coin_change(self): pass
-
-    def subset_sum(self): pass
-
-    def cutting_a_rod(self): pass
-    
-    def painting_fence(self): pass
-
-    def longest_common_subsequence(self, a): pass
-
-    def longest_increasing_subsequence(self, a): pass
-
-    def min_cost_path(self): pass
-
-    def longest_common_substring(self, a): pass
-
-    def edit_distance(self): pass
-
-    def convex_hull(self): pass
-    
-    def unique_paths(self): pass
-
-    # medium
-
-    def knapsack(self): pass
-
-    def fractional_knapsack(self): pass
-
-    def unbounded_knapsack(self): pass
-
-    def edd_dropping_puzzle(self): pass
-    
-    def word_break(self): pass
-
-    def vertex_cover(self, a): pass
-
-    def tile_stacking(self, a): pass
-
-    def box_stacking(self): pass
-
-    def partition(self, a): pass
-
-    def travelling_salesman(self): pass
-
-    def longest_palindromic_subsequence(self, a): pass
-
-    def longest_common_increasing_subsequence(self, a): pass
-
-    def distinct_subset_sums(self, a): pass
-
-    def weighted_job_scheduling(self): pass
-    
-    def count_derangements(self): pass
-    
-    def min_insertions_to_palindrome(self): pass
-    
-    def adjacent_balls(self): pass
-
-    # hard
-    
-    def palindrome_partitioning(self): pass
-    
-    def word_wrap(self): pass
-    
-    def painters_partition(self): pass
-    
-    def bridge_and_torch(self): pass
-    
-    def matrix_chain_mult(self): pass
-    
-    def max_sum_rect(self): pass
-    
-    def max_profit(self): pass
-    
-    def min_cost(self): pass
-    
-    def arithmethic_progression(self): pass
-    
-    def dp_on_trees(self): pass
-    
-    def max_height(self): pass
-    
-    def longest_repeating_substr(self): pass
+########################################
+##  PROBLEM-SOLVING ALGO'S
+########################################
 
 
-class DivideAndConquer:
+class DynamicProgramming: # ! Not Enough DP work
 
     '''
-        # TODO:
+
+        Dynamic Programming Algorithms
+
+        Technique for solving problems, that depends on dividing a problem into sub-problems
+        and results gotten from sub-problems are saved into state, to be used later, for future sub-problems
+
+        - about storing the results of these sub-problems into memory so they need to be recalculate repeatedly
+
+        
+        Attributes:
+
+        - Optimization over Recursion
+        - ?
+
+        - State Machine
+            - Memorize & Memoize repeated solution states
+                - at each sub-problem step
+            - so time isn't wasted trying to recalculate things
+                - already in state
+            - basically trading memory for speed
+                - using extra space for holding state
+                    - to speed up algo's calculations
+                        - perhaps sometimes, mathematically (by formulae)
+            - ?
+        
+        - Memoization
+            - Caching state data at different steps
+        
+        Identification:
+
+        - problem can be broken down / divided into smaller sub-problems
+        - problem is recursive
+        - a lot of repeated states in solution
+        - demands for Optimal Solution
+        - & Optimal solution of sub-problems
+            - can be used to form
+            - the Optimal Solution of the Original Problem
+        - repetitive sub-problems
+        - memoized sub-problems
+        - recursive solution
+        - ?
+
+        - Tips:
+            - Do you have something you can cache ?
+            - Saving maximum Time-Complexity (& perhaps Space-Complexity too)
+                - enables cost minimization, & gain (or revenue) maximization
+                    - can increase bottom-line / salary gains
+            - ?
+        
+        - Examples:
+            - Fibonacci Sequence Problem
+
+        Approach:
+
+        - Structured as a Tree / Graph
+            - with a root node, parent nodes, children nodes, and leaf nodes
+
+        - Top-Down
+            - DFS Traversal, with Recursion
+            - or (not really): BFS Traversal, with Recursion (if possible - TODO: confirm) /(before) Queued-While-loops
+                - while saving state data
+                    - for each step / node at each depth
+            - From top / root node to bottom / deepest depth
+            - state data is saved at each node
+                - so if any future node / child node
+                    - of past nodes / a parent node
+                    - (which are connected to the child node)
+                    - required state data from any connected past / parent node
+                        - that saved state data helps child node
+                            - skip unnecessary re-calculation
+            
+            - Combination of Recursion & Memoization
+                - Recursively solving sub-problems (mostly BFS)
+                - while memorizing (saving) results in memory (state data)
+                - so overlapping sub-problems do not have to be re-solved
+                - Memoization helps speed up algo
+            
+            - eg. Recursive Fibonacci Series: f(n) = f(n-1) + f(n-2)
+                - Recursion (with DFS - or can be BFS too)
+                    - since we're still calculating from the top to bottom
+                        - f(n)
+                        - hence, Top-Down Approach
+                    - even though values still come from base-cases 1st
+                        - leaf node scenarios
+                            - f(n - largest difference)
+                            - or 1st number-function in sequence
+                - saves previous number-functions' results
+                - for summing them up for future number-functions
+                - BUT, still Top-Down Approach, since the root node
+                    - function f(n) is called 1st,
+                        - before next parents f(n-1) & f(n-2)
+                        - and so on .. 
+                        - until base functions with base cases
+                            - summing up all their returns values
+                            - until returning values back to 
+                            - Top (1st) function call
+        
+        - Bottom-Up
+            - BFS Traversal, with Queued-While-loops
+            - or (not really): BFS Traversal (from the bottom), with Queued-While-loops /(before) Recursion (if possible - TODO: confirm)
+                - while saving state data
+                    - for each step / node at each depth
+            - From bottom / leaf node depth to top / root node
+            - state data is saved at each node
+                - so if any future node / parent node
+                    - of past nodes / child nodes
+                    - (which are connected to the parent node)
+                    - required state data from any connected past / child node
+                        - that saved state data helps parent node
+                            - skip unnecessary re-calculation
+            
+            - Simply an Iterative Approach with BFS Traversal (Queued-While Loops)
+                - instead of Top-Down's combination of Recursion & Memoization
+            
+            - or 'maybe' DFS Traversal with Recursion too
+                - or perhaps that's also the Top-Down approach, 
+                    - due to recursion calculating for the top node
+                        - even though values come from the bottom - leaf nodes
+                - but ACTUALLY, it can't be 'both' for 'both'
+                    - DFS Traversal with Recursion CANNOT be seen as both top-down & bottom-up
+                    - (ONLY Top-Down)
+                        - depending on which nodes (whether root / leaf nodes) are worked on 1st
+                            - 'worked on 1st' meaning, which nodes have their initial raw-inputs 1st
+                                - to be able to be 'worked on 1st'
+                        - or: also depending on which order from which you look at the data-structure at hand
+                            - whether a list, or a tree; data-structure can be seen from the opposite-direction
+                                - eg. fibonacci functions being a list
+                                    - can be seen as a tree, with the 1st 2 functions as leaf - child nodes
+                                        - this is actually the Bottom-Up Approach
+                                            - with Iterative or Queued-While-loops
+            
+            - BFS Traversal with Iterative / Queued-While-loops can also ONLY be seen as Bottom-Up ONLY
+            - (NOT both approaches)
+                - for the same reasons as for with DFS with Recursion
+                - with BFS Iterative Traversals:
+                    - whether nodes are seen as a list (from 1st / leaf - child nodes) to end (final / root node)
+                        - if seen as a tree:
+                            - the leaf-child nodes (with 'deepest' depth)
+                                - can be pushed into a Queue
+                                    - for Iterative While-loops
+                                        - WHILE the Queue is NOT empty
+                            - of the entire tree can be converted into a list of nodes
+                                - with the 'deepest' depth (leaf) - child nodes
+                                    - being appending into the list 1st
+                                        - THEN in that order:
+                                            - from deepest depths
+                                                - up until root parent node
+                    - with nodes now seen as a list (or as Queued child-nodes):
+                        - Iterative Traversals on them will work on children nodes 1st
+                            - before calculating parent nodes after
+                - Iterative BFS Traversals can ONLY be Bottom-Up
+                    - because they can only calculate parent nodes, from child nodes 1st
+                    - hence, they can NEVER be Top-Down
+                - NB: For Top-Down Approach, with DFS Recursion
+                    - root node functions are called 1st (with their children) recursively
+                        - before their calculated return values, 
+                            - are collated in a Bottom-Up-wise fashion
+                            - as collated returned values,
+                                - until root node function's return value
+            
+            - eg. Iterative Fibonacci Series: regular iteration, 
+                - starting from 1st 2 leaf - child nodes
+                - code: n = 7 (or some length); a[0] = 0; a[1] = 1 - (bottom-)
+                    - Iterate: from i=2 to i=n -> 
+                        a[i] = a[i - 1] + a[i - 2]
+                    - return: a[n] - (-up approach) - as last fibo-number (this time)
+                
+                - NB: for 'Queued-While-loops', previous 2 child nodes can be queued
+                    - then new sums can always be queued and re-calc'd
+                        - whenever queue-length = 2
+            
+            - eg. Iterative Fibonacci Series: Queued-While-loops
+                - starting from 1st 2 leaf - child nodes
+                    - then popping, peeking, & pushing
+                        - for the next iteration
+                - code: n = 7 (or some length); a = [0, 1]; q = [a[0], a[1]] - (bottom-) - with a queue this time
+                    - While: len(array 'a') < n + 1 ->
+                        num = q.pop(out 1st item) + q.peek(2nd item)
+                        a.append(num) - add number to fibo-sequence
+                        q.push(num) - push number as new 2nd item in Queue
+                    - return: a - (-up approach) - as entire fibo-sequence (this time)
+        
+        - Memoization
+            
+            - Top-Down Approach:
+                - can store each sub-problem's data in an external table, for re-use
+                - can also rely on recursive function-call's return-value collation
+                    - which is already auto, so wouldn't need to store return values
+                    - but any extra values in recursion, 
+                        - still required in recursive calculations
+                            - can be stored in external tables
+                                - or other data-structures
+
+            - Bottom-Up Approach:
+                - can store each sub-problem's data in an external table, for re-use
+                - can also rely on iterative calculations, 
+                    - using values from previous iterations / previous list/queue - items
+                    - can also store extra data in external tables / other data-structures
+                        - to be used in future iterations
+        
+        Example:
+
+        - Check out both Fibonacci Series examples
+            - Top-Down - Recursion
+            - Bottom-Up - Iterative / Queued-While-loops
+
+        Comparisons:
+
+        - vs BackTracking
+            - Both DP & BTrack work with Tree Data-Structure
+                - but DP works with trees, in terms of:
+                    - nodes as input-values of sub-problems
+                        - in the entire problem space
+                - whilst BTrack works with trees, in terms of:
+                    - nodes as paths / options of strategy
+                        - in the entire problem space
+                
+                - hence, DP will always work with ALL nodes
+                    - in order to find optimal solution
+                - BUT, BTrack will only work with SOME (or ALL) nodes
+                    - when finding the optimal solution
+                
+                - HOWEVER, since much of the nodes in the DP's tree
+                    - contain memoized values from previous children nodes
+                        - DP can ignore working with such nodes
+                            - since it can just take out their already
+                                - calculated value from state data / memory
+                - so both DP & BTrack can also be likened
+                    - to still be working with 
+                        - only some nodes, 
+                            - of the entire problem space
+            
+            - ?
+        
+        - vs Divide & Conquer
+            - DP can be seen as D&C + Memoization
+                - ?
+
+            - D&C divides the problem into sub-problems
+                - solved to construct the solution
+                - of the Original Problem
+                    - by combining results of sub-problems' solutions
+            - BUT, D&C sub-problems are NON-OVERLAPPING sub-problems
+                - i.e. they're independent from each other
+                    - & do not depend on state data from each other
+            
+            - eg. D&C's Merge Sort:
+                - array is divided into 2 halves, recursively
+                    - with being independent from each other
+                    - they never repeat at any point of recursion
+                    - they never depend on each other, for any reason
+            
+            - DP sub-problems are OVERLAPPING
+                - they depend on each other's state data
+            
+            - eg. Fibonacci Sequence:
+                - each number is the sum 2 previous numbers in the sequence
+                - if 2 previous number-functions have already been pre-calculated
+                    - and saved to state data
+                - the next number-function does not need to re-calculate them
+                    - it can just use their pre-calculated values
+                        - already saved to state data
+
+            - ?
+        
+        - vs Greedy
+            - both DP & Greedy are used to find optimal solution
+            
+            - BUT Greedy approaches don't guarantee Optimality
+                - they have to be tested with multiple, & different test cases
+                - to confirm if they actually provide optimal solution
+            - BUT DP approaches guarantee Optimal Solutions
+                - using Principle of Optimality
+                - ensuring final solution is most-optimal in all different test cases
+            
+            - Greedy approaches choose whichever 'BEST' option at the moment
+                - and then solve future sub-problems arising
+                    - after the previous 'best' choice was made
+                    - no matter the cost to the final 'sub-optimal' solution
+                        - or any future steps / sub-problems
+            - DP approaches choose at each step
+                - but choices always depend on future final solution
+                    - as well as solutions at all steps / sub-problems
+                - since each step's result is saved to state data
+                    - to be used in future steps / sub-problems
+                    - for the sake of the final optimal solution
+            
+            - Greedy approaches are much easier since there are mostly 'no risks'
+                - to worry about (bring about more risks anyway)
+            - DP approaches are more difficult to implement
+                - since 'all risks' / 'optimality' of solutions
+                - of each sub-problem matters, at each step
+            
+            - Greedy eg. - Coin-change problem
+                - ?
+            - DP eg. - ?
+                - ?
+            
+            - ?
+        
+        - vs Recursion
+            - Optimization over Recursion
+            - same problems can be solved with Recursion
+                - but if problems have overlapping (related) sub-problems
+                - where they depend on state data from each other
+                - Recursive solution, without saving state data for later
+                    - will take more time, recalculating
+                        - same sub-problems repeatedly
+            - ?
+        
+
+    '''
+
+    def __init__(self): # O() t ; O() s
+        pass # TODO
+
+
+    # ! standard
+
+    
+    def meth(self): # O() t ; O() s
+        pass # TODO
+    
+
+    # Top-Down Approach - Recursion
+    def fibonacci(self, n): # O() t ; O() s
+        
+        def recurse(n):
+            if n == 0: return 1
+            elif n == 1: return 2
+            else: return recurse(n - 1) + recurse(n - 2)
+        
+        return recurse(n)
+
+    # Bottom-Up Approach - Iterative for-loop
+    def fibonacci(self, n): # O() t ; O() s
+        
+        a = [1, 2]
+        for i in range(2, n + 1):
+            a[i] = a[i - 1] + a[i - 2]
+        
+        return a[n] # or: a, for the entire fibo-sequence
+
+    # Bottom-Up Approach - Queued while-loop
+    def fibonacci(self, n): # O() t ; O() s
+        
+        a = [1, 2]
+        q = [a[0], a[1]]
+
+        while len(a) < n + 1: # while fibo-series is not at total length, n
+            # now, pop, then peek, then push
+            # * can also use an actual queue() data-structure
+            num = q.pop(0) + q[1] # pop out 1st item, then .peek( 2nd item by index )
+            a.append(num) # append fibo-number
+            q.append(num) # push fibo-number into queue, for next iteration
+        
+        return a # entire fibo-sequence, or last item - a[n]
+
+    # 3rd-Party (Tutorial) - REGULAR recursion - Top-Down
+    def fibonacci(self, n): # O(2^n) t ; O(1) s
+        # O(2^n) t - recursive calls - default time-complexity
+        # O(1) s - no space required
+
+        calcs = 0
+
+        def recurse(n):
+            calcs += 1 # can run this recursive function ..
+            # & compare number of 'calculations' made (WAY slower than below)
+            if n < 2: return n
+            return recurse(n - 1) + recurse(n - 2)
+        
+        return recurse(n)
+
+    # ! 3rd-Party (Tutorial) - DP (DFS) recursion, with Caching - Top-Down (BEST & FASTEST Option)
+    # BEST & FASTEST Option - since it avoids unnecessary recursive re-calculations
+    # plus fibo-numbers will never repeat, since lower ones add up to higher ones
+    
+    def fibonacci(self, n): # O(n) t ; O(n) s
+
+        # O(n) t - recursive calls, BUT with caching - to remove unnecessary re-calculations
+        # algo ends up only recursing through only unique n values
+        # O(n) s - extra hashmap or hashtable - used as a cache data-structure
+        
+        cache = {}
+        calcs = 0
+
+        def recurse(n):
+            calcs += 1 # can run this recursive function ..
+            # & compare number of 'calculations' made (WAY faster than above)
+            if n in cache: return cache[n]
+            else:
+                # ! 'calcs += 1' doesn't have to be placed here ..
+                # * because above base-case still prevents below recursive calls
+                if n < 2: return n
+                else:
+                    cache[n] = recurse(n - 1) + recurse(n - 2)
+                    return cache[n] # return cached-number, after storing
+                # so it's still accessible in future recursive calls
+        
+        return recurse(n)
+    
+    # 3rd-Party (Tutorial) - DP (BFS) iterative, without Caching - Bottom-Up (ALSO BEST & FASTEST Option)
+    # using same resulting array to save previous calculations
+    def fibonacci(self, n): # O() t ; O() s
+
+        a = [0, 1]
+
+        for i in range(2, n + 1):
+            a.append(a[i - 1] + a[i - 2])
+        
+        return a
+
+
+    def bitmasking(self): # O() t ; O() s
+        pass # TODO
+
+    def digit_dp(self): # O() t ; O() s
+        pass # TODO
+
+    def sum_over_subsets(self): # O() t ; O() s
+        pass # TODO
+
+    
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! easy
+
+
+    def coin_change(self): # O() t ; O() s
+        pass # TODO
+
+    def subset_sum(self): # O() t ; O() s
+        pass # TODO
+
+    def cutting_a_rod(self): # O() t ; O() s
+        pass # TODO
+    
+    def painting_fence(self): # O() t ; O() s
+        pass # TODO
+
+    def longest_common_subsequence(self, a): # O() t ; O() s
+        pass # TODO
+
+    def longest_increasing_subsequence(self, a): # O() t ; O() s
+        pass # TODO
+
+    def min_cost_path(self): # O() t ; O() s
+        pass # TODO
+
+    def longest_common_substring(self, a): # O() t ; O() s
+        pass # TODO
+
+    def edit_distance(self): # O() t ; O() s
+        pass # TODO
+
+    def convex_hull(self): # O() t ; O() s
+        pass # TODO
+    
+    def unique_paths(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! medium
+
+
+    def knapsack(self): # O() t ; O() s
+        pass # TODO
+
+    def zero_or_one_knapsack(self): # O() t ; O() s
+        pass # TODO
+
+    def fractional_knapsack(self): # O() t ; O() s
+        pass # TODO
+
+    def unbounded_knapsack(self): # O() t ; O() s
+        pass # TODO
+
+    def edd_dropping_puzzle(self): # O() t ; O() s
+        pass # TODO
+    
+    def word_break(self): # O() t ; O() s
+        pass # TODO
+
+    def vertex_cover(self, a): # O() t ; O() s
+        pass # TODO
+
+    def tile_stacking(self, a): # O() t ; O() s
+        pass # TODO
+
+    def box_stacking(self): # O() t ; O() s
+        pass # TODO
+
+    def partition(self, a): # O() t ; O() s
+        pass # TODO
+
+    def travelling_salesman(self): # O() t ; O() s
+        pass # TODO
+
+    def longest_palindromic_subsequence(self, a): # O() t ; O() s
+        pass # TODO
+
+    def longest_common_increasing_subsequence(self, a): # O() t ; O() s
+        pass # TODO
+
+    def distinct_subset_sums(self, a): # O() t ; O() s
+        pass # TODO
+
+    def weighted_job_scheduling(self): # O() t ; O() s
+        pass # TODO
+    
+    def count_derangements(self): # O() t ; O() s
+        pass # TODO
+    
+    def min_insertions_to_palindrome(self): # O() t ; O() s
+        pass # TODO
+    
+    def adjacent_balls(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! hard
+
+    
+    def palindrome_partitioning(self, s): # O() t ; O() s
+        pass # TODO
+    
+    def word_wrap(self): # O() t ; O() s
+        pass # TODO
+    
+    def painters_partition(self): # O() t ; O() s
+        pass # TODO
+    
+    def bridge_and_torch(self): # O() t ; O() s
+        pass # TODO
+    
+    def matrix_chain_mult(self): # O() t ; O() s
+        pass # TODO
+    
+    def max_sum_rect(self): # O() t ; O() s
+        pass # TODO
+    
+    def max_profit(self): # O() t ; O() s
+        pass # TODO
+    
+    def min_cost(self): # O() t ; O() s
+        pass # TODO
+    
+    def arithmethic_progression(self): # O() t ; O() s
+        pass # TODO
+    
+    def dp_on_trees(self): # O() t ; O() s
+        pass # TODO
+    
+    def max_height(self): # O() t ; O() s
+        pass # TODO
+    
+    def longest_repeating_substr(self): # O() t ; O() s
+        pass # TODO
+
+
+class DivideAndConquer: # ! Not Enough D&C work
+
+    '''
+
+        Divide & Conquer Algorithms
+
+        - dividing problems into sub-problems to be solved recursively, then the result is combined
+        
+        Identification:
+
+            - if problem may generate 2+ sub-problems of the 'same' kind that:
+                - can be solved recursively
+                - can be combined back for global result
+        
+        - eg. Merge & Quick Sorts, Binary Search
+
+        Approach:
+
+            - divide problem into 'a' sub-problems of size 'n/b'
+                - a >= 1, b > 1
+            - conquer by solving each sub-problem recursively
+                - until it becomes really small / almost constant
+            - combine the solution of sub-problems into an overall solution
+                - ** this is optional
+        
+        Recurrence:
+
+            - T(n) = a T(n/b) + work done to split problem & combine / merge all the sub-problems back
+                - T - time to solve a problem
+                - Time to solve entire problem = no. of sub-problems * Time to solve each sub-problem
+                    + work done to split problem into sub-problems + work done to combine/merge all sub-problems
         
     '''
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
-    # standard
+    
+    # ! standard
 
-    def pow(self, x, n): pass
 
-    def closest_pair(self): pass
+    def merge_sort(self, a): # O(2 log n * n ~ n log n) t ; O(n) s
 
-    def karatsuba_mult(self): pass
+        def sort(a, b): # O(1) t ; O(1) s
+            # * only 1 if-check before returning value
+            # 1 check doesn't run if the other check passes
+            if a <= b: return [a, b]
+            else: return [b, a]
+            '''
+            # ! even if there's only 1 return case,
+            there are 2 forced checks to be passed, for both items
+            
+            return [
+                a if a <= b else b,
+                b if b <= a else a
+            ]
+            '''
 
-    def strassens_matrix_mult(self): pass
+        def merge(a): # O(n log n) t ; O(n) s
 
-    def max_subarray_sum(self): pass
+            # O(1) t - base-case or O(log n * (n1 + n2) ~ log n * n - "average of both" - hacky opinion
+            #   - rather n = total size of initial input array, so n is each sub-array's maximum-case scenario = n log n) t ;
 
-    def longest_common_prefix(self): pass
+            # O(n1 + n2 (left & right extra arrays) + s (resulting merged array)
+            #   ~ n - "average of both" - hacky opinion
+            #   - rather - same opinion as above (n1 & n2 are subset-lengths of n)
+            #   ~ 1 - constant-space because even though a1 & a2 are extra arrays being used,
+            #   - they are still returned values from the recursive calls = O(1) s ?
 
-    def convex_hull(self): pass
+            # ! argument - but a1 & a2 can be argued to being used for merging, after dividing & conquering
+            #   - & merging is part of the algo itself (as a "merge-sort")
+            #   - so even if a1 & a2 are resulting arrays of recursive calls,
+            #   - they can still be argued to be additions of space-complexity,
+            #   - even though they're not "extra" space (- by your own terms) = n ) s
 
-    def quick_hull(self): pass
+            # ! TODO: argue again
+
+            if len(a) == 2:
+                return sort(a[0], a[1])
+            else:
+                l = len(a) / 2
+
+                # ! avoid adding sorted sub-arrays
+                # * (will end up with merged but unsorted batches of sub-arrays)
+                # return merge(a[:l]) + merge(a[l:])
+
+                a1, a2 = merge(a[:l]), merge(a[l:])
+                s = []
+
+                while len(a1) and len(a2): # ! argument: both are iterated through simult,
+                    # * so the time taken due to both of them should still be based on their "average lengths" - for all D&C merge-sort "hacky opinions"
+
+                    ''' # ! argument: compare both cases in highest-level terms
+                        less code: assign a.pop(0) in both cases to a value to append after if-else-check
+                        more code; less space: no extra variable used (but could've been gc'd after its usage)
+                    '''
+
+                    if a1[0] <= a2[0]: # ! argument: but both arrays are popped from in different logic-lines (if-case) so
+                        # * and this loop doesn't end until both are empty, so both arrays' lengths are exhausted before loop ends
+                        # ! so O(t) is still O(n1 + n2) t - but still summarised to ~ O(n) t - where n = total size / length of initial input array
+                        # * so n is each sub-array's maximum-case scenario
+
+                        s.append(a1.pop(0))
+                    else: s.append(a2.pop(0))
+
+                    # * compare .pop()ing 1st elem with using an indexed loop
+                    # * is .pop(0) on 1st item still O(1) t, even if it was O(n) t "in theory" (because of 1st item) - even if "stupid"
+                    # * i.e. is .pop() based on iterating until found index - in O(n) t ;
+                    # * or is it based on straight access of elem by index - in O(1) t constant time
+
+                # ! wrong O(t) here - * total complexity - O(2 log n + n ~ log n + n) t ; O(n) s
+                # ! even if the "merging while-loop" is implemented after "recursive calls" to "merge"
+                # * don't forget that it's still exec'd on every "merge" since it's still a part of the "merge" function,
+                # * so "merging while-loop" O(n) t shouldn't be added, but multiplied
+
+                # ! so total complexity - O(2 log n * n ~ n log n) t ; O(n) s
+
+                return s
+
+        if len(a) == 2: return sort(a[0], a[1])
+        if len(a) < 2: return a
+
+        return merge(a)
+
+    # 3rd-Party (Tutorial)
+    def merge_sort(self, a, l = None, u = None): # O(2 log n * n ~ n log n) t ; O(n) s
+
+        def merge(a, l, m, u): # O(n) t ; O(n) s
+
+            # O(n1 + n2 + (n1 + n2) + n1 + n2 ~ 3n1 + 3n2 ~ n1 + n2 - removing constants
+            #   ~ n - "average of both" - hacky opinion
+            #   - rather n = total size of initial input array, so n is each sub-array's maximum-case scenario = n ) t ;
+
+            # O(n1 + n2 (left & right extra arrays) ~ n - "average of both" - hacky opinion
+            #   - rather - same opinion as above (n1 & n2 are subset-lengths of n) = n ) s
+
+            # ! argument: over here, left & right array are actually used as "extra" space in the "merge" section of the algo
+            #   - and not used to return values of any recursive call in the algo (like the above "merge_sort()" option)
+            # ! so O(1) s cannot be argued at all in this case
+
+            n1 = m - l + 1
+            n2 = u - m
+
+            # temp left & right sub-arrays
+            left = [0] * n1
+            right = [0] * n2
+
+            # copying data
+            for x in range(n1): # O(n1)
+                left[x] = a[l + x]
+
+            for y in range(n2): # O(n2)
+                right[y] = a[m + 1 + y]
+
+            # merging data into array
+            i, j, k = 0, 0, l
+
+            while i < n1 and j < n2: # O(n1 + n2 ~ n - "average of both" - hacky opinion - rather n = total size of initial input array, so n is each sub-array's maximum-case scenario)
+                if left[i] < right[j]:
+                    a[k] = left[i]
+                    i += 1
+                else:
+                    a[k] = right[j]
+                    j += 1
+                k += 1
+
+            while i < n1: # O(n1)
+                a[k] = left[i]
+                i += 1; k += 1
+
+            while j < n2: # O(n2)
+                a[k] = right[j]
+                j += 1; k += 1
+
+
+        if not l or not u: # then start merge-sort all over
+            l, u = len(a), len(a) - 1
+
+        m = 0
+
+        if l < u:
+            m = (l + (u - 1)) // 2
+
+            self.merge_sort(a, l, m) # O(log n) t - recursion with halved data ; O(1) s
+            self.merge_sort(a, m + 1, u)
+            merge(a, l, m, u) # O(n) t ; O(n) s when called
+
+            # ! wrong O(t) here - * total complexity - O(2 log n + n ~ log n + n) t ; O(n) s
+            # ! even if "merge" is called after "recursive calls" to "merge_sort"
+            # * don't forget that it's still called on every "merge_sort",
+            # * so "merge" O(n) t shouldn't be added, but multiplied
+
+            # ! so total complexity - O(2 log n * n ~ n log n) t ; O(n) s
+
+        return a # even if array is worked on by reference
+
+
+    def quick_sort(self, a): # O( n/2 * 2 log n ~ n log n ) t ; O(1) s
+
+        # ! all 'a' parameters are passed by reference,
+        # * so input array 'a' will always be updated
+
+        def swap(a, i, j): # O(1) t ; O(1) s
+            tmp = a[j]; a[i] = a[j]; a[j] = tmp
+
+        def sort(a): # O(1) t ; O(1) s
+            if len(a) == 3:
+                if a[0] > a[1]:
+                    swap(a, 0, 1)
+                if a[1] > a[2]:
+                    swap(a, 1, 2)
+            elif len(a) == 2:
+                if a[0] > a[1]:
+                    swap(a, 0, 1)
+            return a
+
+        # ! based on logarithmic recursive calls from merge-sort
+        # * test pre-logic of adding while-loop O(t), before multiplying it by recursive calls
+
+        def quick(a): # O( n/2 * 2 log n ~ n log n ) t ; O(1) s
+
+            # ! wrong still - O( n/2 + 2 log n * n/2 ~ n + n log n ) t ;
+            # * adding while-loop O(t) before still doesn't reduce o expected O(nlogn) t
+            # * so best to regard the while-loop as being in the recursive function entirely,
+            # * and not just being exec'd before recursive calls
+            # ! so O(t) - O( n/2 * 2 log n ~ n log n ) t
+            # O(1) s
+
+            if len(a) <= 3:
+                return sort(a) # O(1) t ; O(1) s
+            else:
+                f, l = 0, len(a) - 1
+                m = math.floor(f + (l - f) / 2)
+
+                # ! now, try using 2-pointer to find discrepancy-pairs, then swap
+                
+                while f < l: # ! TODO: "MAYBE wrong" termination-predicate ! visualize loop 1st
+                    # O(n/2 ~ n) t ; O(1) s
+                    
+                    if a[f] > a[m] \
+                        and a[l] < a[m]: # left > pivot & right < pivot - discrepancy-pair
+                        swap(a, f, l)
+                        f += 1; l -= 1
+                    if a[f] < a[m]: # increment if no discrepancy
+                        f += 1
+                    if a[l] > a[m]: # decrement if no discrepancy
+                        j -= 1
+
+                # ! now, return the array-concatenation of both "quick" recursive-calls
+                return quick(a[:m]) + quick(a[m:]) # O(2 log n ~ log n) t ; O(1) s
+
+        return quick(a)
+
+    def quick_sort(self, a): # O( n/2 * 2 log n ~ n log n ) t ; O(1) s
+
+        # ! all 'a' parameters are passed by reference,
+        # * so input array 'a' will always be updated
+
+        def swap(a, i, j): # O(1) t ; O(1) s
+            tmp = a[j]; a[i] = a[j]; a[j] = tmp
+
+        def sort(a): # O(1) t ; O(1) s
+            if len(a) == 3:
+                if a[0] > a[1]:
+                    swap(a, 0, 1)
+                if a[1] > a[2]:
+                    swap(a, 1, 2)
+            elif len(a) == 2:
+                if a[0] > a[1]:
+                    swap(a, 0, 1)
+
+        def quick(a): # O( n/2 * 2 log n ~ n log n ) t ; O(1) s
+            if len(a) <= 3:
+                sort(a)
+            else:
+                f, l = 0, len(a) - 1
+                m = math.floor(f + (l - f) / 2)
+
+                # ! now, try using 2-pointer to find discrepancy-pairs, then swap
+                
+                while f < l: # ! TODO: "MAYBE wrong" termination-predicate ! visualize loop 1st
+                    
+                    if a[f] > a[m] \
+                        and a[l] < a[m]: # left > pivot & right < pivot - discrepancy-pair
+                        swap(a, f, l)
+                        f += 1; l -= 1
+                    elif a[f] < a[m]:
+                        f += 1
+                    elif a[l] > a[m]:
+                        j -= 1
+
+                # ! now, make both "quick" recursive-calls
+                quick(a[:m]); quick(a[m:])
+
+        quick(a) # ! all method calls work with 'a' array by reference
+        return a
+
+    # 3rd-Party (Tutorial)
+    def quick_sort(self, a, l = None, u = None): # O(n * 2 log n ~ n log n) t ; O(1) s
+        # ! argument: O(n^2) t still chosen by others - due to partition's while-loops argument
+        # ! O(n) s also chosen due to the recursive-calls taking more stack memory
+
+        def partition(a, l, u):
+            # O( n/2 * ( (n/? ~ 1) + (n/? ~ 1) ~ (2n/? ~ n ~ 1) ) ~ n^2 or n ? = n (chosen) ) t ;
+            # ~ O(n) t
+            # O(1) s
+
+            p, left, right = a[l], l, u
+
+            while left < right: # O(n/2 * (2n/? ~ n / 1) ~ n^2 or n ? = n (chosen) ) t
+
+                # ! argument: O(n^2) t still chosen by others - find out exactly why
+                # * O(2n/? ~ n / 1) t - still chosen as constant time due to:
+                #   pivot 'p' limit checks in both inner while-loops
+                # * O(n/2) t - the outer while-loop's base-check
+
+                while a[left] <= p \
+                    and left < len(a) - 1: # O(n/? ~ n / 1) t
+                    left += 1
+
+                while a[right] > p \
+                    and right > 0: # O(n/? ~ n / 1) t
+                    right -= 1
+
+                if left < right:
+                    # now, swap
+                    tmp = a[left]
+                    a[left] = a[right]
+                    a[right] = tmp
+
+            # swap right with pivot
+            tmp = a[l]
+            a[l] = a[right]
+            a[right] = tmp
+
+            return right
+
+
+        if not l or not u: # * then start quick-sort all over
+            l, u = 0, len(a) - 1
+
+        if l < u:
+            i = partition(a, l, u) # O( n/2 * ( (n/? ~ 1) + (n/? ~ 1) ~ (2n/? ~ n ~ 1) ) ~ n^2 or n ? = n (chosen) ) t ; O(1) s
+            self.quick_sort(a, l, i - 1) # O(log n) t ; O(1) s
+            self.quick_sort(a, i + 1, u)
+
+        return a
+
+
+    ''' # * Median of Medians
+        find median, m of an unsorted array such that:
+        half of its elems < m ; & other half > m
+        
+        No need to sort 1st, before calc'ing middle-index - O(n log n)
+        can use the Quick-Sort algo's process to find median mid-way
+        
+        idea 1:
+        
+        choose pivot element, rearrange elems based on left < m < right
+        after each rearrangement, keep switching pivots:
+        until difference in left & right elems' lengths <= 1, 
+        then m is now median; or if difference in lengths == 1,
+        m or its adjacent elem (in the longer side) is median
+        
+        idea 2:
+        
+        choose middle index as median inde, m, x & 1st pivot from start
+        then keep rearranging & switch pivots back from median index
+        until all left < m < right elems; with lengths-difference <= 1
+        then the element at m is median, or its adjacent elem in the longer side
+    '''
+    def median_of_medians(self, a): # O() t ; O() s
+
+        f, l = 0, len(a) - 1
+        m = math.floor(f + (l - f) / 2) # function-scope median index
+
+        def swap(a, i, j): # O(1) t ; O(1) s
+            tmp = a[i]
+            a[i] = a[j]
+            a[j] = tmp
+
+        def median(a, f, l): # O() t ; O() s
+
+            supposed_median = a[m]
+            supposed_median_index = m
+            
+            while f < l: # ! TODO: "MAYBE wrong" termination-predicate ! visualize loop 1st
+                
+                left = a[f]
+                right = a[l]
+
+                # check for swap
+                if left > supposed_median \
+                    and right < supposed_median:
+                    swap(a, f, l)
+                    f += 1; l -= 1
+                if left < supposed_median:
+                    f += 1
+                if right > supposed_median:
+                    l -= 1
+
+            # todo: base-case & recursive-case calls
+            if supposed_median == a[m]:
+                return supposed_median, m
+
+            # ! TODO: Test this theory - recursive calls with the entire array
+            # * for swapping to span across all elements around the middle-element (new supposed_median)
+            # return median(a, 0, len(a) - 1) # ! base-case will return median if supposed_median ends up as middle element a[m]
+
+            # ! wrong - will mix up sub-array sort-orders
+            # TODO: Test
+            elif supposed_median < a[m]:
+                return median(a, m + 1, len(a) - 1)
+            else: return median(a, 0, m - 1)
+
+        return median(a, f, l)
+
+    # * subset all medians & sub-medians & find subset's median
+    def median_of_medians(self, a):
+
+        pass
+
+    # 3rd-Party (Tutorial)
+    def median_of_medians(self, a): # O(  ) t ; O() s
+
+        def find_pivot(a, low, high): # O(  ) t ; O() s
+
+            if high - low + 1 <= 9:
+                sorted(a)
+                return a[ int( len(a) / 2 ) ]
+
+            medians = [0] * int(math.ceil( # O(n or ?) s
+                (high - low + 1) / 5
+            ))
+
+            median_index = 0
+
+            while high >= low: # O() t ; O() s
+
+                tmp = [0] * min(5, (high - low + 1)) # O(n or ?) s
+
+                for i in range(0, len(tmp)):
+                    if low <= high:
+                        tmp[i] = a[low]
+                        low += 1
+
+                sorted(tmp) # O(n log n) - quick-sort
+
+                medians[median_index] = \
+                    tmp[ int( len(tmp) / 2 ) ]
+
+                median_index += 1
+
+            return find_pivot(medians, 0, len(medians) - 1)
+
+        def partition(a, low, high): # O( n/2 * (n1 + n2 ~ n or 1) ~ n^2 or n or 1) t ; O(1) s
+
+            pivot = find_pivot(a, low, high) # * O(t/s) deliberately excluded here
+
+            while low < high:
+
+                while a[low] < pivot: low += 1
+                while a[high] > pivot: high -= 1
+
+                if a[low] == a[high]: low += 1
+
+                # swap
+                elif low < high:
+                    tmp = a[low]
+                    a[low] = a[high]
+                    a[high] = tmp
+
+            return high
+
+        def median(a, k, low, high): # O(1) t ; O(1) s
+
+            m = partition(a, low, high) # * O(t/s) deliberately excluded here
+
+            length = m - low + 1
+
+            if length == k:
+                return a[m]
+            elif length > k:
+                return median(a, k, low, m - 1)
+            else:
+                return median(a, k - length, m + 1, high)
+
+
+        # * - ?
+        median = median(a, a / 2 + 1, 0, len(a) - 1)
+        # todo: find out bodmas/pemdas on - a / 2 + 1
+
+        return median
+
+
+    def pow(self, x, n): # O() t ; O() s
+        pass # TODO
+
+    def closest_pair(self): # O() t ; O() s
+        pass # TODO
+
+    def karatsuba_mult(self): # O() t ; O() s
+        pass # TODO
+
+    def strassens_matrix_mult(self): # O() t ; O() s
+        pass # TODO
+
+    def max_subarray_sum(self): # O() t ; O() s
+        pass # TODO
+
+    def longest_common_prefix(self): # O() t ; O() s
+        pass # TODO
+
+    def convex_hull(self): # O() t ; O() s
+        pass # TODO
+
+    def quick_hull(self): # O() t ; O() s
+        pass # TODO
 
     # binary search based
 
-    def peak_elem(self, a): pass
+    def peak_elem(self, a): # O() t ; O() s
+        pass # TODO
 
-    def majority_elem(self): pass
+    def majority_elem(self): # O() t ; O() s
+        pass # TODO
 
-    def kth_elem(self): pass
+    def kth_elem(self): # O() t ; O() s
+        pass # TODO
 
-    def num_zeroes(self): pass
+    def num_zeroes(self): # O() t ; O() s
+        pass # TODO
 
-    def rotation_count(self): pass
+    def rotation_count(self): # O() t ; O() s
+        pass # TODO
 
-    def unbounded_binary_search(self): pass
+    def unbounded_binary_search(self): # O() t ; O() s
+        pass # TODO
 
-    def median_of_sorted_arrays(self): pass
+    def median_of_sorted_arrays(self): # O() t ; O() s
+        pass # TODO
 
-    def painters_partition(self): pass
+    def painters_partition(self): # O() t ; O() s
+        pass # TODO
 
-    # easy
+    
+    def meth(self): # O() t ; O() s
+        pass # TODO
 
-    # medium
+    
+    # ! easy
 
-    # hard
+    
+    def meth(self): # O() t ; O() s
+        pass # TODO
 
-    def square_root(self): pass
+    
+    # ! medium
 
-    def max_min_of_array(self): pass
+    
+    def meth(self): # O() t ; O() s
+        pass # TODO
 
-    def elem_frequency(self): pass
+    
+    # ! hard
 
-    def tiling(self): pass
+    
+    def meth(self): # O() t ; O() s
+        pass # TODO
 
-    def inversion_count_using_merge_sort(self): pass
 
-    def skyline(self): pass
+    def square_root(self): # O() t ; O() s
+        pass # TODO
 
-    def search_2d_matrix(self): pass
+    def max_min_of_array(self): # O() t ; O() s
+        pass # TODO
 
-    def alloc_min_pages(self): pass
+    def elem_frequency(self): # O() t ; O() s
+        pass # TODO
 
+    def tiling(self): # O() t ; O() s
+        pass # TODO
 
-class Greedy:
+    def inversion_count_using_merge_sort(self): # O() t ; O() s
+        pass # TODO
 
-    def __init__(self): pass
+    def skyline(self): # O() t ; O() s
+        pass # TODO
 
-    # standard
+    def search_2d_matrix(self): # O() t ; O() s
+        pass # TODO
 
-    def activity_selection(self): pass
+    def alloc_min_pages(self): # O() t ; O() s
+        pass # TODO
 
-    def job_sequencing(self): pass
+    
+    def meth(self): # O() t ; O() s
+        pass # TODO
 
-    def huffman_coding(self): pass
 
-    def huffman_decoding(self): pass
+class Greedy: # ! Not Enough Greedy work
 
-    def water_connection(self): pass
+    '''
 
-    def egyptian_fraction(self): pass
+        Greedy Algorithms
 
-    def police_thieves(self): pass
+        - opt for local / immediate / next best option, without planning for the next / future options / effects
 
-    def fitting_shelves(self): pass
+        - make the locally-optimal choice that seems best atm, hoping to lead to a globally-optimal solution
 
-    def mice_to_holes(self): pass
+        attributes:
+            - easy to think of, with easy complexity analysis
+            - hard to confirm / prove if optimal / correct
+            - solutions might also be correct, but still not optimal
+            - ?
 
-    # easy
+        identification:
+            - if a problem's sub-problem sets are very independent of each other
+            - ?
 
-    def split_into_max_composite_nums(self, n): pass
+        approach:
+            - hit and trial to prove if solution is correct
+            - can also go with mathematical definition
+            - always look for next-best choice locally
+                - if choice doesn't fit into solution, don't choose it
+            - keep building the global solution
+
+        notes:
+            - most problems that can't be solved with greedy algo's:
+                - can sometimes be solved with "Dynamic Programming", with certainty
+                - eg. 'Fractional Knapsack' - best solved with greedy algo
+                    - but '0/1 Knapsack' cannot be solved correctly with greedy algo's
+                    - unless a "Dynamic Programming" algo is used as the solution
 
-    def buy_max_stocks(self): pass
+            - NB: Dynamic Programming (DP) is based on exhaustive search & using memoization
+                for all solutions of sub-problems leveraged already
 
-    def min_max_amount(self): pass
+    '''
 
-    def max_equal_sum(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
-    def cuboid_to_cubes(self): pass
+    
+    # ! standard
 
-    def max_custs_to_satisfy(self): pass
 
-    def min_rotations_to_unlock(self): pass
+    def load_balancing(self): # O() t ; O() s
+        pass # TODO
 
-    def min_rooms_for_events(self): pass
+    def coin_change(self): # O() t ; O() s
+        pass # TODO
+
+    '''
+        
+        Given a set of items, and a knapsack (or bag) with a max weight of items that it can hold
+        each item with its weight should be picked out of the set to give you the most profit 
+        
+        Greedy algo well suited for fractional knapsack, but not 0/1 knapsack
+        
+        - 0/1 knapsack requires only 1 item with full-weight of knapsack bag be picked, or not at all
+        - fractional knapsack allows picking of multiple items with weights that can sum up to knapsack total weight
+        or
+        - 0/1 knapsack requires all items of the same kind (eg. flowers) from source be picked at once, to fill up knapsack weight
+        - whilst fractional knapsack allows picking of some of the items of the same kind (eg. flowers) from source to be picked up
+        
+        Greedy algo not suited for 0/1 knapsack since it only has 1 chance to select most-optimal solution
+            - going with the 1st-best option might not be the most-optimal
+            - this is why 0/1 knapsack is best solved with Dynamic Programming
+        
+    '''
 
-    def min_cost_to_reduce_size(self): pass
+    def knapsack(self): # O() t ; O() s
+        pass # TODO
 
-    def min_cost_to_acquire_coins(self): pass
 
-    def min_increment_by_ops(self): pass
+    # sort source 1st, then pick from lowest, until knapsack is full
+    def fractional_knapsack(self, a, limit=20): # O(n log n + n) t ; O(n ~ 1) s
 
-    def min_number_of_notes(self): pass
+        source = list(a.items()) # convert input array into list of tuples
+        # O(n) s ignored, because source is only re-holding input array
 
-    def smallest_subset_with_greatest_sum(self): pass
+        source.sort(key = lambda i: i[1]) # O(n log n) t - sort by each item's 2nd item (value - "weight")
 
-    # medium
+        knapsack = [] # O(n ~ 1) s - only holds the returning result, not required for the algo's further execution
+        # ! on this level of problem-solving, always keep track of everything used
+        # ! whether algo / new algo or data-structure / new data-structure
+        # ! also know when & where each new algo / data-structure is used,
+        # ! & how it affects the old algo / old data-structure
 
-    def max_trains_for_stoppage(self): pass
+        # ! optimize all algo's, data-structure, & extra variable usage
+        # ! whenever & wherever necessary - minimum input to maximum output is the ultimate goal
 
-    def min_fibonacci_terms(self): pass
+        # ! no extra variable, in this case is used to keep count of the sum
+        # ! to be compared with the limit
+        # ! instead, the 'limit's importance is considered to know whether it can be altered
+        # ! if it can be altered (wouldn't be required in future) ??
+        # ! then it is decremented instead, on every new value 'v' (item weight)
+        # ! when limit gets to 0, then loop breaks
 
-    def divide_with_min_sum_diff(self): pass
+        # ! also know when for / while / do-while loops are necessary
+        # ! & when innate indices / multiple indices / or extra (outer) indices are also necessary
 
-    def min_num_squares(self): pass
+        for k, v in source: # O(n) t
+            if v - limit > 0: break
+            else: limit -= v
+            knapsack.append((k, v))
+
+        return knapsack
+
+    #
+    def fractional_knapsack(self, a, b): # O() t ; O() s
+        pass
+
+    #
+    def fractional_knapsack(self): # O() t ; O() s
+        pass
+
+    # 3rd-Party (Tutorial)
+    def fractional_knapsack(self, a, b): # O() t ; O() s
+
+        class Item:
+
+            def __init__(self, wt, val, ind):
+                self.wt = wt
+                self.val = val
+                self.ind = ind
+                self.cost = val // wt
+
+            def __lt__(self, other):
+                return self.cost < other.cost
+
+        def get_max_value(wt, val, capacity): # O(n log n + n) t ; O(1) s
+
+            items = [0] * len(wt) # used to re-hold the same input arrays
+
+            for i in range(0, len(wt)): # ! disregarding O(t/s) here
+                items[i] = Item(wt[i], val[i], i) # re-holding the same input arrays, as an 'Item' object
+
+            items.sort(reverse=True) # O(n log n) t
+            total_val = 0
+
+            for item in items: # O(n) t
+                cur_wt = int(item.wt)
+                cur_val = int(item.val)
+
+                if capacity - cur_wt >= 0:
+                    capacity -= cur_wt
+                    total_val += cur_val
+                else:
+                    fraction = capacity / cur_wt
+                    total_val += cur_val * fraction
+                    # capacity = int(capacity - (cur_wt * fraction))
+                    break
+
+            return total_val
+
+
+        # * Test
+
+        wt = [10, 40, 20, 30]
+        val = [60, 40, 100, 120]
+        capacity = 50
+
+        max_val = get_max_value(wt, val, capacity)
 
-    def min_diff_between_groups(self): pass
+        print("The maximum profit possible: ", max_val)
+
+        return max_val
 
-    def min_num_platforms(self): pass
 
-    def min_vertices_to_traverse_matrix(self): pass
+    def zero_or_one_knapsack(self): # O() t ; O() s
+        pass # TODO
+
+
+    '''
+        
+        Interview Scheduling Maximization
+        
+        Given a set of intervals, 
+        find a set of non-overlapping or non-conflicting intervals of maximum size
+        i.e. choose as many intervals as possible that don't conflict with each other
+        
+        approach:
+            - sort intervals by their finish times
+            - choose the earliest finish time interval
+            - make sure interval should not conflict with the previous one
+        
+        - by choosing the earliest finish-time interval, more can be included
+        
+    '''
+
+    # by 'conflict' intervals (sub-arrays with 2 items only) shouldn't ACTUALLY overlap with each other
+    # not overlap in any 2 intervals' ranges
+    def interval_scheduling(self, a: List[List[int]]) -> List[List[int]]: # O() t ; O() s
+
+        # any sub-array's edge-number shouldn't be between another's edge-numbers (edge-numbers - interval)
+        def funny_trick(a=a): # O() t ; O() s
+
+            m = {}
+            
+            for i, n in enumerate(a):
+                for k, v in m.items():
+                    found = False
+                    # ! in the case sub-arrays don't have sorted intervals
+                    # * n.sort()
+                    for x in n: # * even if n is a sub-array of 2 items (edge-numbers) only
+                        if x >= k and x <= v: # ! intersections can also land on edges' equalities, in this case
+                            # * otherwise: x > k and x < v
+                            found = True
+                            del a[i]
+                            break
+                    if not found:
+                        m[n[0]] = n[1] # * n is sub-array of 2 numbers only (interval)
+
+            return a
+
+    # by 'conflict' adjacent intervals (sub-arrays with 2 items only) shouldn't ACTUALLY overlap with each other
+    # not overlap in any 2 adjacent intervals' ranges
+    def interval_scheduling(self, a: List[List[int]]) -> List[List[int]]: # O() t ; O() s
+
+        # don't store arrays' digits as key-values in a map; just delete on intersections in adjacent arrays
+        def funny_trick(a=a): # O() t ; O() s
+
+            def compare(a, b):
+                for n in a:
+                    # b.sort() - if unsorted sub-arrays
+                    if n >= b[0] and n <= b[1]:
+                        return True
+                return False
+
+            for i in range(1, len(a)):
+                curr, prev = a[i], a[i - 1]
+                if compare(curr, prev):
+                    del a[i]
+
+            return a
+
+    # * by 'conflict' lists shouldn't have any similar number
+    def interval_scheduling(self, a: List[List[int]]) -> List[List[int]]: # O() t ; O() s
+
+        # store arrays' digits as a key string in a map, then delete on duplicates
+        def funny_trick(a=a): # O(nm ~ n^2 (on all unique arrays) ~ n (on many duplicate array-digits)) t ; O(n) s
+
+            to_str = lambda a: ''.join(map(lambda n: f"{n}", a))
+
+            m = {} # O(n) s
+
+            for i, n in enumerate(a): # O(n) t
+                for k, _ in m.items(): # O(m) t
+                    found = False
+                    for x in n: # O(n1) t ; n1 - average sub-array length - but 2 if sub-arrays are intervals of 2 edge-numbers only
+                        if f"{x}" in k:
+                            found = True
+                            del a[i]
+                            break
+                    if not found:
+                        m[to_str(n)] = 1
 
-    def largest_palindromic_num(self): pass
+            return a
+
 
-    def smallest_num_given_digits_num_sum(self): pass
+    # * by 'conflict' adjacent lists shouldn't have any similar number
+    def interval_scheduling(self, a: List[List[int]]) -> List[List[int]]: # O() t ; O() s
 
-    def lexi_largest_subsequence(self): pass
+        # don't store arrays' digits as a key string in a map; just delete on duplicates in adjacent arrays
+        def funny_trick(a=a): # O() t ; O() s
 
-    # hard
+            # Brute-force - O(ab ~ a or b - best to loop through shorter) t used here (sub-arrays with very few digits)
+            # + only will only be iterating through 1 sub-array to check if exists in other,
+            # with 'in' keyword # ! confirm: .py 'in' keyword - O(1) t or O(n)
+            # * more optimized to use a hashmap - O(n) t, or sort / delete on duplicates, but unnecessary
+            def compare(a, b): # = lambda a, b:
+                for n in a if len(a) <= len(b) else b:
+                    if n in a and n in b:
+                        return True
+                return False
 
-    def max_elems_made_equal(self): pass
+            '''
+            # iterating with next item - less-optimal - requires extra check for array out-of-bounds exception, on last iteration
+            for i, n in enumerate(a):
+                next = a[i + 1]
+                if compare(n, next):
+                    del a[i]
 
-    def min_cash_flow(self): pass
+                if i + 2 == len(a): break # ! break out of loop at next to last index
+                # to avoid array out-of-bounds exception on the next iteration
+            '''
 
-    def min_cost_to_cut_board(self): pass
+            # iterating with previous item - better - avoids array out-of-bounds exception, on last iteration
+            for i in range(1, len(a)):
+                curr = a[i]; prev = a[i - 1]
+                if compare(curr, prev):
+                    del a[i] # this time, delete the current item (as the "next" item duplicate)
 
-    def min_cost_to_process_tasks(self): pass
+            return a
 
-    def min_time_to_finish_jobs(self): pass
+    # * by 'conflict' lists shouldn't be equal
+    def interval_scheduling(self, a: List[List[int]]) -> List[List[int]]: # O() t ; O() s
 
-    def minimize_max_diff(self, a): pass
+        def funny_trick(a=a): # O(n) t ; O(n~1) s - reversed array not really considered as added space 'complexity' (but is still added space)
+            ra = a[::-1]
+            for i, v in enumerate(a):
+                if not i == ra.index(v): # ! confirm .py 'in' syntax O(n / 1) t ?
+                    # if there's a new index, from the back (reversed array)
+                    # then there's a duplicate value in array
 
-    def min_edges_to_reverse(self, a): pass
+                    # * so delete from both arrays
+                    del a[i], ra[len(a) - 1 - i]
+                    # for reversed, reverse the index too, to remove the exact mirror-item
 
-    def largest_cube(self): pass
+            del ra # be sure to remove the reversed array
+            return a # new array with no repeating elements
+        
+        # ! reverse-array is used in this case, because the hack of removing an item to check if it still exists isn't possible
+        # ! because removing an item to put it back in (if it doesn't repeat) is 'stupid'
+
+
+    # * by 'conflict' adjacent lists shouldn't be equal
+    def interval_scheduling(self, a: List[List[int]]) -> List[List[int]]: # O() t ; O() s
+
+        def funny_trick(a=a): # O(n) t ; O(1) s
+            for i, v in enumerate(a):
+                if v == a[i + 1]:
+                    del a[i]
+            return a
+
+
+    #
+    def interval_scheduling(self): # O() t ; O() s
+        pass
+
+
+    #
+    def interval_scheduling(self): # O() t ; O() s
+        pass
+
+
+    # 3rd-Party (Tutorial) - sorting intervals-matrix by 'last-finish-time' - last edge of all intervals
+    def interval_scheduling(self, intervals: List[List[int]]) -> List[List[int]]:
+        # O(n log n + n) t ; O(1) s (optimal_intervals array only holds result)
+        
+        intervals.sort(key = lambda i: i[1]) # O(n log n) t
+        
+        last_finish_time = float('-inf')
+
+        optimal_intervals = [] # O(n) s - but ignored since it only holds result
+        # intersecting intervals can also be deleted from input-array instead
+
+        for interval in intervals: # O(n) t
+
+            start = interval[0]
+
+            if start > last_finish_time:
+
+                end = interval[1]
+                optimal_intervals.append(interval)
+                last_finish_time = end
+            # else: delete intervals[index] of this iteration, on intersection
+            # then return updated input-array
+
+        return optimal_intervals
+
+
+    '''
+    
+        Huffman Coding / Variable-Length Coding
+        
+        Data Compression algorithm based on character-frequency of text-string data, in files mostly
+        
+        - using Priority Queues & Merkle-Tree Algorithm
+        - eg. full-solution: https://github.com/Amo-Addai/api-feature-development/tree/main/compression/huffman-encode-decode/python
+        - 
+    
+    '''
+
+
+    def huffman_coding(self): # O() t ; O() s
+        pass # TODO
+
+
+    def huffman_coding(self): # O() t ; O() s
+        pass # TODO
+
+
+    def huffman_coding(self): # O() t ; O() s
+        pass # TODO
+
+
+    # TODO: 3rd-Party (Tutorial) - using a Priority-Queue & Merkle-Tree
+    def huffman_coding(self, data: str): # O(n + n log n + n log k ~ n log k) t ; O(n + k ~ k) s ; k = total number of nodes
+
+        # ! O( .. ~ n log k) t - ignoring non-dominant terms when analyzing logarithmic complexities in asymptotic rate
+        # * O(n log k) t is larger than both O(n) t & O(n log n) t
+        # ! O(n + k ~ k) s - ignoring non-dominant term O(n) s
+        # * since k (number of nodes used for algo) > n (only number of string characters)
+
+        class HuffmanNode:
+
+            def __init__(self, freq, data, left, right):
+                self.freq, self.data, self.left, self.right \
+                    = freq, data, left, right
+
+        def encode(str: str):
+
+            mapping = {}
+
+            for c in str:
+                if not c in mapping: mapping[c] = 1
+                else: mapping[c] += 1
+
+            root = generate_tree(mapping)
+            set_binary_code(root, '')
+
+            print(' char | huffman code ')
+            for char in mapping:
+                print(
+                    ' %-4r | %12s ' % \
+                    (char, char_binary_mapping[char])
+                )
+            
+            s = ''
+            for c in str: s += char_binary_mapping[c]
+
+            return s
+
+        def generate_tree(mapping):
+
+            keyset = mapping.keys()
+
+            priority_queue = [] # ! deque() - Dequeue (Double-ended Queue) much better for implementation
+
+            for c in keyset:
+                node = HuffmanNode(mapping[c], c, None, None)
+
+                # add to priority-queue
+                priority_queue.append(node)
+
+                # then sort priority-queue based on frequency
+                priority_queue = sorted(
+                    priority_queue,
+                    key = lambda x: x.freq
+                )
+
+            while len(priority_queue) > 1:
+                first = priority_queue.pop(0)
+                second = priority_queue.pop(0)
+                merge_node = HuffmanNode(
+                    first.freq + second.freq,
+                    '-', first, second
+                )
+                priority_queue.append(merge_node)
+                priority_queue = sorted(
+                    priority_queue,
+                    key = lambda x: x.freq
+                )
+            
+            return priority_queue
+        
+        def set_binary_code(node, s):
+
+            if not node is None:
+
+                if node.left is None and node.right is None:
+                    char_binary_mapping[node.data] = encoded_str
+
+                # left
+                encoded_str += '0'
+                set_binary_code(node.left, encoded_str)
+                encoded_str = encoded_str[::-1]
+                
+                # right
+                encoded_str += '1'
+                set_binary_code(node.right, encoded_str)
+                encoded_str = encoded_str[::-1]
+        
+
+        def decode(str: str):
+            # TODO:
+            pass
+
+
+        encoded_str = ''
+
+        # store resulting binary-code mapping for each character
+        char_binary_mapping = {}
+
+        code = encode(data)
+        print(code)
+        str1 = decode(code)
+        print(str1)
+
+        return code, str1
+
+
+    '''
+    
+        Dijkstra's Algorithm
+        
+        Find the shortest path for each vertex from a given source vertex
+
+        - 
+    
+    '''
+    
+    
+    def dijkstra_algo(self): # O() t ; O() s
+        pass # TODO
+    
+    
+    def dijkstra_algo(self): # O() t ; O() s
+        pass # TODO
+    
+    
+    def dijkstra_algo(self): # O() t ; O() s
+        pass # TODO
+    
+
+    # TODO: 3rd-Party (Tutorial) - using an Adjacency Matrix Graph
+    def dijkstra_algo(self, mat): # O(n(n-1) ~ n^2) t ; O(n) s
+        
+        v = len(mat)
+        visited = [False for i in range(v)]
+        distance = [0 for i in range(v)]
+
+        for i in range(1, v):
+            distance[i] = float('inf')
+
+        for i in range(v - 1):
+
+            min_vertex = find_min_vertex(distance, visited)
+            visited[min_vertex] = True
+
+            for j in range(v):
+
+                if mat[min_vertex][j] != 0 and \
+                    not visited[j]:
+
+                    new_distance = distance[min_vertex] + mat[min_vertex][j]
+                    
+                    if new_distance < distance[j]:
+                        distance[j] = new_distance
+        
+        for i in range(v):
+            print(i, ' ', distance[i])
+
+        
+        def find_min_vertex(distance, visited):
+            
+            min_vertex = -1
+
+            for i in range(len(distance)):
+                if (min_vertex == -1 or \
+                    distance[min_vertex] > distance[i]) and \
+                        not visited[i]:
+                        min_vertex = i # ! confirm double-tab delimeter
+            
+            return min_vertex
+    
+    
+    '''
+    
+        Maximum Non-Overlapping Segments
+        
+        Given a number of segments,
+        find the maximum number of these segments that do not overlap with each other
+
+        - similar to: Activity Selection Problem
+            - where to choose the max non-overlapping tasks
+    
+    '''
+    
+    
+    def max_non_overlapping_segments(self): # O() t ; O() s
+        pass # TODO
+    
+    
+    def max_non_overlapping_segments(self): # O() t ; O() s
+        pass # TODO
+    
+    
+    def max_non_overlapping_segments(self): # O() t ; O() s
+        pass # TODO
+    
+
+    # 3rd-Party (Tutorial) - 
+    def max_non_overlapping_segments(self, a, b): # O(n) t ; O() s
+        pass # TODO
+    
+    
+    '''
+    
+        Tie Ropes
+        
+        - 
+    
+    '''
+    
+    
+    def tie_ropes(self): # O() t ; O() s
+        pass # TODO
+    
+    
+    def tie_ropes(self): # O() t ; O() s
+        pass # TODO
+    
+    
+    def tie_ropes(self): # O() t ; O() s
+        pass # TODO
+    
+
+    # 3rd-Party (Tutorial) - 
+    def tie_ropes(self): # O() t ; O() s
+        pass # TODO
+    
+
+    '''
+        # TODO: 
+    '''
+
+    
+    def independent_sets(self): # O() t ; O() s
+        pass # TODO
+
+    def activity_selection(self): # O() t ; O() s
+        pass # TODO
+
+    def job_sequencing(self): # O() t ; O() s
+        pass # TODO
+
+    def huffman_coding(self): # O() t ; O() s
+        pass # TODO
+
+    def huffman_decoding(self): # O() t ; O() s
+        pass # TODO
+
+    def water_connection(self): # O() t ; O() s
+        pass # TODO
+
+    def egyptian_fraction(self): # O() t ; O() s
+        pass # TODO
+
+    def police_thieves(self): # O() t ; O() s
+        pass # TODO
+
+    def fitting_shelves(self): # O() t ; O() s
+        pass # TODO
+
+    def mice_to_holes(self): # O() t ; O() s
+        pass # TODO
+
+    
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! easy
+
+
+    def split_into_max_composite_nums(self, n): # O() t ; O() s
+        pass # TODO
+
+    def buy_max_stocks(self): # O() t ; O() s
+        pass # TODO
+
+    def min_max_amount(self): # O() t ; O() s
+        pass # TODO
+
+    def max_equal_sum(self): # O() t ; O() s
+        pass # TODO
+
+    def cuboid_to_cubes(self): # O() t ; O() s
+        pass # TODO
+
+    def max_custs_to_satisfy(self): # O() t ; O() s
+        pass # TODO
+
+    def min_rotations_to_unlock(self): # O() t ; O() s
+        pass # TODO
+
+    def min_rooms_for_events(self): # O() t ; O() s
+        pass # TODO
+
+    def min_cost_to_reduce_size(self): # O() t ; O() s
+        pass # TODO
+
+    def min_cost_to_acquire_coins(self): # O() t ; O() s
+        pass # TODO
+
+    def min_increment_by_ops(self): # O() t ; O() s
+        pass # TODO
+
+    def min_number_of_notes(self): # O() t ; O() s
+        pass # TODO
+
+    def smallest_subset_with_greatest_sum(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! medium
+
+
+    def max_trains_for_stoppage(self): # O() t ; O() s
+        pass # TODO
+
+    def min_fibonacci_terms(self): # O() t ; O() s
+        pass # TODO
+
+    def divide_with_min_sum_diff(self): # O() t ; O() s
+        pass # TODO
+
+    def min_num_squares(self): # O() t ; O() s
+        pass # TODO
+
+    def min_diff_between_groups(self): # O() t ; O() s
+        pass # TODO
+
+    def min_num_platforms(self): # O() t ; O() s
+        pass # TODO
+
+    def min_vertices_to_traverse_matrix(self): # O() t ; O() s
+        pass # TODO
+
+    def largest_palindromic_num(self): # O() t ; O() s
+        pass # TODO
+
+    def smallest_num_given_digits_num_sum(self): # O() t ; O() s
+        pass # TODO
+
+    def lexi_largest_subsequence(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! hard
+
+
+    def max_elems_made_equal(self): # O() t ; O() s
+        pass # TODO
+
+    def min_cash_flow(self): # O() t ; O() s
+        pass # TODO
+
+    def min_cost_to_cut_board(self): # O() t ; O() s
+        pass # TODO
+
+    def min_cost_to_process_tasks(self): # O() t ; O() s
+        pass # TODO
+
+    def min_time_to_finish_jobs(self): # O() t ; O() s
+        pass # TODO
+
+    def minimize_max_diff(self, a): # O() t ; O() s
+        pass # TODO
+
+    def min_edges_to_reverse(self, a): # O() t ; O() s
+        pass # TODO
+
+    def largest_cube(self): # O() t ; O() s
+        pass # TODO
 
     def rearrange_str_chars(self): 
 
@@ -5091,169 +6875,2480 @@ class Greedy:
         pass
 
 
-class BackTracking:
+class BackTracking: # ! Not Enough BTrack work
 
-    def __init__(self): pass
+    '''
 
-    # standard
+        BackTracking Algorithms
 
-    def knights_tour(self): pass
+        Technique to solve a problem recursively, by making series of choices;
+        and if any choice fails, it gets abandoned, for another one to be tried
 
-    def rat_in_a_maze(self): pass
+        - trying out a possible solution, and "backtracking" when not optimal, 
+        to try out other possible solutions, until the most-optimal solution is found
 
-    def n_queen(self): pass
+        - some extended form of recursion, but with some special properties
 
-    def subset_sum(self): pass
+        - for problems where taking decisions back are necessary
+            - change decisions at runtime, & take step(s) back for re-decisions
+        
+        Attributes:
 
-    def m_coloring(self): pass
+        - useful for game dev programming
+            - and game theory strategies
+        
+        Identification:
 
-    def hamiltonian(self): pass
+        - problem gives set of choices to be made
+        - & set of constraints to follow
+        - also consists of decision-making calls (Recursive)
+            - with given choices & constraints
+        
+        - Difference b/n BackTracking & Recursion:
+            - Recursion:
+                - keep moving forward with solving a problem (recursively)
+                - sub-problem after sub-problem, being solved recursively, at each stage
+                - until the problem is fully-solved (at the base-case scenario)
+            - BackTracking:
+                - keep moving forward with solving a problem (recursively)
+                - until current choice / option fails
+                - then backtrack to starting / mid - (base) - point
+                - then try another choice / option, & continue solving recursively
+                - until that also fails, then loop recursion + backtracking
+                - until problem is finally solved
+        
+        Approach:
 
-    def sudoku(self): pass
+        - Choices
+            - Matrix / Tree/Graph - Depth-First Search Traversal
+            - can be treated as DFS traversal of a tree
+            - if a path is blocked, traversal backtracks until start/mid-point
+            - then changes direction to traverse another node's path
+        - Each Step of Choice
+            - each step (node) has multiple choices (children)
+            - (same decision-space at each step)
+            - DFS traverse through by choosing 1 node's path
+                - if a wrong choice was made:
+                    - go back then make the next possible choice
 
-    def magnet_puzzle(self): pass
+        - DFS Traversal Options
+            - Recursion - with Pre / Post / In - Order Traversals
+            - ?
+            - NB: BFS Traversals: not required for BackTracking
+                - Queued While-Loop
+                - ?
+            - ?
+        
+        - Constraints
+            - prevent traversal through certain paths / choice options
+            - or at base-case / final destination
+                - where the path reaches the end of the traversal
+                    - with no other possible path
+                    - whether this was a valid path or not
+                - if path was valid:
+                    - then the answer has been found
+                    - or 1 of the answers have been found
+                        - (& probably appended to a list of answers)
+                - if path was not valid:
+                    - then traversal will 'BackTrack'
+                        - to the closest mid-point node
+                        - to continue traversal to the next best option node
 
-    def remove_invalid_parenthesis(self): pass
+        - Example:
+            - Matrix of 0s & 1s:
+                - find the path of 0s, 
+                - from a starting point (eg. 1 vertex)
+                - to an ending point (eg. another vertex - at the opposite corner)
+            - DFS Traversal from starting 0, based on 0-direction, till ending 0
+                - Constraint: can only move in Cross-Directions (up, down, left, right)
+                    - cannot move diagonally
+                - if traversal reaches a 0 with more spots to move to
+                    - i.e. that 0 is not at an ending vertex (ending point)
+                    - but all spots to move to, have 1s,
+                        - then base-case scenario (in recursion, for DFS Traversal),
+                        - but not a successful path
+                    - so Recursive DFS Traversal will 'BackTrack' to nearest 0 - midpoint
+                    - (by recursively calling the '0' paths only)
+                    - (whether left -> right / right -> left)
+                    - (but still with Pre / Post / In - Order Traversal chosen)
+                        - Recursive DFS Traversal will 'BackTrack' to nearest 0 - midpoint
+                        - which has other 0 paths to traverse (DFS with Recursion)
+                    
+                    - if base case of all 0s do not land on an ending vertex point
+                        - then there is no valid path (return False)
+                    - if base case (whether 1st, or can also find multiple, then save all valid paths)
+                        - then there is 1+ valid paths (return True / list of valid paths)
+        
+        Tips:
 
-    def generate_gray_codes(self): pass
+        - most problems involve a list / array / string data-structure
+            - most of the inputs (lists/arrays/strings) can be backtracked through, 
+                - whilst forming a Tree data-structure of results
+        - most solutions involve a loop with recursive iterations
+            - loop through base input array, 
+                - with each item as the pivot,
+                    - while recursing with entire input array each time
+            - NB: without saving results to state, using a state-machine
+                - like with Dynamic Programming
+        
 
-    def string_permutations(self): pass
+    '''
 
-    # easy
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
-    def print_subsets(self): pass
-
-    def is_sum_str(self): pass
-
-    def possible_paths(self): pass
-
-    def bitmasking_distinct_subsets(self): pass
-
-    def path_from_source(self): pass
-
-    def print_paths_from_source(self): pass
-
-    def print_strings_using_spaces(self): pass
-
-    # medium
-
-    def tug_of_war(self): pass
-
-    def eight_queens(self): pass
-
-    def combinational_sum(self): pass
-
-    def warnsdorff_for_knights_tour(self): pass
-
-    def paths_in_maze(self): pass
-
-    def max_num_by_k_swaps(self): pass
-
-    # hard
-
-    def power_set(self): pass
-
-    def word_break(self): pass
-
-    def set_to_k_subsets(self): pass
-
-    def longest_route_in_matrix(self): pass
-
-    def shortest_safe_route(self): pass
-
-    def print_n_queen_solns(self, a): pass
-
-    def longest_common_subsequence(self, a): pass
+    
+    # ! standard
 
 
-class SystemDesign:
+    '''
 
-    def __init__(self): pass
+        Subsets
+
+        Given a set of distinct integers, nums,
+        return all possible subsets (the power set)
+
+        Constraints:
+        - solution set must not contain duplicate subsets
+        - must include both:
+            - empty list as a subset - []
+            - and the entire input array, 
+                - also as a subset - [ ... ]
+    
+    '''
+    
+    # BackTrack with a Recursive Tree Structure of subset permutations
+    def subsets(self, a): # O() t ; O() s
+        
+        # * 1st, set up Tree with root node value as the empty array []
+
+        sub_set = []
+
+        tree = DataStructures.Tree(
+            r = DataStructures.Tree.TreeNode(
+                v = sub_set, # value
+                c = [] # children
+            ) # root
+        )
+
+        root = tree.root
+
+        def recurse(a, sub_set, node): # O() t ; O() s
+
+            # ! Recursive base-case is handled just before recursing
+            # * to prevent array-out-of-bounds error on recursion
+            
+            ''' # ! ALL DONE RECURSIVELY, to fill up the tree
+             * for each item in list, 
+                append to subset
+                then append subset to node's children
+             * then recurse, 
+                without 1st item in array
+                with that current subset
+                & with that current child-node
+            '''
+
+            for i, n in enumerate(a):
+                
+                sub_set.append(n)
+
+                # ! still wrong, because sub_set has to be confirmed to not already be in the tree
+                # todo: so DFS search 'tree' to ensure that it doesn't already contain 'sub_set'
+                exists = False
+                # ! Tree.dfs() doesn't have a callback argument, so create one
+                tree.dfs(root, sub_set, cb = lambda value: exists = value is not None)
+                # if not exists: then set node_to_append, & .append(to node.children)
+
+                node_to_append = DataStructures.Tree.TreeNode(
+                    v = sub_set,
+                    c = []
+                )
+                node.children.append(
+                    node_to_append
+                )
+
+                # ! now, recurse on this iteration
+                # ! skipping the current n's index
+
+                # ! but make sure this recursion's sub-array has length > 1
+                if len(a) > 1: # ! so recursion's BASE-CASE is actually handled here
+                    
+                    # * or you can a.pop(0) and then pass in 'a'
+
+                    # * then base case of len(a) == 0: return
+                    # could be at beginning of function
+
+                    recurse(a[i + 1:], sub_set.copy(), node_to_append)
+
+                    # ! pass in a copy of subset instead, 
+                    # * so that this specific subset can be worked with after
+
+                # ! and also pop out last appended item in subset
+                # before next iteration, which will only need to work with next array item
+                sub_set.pop()
 
 
-class Mathematical:
+        recurse(a, sub_set, root)
 
-    def __init__(self): pass
+        # ! print out Tree
+        # tree.print() # or: find a way to print(tree object)
+
+        # ! now, tree contains all possible subsets, in all its nodes
+        # TODO: TEST & Confirm
+
+        res = []
+
+        # use Breadth-First Search to list out all of the tree's nodes
+        # ! Tree.bfs() doesn't have a callback argument, so create one
+        tree.bfs(root, cb: lambda value: res.append(value))
+        # ! or implement BFS search manually
+
+        # * NB: BFS is better since children nodes are appended laterally
+        # * so getting same / similar length subsets with BFS is faster & cleaner
+
+        return res
+
+    
+    # BackTrack with a Recursion, without a Tree, 
+    # but straight to a list of subset permutations
+    def subsets(self, a): # O() t ; O() s
+        
+        res = [] # O(ignore) s - only holding result
+        subset = [] # O( ?? ) s - ?
+        # ! will keep appending number permutations, for each subset addition
+        # * unless perhaps, you delete the current subset, after recursion
+
+        def recurse_WRONG(a, subset): # O() t ; O() s
+            if len(a) == 0: return
+
+            for n in a:
+                subset.append(n)
+                if subset not in res: # check if subset doesn't already exist 1st
+                    res.append(subset)
+                a.pop(0)
+
+                recurse(a, subset.copy())
+                # ! pass in a copy of subset instead, 
+                # * so that this subset can be deleted after
+
+                del subset # ! delete it after recusive usage
+                # * to remove all subsets when they become unnecessary
+
+                '''
+                    passing subset (as a list) be reference will affect original subset
+                    but its only original use was to be appended to 'res', so no issue really
+                    
+                    # ! so it's still best to pass in a copy instead, and delete right after
+                    else, there would be residual subset lists being affected and not being used any more
+                '''
+
+                # ! SUB-SET DOESN'T ACTUALLY HAVE TO BE DELETED, OR LEFT ALONE
+                # ! INSTEAD, IT MUST POP OUT THE LAST APPENDED ITEM, 
+                # ! SO IT DOESN'T INCLUDE IT IN THE NEXT ITERATION
+        
+        # ! CORRECT recursion
+        def recurse(a, subset): # O() t ; O() s
+            if len(a) == 0: return
+
+            for n in a:
+                subset.append(n)
+
+                if subset not in res: # check if subset doesn't already exist 1st
+                    res.append(subset)
+
+                a.pop(0) # * still pop out 1st item in array, before recursing
+                recurse(a, subset.copy()) # * remember to still pass in a copy of subset instead
+                subset.pop() # * and also pop out last appended item in subset
+                # before next iteration, which will only need to work with next array item
 
 
-class Geometric:
+        recurse(a, subset)
 
-    def __init__(self): pass
+        return res
+
+    
+    def subsets(self, a): # O() t ; O() s
+        pass # TODO
+
+    
+    def subsets(self, a): # O() t ; O() s
+        pass # TODO
 
 
-class PatternSearching:
+    # TODO: TEST: 3rd-Party (Tutorial) - pseudocode-algo # TODO: Test & Fix
+    def subsets(self, a): # O() t ; O() s
 
-    def __init__(self): pass
+        ans = []
+        
+        def recurse(nums, ans, curr, index):
+            if index >= len(nums): return
+
+            ans.append(curr)
+
+            for i in range(index, len(nums)):
+
+                if not nums[i] in curr:
+
+                    curr.append(nums[i])
+                    recurse(nums, ans, curr, i)
+                    curr.pop()
+        
+        recurse(a, ans, [], 0)
+
+        return ans
+
+    
+    # 3rd-Party (Tutorial) - LC #78 - 
+    def subsets(self, nums: List[int]) -> List[int]: # O() t ; O() s
+        
+        ans = []; curr = []
+
+        def recurse(nums, ans, curr, index):
+
+            if index > len(nums): return
+            
+            ans.append(curr[:]) # append as a copy
+
+            for i in range(index, len(nums)):
+
+                if nums[i] not in curr:
+
+                    curr.append(nums[i])
+                    recurse(nums, ans, curr, i)
+                    curr.pop()
+        
+        recurse(nums, ans, curr, 0)
+
+        return ans
+
+
+    '''
+    
+        Subset Sum
+
+        -
+
+    '''
+
+
+    def subset_sum(self, a): # O() t ; O() s
+        pass # TODO
+
+
+    def subset_sum(self, a): # O() t ; O() s
+        pass # TODO
+
+
+    # 3rd-Party (Tutorial) - 
+    def subset_sum(self, a): # O() t ; O() s
+        pass # TODO
+
+
+    '''
+
+        Combination Sum
+
+        Given a set of +ve candidate numbers (without duplicates),
+        & a target number,
+        Find all unique Combinations of candidates,
+        where the candidate numbers sum up to the target number
+
+        - The same repeated number may be chosen from candidates
+        for an unlimited number of times
+
+        - Constraints:
+            - solution set must not contain duplicate combinations
+            - ?
+    
+    '''
+    
+
+    # TODO: TEST: BackTrack with a Recursive Tree Structure of subset permutations
+    def combination_sum(self, a, target = 7): # O() t ; O() s
+        
+        tree = DataStructures.Tree(
+            r = DataStructures.Tree.TreeNode(
+                v = None,
+                l = None,
+                r = None,
+                c = []
+                # ! this time, only working with .left & .right children nodes
+                # * subsets in same depth-path not entirely related to each other, 
+                # like with 'subsets' problem-solution with Tree Data-Structure
+            )
+        )
+
+        root = tree.root
+        subset = []
+
+        # TODO: TEST
+        def recurse(a, node, subset): # O() t ; O() s
+
+            for n in a:
+
+                if n == target:
+
+                    # ! WRONG code - don't reset subset
+                    # * which may already have numbers with sum < target
+                    # subset = [n]
+                    value = [n] # better
+
+                    # ! NB: if preferred, can prevent duplication combinations, with .dfs search
+                    exists = False
+                    # ! Tree.dfs() doesn't have a callback argument, so create one
+                    tree.dfs(root, value, cb: lambda value: exists = value is not None)
+                    # if not exists: # then set to node.value
+
+                    node.value = value # ! NOT 'subset'
+                    # * instead, set node's value to a new array
+
+                    # ! now, just return
+                    # * because any other addition is > target
+                    return
+
+                    # ! NO NEED to remove 'n' from subset then continuing on to next iteration
+                    # ! because a new 'value' list was created in place of 'subset'
+
+                    # * can end recursion here as a base-case 
+                    # and not have to recurse again with node's children
+                    # plus that would even cause an infinite recursion issue, with this same 'n' later
+
+                    # ! since duplicates are also not allowed, a faster addition would've been to
+                    # * also remove this 'n' from 'a', but would have to use the global 'a' input array 1st
+                    # ! with a recursive index this time
+                
+                elif n < target:
+
+                    subset.append(n) # add number
+
+                    subset_sum = sum(subset) # O(s) t
+                    
+                    if subset_sum > target:
+
+                        # ! WRONG
+                        # end recursion if subset's sum exceeds target
+                        # ! return # good base-case for backtracking from failed paths
+
+                        # * why return ? when in this case, both other cases will not continue on to next iteration ?
+
+                        # elif subset_sum < target: will recurse with same node & subset's copy
+                        # so next recursion can re-work with this same 'n'
+
+                        # else: if subset_sum == target: will set node.value
+                        # then recurse with both node .left & .right child nodes
+
+                        # ! INSTEAD, pop out this n 'lifo'wise, then continue on to next iteration
+                        subset.pop(); continue
+                    
+                    elif subset_sum < target: # also an 'elif' check, before equality-check
+                        # so recursion can happen, with this current node's .value prop
+                        # before dealing with node's children (.left & .right)
+
+                        recurse(a, node, subset.copy()) # ! remember to pass in a copy, 
+                        # * to avoid updates by reference
+
+                    else: # if subset_sum == target: # check sum
+
+                        # ! NB: if preferred, can prevent duplication combinations, with .dfs search
+                        exists = False
+                        # ! Tree.dfs() doesn't have a callback argument, so create one
+                        tree.dfs(root, value, cb: lambda value: exists = value is not None)
+                        # if not exists: # then set to node.value
+
+                        node.value = subset # ! 'subset' this time
+                        # now, can deal with node's children (.left & .right)
+
+                        # ! but, use subset without current n again (like in 'subset > target' check)
+                        # because any other recursion's appending will exceed > target
+                        subset.pop() # * so pop out current iteration's n again
+
+                        if not node.left:
+                            recurse(a, node.left, subset.copy())
+                        
+                        if not node.right:
+                            recurse(a, node.right, subset.copy())
+
+                # else: pass # ! NO n > target check necessary
+                # ! continue on to next iteration, with same subset
+
+
+        recurse(a, root, subset)
+
+        # ! print out tree
+        # tree.print() # or: print(tree)
+
+        res = []
+
+        # ! BFS Traverse tree for all nodes' values
+        tree.bfs(root, cb = lambda value: res.append(value) if value is not None else print('None Value Found (check if root)'))
+
+        return res
+    
+
+    # TODO: TEST BackTrack with a Recursion, without a Tree, 
+    # but straight to a list of subset permutations
+    def combination_sum(self, a, target): # O() t ; O() s
+        
+        res = []
+        subset = []
+
+        def recurse(a, subset):
+
+            for n in a:
+
+                if n == target:
+
+                    value = [n]
+                    if value not in res:
+                        res.append(value)
+                    
+                    return
+                
+                elif n < target:
+
+                    subset.append(n)
+
+                    subset_sum = sum(subset)
+
+                    if subset_sum > target:
+
+                        subset.pop()
+                        continue
+
+                    elif subset_sum < target:
+
+                        recurse(a, subset.copy())
+                    
+                    else: # if subset_sum == target:
+
+                        if subset not in res:
+                            res.append(subset)
+                        
+                        subset.pop()
+
+                        recurse(a, subset.copy())
+        
+
+        recurse(a, subset)
+
+        return res
+
+    
+    def combination_sum(self, a, target): # O() t ; O() s
+        pass # TODO
+    
+    
+    def combination_sum(self, a, target): # O() t ; O() s
+        pass # TODO
+    
+    
+    # 3rd-Party (Tutorial) - pseudocode-algo # TODO: Test & Fix
+    def combination_sum(self, a, target): # O() t ; O() s
+
+        res, curr = [], []
+        
+        def recurse(a, res, curr, target, index, subset_sum):
+            if subset_sum == target:
+                res.append(curr)
+            elif subset_sum < target:
+                for i in range(index, len(a)):
+                    curr.append(a[i])
+                    recurse( \
+                        a, res, curr, \
+                        target, i, \
+                        subset_sum + a[i] \
+                    )
+                    curr.pop()
+            return
+        
+        recurse(a, res, curr, target, 0, 0)
+
+        return res
+    
+
+    # 3rd-Party (Tutorial) - LC #39 - 
+    def combination_sum(self, a: List[int], target: int) -> List[List[int]]: # O() t ; O() s
+        
+        ans, cur = [], []
+
+        def recurse(candidates, ans, cur, target, index, sum):
+            if sum == target:
+                ans.append(cur[:])
+            elif sum < target:
+                n = len(candidates)
+                for i in range(index, n):
+                    cur.append(candidates[i])
+                    recurse(candidates, ans, cur, target, i, sum + candidates[i])
+                    cur.pop()
+            return
+        
+        recurse(a, ans, cur, target, 0, 0)
+
+        return ans
+
+
+    '''
+
+        Letter Combinations of a Phone Number
+
+        Given a string containing digits from 2-9 inclusive, 
+        find all possible letter combinations 
+        that the number could represent
+
+        NB: in a 'feature phone', each digit (from 2-9 inclusive) in keyboard
+        correspond to a set of letters (eg. 2 - abc, 3 - def, .. , 7 - pqrs, 9 - wxyz)
+
+        - Constraints:
+            - can only take 1 letter from each digit's set / string of letters
+            - ?
+        
+        - Examples:
+            - input: '23' ( 2 - abc & 3 - def )
+            - approach: can brute-force through all possible letter combinations
+                - but with only 1 letter from both numbers' string
+            - output: [ 'ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf' ]
+
+        - Approach:
+            - Steps:
+                - create a map b/n digits & corresponding letters
+                - set up digit-to-letters mapping, m
+                - call recursive backtracking function with params:
+                    - ans, m, digits, '', 0
+                    - where:
+                        '' - current combination string
+                        0 - current index, in the digits string
+                    - recursive steps:
+                        - check if index < length of digits string
+                        - check if combination string sum is equal to digits size
+                            - add the current combination to the answer
+                                & return from current recursive call
+                        - after both checks:
+                            - find corresponding string for current digit @ param index
+                                - digit[index], eg. called curString
+                                - curDigit = digits[index]; curString = m[curDigit]
+                            - loop over curString:
+                                - recursively call backtracking function
+                                    - but add 1 to index
+                                    - also add current character of curString to combination
+                                - backtrack(ans, m, digits, combo + curString[i], index + 1)
+                            - ?
+    
+    '''
+
+    digit_letters_map = {
+        2: 'abc', 3: 'def',
+        4: 'ghi', 5: 'jkl', 6: 'mno',
+        7: 'pqrs', 8: 'tuv', 9: 'wxyz'
+    }
+    
+    # can only pick 1 letter from each digit's string
+    def letter_combinations_of_phone_number(self, s): # O() t ; O() s
+
+        if not s or len(s) == 0: return []
+
+        res, combo = [], ''
+
+        def recurse(s, combo):
+        
+            for d in s:
+
+                try: d = int(d)
+                except: d = None
+
+                if not d or \
+                    d in [0,1] or \
+                        d > 9: # * d (digit) will never > 9
+                    return # error - case (not base-case)
+
+                cs = self.digit_letters_map[d]
+
+                for c in cs: # ! TODO: confirm: this section works properly
+
+                    # * now, recursively combine c with every 1 character, in every other digit
+
+                    combo += c
+
+                    if len(combo) > 1: # bad (or unnecessary 'perfection'-check)
+                        # * find a way to combine letters from 2+ strings, before appending to result
+                        res.append(combo)
+                    
+                    recurse(s[1:], combo)
+                
+                    # ! remove the current iteration's character (c)
+                    # * to prevent repetitions in 1 digit's letters
+                    # * can only pick 1 letter from each digit's string
+                    combo = combo[ : len(combo) - 1 ]
+        
+        recurse(s, combo)
+
+        return res
+
+    
+    # can also pick multiple letter from each digit's string
+    def letter_combinations_of_phone_number(self, s): # O() t ; O() s
+        pass # TODO
+    
+    # 
+    def letter_combinations_of_phone_number(self, s): # O() t ; O() s
+        pass # TODO
+    
+    # 
+    def letter_combinations_of_phone_number(self, s): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - pseudocode-algo # TODO: Test & Fix
+    def letter_combinations_of_phone_number(self, s): # O() t ; O() s
+
+        if len(s) == 0: return []
+        
+        ans = []
+        combo = ''
+        m = self.digit_letters_map
+
+
+        def recurse(ans, m, digits, combo, index):
+
+            if index > len(digits): return
+
+            if len(combo) == len(digits):
+
+                ans.append(combo)
+                return
+            
+            curDigit = digits[index]
+            curString = m[curDigit]
+
+            for i in range(len(curString)):
+
+                recurse( \
+                    ans, \
+                    m, \
+                    digits, \
+                    combo + curString[i], \
+                    index + 1 \
+                )
+
+        recurse(ans, m, s, combo, 0)
+
+        return ans
+    
+    # 3rd-Party (Tutorial) - LC #17 - 
+    def letter_combinations_of_phone_number(self, digits): # O() t ; O() s
+        
+        ans = []
+
+        if len(digits) == 0: return ans
+
+        m = self.digit_letters_map
+
+        def backtrack(ans, m, digits, combination, index):
+
+            if index > len(digits): return
+
+            if len(combination) == len(digits):
+                ans.append(combination[:])
+                return
+            
+            curDigit = digits[index]
+            curString = m[curDigit]
+
+            for i in range(len(curString)):
+
+                backtrack( \
+                    ans, \
+                    m, \
+                    digits, \
+                    combination + curString[i], \
+                    index + 1 \
+                )
+        
+        backtrack(ans, m, digits, '', 0)
+
+        return ans
+
+
+    '''
+
+        Palindrome Partitioning
+
+        Given a string s, partition s such that 
+        every substring of each partition is a palindrome
+        return all possible palindrome partitioning of s
+
+        - Example:
+            - s = 'aab'
+            - output: [ [ 'aa', 'b' ], [ 'a', 'a', 'b' ] ]
+        
+        - Approach:
+            - 
+    
+    '''
+    
+    # adding palindrome-partitions to result array
+    def palindrome_partitioning(self, s): # O() t ; O() s
+
+        if len(s) == 0: return []
+        elif len(s) == 1: return s
+
+        sub_str = ''
+        partition = []
+        res = []
+        
+        is_palindrome = lambda s: s == s[::-1] # O(n ~ 1) t
+        
+        def recurse(s, sub_str, partition, res):
+
+            if len(s) == 0: return
+
+            for c in s:
+
+                sub_str += c
+
+                if is_palindrome(sub_str):
+                    partition.append(sub_str)
+
+                recurse(s[1:], sub_str, partition, res)
+
+                sub_str = sub_str[ : len(sub_str) - 1 ]
+
+            # ! TODO: Confirm: append partition to res after entire iteration of current 's'
+            res.append(partition)
+
+        recurse(s, sub_str, partition, res)
+
+        return res
+
+    
+    # forming palindrome-partitions into a tree, then traversing back into a result array
+    def palindrome_partitioning(self, s): # O() t ; O() s
+        pass # TODO
+    
+    def palindrome_partitioning(self, s): # O() t ; O() s
+        pass # TODO
+    
+    def palindrome_partitioning(self, s): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - pseudocode-algo # TODO: Test & Fix
+    def palindrome_partitioning(self, s): # O() t ; O() s
+
+        is_palindrome = lambda s: s == s[::-1]
+        
+        def dfs(s, tmp, ans):
+            if len(s) == 0 and len(tmp) > 0:
+                ans.append([tmp])
+                return
+            
+            for i in range(1, len(s)):
+                segment = s[:i] # s.substring(0, i) - i inclusive / exclusive
+                if is_palindrome(segment):
+                    tmp.append(segment)
+                    dfs(s[i:]) # s.substring(i) - i inclusive / exclusive
+                    tmp.pop(len(tmp) - 1) # pop out last item
+                    # or just: tmp.pop()
+        
+        tmp, ans, = [], []
+
+        dfs(s, tmp, ans)
+
+        return ans
+    
+    # 3rd-Party (Tutorial) - LC #131 - using DFS Approach (on string data-structure ; not tree/graph)
+    def palindrome_partitioning(self, s): # O() t ; O() s
+        
+        res, tmp = [], []
+
+        def is_pali(s):
+            
+            i, j = 0, len(s) - 1
+
+            while i < j:
+                if s[i] != s[j]:
+                    return False
+                i += 1
+                j -= 1
+            
+            return True
+        
+        def dfs(s):
+
+            if len(s) == 0 and len(tmp) > 0:
+                res.append(tmp[:])
+                return
+            
+            n = len(s) + 1
+
+            for i in range(1, n):
+                seg = s[:i]
+                if is_pali(seg):
+                    tmp.append(seg)
+                    dfs(s[i:])
+                    tmp.pop()
+
+        dfs(s)
+
+        return res
+
+
+    '''
+
+        Rat in a Maze
+
+        Given a maze (as a 2D-Array / matrix / graph), with some blocked paths / obstacles / dead-ends,
+        a rat starts from the top-left corner, & has to reach the bottom-right corner,
+        
+        - matrix can have 0s (for blocked paths) & 1s (for valid paths)
+            - 
+        
+        - Approach:
+            
+            - Choices:
+                - decision-space: 
+                    - can only either go in x-direction (left / right) 
+                    - or in y-direction (up / down)
+                    -
+            
+            - Recursion:
+                - Go in either x / y direction
+                - if cannot go in either direction:
+                    - discard / go back in opposite direction
+                    - to previous cell in maze
+                - 
+        
+        - Constraints:
+            - can only move in cells having value '1'
+            - cell (row / col value) must be within the maze
+                (bounds of the matrix / 2D-Array)
+            - 
+
+        - Goal:
+            - 
+    
+    '''
+    
+    def rat_in_maze(self): # O() t ; O() s
+        pass # TODO
+    
+    def rat_in_maze(self): # O() t ; O() s
+        pass # TODO
+    
+    def rat_in_maze(self): # O() t ; O() s
+        pass # TODO
+    
+    def rat_in_maze(self): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - pseudocode-algo # TODO: Test & Fix (wrong) - # TODO: Confirm why wrong
+    def rat_in_maze(self, mat): # O() t ; O() s
+
+        # 1st, create empty matrix, for holding rat's path in maze
+        board = [[] for _ in range(0, len(mat))] # O(n ^ 2 or n * m) s ; 
+        # but only holds resulting path, so is not being considered here
+
+        def recursion(maze, x, y, board):
+
+            if x == n - 1 and \
+                y == n - 1 and \
+                    maze[x][y] == 1:
+                    board[x][y] = 1
+                    return True
+            
+            if recursion(maze, x + 1, y, board):
+                return True # can go in x-direction
+
+            if recursion(maze, x, y + 1, board):
+                return True # can go in y-direction
+            
+            # backtrack move (cannot go in either direction)
+            board[x][y] = 0
+            return False
+        
+        recursion(mat, 0, 0, board)
+
+        return board
+    
+    # 3rd-Party (Tutorial) - 
+    def rat_in_maze(self, maze: List[List[int]]): # O( 2 ^ ( n ^ 2) ) t ; O(n ^ 2) s
+
+        def is_safe(maze, x, y, n):
+
+            if 0 <= x < n and \
+                0 <= y < n and \
+                    maze[x][y] == 1:
+                    return True
+            
+            return False
+        
+        def solve_maze(maze, x, y, soln, n):
+
+            # base-case
+            if x == n - 1 and \
+                y == n - 1 and \
+                    maze[x][y] == 1:
+                    soln[x][y]= 1
+                    return True
+
+            if is_safe(maze, x, y, n):
+
+                soln[x][y] = 1
+
+                # x - dir, x is rows, downwards
+                if solve_maze(maze, x + 1, y, soln, n):
+                    return True
+                
+                # y - dir, y is cols, horizontally
+                if solve_maze(maze, x, y + 1, soln, n):
+                    return True
+                
+                # backtrack
+                maze[x][y] = 0
+
+            return False
+        
+        soln = [ \
+            [ \
+                0 for j in range(len(maze[0])) \
+            ] \
+            for i in range(len(maze)) \
+        ]
+
+        n = len(maze)
+        
+        if solve_maze(maze, 0, 0, soln, n):
+            for i in soln:
+                for j in i:
+                    print( \
+                        str(j), \
+                         ' ', \
+                         end = ' ' \
+                    )
+                print(' ')
+
+
+    def rat_in_a_maze(self): # O() t ; O() s
+        pass # TODO
+
+
+    '''
+
+        N-Queens (Chess Problem with Queen pieces)
+
+        Given a Chess board of nxn (n^2) size and n Queens,
+        put the n Queens on the board, (n size of board == n number of Queens)
+        in a way that they cannot attack each other
+        (based on the Queen piece's possible moves - Complete Compass)
+
+        - given a matrix (representing the chess board) filled with 0s,
+            - place n number of 1s (Queens) in a non-attacking way
+
+        - Approach:
+
+            - Choices:
+                - each Queen can move:
+                    - horizontally in-row
+                    - vertically in-col
+                    - diagonally too, across cells
+                - can only choose a cell to place a Queen where:
+                    - its moves cannot intersect with another's
+            
+            - Recursion:
+                - if choices do not work out:
+                    - discard or undo current move
+                    (backtracking to previous step)
+
+        - Constraints:
+            - ensure no move intersections
+                - check if each cell is safe 1st
+
+        - Goal:
+            - end recursion when columns are exhausted
+        
+        - Hint:
+            - The Knight can move to the cells, that The Queen cannot
+        
+    '''
+    
+    def n_queens(self): # O() t ; O() s
+        pass # TODO
+    
+    def n_queens(self): # O() t ; O() s
+        pass # TODO
+    
+    def n_queens(self): # O() t ; O() s
+        pass # TODO
+    
+    def n_queens(self): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - pseudocode-algo # TODO: Test & Fix
+    def n_queens(self, board): # O() t ; O() s
+        
+        def is_safe(board, row, col, size):
+
+            # loop through left-sided columns
+            for c in range(col, len(board[0])):
+                if board[row][c] == 1:
+                    return False
+            
+            # loop through upper-left rows & cols (diagonally)
+            # for:
+            if board[r][c] == 1: return False
+
+            # loop through lower-left rows & cols (diagonally)
+            # for:
+            if board[r][c] == 1: return False
+        
+            return True
+        
+        def save_the_queen(board, col):
+
+            cols_size = len(board[0]) - 1
+
+            if col > cols_size:
+                return True
+            
+            for r in range(0, len(board)):
+        
+                if is_safe(board, r, col, cols_size):
+
+                    # make move
+                    board[r][col] = 1
+
+                    if save_the_queen(board, col + 1):
+                        return True
+                
+                    # BackTrack move
+                    board[r][col] = 0
+
+            return False
+        
+        res = None # todo: should pass into recursive function
+        # * to be set (triggered) to True, once & for all, on success
+        # ! should be False by default
+        # todo: & adjust recursive function save_the_queen; to trigger 'res'
+
+        save_the_queen(board, 0)
+
+        return res
+
+    
+    # 3rd-Party (Tutorial) - 
+    def n_queens(self, board): # O(n!) t ; O(n) s
+
+        # O(t) - for each col, traversing through n rows, & n depth of recursive calls
+        # so base complexity n ^ n time
+        # however, recursive calls only happen for remaning n-queens only
+        # i.e. after placing 1st queen, there are n - 1 options to place the others
+        # so recursive part: n * T(n - 1) time
+        # and considering the is_safe() call runs for n times for n cols
+        # so is_safe part: n & 2 time
+        # so total: T(n) = O(n ^ 2) + n * T(n - 1)
+        # T(n) = O(n ^ 2) ( O( (n - 2)! ) ) ~~ O(n!) t
+        # * so: O(n!) t
+
+        # O(s) - 'n' recursive calls at a time, on the call-stack
+        # so there will be linear space-complexity
+        # * can assume n x n board requires n ^ 2 space
+        # but that's not actually part of the algo
+        # only auxillary space algo consumes is considered
+        # * so not included in the already linear space being used
+        # * so: O(n) s
+
+        def is_safe(board, row, col, size):
+
+            # no queen horizontally
+            for i in range(col):
+
+                if board[row][i] == 1:
+                    return False
+            
+            # upper-half
+            for i, j in zip( \
+                range(row, -1, -1), \
+                range(col, -1, -1) \
+            ):
+                if board[i][j] == 1:
+                    return False
+            
+            # lower-half
+            for i, j in zip( \
+                range(row, size, 1), \
+                range(col, -1, -1) \
+            ):
+                if board[i][j] == 1:
+                    return False
+            
+            # else, this is the right cell to place a queen
+            return True
+        
+        def save_queens(board, col, size):
+
+            if col >= size: return True
+
+            for i in range(size):
+
+                if is_safe(board, i, col, size):
+
+                    board[i][col] = 1
+
+                    if save_queens(board, col + 1, size):
+                        return True
+                    
+                    # backtrack
+                    board[i][col] = 0
+            
+            return False
+
+        #  
+        size = len(board)
+        res = save_queens(board, 0, size)
+
+        if not res: print('No Solution')
+        else:
+            for i in board:
+                for j in i:
+                    print(str(j), ' ', end=' ')
+                print(' ')
+        
+        return res
+
+    def n_queen(self): # O() t ; O() s
+        pass # TODO
+
+
+    '''
+
+        Knight's Tour
+
+        Given a n x n chess board, and a Knight, with its 'jumping' moves,
+        (a knight's moves go beyond the queen's moves - vertically, horizontally, & diagonally)
+        make the knight visit every single cell on the board, with all its movements
+
+        - Approach:
+
+            - Choices:
+                - knight has maximum 8 possible moves
+                    - nearest cells to the knight that the queen cannot access
+                    - the knight accesses those cells by 'jumping' to them
+                - movement coordinates:
+                    - (i + 2, j + 1)    or    (i + 1, j + 2)
+                    - (i - 1, j + 2)    or    (i - 2, j + 1)
+                    - (i - 2, j - 1)    or    (i - 1, j - 2)
+                    - (i + 1, j - 2)    or    (i + 2, j - 1)
+            
+            - Recursion:
+                - checking if solution was found
+                    - at any move choice made
+                - if no choice is left to move forward:
+                    - discard the current move
+            
+            - BackTracking:
+                - the 'discarding' sub-step above
+                    - where we eject out decision
+                        - for the current cell
+
+        - Constraints:
+            - knight can move to a cell only once
+                - cannot move to an already visited cell
+            - knight cannot move outside the chess board
+                - cannot go ahead of the last (n - 1) column
+                - cannot go ahead of the last (n - 1) row
+            - moveIsValid if:
+                - row, col < N & value of cell = 0
+
+        - Goal:
+            - to find the path / tour
+                - that knight takes to visit
+                    - each cell exactly once
+        
+    '''
+    
+    def knights_tour(self): # O() t ; O() s
+        pass # TODO
+    
+    def knights_tour(self): # O() t ; O() s
+        pass # TODO
+    
+    def knights_tour(self): # O() t ; O() s
+        pass # TODO
+    
+    def knights_tour(self): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - pseudocode-algo # TODO: Test & Fix
+    def knights_tour(self, board): # O() t ; O() s
+
+        size = len(board)
+
+        # paths a Knight can take
+        x_path = [2,1, -1,-2, -2,-1, 1,2]
+        y_path = [1,2, 2,1, -1,-2, -2,-1]
+
+        def move_is_valid(board, row, col): return True # TODO
+        
+        def recurse(board, row, col, step):
+
+            # last step check
+            if step == n**2: return True # TODO
+
+            for i in range(size):
+
+                r = row + x_path[i]
+                c = col + y_path[i]
+
+                if move_is_valid(board, r, c):
+
+                    step += 1
+                    board[r][c] = step
+
+                    if recurse(board, r, c, step + 1):
+                        return True
+                    
+                    # backtrack move
+                    step -= 1
+                    board[r][c] = 0
+            
+            return False
+        
+        # ! TODO: should set 'res' as a 'callback' argument in recursive function
+        res = recurse(board, 0, 0, 1)
+
+        return res
+    
+    # 3rd-Party (Tutorial) - 
+    def knights_tour(self, board): # O( 8 ^ (n ^ 2) ) t ; O(n ^ 2) s
+
+        # O(t) - max 8 choices (knight moves) can be made, with board as matrix of n x n size
+        # * so: O( 8 ^ (n ^ 2) ) t
+
+        # O(s) - recursive function can be called for n rows & n cols at a time
+        # so call-stack may have n^2 recursive calls at a time
+        # * so: O(n ^ 2) s
+
+        size = len(board)
+        x_path = [2,1, -1,-2, -2,-1, 1,2]
+        y_path = [1,2, 2,1, -1,-2, -2,-1]
+
+        def move_is_valid(board, row, col):
+
+            if 0 <= row < size and \
+                0 <= col < size and \
+                    board[row][col] == -1:
+                    return True
+            
+            return False
+        
+        def recurse(board, row, col, step):
+
+            # last step check
+            if step == n**2: return True
+
+            for i in range(size):
+
+                r = row + x_path[i]
+                c = col + x_path[i]
+
+                if move_is_valid(board, r, c):
+
+                    board[r][c] = step
+
+                    if recurse(board, r, c, step + 1):
+                        return True
+                    
+                    board[r][c] = -1
+            
+            return False
+        
+        board[0][0] = 0
+        step = 1
+        size = len(board)
+
+        if recurse(board, 0, 0, 0):
+            for i in range(size):
+                for j in range(size):
+                    print(board[i][j], ' ', end=' ')
+                print(' ')
+        else: print('solution does not exist')
+
+
+    def knights_tour(self): # O() t ; O() s
+        pass # TODO
+
+
+    '''
+
+        Boggle 'Word Search'
+
+        Given a matrix (or board) of characters,
+        (with each cell containing 1 character)
+        and a dictionary / set of words (or not),
+        find all words that can be formed,
+        from the characters in the matrix or board
+
+        - either from data-structure of words,
+            - or all possible words in general
+        - either by sequence of adjacent characters / cells,
+            - or randomly - accessed cells
+        - either cells cannot be revisited, regardless of the words found 1st
+            - or cells can be revisited,
+                - so all expected / possible words can also be found
+                - if all their characters exist in the matrix or not
+                - regardless of intersections between words' characters
+            - NB: if cells cannot be revisited:
+                - some characters might be 'taken' by words found first
+            - or, perhaps:
+                - cells can only be revisted,
+                    - after a given word has been found
+                    - so revisited cells are reset (from '1' to '0')
+                        - when any given word is found
+                - this way, any 1 given word cannot be found
+                    - by revisiting cells
+                        - in case, multiple instances of a character is required
+                        - eg. 'book' required 2 'o's, if they both exist in matrix
+                - after finding any 1 given word
+                    - all cells reset (from '1' to '0')
+                    - so the next word can be found
+                        - with NO already visited cells
+        - default constraint-option chosen:
+            - sequence of adjacent cells
+            - only words from data-structure of words
+            - cells can only be visited once, regardless of the words found 1st
+        
+        - Approach:
+
+            - with Default Chosen Option:
+                - words from data-structure / bag of words
+                - words by sequence of adjacent characters / cells
+
+            - Choices:
+                - in order to look for words, with default chosen option
+                    - can move in all eight directions of any given cell
+                    (sequence of adjacent cell chosen option)
+                - can move to:
+                    - (i, j + 1)        or    (i, j - 1)       or
+                    - (i + 1, j - 1)    or    (i + 1, j + 1)   or
+                    - (i - 1, j + 1)    or    (i + 1, j)       or
+                    - (i - 1, j)        or    (i - 1, j - 1)
+            
+            - Context:
+                - matrix initially filled up with 0s
+                - cells updated to 1s when visited
+                    - matrix keeps track of visited cells with 1s
+                - so a cell can only be visited when:
+                    - it's in context (in range of the matrix)
+                    - & when its value is 0 (not already been visited)
+            
+            - Recursion:
+                - about checking if a word will be found
+                    - with the character choice that was made
+                        - in the given recursion
+                - in the case when a roadblock is reached
+                    - no choice left to move to
+                        - but still, no word found at the roadblock
+                    - at a corner or any blocked cell in the matrix
+                        - cannot move to any other unvisited cell
+                        - also cannot move outside the matrix
+                    - then current move has to be discarded
+                        - and BackTracking is required
+                        - going back previous moves
+                            - until can move to another cell choice again
+                - TODO: Find the entire algo' in the tutorial
+
+        - Constraints:
+            - can form only words from data-structure of words
+            - movement through sequence of adjacent cells only
+                - i.e. only in all 8 directions of a given cell
+                - 2 vertically, horizontally, & diagonally
+            - cannot revisit already visited cells / characters
+            - cannot go outside of the matrix
+                - cannot go ahead of last / n - 1 column
+                - cannot go ahead of last / n - 1 row
+
+        - Goal:
+            - to find either words in a given list
+                - or any other data-structure
+            - or: to find all possible words
+            - so find all words present in the boggle (or given matrix)
+                - by trying every possible combination
+        
+    '''
+    
+    def boggle_word_search(self): # O() t ; O() s
+        pass # TODO
+    
+    def boggle_word_search(self): # O() t ; O() s
+        pass # TODO
+    
+    def boggle_word_search(self): # O() t ; O() s
+        pass # TODO
+    
+    def boggle_word_search(self): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - pseudocode-algo # TODO: Test & Fix
+    def boggle_word_search(self, boggle, word_map): # O() t ; O() s
+
+        M, N = len(boggle), len(boggle[0])
+        visited = [[0 for i in range(0, N)] for i in range(0, M)]
+        
+        def cell_is_valid(row, col, visited):
+
+            return \
+                row is not None and col >= 0 and \
+                row < M and col < N and \
+                visited[row][col] == 0
+        
+        def word_is_valid(word):
+            return word in word_map
+        
+        def recurse(boggle, visited, row, col, word):
+
+            for i in range(0, M):
+                for j in range(0, N):
+
+                    # mark cell as visited
+                    visited[i][j] = 1
+
+                    # include letter of cell
+                    word = word + boggle[i][j]
+
+                    # check if word is valid
+                    if word_is_valid(word):
+                        print('Valid: ', word)
+                        return True
+
+                    # iterate through choices, & update row - column
+
+                    if cell_is_valid(row, col, visited):
+                        recurse(boggle, visited, row, col, word)
+                    
+            # mark cell as unvisited
+            visited[row][col] = 0
+
+            return False
+    
+        # ! TODO: MUST exec recursive function in iteration
+        # for all cells in matrix
+        # * for i in range(M): for j in range(N):
+        res = recurse(boggle, visited, 0, 0, '')
+        # recurse( will already be printing found words )
+
+        return res
+    
+    # 3rd-Party (Tutorial) - 
+    def boggle_word_search(self, boggle, my_dict): # O(8 ^ (mn)) t ; O(mn) s
+
+        # O(t) - maximum 8 choices to make at each cell 
+        # & m x n size of matrix (boggle) of words
+        # * so: O(8 ^ (mn)) t
+
+        # O(s) - m x n maximum number of recursive calls
+        # happening on the call stack at a point in time
+        # * so: O(mn) s
+
+        m = len(boggle)
+        n = len(boggle[0])
+
+        def is_valid(row, col, visited):
+
+            if 0 <= row < m and \
+                0 <= col < n and \
+                visited[row][col] == 0:
+                return True
+            
+            return False
+        
+        def find_words(boggle, visited, i, j, word):
+
+            word = ''.join( \
+                [word, boggle[i][j]] \
+            )
+
+            visited[i][j] = 1
+
+            if word in my_dict:
+                print(word)
+
+            for row in range(i - 1, i + 2):
+                for col in range(j - 1, j + 2):
+
+                    if is_valid(row, col, visited):
+
+                        find_words(boggle, visited, row, col, word)
+            
+            visited[i][j] = 0
+            # * in this case, not returning bool result
+            # just printing found / valid words
+        
+        visited = [ \
+            [0 for j in range(n)] \
+            for i in range(m) \
+        ]
+
+        for i in range(m):
+            for j in range(n):
+                find_words(boggle, visited, 0, 0, '')
+
+
+    # * Others
+
+
+    def m_coloring(self): # O() t ; O() s
+        pass # TODO
+
+    def hamiltonian(self): # O() t ; O() s
+        pass # TODO
+
+    def sudoku(self): # O() t ; O() s
+        pass # TODO
+
+    def magnet_puzzle(self): # O() t ; O() s
+        pass # TODO
+
+    def remove_invalid_parenthesis(self): # O() t ; O() s
+        pass # TODO
+
+    def generate_gray_codes(self): # O() t ; O() s
+        pass # TODO
+
+    def string_permutations(self): # O() t ; O() s
+        pass # TODO
+
+    
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! easy
+
+
+    def print_subsets(self): # O() t ; O() s
+        pass # TODO
+
+    def is_sum_str(self): # O() t ; O() s
+        pass # TODO
+
+    def possible_paths(self): # O() t ; O() s
+        pass # TODO
+
+    def bitmasking_distinct_subsets(self): # O() t ; O() s
+        pass # TODO
+
+    def path_from_source(self): # O() t ; O() s
+        pass # TODO
+
+    def print_paths_from_source(self): # O() t ; O() s
+        pass # TODO
+
+    def print_strings_using_spaces(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! medium
+
+
+    def tug_of_war(self): # O() t ; O() s
+        pass # TODO
+
+    def eight_queens(self): # O() t ; O() s
+        pass # TODO
+
+    def combinational_sum(self): # O() t ; O() s
+        pass # TODO
+
+    def warnsdorff_for_knights_tour(self): # O() t ; O() s
+        pass # TODO
+
+    def paths_in_maze(self): # O() t ; O() s
+        pass # TODO
+
+    def max_num_by_k_swaps(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! hard
+
+
+    def power_set(self): # O() t ; O() s
+        pass # TODO
+
+    def word_break(self): # O() t ; O() s
+        pass # TODO
+
+    def set_to_k_subsets(self): # O() t ; O() s
+        pass # TODO
+
+    def longest_route_in_matrix(self): # O() t ; O() s
+        pass # TODO
+
+    def shortest_safe_route(self): # O() t ; O() s
+        pass # TODO
+
+    def print_n_queen_solns(self, a): # O() t ; O() s
+        pass # TODO
+
+    def longest_common_subsequence(self, a): # O() t ; O() s
+        pass # TODO
+
+
+class Iteration:
+
+    '''
+        
+        Iteration
+
+        -
+
+    '''
+
+    def __init__(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! standard
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! easy
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! medium
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! hard
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
 
 
 class Recursion:
 
-    def __init__(self): pass
+    '''
+        
+        Recursion
+
+        -
+
+    '''
+
+    def __init__(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! standard
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! easy
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! medium
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! hard
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+
+class Mathematical: # ! Not Enough Math work
+
+    '''
+        
+        Math Problems
+
+        # ! NB:
+
+        All Math Problems can be solved with mathematical formulae
+        # * most of the time, bringing solutions' speed from linear to constant time-complexities
+        # ! O(n) t ~ O(1) t | with already O(1) s
+
+        "Calculations speed up number - algorithms"
+        
+    '''
+
+    def __init__(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! standard
+
+
+    '''
+
+        Missing Number Problem
+
+        Given an unsorted array of n distinct numbers, from 0 -> n
+        - find the missing number
+        - NB: easier solution if array is sorted
+    
+    '''
+
+    # find multiple missing numbers; already sorted array - can sort 1st, if array not already sorted
+    def missing_number(self, a): # O(nd ~ n) t ; O(1 - 'ans' only holding result) s
+
+        ans = [] # in case of multiple missing numbers
+        
+        # ! use for i in range(1, len(a)): for starting loop from index i
+        # * to work with both a[i] & a[i - 1]
+        for i, n in enumerate(a):
+            # ! breaking at end of loop to prevent out-of-bounds exception
+            if i == len(a) - 1: break
+            # ! should've started loop from index 1, not 0; instead of checking this on every iteration
+            d = a[i + 1] - n # already sorted, a[i + 1] > a[i]
+            if d > 1: # using 'd', in case d also > 2 (so there might be more missing numbers)
+                for _ in range(1, d): # O(d ~ 1) t - only iterate from 1 (0-exclusive) to d-1 (d-exclusive), 
+                    # for the number of times numbers were actually missing # ! (visualize calculation)
+                    n += 1 # just increment n, since it'll iterate to next
+                    ans.append(n) # append all missing numbers
+        
+        return ans
+
+    # find multiple missing numbers; unsorted array - using a hashmap
+    def missing_number(self, a): # O(2n ~ n) t ; O(n) s
+
+        # self.missing_number(sorted(a)) # ! can sort 1st: return above 
+        # O( n log n + n ~ n log n (2nd term 'n' being non-dominant term) ) t ; O(1) s
+        # ! (n) faster than (n log n) faster than (2n) in t
+        # ! so (2n ~ n) is still faster than (n log n + n ~ n log n), whether both BigO's are simplified or not
+        # todo: confirm: (2n) is still faster than (n log n + n), whilst (n) is still faster than (n log n)
+        # * either way, the sorting option has O(1) s ; whilst the hashmap option has O(n) s
+        
+        ans = []
+        m = {}
+
+        for n in a:
+            m[n] = 1 # no need to check if already exists, due to all distinct numbers
+
+        for n in a:
+
+            '''
+            # not using 'd', in case differences are always 1 (only 1 step of each missing number)
+            if not n == 0 and n - 1 not in m:
+                ans.append(n-1)
+            '''
+            
+            if not n > 0: # assuming there are only distinct +ve integers
+                while n - 1 not in m: # keep appending lesser (decremented) numbers which aren't in m (or the input array)
+                    n -= 1
+                    ans.append(n)
+
+        return ans
+
+    # find only 1 missing number; already sorted array
+    def missing_number(self, a): # O(n) t ; O(1) s
+        
+        for i, n in enumerate(a):
+            if i == 0: continue # ! should just start loop from index 1, instead of checking this on every iteration
+            d = n - a[i - 1]
+            if d > 1: return a[i - 1] + 1 # 1st (& only, in this case) missing number
+
+        return -1
+
+    # find only 1 missing number; unsorted array
+    def missing_number(self, a): # O(2n ~ n) t ; O(n) s
+
+        m = {}
+
+        for n in a:
+            m[n] = 1
+        
+        for n in a:
+            if not n == 0 and n - 1 not in m:
+                return n - 1 # ! assuming there's only 1 missing number
+                # ! otherwise, the remaining 'decremented n's not in m will be left out
+                # * and even in such a case, the best answer should be the 1st missing number
+                # ! not the last missing number < n in this iteration case
+        
+        '''
+        # ! in 2nd loop, you can also just loop from 0 to n, to find all possible missing numbers too
+        for x in range(0, n): # ! only if given 'n' the maximum number of the array
+            if not x in m:
+                return x / ans.append(x)
+        '''
+
+        return -1
+    
+    # find multiple missing numbers, given the maximum number too
+    def missing_number(self, a, max): # O(n) t ; O(1) s
+
+        # * can add all a's numbers to a hashmap, then loop from 0 to max, checking each in hashmap
+        # ! no need to sort a in any scenario (would be 'dumb' addition to solution - unnecessary)
+
+        ans = []
+
+        # ! best method is to just iterate from 0 to max, checking if all numbers exist in same input array
+        for x in range(0, max + 1): # max + 1, so max is inclusive
+            # * the 'max' number removes the need for sorting the array
+            if not x in a:
+                ans.append(x) # or return x as 1st (or only) missing number
+
+        return ans
+
+    # 3rd-Party (Custom) - Mathematical Approach - Gauss Formula - Linear ~ Constant (in only 'some' special cases) Time
+    '''
+        Gauss Formula  # ! NB: All summation math-solutions match with summation '∑' Math-formulae
+
+        (i=0 -> N) ∑ i = n * (n + 1) / 2
+        
+        - summation of i=0 till N ; with i = ...
+        
+        " summation of numbers from 0 up to n, is equal to ... 
+        n multiplied by n toss 1 over 2 (n * (n + 1)/2) "
+
+        where n = length of array of numbers from i=0 till N
+
+        Approach to Solution:
+
+        # ! only works where there's only 1 missing number
+
+        - find the intended sum up to N (array-length) using Gauss Formula
+            - find the actual reduced sum of the input array,
+            - then calc the difference with the intended sum
+            - difference is the missing number
+
+    '''
+    def missing_number(self, a): # O(n ~ 1) t ; O(1) s
+        
+        gauss = lambda n: n * (n + 1) / 2
+
+        intended_sum = gauss(len(a))
+
+        current_sum = 0 # ! or: sum(a) # O(n ~ 1) t - for .py optimum-speed sake
+        for n in a: # O(n) t
+            current_sum += n
+        
+        return intended_sum - current_sum # ! only 1 expected missing number
+    
+    # 3rd-Party (Tutorial) - Gauss Formula
+    def missing_number(self, nums: List[int]) -> int: # O(n ~ 1) t ; O(1) s
+        
+        current_sum = sum(nums) # O(n ~ 1) t - for .py optimum-speed sake
+
+        n = len(nums)
+        intended_sum = n * (n + 1) / 2
+
+        return int(intended_sum - current_sum)
+
+
+    '''
+
+        Count Primes Problem
+
+        Count number of prime numbers less than a given non-negative number
+
+        NB: prime number - greater than 1 & can only be divided by 1 & itself - only 2 common multiples (1 & itself)
+        # ! 1 may not be regarded as a prime number (in this Math-Algo's case)
+        # ! 2 is a prime number, as the smallest even counting number
+        # ! 0 is not a prime number; if divisible by 1 & 0 (= 0), then also divisible by all other numbers (= 0)
+
+        Options:
+
+        - find 'lcm's of 1 & 2, & all odd numbers less than n 
+        - (only 'Common Multiples' not actually 'Lowest'; 'lcm's just used as a jargon in this case)
+            - can skip finding lcms of 1 & 2, since they're already obvious
+            - therefore, from 3 to largest prime number less than n
+            - primes are those of lcms with 2 numbers (can confirm 1 & itself)
+            # ! - how (formulae) to find LCMs programmatically
+        - 
+
+        Mathematical Approach:
+
+        Sieve of Eratosthenes - Algorithm
+
+        - define a boolean array of size n & set all elements to True
+            - then set 1st & 2nd elements to False
+            - representing 0 & 1, which are not prime numbers
+            # * - 1 is disregarded as a prime-number in this case
+        - loop from index 2 to square root of N
+        - if current index has Prime number (True in boolean array):
+            - set all multiples of index i up to N to False, in the boolean array
+        
+        - now return the total number of 'True's in the boolean array
+    
+    '''
+
+    # 
+    def count_primes(self): # O() t ; O() s
+        pass # TODO
+
+    # 
+    def count_primes(self): # O() t ; O() s
+        pass # TODO
+
+    # 3rd-Party (Tutorial) - Sieve of Eratosthenes Algo
+    def count_primes(self, n: int) -> int: # O(n/2 * ~n/2 ~ n) t ; O(1) s
+        
+        if n < 2: return 0 # 0 & 1 are not prime-numbers
+
+        isPrime = [True] * n # assume all numbers < n are prime for now
+        isPrime[0] = isPrime[1] = False # but base-case - 0 & 1 are not prime
+
+        for i in range(2, math.ceil(math.sqrt(n))): # loop from 2 till square-root of n
+            # * square-root of n is the mid-point at which, 1-half of all potential multiples have been found
+
+            if isPrime[i]: # if number in this index is assumed to be a prime-number
+                # then make all its multiples non-prime
+                # * by default 
+
+                # range(i * i, n, i) - step-method for finding all multiples of n
+                for multiples_of_i in range(i * i, n, i):
+                    isPrime[multiples_of_i] = False
+                    # ! todo: find out how this 'removes' all non-prime numbers
+                    # * Square-of 'already-set' prime-number i till n, in i steps (i^2 + i + i + .. + i < n)
+                    ''' # ! 'already-set' prime-numbers is achieved by starting loop from 2, to square-root of n
+                    step-method from 'square-of i till n, in i steps' will help remove 
+                    as many multiples as possible, below n, which are all non-prime numbers
+                    ''' # ! this step method is done for each iteration i which has not already been set as non-prime
+        
+        return sum(isPrime) # * int(True) = 1 | int(False) = 0
+        # * sum(of array of booleans is sum of number of 'True's)
+    
+    # 3rd-Party (Tutorial) - Sieve of Eratosthenes Algo - no comments
+    def count_primes(self, n): # O(n/2 * ~n/2 ~ n) t ; O(1) s
+
+        if n < 2: return 0
+
+        isPrime = [True] * n
+        isPrime[0] = isPrime[1] = False
+
+        for i in range(2, int(math.ceil(math.sqrt(n)))):
+            if isPrime[i]:
+                for mults_i in range(i * i, n, i):
+                    isPrime[mults_i] = False
+        
+        return sum(isPrime)
+
+
+    '''
+
+        Single Number Problem
+
+        Given a non-empty array of integers, every element appears twice (2x), except for 1
+            - find that 1 exception (that appears only once)
+        
+        Options:
+            - sort all elems, find the 1 that isn't adjacent to itself
+                - O(n log n + n~1 ~ n) t | O(1) s
+            - stupid: store all elems in hashmap, incrementing values of repetitions to 2
+                - loop again & find 1 with value 1
+                - O(2n ~ n) t | O(n) s
+            - better: store elems in hashmap, delete as repetitions are found
+                - find the last 1 standing in hashmap
+                - O(n) t | O(n ~ 1) s (maybe ~ constant-space since repetitions are deleted from hashmap, until 1 item, finally 'deleted' after being found & used)
+    
+        Mathematical Approach:
+        
+        2 * UniqueSum - Sum = Answer
+
+        (2 * UniqueSum) - Sum = Same Answer - by BODMAS / PEMDAS - multiplication before subtraction
+
+        UniqueSum = sum of all unique numbers (non-repeating)
+        Sum = sum of all numbers
+
+        - unique elems is all present numbers, without their repetitions
+        - including the 1 single-number being searched
+            - get all unique elems by converting array into a set (in .py)
+        
+        # ! this formula only works if repeating numbers only appear twice (2x)
+        # * they must all appear the same number of times (which is > 1)
+        - for the formula to be: # ! n * UniqueSum - Sum = Answer
+            - where n = number of times each repeating number appears
+        - the '2' represents the repeating numbers appearing twice
+            - so the regular sum = (2 * unique-sum) + the single-number - can solve algebraic'ly
+
+    '''
+
+    # ! NB: in the case of multiple non-repetitions, you can always append them all into a resulting array
+    # * for each case here, dealing with only 1 non-repeating number
+
+    # sort 1st, then find non-repeating number
+    def single_number(self, a): # O(n log n + n ~ n log n) t ; O(1) s
+        
+        a.sort() # O(n log n) t
+
+        # for i, n in enumerate(a):
+        # using a while-loop instead, for jumping index'ing
+        i = 0
+        while i < len(a):
+            # if last item or item != next item
+            if i == len(a) - 1 or \
+                not a[i] == a[i + 1]:
+                return a[i]
+            else: i += 2
+            # since we're only expecting 1 non-repeating number in these cases
+            # * will never need to increment index by 1 (when a non-repeating number is found)
+        
+        return -1
+
+    # stupid: store all elems in hashmap, increment repetitions
+    def single_number(self, a): # O(2n ~ n) t ; O(n) s
+        
+        m = {}
+
+        for n in a:
+            if n in m: m[n] += 1
+            else: m[n] = 1
+        
+        for k, v in m.items():
+            if v == 1: return k
+        
+        return -1
+
+    # better: store elems in hashmap, delete repetitions
+    def single_number(self, a): # O(n) t ; O(n ~ 1) s
+        
+        m = {}
+
+        for n in a:
+            if n in m: del m[n]
+            else: m[n] = 1
+        
+        print(len(m)) # confirm length of map is 1, else there are multiple non-repetitions
+
+        return list(m.keys())[0] # return 1st (only, if 1 non-repetition) key-value -> list item
+
+    # Math Approach - 2 * UniqueSum - Sum = Ans
+    def single_number(self, a): # O(3(n ~ 1) ~ n ~ 1) t ; O(n ~ 1 ~ back to n - by opinion) s
+        # O(n) s - usage of set is still used in formula, alongside the input array, 
+        # * so can also be considered a part of the algo
+        
+        unique = set(a) # O(n ~ 1) t | O(n) s
+        
+        return 2 * sum(unique) - sum(a) # O(n~1 + n~1 ~ 2(n~1) ~ n~1) t
+
+    # 3rd-Party (Tutorial) - 
+    def single_number(self, nums): # O(n ~ 1) t ; O(n ~ 1 ~ back to n - by opinion) s
+        return 2 * sum(set(nums)) - sum(nums)
+
+
+    '''
+
+        Robot Return to Origin Problem
+
+        Imagine a robot standing at position (0, 0) in a 2D grid
+        Given a string of its moves, find its final location
+
+        - eg. UD - UP, DOWN
+
+        NB: movements
+        U - up - increase in y-axis
+        D - down - decrease in y-axis
+        R - right - increase in x-axis
+        L - left - decrease in x-axis
+
+        "Robot Return to Origin" means judge if moves are circular
+            - i.e. robot returned to its original position (0, 0)
+    
+    '''
+
+    def robot_moves_from_origin(self, moves: str, pos: tuple[int] = (0, 0)) -> tuple[int]:
+        # O(n or s - length of string) t ; O(1) s
+        
+        for c in moves:
+            if c == 'U': pos[1] += 1
+            elif c == 'D': pos[1] -= 1
+            if c == 'R': pos[0] += 1
+            elif c == 'L': pos[0] -= 1
+        
+        return pos
+
+    # 'Judge-Circle' - check if moves are circular
+    '''
+        confirm if robot moves in a 'circle'ish motion, to land at same position
+        'circular' motion eg. - u r d l
+        'circular'ish motion eg. - u d r l
+    '''
+    def robot_return_to_origin(self, moves: str): # O(n) t ; O(1) s
+        return self.robot_moves_from_origin(moves) == (0, 0)
+
+    # 3rd-Party (Tutorial) - 'Judge-Circle' alt problem-name
+    def robot_return_to_origin(self, moves: str): # O(n) t ; O(1) s
+        
+        x = y = 0
+
+        for move in moves:
+            if move == 'U': y += 1
+            elif move == 'R': x += 1
+            elif move == 'D': y -= 1
+            elif move == 'L': x -= 1
+        
+        return x == 0 and y == 0 # or: (x, y) == (0, 0)
+
+    # 3rd-Party (Tutorial) - 'Judge-Circle' actual problem
+    def judge_circle(self, moves: str):
+
+        # ! confirm order of characters in string as 'circular'
+        # u r d l / u l d r - in this order, with any starting position
+        # * can have multiple repetitions, but must have same-multiples of opposite direction, 
+        # while in consistent order
+        
+        pass # TODO
+
+
+    '''
+
+        Add Binary Problem - Base 2 numbers addition
+
+        Given 2 binary strings, return their sum
+
+        NB: Binary (Base 2) numbers are numbers represented only by 0 & 1
+        Decimal (Base 10) numbers are constructed by digits based in columns that are multiples of 10
+
+        eg. 1996 = (1 * 1000) + (9 * 100) + (9 * 10) + (6 * 1)
+
+        NB: now converting Base 2 numbers back to Decimal (Base 10) numbers
+
+        digit * 2^(n - digit's index-position from right - starting from 0)
+
+        eg. 1011 = 1 * (2^3) + 0 * (2^2) + 1 * (2^1) + 1 * (2^0)
+                 = 1*8 + 0*4 + 1*2 + 1*1
+                 = 11
+    
+    '''
+
+    # Using carry-over addition, with base 2
+    # While-looping until all digits removed, from both numbers
+    def add_binary(self, a, b): # O(a or b ~ n - longest number) t ; O(1 - ignoring resulting array of base-2 digits) s
+
+        sum = ans = c = 0
+        
+        while a > 0 or b > 0:
+            
+            ax, bx = a % 10, b % 10 # take out last digits
+
+            a, b = a // 10, b // 10 # & remove last digits
+            # or: a //= 10; b //= 10
+
+            '''
+            would've have summed up c + ax + bx
+            then taken out last digit of sum as ans
+            then will carry-over remaining number
+            (without the last digit, & not replaced by 0, i.e. ans //= 10)
+            '''
+
+            # but instead, ensuring for Base - 2 numbers
+
+            # * in this 'manual' case 0 <= s <= 3
+            s = c + ax + bx
+            
+            c = 0
+            if s == 2 or s == 0:
+                ans = 0 # ans is always 0 on 0 & 2 (base-2)
+                if s == 2: c = 1 # on 2, carry 1
+            else: # s == 1 or 3
+                ans = 1 # ans is always 1 on 1 & 3 (above base-2)
+                if s == 3: c = 1 # on 3, ans = 1, carry = 1
+
+            sum = sum * 10 + ans
+
+        return sum
+
+
+    # Using carry-over addition, with base 2
+    # Using Iterators (instead of while-looping until all digits removed)
+    def add_binary(self): # O() t ; O() s
+        
+        # TODO - find similar algo in next solution
+        pass
+
+    # 3rd-Party (Tutorial) - Base-2 addition, with Carry-Overs
+    # Using Iterators (instead of while-looping until all digits removed)
+    def add_binary(self, a, b): # O(n) t ; O(1) s
+        
+        result = []
+        carry = 0
+        i = len(a) - 1
+        j = len(b) - 1
+
+        while i >= 0 or j >= 0 or carry:
+            
+            total = carry
+
+            if i >= 0:
+                total += int(a[i])
+                i -= 1
+            
+            if j >= 0:
+                total += int(b[j])
+                j -= 1
+        
+            result.append(
+                str(
+                    total % 2
+                )
+            )
+
+            carry = total // 2
+        
+        return ''.join(reversed(result)) # O(2r ~ 1 ; r = result's digit-length)
+    
+    # 3rd-Party (Tutorial - 2) - same as above
+    def add_binary(self, a, b): # O(n) t ; O(1) s
+
+        result = []
+        carry = 0
+        i, j = len(a) - 1, len(b) - 1
+        # will iterate both pointers from right -> left of both numbers
+
+        while i >= 0 or j >= 0 or carry:
+            total = carry
+            if i >= 0:
+                total += int(a[i])
+                i -= 1
+            if j >= 0:
+                total += int(b[j])
+                j -= 1
+            result.append(str(total % 2))
+            carry = total // 2
+        
+        return ''.join(reversed(result))
+
+    
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+
+    # ! easy
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! medium
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+    
+    # ! hard
+
+
+    def meth(self): # O() t ; O() s
+        pass # TODO
+
+
+class Geometric:
+
+    def __init__(self): # O() t ; O() s
+        pass # TODO
+
+
+class PatternSearching:
+
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class Bitwise:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class Randomized:
 
-    def __init__(self): pass
-
-
-class Hashing:
-
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class Compression:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class Encryption:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
+
+
+class Hashing:
+
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class BranchAndBound:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class MachineLearning:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class DeepLearning:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class NaturalLanguageProcessing:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class Genetic:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class MultiThreading:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class Games:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
 
 
 class Quant:
 
-    def __init__(self): pass
+    def __init__(self): # O() t ; O() s
+        pass # TODO
+
+
+class SystemDesign:
+
+    def __init__(self): # O() t ; O() s
+        pass # TODO
+
 
 
 
@@ -5456,7 +9551,9 @@ def two_sum(nums, target):
     return None
 
 # TODO
-def lru_cache(): pass
+def lru_cache(): # O() t ; O() s
+    # TODO
+    pass
 
 
 # Matrices
@@ -5896,3 +9993,4 @@ def gas_stations(strArr):
 
 if __name__ == "__main__":
     print("Hello, World!")
+

@@ -4749,6 +4749,307 @@ class DataAlgoJava {
 
         }
 
+
+        ////////////////////////////////////////
+        // PROBLEM-SOLVING ALGO'S
+        ////////////////////////////////////////
+        
+
+        public static class ProblemSolvingAlgorithms {
+
+            public ProblemSolvingAlgorithms() {}
+
+
+            public static class DynamicProgramming {
+
+            }
+            
+            
+            public static class DivideAndConquer {
+            
+            }
+            
+            
+            public static class Greedy {
+            
+            }
+            
+            
+            public static class BackTracking {
+
+                /*
+                
+                    BackTracking Algorithms
+
+                    Technique to solve a problem recursively, by making series of choices;
+                    and if any choice fails, it gets abandoned, for another one to be tried
+
+                    - trying out a possible solution, and "backtracking" when not optimal, 
+                    to try out other possible solutions, until the most-optimal solution is found
+
+                    - some extended form of recursion, but with some special properties
+
+                    - for problems where taking decisions back are necessary
+                        - change decisions at runtime, & take step(s) back for re-decisions
+                    
+                    Attributes:
+
+                    - useful for game dev programming
+                        - and game theory strategies
+                    
+                    Identification:
+
+                    - problem gives set of choices to be made
+                    - & set of constraints to follow
+                    - also consists of decision-making calls (Recursive)
+                        - with given choices & constraints
+                    
+                    - Difference b/n BackTracking & Recursion:
+                        - Recursion:
+                            - keep moving forward with solving a problem (recursively)
+                            - sub-problem after sub-problem, being solved recursively, at each stage
+                            - until the problem is fully-solved (at the base-case scenario)
+                        - BackTracking:
+                            - keep moving forward with solving a problem (recursively)
+                            - until current choice / option fails
+                            - then backtrack to starting / mid - (base) - point
+                            - then try another choice / option, & continue solving recursively
+                            - until that also fails, then loop recursion + backtracking
+                            - until problem is finally solved
+                    
+                    Approach:
+
+                    - Choices
+                        - Matrix / Tree/Graph - Depth-First Search Traversal
+                        - can be treated as DFS traversal of a tree
+                        - if a path is blocked, traversal backtracks until start/mid-point
+                        - then changes direction to traverse another node's path
+                    - Each Step of Choice
+                        - each step (node) has multiple choices (children)
+                        - (same decision-space at each step)
+                        - DFS traverse through by choosing 1 node's path
+                            - if a wrong choice was made:
+                                - go back then make the next possible choice
+
+                    - DFS Traversal Options
+                        - Recursion - with Pre / Post / In - Order Traversals
+                        - ?
+                        - NB: BFS Traversals: not required for BackTracking
+                            - Queued While-Loop
+                            - ?
+                        - ?
+                    
+                    - Constraints
+                        - prevent traversal through certain paths / choice options
+                        - or at base-case / final destination
+                            - where the path reaches the end of the traversal
+                                - with no other possible path
+                                - whether this was a valid path or not
+                            - if path was valid:
+                                - then the answer has been found
+                                - or 1 of the answers have been found
+                                    - (& probably appended to a list of answers)
+                            - if path was not valid:
+                                - then traversal will 'BackTrack'
+                                    - to the closest mid-point node
+                                    - to continue traversal to the next best option node
+
+                    - Example:
+                        - Matrix of 0s & 1s:
+                            - find the path of 0s, 
+                            - from a starting point (eg. 1 vertex)
+                            - to an ending point (eg. another vertex - at the opposite corner)
+                        - DFS Traversal from starting 0, based on 0-direction, till ending 0
+                            - Constraint: can only move in Cross-Directions (up, down, left, right)
+                                - cannot move diagonally
+                            - if traversal reaches a 0 with more spots to move to
+                                - i.e. that 0 is not at an ending vertex (ending point)
+                                - but all spots to move to, have 1s,
+                                    - then base-case scenario (in recursion, for DFS Traversal),
+                                    - but not a successful path
+                                - so Recursive DFS Traversal will 'BackTrack' to nearest 0 - midpoint
+                                - (by recursively calling the '0' paths only)
+                                - (whether left -> right / right -> left)
+                                - (but still with Pre / Post / In - Order Traversal chosen)
+                                    - Recursive DFS Traversal will 'BackTrack' to nearest 0 - midpoint
+                                    - which has other 0 paths to traverse (DFS with Recursion)
+                                
+                                - if base case of all 0s do not land on an ending vertex point
+                                    - then there is no valid path (return False)
+                                - if base case (whether 1st, or can also find multiple, then save all valid paths)
+                                    - then there is 1+ valid paths (return True / list of valid paths)
+
+                */
+
+
+                public static class ExponentialBackOff {
+
+                    /*
+                        Exponential Back-Off
+
+                        - 
+
+                        - eg. Network Retrying Pattern
+
+                    */
+
+                    // eg. Search in a Big Sorted Array
+                    public static class SearchBigSortedArray {
+
+                        /*
+                         
+                            * Search in a Big Sorted Array
+
+                            - Given a big sorted array with non-negative integers sorted by non-decreasing order.
+                            The array is so big that you cannot get its length directly,
+                            and you can only access the kth number by ArrayReader.get(k) (or ArrayReader->get(k) for c++)
+
+                            - Find the 1st index of a target number, in O(log k) t (Binary-Search), 
+                            where k = 1st index of the target number
+                            return -1, if target number doesn't exist in the array
+
+                            - Example 1:
+                            Input: [1, 3, 6, 9, 21, ... ], target = 3
+                            Output: 1
+
+                            - Example 2:
+                            Input: [1, 3, 6, 9, 21, ... ], taget = 4
+                            Output: -1
+
+                            - Example 3:
+                            Input: [1, 3, 7, 7, 7, 9, 21, ... ], target = 7
+                            Output: 2 (neither 3, nor 4; 2 = 1st index)
+
+                            NB: in such a case, if you find target 7 at any index,
+                            since Big Array is sorted, remember to keep traversing back 
+                            to find the '1st target index' of the number,
+                            in case they're succeeding numbers of the same target
+                                - O(n) linear time for linear traversal backwards
+
+                            NB: or since this is a Big Sorted Array, 
+                            there may be a larget set of repetitions before the initial found index
+                            - so you can also continue BinarySearch on the left side of the Big Array
+                                - until you find the 1st target index, 
+                                    - you keep searching on the left side
+                                        - if the found target has another same preceeding number
+                            - O(log n) logarithmic time for binary traversal backwards (to the left-side)
+
+                            - Constraint:
+                                - The array's length cannot be gotten directly
+                                    - only an array-reader object pointing to the array is given
+                                - Try to solve problem in O(log n) t, 
+                                where n = the 1st index of the given target number
+                                - If you accessed an inaccessible index (outside the array),
+                                ArrayReader.get will return `2,147,483,647`
+                        
+                        */
+
+                        
+                        // ! Working with an ArrayReader object
+                        // * used to parse the Big Sorted Array
+                        // * because that data cannot fit into a variable's memory capacity
+
+                        /**
+                         * @param reader: An instance of ArrayReader.
+                         * @param target: An integer
+                         * @return: An integer which is the 1st index of target.
+                         * 
+                         * Definition of ArrayReader:
+                         * public class ArrayReader {
+                         *      public int get(int index) {
+                         *          // return the number on given index,
+                         *          // return 2147483647 if the index is invalid
+                         *      }
+                         * }
+                         */
+                        
+                        public class ArrayReader {
+                            public int get(int index) { return 0; }
+                        }
+
+                        // Custom Solution - ?
+                        public int searchBigSortedArray(ArrayReader reader, int target) {
+
+                            // TODO
+
+                        }
+
+                        // 3rd-Party (Tutorial) - Hacky - but 'just might' be the 'MOST-OPTIMIZED'
+                        public int searchBigSortedArray(ArrayReader reader, int target) { // O( n / ( ~ 2(target)) + log n ~ n + log n ~ n or log n ? ~ ?? ) t ; O(1) s
+                            
+                            // ! O( n / ( ~ 2(target)) + log n ~ n + log n ~ n or log n ? ~ ?? ) t ; 
+                            /**
+                             * 
+                             */
+
+                            // * O(1) s - no extra data-structure being used
+
+                            // * ?
+                            int kth = 1;
+                            while (reader.get(kth - 1) < target)
+                                kth *= 2; // * ? increase k exponentially, until you enter the 'target' range, within the Big Sorted Array
+                                // * (exponentially) - fastest way to increase k's value, until you enter the target's range
+                                // * kth started from 1, because if 0, cannot expo-increase it (0 *= any number = 0 still)
+                            
+                            // ! in case of luckily landing on 1st index of target
+                            // * can check here: if (reader.get(kth - 1) < return target;
+                            // ! NOT != target, in case kth landed on a value > target
+                            
+                            // * ?
+                            int start = 0, // * ?
+                            end = kth - 1, // * ? - why kth - 1 ? 
+                            mid;
+
+                            while (start + 1 < end) {
+                                mid = start + (end - start) / 2;
+                                if (reader.get(mid) < target)
+                                    start = mid;
+                                else end = mid;
+                            }
+
+                            // * ?
+                            if (reader.get(start) == target)
+                                return start;
+                            if (reader.get(end) == target)
+                                return mid;
+                            
+                            
+                            // * return -1 if target does not exist in the Big Sorted Array
+                            return -1;
+
+                        }
+
+                    }
+
+                    public static class ExpoBackOff {
+
+                        //
+
+                    }
+
+                }
+            
+
+            }
+            
+            
+            public static class Iteration {
+            
+            }
+            
+            
+            public static class Recursion {
+            
+            }
+            
+            
+            public static class Mathematical {
+            
+            }
+
+            
+        }
+
         ////////////////////////////////////////
         // Cracking Coding Interview Qs
         ////////////////////////////////////////
@@ -4840,3 +5141,4 @@ class DataAlgoJava {
     }
 
 }
+

@@ -4645,6 +4645,213 @@ function kthToLast(l, k) {
 
 
 ////////////////////////////////////////
+// PROBLEM-SOLVING ALGO'S
+////////////////////////////////////////
+
+
+class DynamicProgramming {
+
+    calculations = 0
+
+    // 3rd-Party (Tutorial) - REGULAR recursion - Top-Down
+    fibonacci = n => ( // O(2^n) t ; O(1) s
+        // O(2^n) t - recursive calls - default time-complexity
+        // O(1) s - no space required
+        
+        calculations++, // can run this recursive function ..
+        // & compare number of 'calculations' made (WAY slower than below)
+        n < 2 ? n
+        : fibonacci(n - 1) + fibonacci(n - 2)
+    ) // eg: fibonacci(30)
+
+
+    // ! 3rd-Party (Tutorial) - DP (DFS) recursion, with Caching - Top-Down (BEST & FASTEST Option)
+    // BEST & FASTEST Option - since it avoids unnecessary recursive re-calculations
+    // plus fibo-numbers will never repeat, since lower ones add up to higher ones
+
+    cache = {}
+    fibonacci = n => ( // O(n) t ; O(n) s
+
+        // O(n) t - recursive calls, BUT with caching - to remove unnecessary re-calculations
+        // algo ends up only recursing through only unique n values
+        // O(n) s - extra hashmap or hashtable - used as a cache data-structure
+
+        calculations++, // can run this recursive function ..
+        // & compare number of 'calculations' made (WAY faster than above)
+        n in cache
+        ? cache[n]
+        : (
+            // ! 'calculations++' doesn't have to be placed here ..
+            // * because above base-case still prevents below recursive calls
+            n < 2
+            ? n
+            : (
+                cache[n] =
+                    fibonacci(n - 1)
+                    + fibonacci(n - 2),
+                cache[n] // return cached-number, after storing
+                // so it's still accessible in future recursive calls
+            )
+        )
+    ) // eg: fibonacci(30)
+
+    // 3rd-Party (Tutorial) - DP (BFS) iterative, without Caching - Bottom-Up (ALSO BEST & FASTEST Option)
+    // using same resulting array to save previous calculations
+    fibonacci = n => {
+        let a = [0, 1]
+        for (let i = 2; i <= n; i++)
+            a.push(a[i - 1] + a[i - 2])
+        (a) // return entire fibo-series ; or: a.pop() - last a[n] item
+    }
+
+}
+
+
+class DivideAndConquer {
+
+}
+
+
+class Greedy {
+
+
+    /*
+
+        Maximum Non-Overlapping Segments
+        
+        Given a number of segments,
+        find the maximum number of these segments that do not overlap with each other
+
+        - similar to: Activity Selection Problem
+            - where to choose the max non-overlapping tasks
+
+    */
+
+
+    maxNonOverlappingSegments = (a, b) => ( // O() t ; O() s
+        null
+    )
+
+    // 3rd-Party (Tutorial) - comparison of 2 segments only
+    maxNonOverlappingSegments = (
+        a1, a2,
+        [lastEndSegment, chosenCount, i] = []
+    ) => ( // O(n) t ; O(1) s
+        lastEndSegment = -1,
+        chosenCount = 0,
+
+        i = 0, // ! TODO: fix for-loop replacement - for (let i = 0; i < a.length; i++)
+        Array(a1.length).fill(i++).forEach(i => ( // ! i++ (or ++i) increments only once, after/before  .fill() on each item
+            a1[i] > lastEndSegment
+            && (
+                chosenCount++,
+                lastEndSegment = a2[i]
+            )
+        )),
+
+        chosenCount
+    )
+
+    // 3rd-Party (Tutorial) - comparison of 2 segments only
+    maxNonOverlappingSegments = (a1, a2) => { // O(n) t ; O(1) s
+        let lastEndSegment = -1
+        let chosenCount = 0
+
+        for (let i = 0; i < a1.length; i++)
+            if (a1[i] > lastEndSegment) {
+                chosenCount++
+                lastEndSegment = a2[i]
+            }
+        
+        (chosenCount)
+    }
+
+
+    /*
+
+        Tie Ropes
+
+        Given a number of ropes, each with a different length,
+        and a constant, k, 1 of the ropes' length,
+        2 ropes are adjacent if they're next to each other,
+        & only 2 adjacent ropes can be tied together
+        
+        - when 2 adjacent ropes are tied:
+            - new length = sum of both ropes' lengths
+        - aim is to find max number of adjacent ropes (or a single rope):
+            - with tied length-sum (or a single rope's length) >= k
+
+    */
+
+
+    // can only tie 2 adjacent ropes
+    tieRopes = (a, k, [c, a1] = [0, []]) => ( // O(n) t ; O(1 - resulting array a1 ignored) s
+        a.forEach((n, i) => (
+            i + 1 == a.length - 1 ? null : ( // * cannot iterate from index 1 ; 
+            // * has to iterate up to last-but-1 index [(length - 1) - 1]
+                n >= k
+                ? (
+                    c++, a1.push(n)
+                ) : n + a[i + 1] >= k
+                && (
+                    c++, a1.push(n + a[i + 1])
+                )
+            )
+        )),
+        [a1, c]
+    )
+
+    // can tie 2+ adjacent ropes
+    tieRopes = (a, k, [l, c, a1] = [0, 0, []]) => ( // O(n) t ; O(1 - resulting array a1 ignored) s
+        a.forEach((n, i) => (
+            l += n, // increment rope length-sum
+            l >= k
+            && (
+                c++, a1.push(l), l = 0
+            )
+        )),
+        [a1, c]
+    )
+
+    // 3rd-Party (Tutorial) - can tie 2+ adjacent ropes
+    tieRopes = (a, k) => { // O(n) t ; O(1) s
+        let count = 0
+        let ropeLength = 0
+        a.forEach(rope => {
+            ropeLength += rope
+            ropeLength >= k && (
+                count++,
+                ropeLength = 0
+            )
+        })
+        (count)
+    }
+
+}
+
+
+class BackTracking {
+
+}
+
+
+class Iteration {
+
+}
+
+
+class Recursion {
+
+}
+
+
+class Mathematical {
+
+}
+
+
+
+////////////////////////////////////////
 // LEETCODE
 ////////////////////////////////////////
 
@@ -4853,3 +5060,4 @@ function main() {
     const mergeArrays = (a1, a2) => [...a1, ...a2]
 
 }
+
