@@ -19,6 +19,23 @@ functools, toolz, pyrsistent
 
 '''
 
+# ! NB: Big O
+
+# * in terms of speed: x-axis (Elements) & y-axis (operations)
+
+O(1) > O(log n) > O(n) > O(n log n) 
+> O(n ^ 2) > O(n ^ 3) > ... 
+> O(2 ^ n) > O(n!) > ??? 
+
+Excellent - O(1) - constant time
+Good - O(log n) - logarithmic time (binary operations)
+Fair - O(n) - linear time (loops / iterations - 1D array/list)
+Bad - O(n log n) - linearithmic time (fast sorting algo's)
+Horrible - O(n ^ 2) (quadratic - 2D arrays) > O(n ^ 3) (cubic - 3D arrays) 
+# TODO: > O(2 ^ n) (exponential - ? ) > O(n!) (factorial - ? ) >
+Dead Code - ???
+
+
 # TODO:
 
 Test all files' Algo's - Correctness, Speed / Execution Time, Uniqueness
@@ -4953,12 +4970,13 @@ class DynamicProgramming: # ! Not Enough DP work
         Technique for solving problems, that depends on dividing a problem into sub-problems
         and results gotten from sub-problems are saved into state, to be used later, for future sub-problems
 
-        - about storing the results of these sub-problems into memory so they need to be recalculate repeatedly
-
+        - about storing the results of these sub-problems into memory so they need to be recalculated repeatedly
+        - ?
         
         Attributes:
 
-        - Optimization over Recursion
+        - Optimization over Recursion & other problem-solving techniques
+            - BackTracking, Divide & Conquer, Greedy Algo techniques
         - ?
 
         - State Machine
@@ -4998,6 +5016,7 @@ class DynamicProgramming: # ! Not Enough DP work
         
         - Examples:
             - Fibonacci Sequence Problem
+            - ?
 
         Approach:
 
@@ -5006,6 +5025,7 @@ class DynamicProgramming: # ! Not Enough DP work
 
         - Top-Down
             - DFS Traversal, with Recursion
+
             - or (not really): BFS Traversal, with Recursion (if possible - TODO: confirm) /(before) Queued-While-loops
                 - while saving state data
                     - for each step / node at each depth
@@ -5019,7 +5039,7 @@ class DynamicProgramming: # ! Not Enough DP work
                             - skip unnecessary re-calculation
             
             - Combination of Recursion & Memoization
-                - Recursively solving sub-problems (mostly BFS)
+                - Recursively solving sub-problems (mostly DFS)
                 - while memorizing (saving) results in memory (state data)
                 - so overlapping sub-problems do not have to be re-solved
                 - Memoization helps speed up algo
@@ -5203,7 +5223,7 @@ class DynamicProgramming: # ! Not Enough DP work
                 - they depend on each other's state data
             
             - eg. Fibonacci Sequence:
-                - each number is the sum 2 previous numbers in the sequence
+                - each number is the sum of 2 previous numbers in the sequence
                 - if 2 previous number-functions have already been pre-calculated
                     - and saved to state data
                 - the next number-function does not need to re-calculate them
@@ -5217,7 +5237,7 @@ class DynamicProgramming: # ! Not Enough DP work
             
             - BUT Greedy approaches don't guarantee Optimality
                 - they have to be tested with multiple, & different test cases
-                - to confirm if they actually provide optimal solution
+                - to confirm if they actually provide an optimal solution
             - BUT DP approaches guarantee Optimal Solutions
                 - using Principle of Optimality
                 - ensuring final solution is most-optimal in all different test cases
@@ -5242,14 +5262,14 @@ class DynamicProgramming: # ! Not Enough DP work
             
             - Greedy eg. - Coin-change problem
                 - ?
-            - DP eg. - ?
+            - DP eg. - Fibonacci / ? problem
                 - ?
             
             - ?
         
         - vs Recursion
-            - Optimization over Recursion
-            - same problems can be solved with Recursion
+            - DP is an 'Optimization' over Recursion
+            - same DP problems can also be solved with Recursion
                 - but if problems have overlapping (related) sub-problems
                 - where they depend on state data from each other
                 - Recursive solution, without saving state data for later
@@ -5360,6 +5380,13 @@ class DynamicProgramming: # ! Not Enough DP work
         return a
 
 
+    '''
+
+        TODO: ?
+
+    '''
+    
+
     def bitmasking(self): # O() t ; O() s
         pass # TODO
 
@@ -5370,9 +5397,915 @@ class DynamicProgramming: # ! Not Enough DP work
         pass # TODO
 
     
-    def meth(self): # O() t ; O() s
-        pass # TODO
+    '''
 
+        Unique Paths - LeetCode #62
+
+        .
+
+    '''
+    
+    def unique_paths(self): # O() t ; O() s
+        pass # TODO
+    
+    def unique_paths(self): # O() t ; O() s
+        pass # TODO
+    
+    def unique_paths(self): # O() t ; O() s
+        pass # TODO
+    
+    # TODO: 3rd-Party (Tutorial) - LC #62
+    def unique_paths(self, m: int, n: int) -> int: # O() t ; O() s
+        
+        dp = [ \
+            [ \
+                0 for x in range(m) for y in range(n)
+            ]
+        ]
+
+        for i in range(m):
+            dp[0][i] = 1
+        
+        for i in range(n):
+            dp[i][0] = 1
+        
+        for i in range(1, n):
+            for j in range(1, m):
+                dp[i][j] = \
+                dp[i - 1][j] \
+                + \
+                dp[i][j - 1]
+        
+        return dp[-1][-1]
+
+
+    '''
+
+        Climbing Stairs
+
+    '''
+    
+    def climbing_stairs(self): # O() t ; O() s
+        pass # TODO
+    
+    def climbing_stairs(self): # O() t ; O() s
+        pass # TODO
+    
+    def climbing_stairs(self): # O() t ; O() s
+        pass # TODO
+    
+    # TODO: 3rd-Party (Tutorial) - LC #70
+    def climbing_stairs(self, n: int) -> int: # O() t ; O() s
+        
+        if n == 1: return 1
+
+        dp = [0] * (n + 1)
+        dp[1], dp[2] = 1, 2
+
+        for i in range(3, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2]
+        
+        return dp[n]
+
+
+    '''
+
+        House Robber
+
+    '''
+    
+    def house_robber(self): # O() t ; O() s
+        pass # TODO
+    
+    def house_robber(self): # O() t ; O() s
+        pass # TODO
+    
+    def house_robber(self): # O() t ; O() s
+        pass # TODO
+    
+    # TODO: 3rd-Party (Tutorial) - LC #198
+    def house_robber(self, nums: List[int]) -> int: # O() t ; O() s
+        
+        n = len(nums)
+        if n == 0: return 0
+
+        dp = [0] * n
+        dp[0] = nums[0]
+
+        for i in range(n):
+            dp[i] = nums[0] if i == 0 else ( \
+                max(nums[0], nums[1]) \
+                if i == 1 else \
+                max( \
+                    dp[i - 1], \
+                    dp[i - 2] + nums[i] \
+                )
+            )
+        
+        return dp[n - 1] # last item
+
+
+    '''
+
+        Coin Change
+
+    '''
+    
+    def coin_change(self): # O() t ; O() s
+        pass # TODO
+    
+    def coin_change(self): # O() t ; O() s
+        pass # TODO
+    
+    def coin_change(self): # O() t ; O() s
+        pass # TODO
+    
+    # TODO: 3rd-Party (Tutorial) - LC #322
+    def coin_change(self, coins: List[int], amount: int) -> int: # O() t ; O() s
+        
+        if amount <= 0: return 0
+
+        if min(coins) > amount: return -1
+
+        INT_MAX = 1 << 32
+        dp = [INT_MAX] * (amount + 1)
+        dp[0] = 0
+
+        for i in range(1, amount + 1):
+            for coin in coins:
+                if coin <= i:
+                    dp[i] = min( \
+                        (dp[i - coin] + 1), \
+                        dp[i] \
+                    )
+        
+        return dp[amount] if dp[amount] != INT_MAX else -1
+    
+    # TODO: 3rd-Party (Tutorial) - Using Recursion (NOT DP, in this case) - LC #322
+    def min_coins_recursion___NO_DP(self, coins, n, total): # O(n ^ a) t ; O(a) s ; a - target amount
+
+        if total == 0: return 0
+
+        res = sys.maxsize
+
+        for i in range(n):
+
+            if coins[i] <= total:
+
+                sub_res = self.min_coins(coins, n, total - coins[i])
+
+                if sub_res != sys.maxsize and sub_res + 1 < res:
+
+                    res = sub_res + 1
+        
+        return res
+    
+    # TODO: 3rd-Party (Tutorial) - Using DP (NOT Recursion, in this case) - LC #322
+    def min_coins_top_down_recursion(self, coins, n, total, table): # O(na) t ; O(a) s ; a - target amount
+
+        if total == 0: return 0
+        if total in table.keys(): return table[total]
+
+        res = sys.maxsize
+
+        for i in range(n):
+            if coins[i] <= total:
+                sub_res = self.min_coins_top_down( \
+                    coins, n, total - coins[i], table \
+                )
+                if sub_res != sys.maxsize and sub_res + 1 < res:
+                    res = sub_res + 1
+        
+        table[total] = res
+        return res
+    
+    # TODO: 3rd-Party (Tutorial) - Using DP (NOT Recursion, in this case) - LC #322
+    def min_coins_bottom_up_iteration(self, coins, n, total, table): # O(na) t ; O(a) s ; a - target amount
+
+        table = [sys.maxsize for k in range(total + 1)]
+        table[0] = 0
+
+        for i in range(1, total + 1):
+            for j in range(n):
+                if coins[j] <= 1:
+                    sub_res = table[i - coins[j]]
+                    if sub_res != sys.maxsize and sub_res + 1 < table[i]:
+                        table[i] = sub_res + 1
+        
+        return table[total]
+
+
+    '''
+
+        Best Time to Buy & Sell Stock
+
+    '''
+    
+    def best_time_to_buy_sell_stock(self): # O() t ; O() s
+        pass # TODO
+    
+    def best_time_to_buy_sell_stock(self): # O() t ; O() s
+        pass # TODO
+    
+    def best_time_to_buy_sell_stock(self): # O() t ; O() s
+        pass # TODO
+    
+    # TODO: 3rd-Party (Tutorial) - LC #121
+    def best_time_to_buy_sell_stock(self, prices: List[int]) -> int: # O() t ; O() s
+        
+        buy_price = float('inf')
+        profit = 0
+
+        for i, price in enumerate(prices):
+            if buy_price > price:
+                buy_price = price
+            else:
+                profit = max(profit, price - buy_price)
+        
+        return profit
+    
+    # TODO: 3rd-Party (Tutorial) - LC #121
+    def max_profit(self, prices: List[int]) -> int: # O() t ; O() s
+        
+        buy_price = float('inf')
+        profit = 0
+
+        for i, price in enumerate(prices):
+            if buy_price > price:
+                buy_price = price
+            else:
+                profit = max(profit, price - buy_price)
+
+        return profit
+
+
+    '''
+
+        Word Search
+
+    '''
+    
+    def word_search(self): # O() t ; O() s
+        pass # TODO
+    
+    def word_search(self): # O() t ; O() s
+        pass # TODO
+    
+    def word_search(self): # O() t ; O() s
+        pass # TODO
+    
+    # TODO: 3rd-Party (Tutorial) - LC #79
+    def word_search(self, board, word, x, y, cur): # O() t ; O() s
+
+
+        def exist(self, board: List[List[str]], word: str) -> bool:
+            
+            if len(word) == 0: return True
+
+            n = len(board)
+
+            for i in range(n):
+
+                m = len(board[i])
+
+                for j in range(m):
+
+                    if word[0] == board[i][j] and \
+                        self.word_search(board, word, i, j, ''):
+                        
+                        return True
+            
+            return False
+
+
+        dx, dy = [0, 0, -1, 1], [1, -1, 0, 0]
+
+        if x < 0 or \
+            x >= len(board) or \
+                y < 0 or \
+                    y >= len(board[x]) or \
+                        board[x][y] == ' ':
+            
+            return False
+        
+        cur += board[x][y]
+
+        if len(cur) > len(word):
+            return False
+        if cur[len(cur) - 1] != word[len(cur) - 1]:
+            return False
+        if cur == word:
+            return True
+        
+        temp = board[x][y]
+        board[x][y] = ' '
+
+        for i in range(4):
+            if self.word_search(
+                board, \
+                word, \
+                x + dx[i], \
+                y + dy[i], \
+                cur
+            ):
+                return True
+        
+        board[x][y] = temp
+
+        return False
+    
+
+    '''
+
+        Longest Palindromic Substring
+
+    '''
+    
+    def longest_palindromic_substring(self): # O() t ; O() s
+        pass # TODO
+    
+    def longest_palindromic_substring(self): # O() t ; O() s
+        pass # TODO
+    
+    def longest_palindromic_substring(self): # O() t ; O() s
+        pass # TODO
+    
+    # TODO: 3rd-Party (Tutorial) - LC #5
+    def longest_palindromic_substring(self, s: str) -> str: # O() t ; O() s
+        
+        n = len(s)
+
+        if n < 2: return s
+
+        left = right = 0
+        palindrome = [[0] * n for _ in range(n)]
+
+        for j in range(1, n):
+            for i in range(0, j):
+                
+                inner_is_palindrome = palindrome[i + 1][j - 1] \
+                or j - i <= 2
+
+                if s[i] == s[j] and inner_is_palindrome:
+
+                    palindrome[i][j] = True
+
+                    if j - i > right - left:
+                        left, right = i, j
+        
+        return s[left : right + 1]
+
+
+    '''
+
+        Trapping Rain Water
+
+    '''
+    
+    def trapping_rain_water(self): # O() t ; O() s
+        pass # TODO
+    
+    def trapping_rain_water(self): # O() t ; O() s
+        pass # TODO
+    
+    def trapping_rain_water(self): # O() t ; O() s
+        pass # TODO
+    
+    # TODO: 3rd-Party (Tutorial) - LC #42
+    def trapping_rain_water(self, height: List[int]) -> int: # O() t ; O() s
+        
+        n = len(height)
+        if n == 0: return 0
+
+        # * do not chain-assign a reference value (list)
+        left, right = [0] * n, [0] * n
+
+        ans = 0
+        left[0] = height[0]
+
+        for i in range(1, n):
+            left[i] = max(left[i - 1], height[i])
+
+        right[n - 1] = height[n - 1]
+
+        for i in range(n - 2, -1, -1):
+            right[i] = max(right[i + 1], height[i])
+        
+        for i in range(0, n):
+            ans += min(left[i], right[i]) - height[i]
+        
+        return ans
+
+
+    '''
+
+        Staircase
+
+    '''
+    
+    def staircase(self): # O() t ; O() s
+        pass # TODO
+    
+    def staircase(self): # O() t ; O() s
+        pass # TODO
+    
+    def staircase(self): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def staircase(self, n, k): # O() t ; O() s
+        
+        if n == 0: return 1
+        if n < 0: return 0
+
+        ans = 0
+
+        for i in range(1, k + 1):
+            ans += self.staircase(n - i, k)
+        
+        return ans
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def ways(self, n, k): # O(3 ^ n) t ; O(n) s
+        
+        if n == 0: return 1
+        if n < 0: return 0
+
+        ans = 0
+
+        for i in range(1, k + 1):
+            ans += self.ways(n - i, k)
+        
+        return ans
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def ways_top_down_recursion(self, n, k, dp): # O(n) t ; O(n) s
+
+        if n == 0:
+            # return 1 # for soln's sake, don't just return '1' base-value
+            dp[n] = 1; return dp[n] # return '1' base-value as list's indexed value
+        
+        if n < 0: return 0
+
+        if not dp[n] == -1:
+            return dp[n]
+
+        dp[n] = 0
+
+        for i in range(1, k + 1):
+            dp[n] += self.ways_top_down_recursion(n - i, k, dp)
+        
+        return dp[n]
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def ways_bottom_up_iteration(self, n, k): # O(n) t ; O(n) s
+
+        dp = [0] * (n + 1)
+        dp[0] = 1
+
+        for step in range(1, n + 1):
+
+            dp[step] = 0
+
+            for j in range(1, k + 1):
+
+                if step - j >= 0:
+                    dp[step] += dp[step - j]
+        
+        return dp[n]
+    
+
+    '''
+
+        Knapsack
+
+    '''
+    
+    def knapsack(self): # O() t ; O() s
+        pass # TODO
+    
+    def knapsack(self): # O() t ; O() s
+        pass # TODO
+    
+    def knapsack(self): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def knapsack(self, weight, price, n, capacity, values): # O(2 ^ n) t ; O(n) s
+        
+        if n == 0 or capacity == 0:
+            values[n - 1][capacity - 1] = 0
+            return 0
+        
+        if values[n - 1][capacity - 1] != -1:
+            return values[n - 1][capacity - 1]
+
+        incl = excl = 0
+
+        if weight[n - 1] <= capacity:
+            incl = \
+                price[n - 1] + \
+                    self.knapsack( \
+                        weight, price, n - 1, capacity - weight[n - 1], values \
+                    )
+        
+        excl = self.knapsack( \
+            weight, price, n - 1, capacity, values \
+        )
+
+        values[n - 1][capacity - 1] = max(incl, excl)
+
+        return values[n - 1][capacity - 1]
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def get_max_profit__recursion(self, weight, price, n, capacity, values): # O(2 ^ n) t ; O(n) s
+        
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def get_max_profit__top_down_memoization(self, weight, price, n, capacity, values): # O(nw) t ; O(nw) s
+        
+        if n == 0 or capacity == 0:
+            values[n - 1][capacity - 1] = 0
+            return 0
+        
+        if values[n - 1][capacity - 1] != -1:
+            return values[n - 1][capacity - 1]
+
+        incl = excl = 0
+
+        if weight[n - 1] <= capacity:
+            incl = \
+                price[n - 1] + \
+                    self.get_max_profit( \
+                        weight, price, n - 1, capacity - weight[n - 1], values \
+                    )
+        
+        excl = self.get_max_profit( \
+            weight, price, n - 1, capacity, values \
+        )
+
+        values[n - 1][capacity - 1] = max(incl, excl)
+
+        return values[n - 1][capacity - 1]
+
+    # 3rd-Party (Tutorial) - LC #?
+    def get_max_profit__bottom_up_iteration(self, weight, price, n, capacity): # O(nw) t ; O(nw) s
+
+        values = [[0 for i in range(capacity + 1)] for i in range(n + 1)]
+
+        for i in range(n + 1):
+            for j in range(capacity + 1):
+
+                if i == 0 or j == 0:
+
+                    values[i][j] = 0
+
+                else:
+
+                    incl = excl = 0
+
+                    if weight[i - 1] <= j:
+
+                        incl = price[i - 1] + values[i - 1][j - weight[i - 1]]
+
+                    excl = values[i - 1][j]
+                    values[i][j] = max(incl, excl)
+        
+        return values[n][capacity]
+
+
+    '''
+
+        Longest Decreasing Subsequence
+
+    '''
+    
+    def longest_decreasing_subsequence(self): # O() t ; O() s
+        pass # TODO
+    
+    def longest_decreasing_subsequence(self): # O() t ; O() s
+        pass # TODO
+    
+    def longest_decreasing_subsequence(self): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def longest_decreasing_subsequence(self, nums, i, prev): # O(2 ^ n) t ; O(n) s
+        
+        if i == len(nums): return 0
+
+        incl = 0
+
+        if nums[i] < prev:
+            
+            incl = 1 + self.longest_decreasing_subsequence(nums, i + 1, nums[i])
+        
+        excl = self.longest_decreasing_subsequence(nums, i + 1, prev)
+
+        return max(incl, excl)
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def get_lds_top_down_memoization(self, nums, prev_i, curr, dp): # O(n ^ 2) t ; O(n ^ 2) s
+        
+        if curr == len(nums): return 0
+
+        if dp[prev_i][curr] > 0:
+            return dp[prev_i][curr]
+        
+        incl = 0
+
+        if prev_i < 0 or nums[curr] < nums[prev_i]:
+
+            incl = 1 + self.get_lds_top_down_memoization( \
+                nums, curr, curr + 1, dp \
+            )
+
+        excl = self.get_lds_top_down_memoization( \
+            nums, prev_i, curr + 1, dp \
+        )
+
+        dp[prev_i + 1][curr] = max(incl, excl)
+
+        return dp[prev_i + 1][curr]
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def get_lds_bottom_up_iteration(self, nums): # O(n ^ 2) t ; O(n) s
+        
+        if len(nums) == 0: return 0
+
+        max_lds = [1] * len(nums)
+        max_so_far = 1
+
+        for j in range(1, len(nums)):
+            for i in range(j):
+
+                if nums[j] < nums[i]:
+
+                    max_lds[i] = max(max_lds[j], max_lds[i] + 1)
+                
+                max_so_far = max(max_so_far, max_lds[j])
+        
+        return max_so_far
+
+
+    '''
+
+        Levenshtein
+
+    '''
+    
+    def levenshtein(self): # O() t ; O() s
+        pass # TODO
+    
+    def levenshtein(self): # O() t ; O() s
+        pass # TODO
+    
+    def levenshtein(self): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def levenshtein(self, str1, str2, m, n): # O(3 ^ m) t ; O(mn) s
+        
+        if m == 0 or n == 0:
+            return max(m, n)
+        
+        ch1 = 1 + self.levenshtein(str1, str2, m, n - 1)
+        ch2 = 1 + self.levenshtein(str1, str2, m - 1, n)
+
+        if str1[m - 1] == str2[n - 1]:
+            k = 0
+        else: k = 1
+
+        ch3 = k + self.levenshtein(str1, str2, m - 1, n - 1)
+
+        return min(ch1, ch2, ch3)
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def get_edit_distance__top_down_memoization(self, str1, str2, m, n, dp): # O(mn) t ; O(mn) s
+        
+        if m == 0 or n == 0: return max(m, n)
+
+        if dp[m - 1][n - 1] >= 0:
+            return dp[m - 1][n - 1]
+        
+        ch1 = 1 + self.get_edit_distance__top_down_memoization( \
+            str1, str2, m, n - 1, dp \
+        )
+        ch2 = 1 + self.get_edit_distance__top_down_memoization( \
+            str1, str2, m - 1, n, dp \
+        )
+
+        if str1[m - 1] == str2[n - 1]:
+            k = 0
+        else: k = 1
+
+        ch3 = k + self.get_edit_distance__top_down_memoization( \
+            str1, str2, m - 1, n - 1, dp \
+        )
+
+        dp[m - 1][n - 1] = min(ch1, ch2, ch3)
+
+        return dp[m - 1][n - 1]
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def get_edit_distance__bottom_up_iteration(self, str1, str2, m, n): # O(mn) t ; O(mn) s
+        
+        l_dist = [[0 for i in range(n + 1)] for i in range(m + 1)]
+
+        for i in range(m + 1):
+            for j in range(n + 1):
+
+                if i == 0: l_dist[i][j] = j
+                elif j == 0: l_dist[i][j] = i
+                elif str1[i - 1] == str2[j - 1]:
+                    l_dist[i][j] = l_dist[i - 1][j - 1]
+                else:
+                    l_dist[i][j] = \
+                        min( \
+                            l_dist[i - 1][j], \
+                            l_dist[i - 1][j - 1], \
+                            l_dist[i][j - 1] + 1 \
+                        )
+        
+        return l_dist[m][n]
+
+
+    '''
+
+        Rod Cutting
+
+    '''
+    
+    def rod_cutting(self): # O() t ; O() s
+        pass # TODO
+    
+    def rod_cutting(self): # O() t ; O() s
+        pass # TODO
+    
+    def rod_cutting(self): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def rod_cutting(self, price, n): # O(2 ^ (n - 1)) t ; O(n ~ 1) s
+        
+        if n == 0: return 0
+
+        max_revenue = -sys.maxsize
+
+        for i in range(1, n + 1):
+
+            max_revenue = max( \
+                max_revenue, price[i - 1] + self.rod_cutting(price, n - i) \
+            )
+        
+        return max_revenue
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def rod_cut_top_down_memoization(self, price, n, memo): # O(n ^ 2) t ; O(n) s
+        
+        if n == 0: return 0
+
+        if memo[n - 1] > 0:
+            return memo[n - 1]
+
+        max_revenue = -sys.maxsize
+
+        for i in range(1, n + 1):
+
+            max_revenue = max( \
+                max_revenue, \
+                price[i - 1] + \
+                self.rod_cut_top_down_memoization( \
+                    price, n - i, memo \
+                )
+            )
+        
+        memo[n - 1] = max_revenue
+
+        return memo[n - 1]
+
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def rod_cut_bottom_up_iteration(self, price, n): # O(n ^ 2) t ; O(n) s
+        
+        revenues = [0] * (n + 1)
+
+        max_revenue = -sys.maxsize
+
+        for i in range(1, n + 1):
+            for j in range(1, i + 1):
+
+                max_revenue = max( \
+                    max_revenue, \
+                    price[j - 1] + revenues[i - j] \
+                )
+            
+            revenues[i] = max_revenue
+        
+        return revenues[n]
+
+
+    '''
+
+        Matrix Chain - Multiplication
+
+    '''
+    
+    def matrix_chain_multiplication(self): # O() t ; O() s
+        pass # TODO
+    
+    def matrix_chain_multiplication(self): # O() t ; O() s
+        pass # TODO
+    
+    def matrix_chain_multiplication(self): # O() t ; O() s
+        pass # TODO
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def matrix_chain_multiplication(self, seq, i, j): # O(2 ^ n) t ; O(n) s
+        
+        if i == j: return 0
+
+        min_ops = sys.maxsize
+
+        for k in range(i, j):
+
+            ops = \
+                self.matrix_chain_multiplication( \
+                    seq, i, k \
+                ) + \
+                self.matrix_chain_multiplication( \
+                    seq, k + 1, j \
+                ) + \
+                seq[i - 1] * \
+                seq[k] * \
+                seq[j]
+            
+            min_ops = min(ops, min_ops)
+        
+        return min_ops
+        
+    # 3rd-Party (Tutorial) - LC #?
+    def mcm_top_down_memoization(self, seq, i, j, memo): # O(n ^ 3) t ; O(n ^ 2) s
+        
+        if i == j: return 0
+
+        if memo[i][j] >= 0:
+            return memo[i][j]
+
+        min_ops = sys.maxsize
+
+        for k in range(i, j):
+
+            ops = \
+                self.mcm_top_down_memoization( \
+                    seq, i, k, memo \
+                ) + \
+                self.mcm_top_down_memoization( \
+                    seq, k + 1, j, memo \
+                ) + \
+                seq[i - 1] * \
+                seq[k] * \
+                seq[j]
+            
+            min_ops = min(ops, min_ops)
+        
+        memo[i][j] = min_ops
+
+        return memo[i][j]
+    
+    # 3rd-Party (Tutorial) - LC #?
+    def mcm_bottom_up_iteration(self, seq, n): # O(n ^ 3) t ; O(n ^ 2) s
+        
+        arr = [[0 for i in range(n)] for i in range(n)]
+        # arr[i][j] = 0
+
+        for len in range(2, n):
+            for i in range(1, n - len + 1):
+
+                j = i + len - 1
+
+                if j == n: continue
+
+                min_ops = sys.maxsize
+
+                for k in range(i, j):
+
+                    min_ops = min( \
+                        min_ops, \
+                        ( \
+                            arr[i][k] + \
+                            arr[k + 1][j] + \
+                            seq[i - 1] * \
+                            seq[k] * \
+                            seq[j] \
+                        )
+                    )
+                
+                arr[i][j] = min_ops
+        
+        return arr[1][n - 1]
+    
     
     # ! easy
 
@@ -5633,7 +6566,7 @@ class DivideAndConquer: # ! Not Enough D&C work
 
         return merge(a)
 
-    # 3rd-Party (Tutorial)
+    # 3rd-Party (Tutorial) - LC #?
     def merge_sort(self, a, l = None, u = None): # O(2 log n * n ~ n log n) t ; O(n) s
 
         def merge(a, l, m, u): # O(n) t ; O(n) s
@@ -5806,7 +6739,7 @@ class DivideAndConquer: # ! Not Enough D&C work
         quick(a) # ! all method calls work with 'a' array by reference
         return a
 
-    # 3rd-Party (Tutorial)
+    # 3rd-Party (Tutorial) - LC #?
     def quick_sort(self, a, l = None, u = None): # O(n * 2 log n ~ n log n) t ; O(1) s
         # ! argument: O(n^2) t still chosen by others - due to partition's while-loops argument
         # ! O(n) s also chosen due to the recursive-calls taking more stack memory
@@ -5931,7 +6864,7 @@ class DivideAndConquer: # ! Not Enough D&C work
 
         pass
 
-    # 3rd-Party (Tutorial)
+    # 3rd-Party (Tutorial) - LC #?
     def median_of_medians(self, a): # O(  ) t ; O() s
 
         def find_pivot(a, low, high): # O(  ) t ; O() s
@@ -6226,7 +7159,7 @@ class Greedy: # ! Not Enough Greedy work
     def fractional_knapsack(self): # O() t ; O() s
         pass
 
-    # 3rd-Party (Tutorial)
+    # 3rd-Party (Tutorial) - LC #?
     def fractional_knapsack(self, a, b): # O() t ; O() s
 
         class Item:

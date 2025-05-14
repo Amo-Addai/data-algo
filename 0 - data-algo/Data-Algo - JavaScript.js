@@ -4338,25 +4338,469 @@ function numberOfIslands(grid) { // O(n) / O(m * n) t ; O(1) s (n - num cells of
 // Bits
 
 
-/* // TODO: Create classes:
 
-class DynamicProgramming
 
-class DivideAndConquer
 
-class Greedy
+////////////////////////////////////////
+// PROBLEM-SOLVING ALGO'S
+////////////////////////////////////////
 
-class BackTracking
 
-class SystemDesign
+class DynamicProgramming {
 
-class Mathematical
+    memoization = {
 
-class Geometric
+        addTo5: n => n + 5,
 
-class PatternSearching
+        memoizedAddTo5: (n, cache = {}) => (
+            n in cache ? cache[n]
+            : (
+                console.log('longer exec'),
+                cache[n] = n + 5,
+                cache[n]
+            )
+        )
 
-*/
+    }
+
+    // * to be used in fibonacci methods
+    calculations = 0
+
+    // 3rd-Party (Tutorial) - REGULAR recursion - Top-Down
+
+    fibonacci = n => {
+        calculations++
+        if (n < 2) return n
+        return fibonacci(n - 1) + fibonacci(n - 2)
+    }
+
+    fibonacci = n => ( // O(2^n) t ; O(1) s
+        // O(2^n) t - recursive calls - default time-complexity
+        // O(1) s - no space required
+        
+        calculations++, // can run this recursive function ..
+        // & compare number of 'calculations' made (WAY slower than below)
+        n < 2 ? n
+        : fibonacci(n - 1) + fibonacci(n - 2)
+    ) // eg: fibonacci(30)
+
+
+    // ! 3rd-Party (Tutorial) - DP (DFS) recursion, with Caching - Top-Down (BEST & FASTEST Option)
+    // BEST & FASTEST Option - since it avoids unnecessary recursive re-calculations
+    // plus fibo-numbers will never repeat, since lower ones add up to higher ones
+
+    cache = {}
+
+    fibonacci = n => {
+        calculations++
+        if (n in cache) return cache[n]
+        else {
+            if (n < 2) return n
+            else {
+                cache[n] = fibonacci(n - 1) + fibonacci(n - 2)
+                return cache[n]
+            }
+        }
+    }
+
+    fibonacci = n => ( // O(n) t ; O(n) s
+
+        // O(n) t - recursive calls, BUT with caching - to remove unnecessary re-calculations
+        // algo ends up only recursing through only unique n values
+        // O(n) s - extra hashmap or hashtable - used as a cache data-structure
+
+        calculations++, // can run this recursive function ..
+        // & compare number of 'calculations' made (WAY faster than above)
+        n in cache
+        ? cache[n]
+        : (
+            // ! 'calculations++' doesn't have to be placed here ..
+            // * because above base-case still prevents below recursive calls
+            n < 2
+            ? n
+            : (
+                cache[n] =
+                    fibonacci(n - 1)
+                    + fibonacci(n - 2),
+                cache[n] // return cached-number, after storing
+                // so it's still accessible in future recursive calls
+            )
+        )
+    ) // eg: fibonacci(30)
+
+    // 3rd-Party (Tutorial) - DP (BFS) iterative, without Caching - Bottom-Up (ALSO BEST & FASTEST Option)
+    // using same resulting array to save previous calculations
+
+    fibonacci = n => {
+        let a = [0, 1] // pre-fill list with 1st 2 ('botton') items ..
+        // for 'bottom-up' addition approach
+        for (let i = 2; i <= n; i++)
+            a.push(a[i - 1] + a[i - 2])
+        return a // return entire fibo-series, or a.pop() - last a[n] item
+    }
+
+    fibonacci = n => {
+        let a = [0, 1]
+        for (let i = 2; i <= n; i++)
+            a.push(a[i - 1] + a[i - 2])
+        (a) // return a
+    }
+
+
+    /*
+
+        Jump Game
+
+    */
+
+    jumpGame = (
+        nums,
+        [] = []
+    ) => (
+        null // todo:
+    )
+
+    // TODO: 3rd-Party (Tutorial) - LC #55
+    jumpGame = (
+        nums,
+        [] = []
+    ) => (
+        null // todo
+    )
+
+    // TODO: 3rd-Party (Tutorial) - LC #55
+    canJump = nums => { // O(n ^ 2) t ; O(n) s
+
+        // create an aux-array for holding boolean return-values
+        let dpPositions = new Array(nums.length).fill(false)
+        dpPositions[0] = true
+
+        for (let j = 1; j < nums.length; j++)
+            for (let i = 0; i < j; i++)
+                if (dpPositions[i] && i + nums[i] >= j) {
+                    dpPositions[j] = true // update next (last) return value to true
+                    break
+                }
+        
+        return dpPositions[ // return last boolean value in the return-values array
+            dpPositions.length - 1
+        ]
+    }
+
+
+    /*
+
+        Unique Paths
+
+    */
+
+    uniquePaths = (m, n) => (
+        null
+    )
+
+    // TODO: 3rd-Party (Tutorial) - LC #62
+    uniquePaths = () => { // O(m*n) t ; O(m*n) s - n x m are matrix dimensions
+        
+        const dpMatrix = []
+
+        for (let row = 1; row <= n; row++)
+            dpMatrix.push([])
+
+        // fill out 1st row of dp matrix
+        for (let row = 0; row < n; row++)
+            dpMatrix[row][0] = 1
+        
+        // fill out 1st col of dp matrix
+        for (let col = 0; col < n; col++)
+            dpMatrix[0][col] = 1
+        
+        for (let row = 1; row < n; row++)
+            for (let col = 1; col < m; col++)
+                dpMatrix[row][col] =
+                    dpMatrix[row][col - 1]
+                    +
+                    dpMatrix[row - 1][col]
+
+        return dpMatrix[dpMatrix.length - 1][m - 1]
+
+    }
+
+
+    /*
+
+        Climbing Stairs
+
+    */
+
+    climbingStairs = n => (
+        null
+    )
+
+    // TODO: 3rd-Party (Tutorial) - LC #70
+    // * using 2 number vars, as sequence of 'Ways'
+    climbingStairs = n => { // O(n) t ; O(1) s
+
+        if (n === 1) return n
+
+        let first = 1, second = 2, third
+
+        for (let i = 3; i <= n; i++) {
+            third = first + second
+            first = second
+            second = third
+        }
+
+        return second
+        
+    }
+
+    // TODO: 3rd-Party (Tutorial) - LC #70
+    climbingStairs = n => { // O(n) t ; O(n) s
+
+        if (n <= 3) return n
+
+        let ways = [0, 1, 2, 3]
+
+        for (let i = 4; i <= n; i++)
+            ways.push(
+                ways[i - 1] + ways[i - 2]
+            )
+        
+        return ways[n] // or: ways.pop() out last item
+        
+    }
+    
+
+    /*
+
+        House Robber
+
+    */
+
+    houseRobber = nums => null
+
+    // TODO: 3rd-Party (Tutorial) - LC #198
+    houseRobber = nums => { // O(n) t ; O(n) s
+        // ! O(s) can also be optimized to O(1) s, when using 2 numbers instead of the aux-space array
+        
+        if (nums.length === 0) return 0
+        if (nums.length === 1) return nums[0]
+        if (nums.length === 2) return Math.max(nums[0], nums[1])
+        
+        let maxLootAtNth = [
+            nums[0],
+            Math.max(nums[0], nums[1])
+        ]
+
+        for (let i = 2; i < nums.length; i++)
+            maxLootAtNth.push(
+                Math.max(
+                    nums[i] + maxLootAtNth[i - 2],
+                    maxLootAtNth[i - 1]
+                )
+            )
+        
+        return maxLootAtNth.pop() // last item
+
+    }
+    
+
+    /*
+
+        Longest Increasing Subsequence
+
+    */
+
+    lengthOfLongestIncreasingSubsequence = () => null
+
+    // TODO: 3rd-Party (Tutorial) - LC #300
+    lengthOfLongestIncreasingSubsequence = () => { // O(n ^ 2) t ; O(n) s
+
+        // * O(n ^ 2) t - up to n work is done, for all n elements
+        // * O(n) s - dp (aux-space) array stores the answer up to n sub-problems
+
+        if (nums.length === 0) return 0
+
+        let dp = new Array(nums.length).fill(1)
+        let max = 1
+
+        for (let j = 1; j < nums.length; j++) {
+            for (let i = 0; i < j; i++)
+                if (nums[j] > nums[i])
+                    dp[j] = Math.max(dp[i] + 1, dp[j])
+            max = Math.max(max, dp[j])
+        }
+        
+        return max
+        
+    }
+    
+
+    /*
+
+        Coin Change
+
+    */
+
+    coinChange = () => null
+
+    // TODO: 3rd-Party (Tutorial) - LC #322
+    coinChange = () => { // O(ac) t ; O(a) s ; a - amount, c - number of coins
+
+        let dp = new Array(amount + 1).fill(Infinity),
+        value
+        dp[0] = 0
+
+        for (let i = 1; i < dp.length; i++)
+            for (let j = 0; j < coins.length; j++) {
+                value = coins[j]
+                if (value <= i)
+                    dp[i] = Math.min(
+                        dp[i - value] + 1,
+                        dp[i]
+                    )
+            }
+        
+        let res = dp[dp.length - 1] // or: dp.pop() out last item
+        return res === Infinity ? -1 : res
+        
+    }
+
+}
+
+
+class DivideAndConquer {
+
+}
+
+
+class Greedy {
+
+
+    /*
+
+        Maximum Non-Overlapping Segments
+        
+        Given a number of segments,
+        find the maximum number of these segments that do not overlap with each other
+
+        - similar to: Activity Selection Problem
+            - where to choose the max non-overlapping tasks
+
+    */
+
+
+    maxNonOverlappingSegments = (a, b) => ( // O() t ; O() s
+        null
+    )
+
+    // 3rd-Party (Tutorial) - comparison of 2 segments only
+    maxNonOverlappingSegments = (
+        a1, a2,
+        [lastEndSegment, chosenCount, i] = []
+    ) => ( // O(n) t ; O(1) s
+        lastEndSegment = -1,
+        chosenCount = 0,
+
+        i = 0, // ! TODO: fix for-loop replacement - for (let i = 0; i < a.length; i++)
+        Array(a1.length).fill(i++).forEach(i => ( // ! i++ (or ++i) increments only once, after/before  .fill() on each item
+            a1[i] > lastEndSegment
+            && (
+                chosenCount++,
+                lastEndSegment = a2[i]
+            )
+        )),
+
+        chosenCount
+    )
+
+    // 3rd-Party (Tutorial) - comparison of 2 segments only
+    maxNonOverlappingSegments = (a1, a2) => { // O(n) t ; O(1) s
+        let lastEndSegment = -1
+        let chosenCount = 0
+
+        for (let i = 0; i < a1.length; i++)
+            if (a1[i] > lastEndSegment) {
+                chosenCount++
+                lastEndSegment = a2[i]
+            }
+        
+        (chosenCount)
+    }
+
+
+    /*
+
+        Tie Ropes
+
+        Given a number of ropes, each with a different length,
+        and a constant, k, 1 of the ropes' length,
+        2 ropes are adjacent if they're next to each other,
+        & only 2 adjacent ropes can be tied together
+        
+        - when 2 adjacent ropes are tied:
+            - new length = sum of both ropes' lengths
+        - aim is to find max number of adjacent ropes (or a single rope):
+            - with tied length-sum (or a single rope's length) >= k
+
+    */
+
+
+    // can only tie 2 adjacent ropes
+    tieRopes = (a, k, [c, a1] = [0, []]) => ( // O(n) t ; O(1 - resulting array a1 ignored) s
+        a.forEach((n, i) => (
+            i + 1 == a.length - 1 ? null : ( // * cannot iterate from index 1 ; 
+            // * has to iterate up to last-but-1 index [(length - 1) - 1]
+                n >= k
+                ? (
+                    c++, a1.push(n)
+                ) : n + a[i + 1] >= k
+                && (
+                    c++, a1.push(n + a[i + 1])
+                )
+            )
+        )),
+        [a1, c]
+    )
+
+    // can tie 2+ adjacent ropes
+    tieRopes = (a, k, [l, c, a1] = [0, 0, []]) => ( // O(n) t ; O(1 - resulting array a1 ignored) s
+        a.forEach((n, i) => (
+            l += n, // increment rope length-sum
+            l >= k
+            && (
+                c++, a1.push(l), l = 0
+            )
+        )),
+        [a1, c]
+    )
+
+    // 3rd-Party (Tutorial) - can tie 2+ adjacent ropes
+    tieRopes = (a, k) => { // O(n) t ; O(1) s
+        let count = 0
+        let ropeLength = 0
+        a.forEach(rope => {
+            ropeLength += rope
+            ropeLength >= k && (
+                count++,
+                ropeLength = 0
+            )
+        })
+        (count)
+    }
+
+}
+
+
+class BackTracking {
+
+}
+
+
+class Iteration {
+
+}
+
 
 class Recursion {
 
@@ -4373,7 +4817,19 @@ class Recursion {
 
 }
 
-/* // TODO: Create classes:
+
+class Mathematical {
+
+}
+
+
+/* // TODO: Also Create classes:
+
+class SystemDesign
+
+class Geometric
+
+class PatternSearching
 
 class Bitwise
 
@@ -4641,213 +5097,6 @@ function kthToLast(l, k) {
 // Trees
 
 // Graphs
-
-
-
-////////////////////////////////////////
-// PROBLEM-SOLVING ALGO'S
-////////////////////////////////////////
-
-
-class DynamicProgramming {
-
-    calculations = 0
-
-    // 3rd-Party (Tutorial) - REGULAR recursion - Top-Down
-    fibonacci = n => ( // O(2^n) t ; O(1) s
-        // O(2^n) t - recursive calls - default time-complexity
-        // O(1) s - no space required
-        
-        calculations++, // can run this recursive function ..
-        // & compare number of 'calculations' made (WAY slower than below)
-        n < 2 ? n
-        : fibonacci(n - 1) + fibonacci(n - 2)
-    ) // eg: fibonacci(30)
-
-
-    // ! 3rd-Party (Tutorial) - DP (DFS) recursion, with Caching - Top-Down (BEST & FASTEST Option)
-    // BEST & FASTEST Option - since it avoids unnecessary recursive re-calculations
-    // plus fibo-numbers will never repeat, since lower ones add up to higher ones
-
-    cache = {}
-    fibonacci = n => ( // O(n) t ; O(n) s
-
-        // O(n) t - recursive calls, BUT with caching - to remove unnecessary re-calculations
-        // algo ends up only recursing through only unique n values
-        // O(n) s - extra hashmap or hashtable - used as a cache data-structure
-
-        calculations++, // can run this recursive function ..
-        // & compare number of 'calculations' made (WAY faster than above)
-        n in cache
-        ? cache[n]
-        : (
-            // ! 'calculations++' doesn't have to be placed here ..
-            // * because above base-case still prevents below recursive calls
-            n < 2
-            ? n
-            : (
-                cache[n] =
-                    fibonacci(n - 1)
-                    + fibonacci(n - 2),
-                cache[n] // return cached-number, after storing
-                // so it's still accessible in future recursive calls
-            )
-        )
-    ) // eg: fibonacci(30)
-
-    // 3rd-Party (Tutorial) - DP (BFS) iterative, without Caching - Bottom-Up (ALSO BEST & FASTEST Option)
-    // using same resulting array to save previous calculations
-    fibonacci = n => {
-        let a = [0, 1]
-        for (let i = 2; i <= n; i++)
-            a.push(a[i - 1] + a[i - 2])
-        (a) // return entire fibo-series ; or: a.pop() - last a[n] item
-    }
-
-}
-
-
-class DivideAndConquer {
-
-}
-
-
-class Greedy {
-
-
-    /*
-
-        Maximum Non-Overlapping Segments
-        
-        Given a number of segments,
-        find the maximum number of these segments that do not overlap with each other
-
-        - similar to: Activity Selection Problem
-            - where to choose the max non-overlapping tasks
-
-    */
-
-
-    maxNonOverlappingSegments = (a, b) => ( // O() t ; O() s
-        null
-    )
-
-    // 3rd-Party (Tutorial) - comparison of 2 segments only
-    maxNonOverlappingSegments = (
-        a1, a2,
-        [lastEndSegment, chosenCount, i] = []
-    ) => ( // O(n) t ; O(1) s
-        lastEndSegment = -1,
-        chosenCount = 0,
-
-        i = 0, // ! TODO: fix for-loop replacement - for (let i = 0; i < a.length; i++)
-        Array(a1.length).fill(i++).forEach(i => ( // ! i++ (or ++i) increments only once, after/before  .fill() on each item
-            a1[i] > lastEndSegment
-            && (
-                chosenCount++,
-                lastEndSegment = a2[i]
-            )
-        )),
-
-        chosenCount
-    )
-
-    // 3rd-Party (Tutorial) - comparison of 2 segments only
-    maxNonOverlappingSegments = (a1, a2) => { // O(n) t ; O(1) s
-        let lastEndSegment = -1
-        let chosenCount = 0
-
-        for (let i = 0; i < a1.length; i++)
-            if (a1[i] > lastEndSegment) {
-                chosenCount++
-                lastEndSegment = a2[i]
-            }
-        
-        (chosenCount)
-    }
-
-
-    /*
-
-        Tie Ropes
-
-        Given a number of ropes, each with a different length,
-        and a constant, k, 1 of the ropes' length,
-        2 ropes are adjacent if they're next to each other,
-        & only 2 adjacent ropes can be tied together
-        
-        - when 2 adjacent ropes are tied:
-            - new length = sum of both ropes' lengths
-        - aim is to find max number of adjacent ropes (or a single rope):
-            - with tied length-sum (or a single rope's length) >= k
-
-    */
-
-
-    // can only tie 2 adjacent ropes
-    tieRopes = (a, k, [c, a1] = [0, []]) => ( // O(n) t ; O(1 - resulting array a1 ignored) s
-        a.forEach((n, i) => (
-            i + 1 == a.length - 1 ? null : ( // * cannot iterate from index 1 ; 
-            // * has to iterate up to last-but-1 index [(length - 1) - 1]
-                n >= k
-                ? (
-                    c++, a1.push(n)
-                ) : n + a[i + 1] >= k
-                && (
-                    c++, a1.push(n + a[i + 1])
-                )
-            )
-        )),
-        [a1, c]
-    )
-
-    // can tie 2+ adjacent ropes
-    tieRopes = (a, k, [l, c, a1] = [0, 0, []]) => ( // O(n) t ; O(1 - resulting array a1 ignored) s
-        a.forEach((n, i) => (
-            l += n, // increment rope length-sum
-            l >= k
-            && (
-                c++, a1.push(l), l = 0
-            )
-        )),
-        [a1, c]
-    )
-
-    // 3rd-Party (Tutorial) - can tie 2+ adjacent ropes
-    tieRopes = (a, k) => { // O(n) t ; O(1) s
-        let count = 0
-        let ropeLength = 0
-        a.forEach(rope => {
-            ropeLength += rope
-            ropeLength >= k && (
-                count++,
-                ropeLength = 0
-            )
-        })
-        (count)
-    }
-
-}
-
-
-class BackTracking {
-
-}
-
-
-class Iteration {
-
-}
-
-
-class Recursion {
-
-}
-
-
-class Mathematical {
-
-}
 
 
 
